@@ -1,0 +1,8 @@
+# Secrets stay out of this public repo
+.env*
+!.env.example
+*.pem
+
+# Local only
+.DS_Store
+.claude/worktrees/
