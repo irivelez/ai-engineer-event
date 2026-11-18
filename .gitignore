@@ -6,3 +6,11 @@
 # Local only
 .DS_Store
 .claude/worktrees/
+
+# Keynote: dependencies, dev builds, large media (the opener film is never committed)
+node_modules/
+keynote/.dev/
+keynote/media/opener*.mp4
+keynote/media/*.mov
+keynote/docs/animatic/*.webm
+keynote/docs/animatic/*.mp4

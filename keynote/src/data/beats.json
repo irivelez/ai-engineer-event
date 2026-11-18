@@ -1,0 +1,611 @@
+{
+  "title": "Inside the AI Frontier",
+  "presenter": "Irina Vélez",
+  "event": "Inside the AI Frontier · free online session",
+  "date": "2026-11-19T19:00:00-05:00",
+  "plannedTotalSec": 3600,
+  "icons": {
+    "speed": "Speed",
+    "tradeoffs": "Trade-offs",
+    "constraints": "Constraints",
+    "uncertainty": "Uncertainty",
+    "value": "Value"
+  },
+  "acts": [
+    { "id": "open", "n": "", "title": "Open" },
+    { "id": "sf", "n": "I", "title": "What San Francisco is building" },
+    { "id": "labs", "n": "II", "title": "What the frontier labs show" },
+    { "id": "limits", "n": "III", "title": "Where they hit their limits" },
+    { "id": "world", "n": "IV", "title": "What the world is saying" },
+    { "id": "next", "n": "V", "title": "What you do next" },
+    { "id": "close", "n": "", "title": "Close" }
+  ],
+  "moments": [
+    {
+      "id": "opener", "act": "open", "owner": "E1", "plannedSec": 90, "energy": 9, "ground": "void", "mode": "video", "icon": "speed",
+      "brief": "A 60–90 s film about speed opens the night. It ends on white type on black: Inside the AI Frontier.",
+      "steps": ["Film plays full-bleed and holds on its last frame"],
+      "copy": { "fallbackTitle": "Inside the AI Frontier" },
+      "visual": "Full-bleed <video src='media/opener-1080p.mp4'>. On end, hold the last frame. If the file is missing, play a 20–25 s typographic speed sequence built from this keynote's own facts (release dates and model names flashing faster and faster) that lands on the exact same title frame.",
+      "facts": []
+    },
+    {
+      "id": "title", "act": "open", "owner": "E1", "plannedSec": 45, "energy": 6, "ground": "void", "mode": "calm", "icon": null,
+      "brief": "Seamless from the film's last frame: the title holds, the byline arrives, then black opens to white.",
+      "steps": ["Title, pixel-matched to the film's last frame", "Byline and date rise in", "Black opens to white: the calm world begins"],
+      "copy": { "title": "Inside the AI Frontier", "name": "Irina Vélez", "role": "Founder, Deltanova", "date": "19 November 2026" },
+      "visual": "White type on black, centered, same size and position as the film's last frame. Exit: an aperture of white opens from the center (or a clean vertical wipe) into the paper world.",
+      "facts": []
+    },
+    {
+      "id": "question", "act": "open", "owner": "E1", "plannedSec": 90, "energy": 3, "ground": "paper", "mode": "calm", "icon": null,
+      "brief": "One question frames the night, then the five stops of the route.",
+      "steps": ["Kicker", "The question", "The route: five stops on one line"],
+      "copy": {
+        "kicker": "Tonight, one question",
+        "question": "What will you decide differently in 2027?",
+        "route": ["What San Francisco is building", "What the frontier labs show", "Where they hit their limits", "What the world is saying", "What you do next"]
+      },
+      "visual": "DevDay calm: white, black type, one idea at a time. The route is a single hairline with five numbered stops (I–V) that draw left to right.",
+      "facts": []
+    },
+    {
+      "id": "sf-arrival", "act": "sf", "owner": "E2", "plannedSec": 60, "energy": 8, "ground": "void", "mode": "burst", "icon": "speed",
+      "brief": "We land in San Francisco, three days of the AI Engineer Code Summit, where builders ship AI-written code at volume.",
+      "steps": ["Night city of light, camera glides in", "Act title and event", "80 sessions · 3 days"],
+      "copy": { "act": "I", "actTitle": "What San Francisco is building", "event": "AI Engineer Code Summit", "place": "San Francisco", "dates": "10–12 Nov 2026", "stat1": "80 sessions", "stat2": "3 days" },
+      "visual": "Full-screen 3D: an abstract night city made of light (instanced blocks, streets as flowing light lines, data traffic pulsing). Camera glides low between blocks, then rises to reveal the grid. Type lands calm on top. Optional: one real wide stage still (media/sf) appears as a framed card at the end.",
+      "facts": ["sf-sessions"]
+    },
+    {
+      "id": "sf-topics", "act": "sf", "owner": "E3", "plannedSec": 75, "energy": 4, "ground": "paper", "mode": "data", "icon": null,
+      "brief": "What 80 talks were about: shipping AI-written code at volume dominates.",
+      "steps": ["Bars draw in", "The four 'shipping code' bars light up: 34 of 80"],
+      "copy": {
+        "title": "What 80 talks were about",
+        "items": [
+          ["Software factories & agent-run teams", 13], ["Verification & code review", 8], ["Coding-agent products", 8], ["People, culture & community", 8],
+          ["Agent harnesses & infrastructure", 7], ["Context, data, search & memory", 7], ["Models, inference & post-training", 6], ["Decision models", 5],
+          ["Trust, security & governance", 5], ["Large codebases: migrations & rewrites", 5], ["Evals & reliability", 3], ["Enterprise & business adoption", 3]
+        ],
+        "highlight": ["Software factories & agent-run teams", "Verification & code review", "Coding-agent products", "Large codebases: migrations & rewrites"],
+        "takeaway": "34 of 80: shipping AI-written code at volume.",
+        "note": "Topic grouping is our reading of the official schedule; 2 talks had no published title."
+      },
+      "visual": "Horizontal bar chart, black on white, Geist Mono values. Highlight bars in accent; others go grey.",
+      "facts": ["sf-topics", "sf-shipping-34"]
+    },
+    {
+      "id": "factory", "act": "sf", "owner": "E2", "plannedSec": 120, "energy": 9, "ground": "void", "mode": "burst", "icon": "speed",
+      "brief": "The software factory: agents write, test and ship; people set direction and check. Three real numbers from the stage.",
+      "steps": ["The line: thousands of changes flow into one trunk", "11,000 pull requests in a month, ~0.5% reverted", "~75% of Ramp's merged pull requests come from its own agent", "92% of Cognition's merged pull requests in September came from Devin"],
+      "copy": {
+        "title": "The software factory",
+        "sub": "Agents write, test and ship. People set direction and check.",
+        "gloss": "Pull request: a proposed change to a codebase.",
+        "s1": { "value": "11,000", "label": "pull requests in one month", "detail": "around 0.5% reverted", "who": "SpaceXSI · Grok Bot team · Lauren Tan" },
+        "s2": { "value": "~75%", "label": "of merged pull requests", "detail": "written by Ramp's in-house agent, Inspect", "who": "Ramp · Zach Bruggeman" },
+        "s3": { "value": "92%", "label": "of merged pull requests in September", "detail": "written by its agent, Devin", "who": "Cognition · Theodor Marcu" }
+      },
+      "visual": "Full-screen 3D: instanced cubes (pull requests) stream on many conveyor lines converging into one bright trunk ('main'). Step 2: the counter rolls to 11,000 and ~0.5% of cubes flash red and drop out. Steps 3–4: the stream recolors to show the agent share (75%, then 92%). Big numbers in DOM over the 3D.",
+      "facts": ["grokbot-prs", "ramp-inspect-75", "cognition-devin-92"]
+    },
+    {
+      "id": "slop", "act": "sf", "owner": "E3", "plannedSec": 60, "energy": 6, "ground": "void", "mode": "quote", "icon": "tradeoffs",
+      "brief": "The most-watched talk of the summit: humans no longer read most of the code, and quality went up. Speed versus control.",
+      "steps": ["Speaker still and talk title", "The view count rolls up"],
+      "copy": {
+        "talk": "All Code Is Slop (Except Mine)",
+        "speaker": "Lauren Tan · SpaceXSI",
+        "views": "746,083",
+        "viewsLabel": "views in three days",
+        "asOf": "YouTube, 17 Nov 2026",
+        "point": "Hundreds of unread pull requests a day, and quality went up."
+      },
+      "visual": "Real stage still (media/sf) large with a slow push-in; talk title in serif; the view count rolls in Geist Mono.",
+      "facts": ["laurentan-views", "grokbot-unread"]
+    },
+    {
+      "id": "lean-harness", "act": "sf", "owner": "E3", "plannedSec": 60, "energy": 5, "ground": "paper", "mode": "quote", "icon": "tradeoffs",
+      "brief": "Better models need less scaffolding: a Google DeepMind engineer deleted 90% of his harness and the agent got better.",
+      "steps": ["The quote", "What was left: Bash and a 300-token prompt"],
+      "copy": {
+        "quote": "I deleted 90% of my harness. And it got better.",
+        "speaker": "Philipp Schmid · Google DeepMind",
+        "detail": "Custom tools replaced by Bash and a 300-token prompt.",
+        "gloss": "Harness: the code and tools wrapped around a model.",
+        "point": "Build less around the model."
+      },
+      "visual": "Paper. A block of 'harness' lines (code bars) deletes itself down to two short lines; then the quote.",
+      "facts": ["schmid-harness"]
+    },
+    {
+      "id": "org", "act": "sf", "owner": "E3", "plannedSec": 75, "energy": 6, "ground": "paper", "mode": "calm", "icon": "value",
+      "brief": "It is not just code: companies are reorganizing around the agent.",
+      "steps": ["Title", "Amp: three facts", "Ramp: an agent that builds the culture"],
+      "copy": {
+        "title": "A company built around the agent",
+        "amp": ["21 co-founders", "No traditional roles", "Everyone pushes to main"],
+        "ampWho": "Amp · Quinn Slack",
+        "ramp": "“How to build an agent that builds the culture”",
+        "rampWho": "Ramp · Zach Bruggeman"
+      },
+      "visual": "Paper. Three statements land one by one, large. Small stills of the speakers if available.",
+      "facts": ["amp-org", "ramp-culture"]
+    },
+    {
+      "id": "verification", "act": "sf", "owner": "E3", "plannedSec": 90, "energy": 6, "ground": "paper", "mode": "data", "icon": "constraints",
+      "brief": "When agents write the code, the bottleneck becomes checking it, and even AI judges hallucinate.",
+      "steps": ["Title and the 8-of-80 stat", "Diffs of 10,000 lines", "The AI grader that passed work that never happened"],
+      "copy": {
+        "title": "The new bottleneck: checking the work",
+        "stat": "8 of 80",
+        "statLabel": "talks were about verification and code review",
+        "items": [
+          { "talk": "Code review without reviewing code", "line": "Diffs now reach 10,000 lines." },
+          { "talk": "Your Judge Is Hallucinating Too", "line": "ZoomInfo's AI grader passed work that never happened." }
+        ]
+      },
+      "visual": "Paper. A diff column scrolls endlessly (10,000 lines) then freezes; the second item shows a green 'PASS' stamp that turns hollow.",
+      "facts": ["sf-verification-8", "diff-10000", "zoominfo-judge"]
+    },
+    {
+      "id": "last-job", "act": "sf", "owner": "E3", "plannedSec": 45, "energy": 3, "ground": "paper", "mode": "quote", "icon": "value",
+      "brief": "The line that closes San Francisco: judgment is the last job.",
+      "steps": ["The line, alone"],
+      "copy": { "quote": "Judgement is the last job.", "speaker": "Ishaan Dey · Google (Antigravity)", "note": "Talk title, AI Engineer Code Summit, 12 Nov 2026" },
+      "visual": "Huge type, nothing else. Long hold. Silence.",
+      "facts": ["dey-judgement"]
+    },
+    {
+      "id": "three-labs", "act": "labs", "owner": "E4", "plannedSec": 60, "energy": 7, "ground": "void", "mode": "burst", "icon": null,
+      "brief": "Three labs share the frontier; each shipped its flagship in the last six weeks.",
+      "steps": ["Act title", "Three monoliths rise, one per lab", "Model names and dates"],
+      "copy": {
+        "act": "II", "actTitle": "What the frontier labs show",
+        "line": "Three labs share the frontier.",
+        "labs": [
+          { "lab": "Anthropic", "model": "Claude Fable 5.2", "date": "9 Nov" },
+          { "lab": "OpenAI", "model": "GPT-6.2 Astra", "date": "17 Nov" },
+          { "lab": "Google DeepMind", "model": "Gemini 4 Carbon", "date": "10 Nov" }
+        ]
+      },
+      "visual": "Full-screen 3D: three luminous monoliths rise from a dark reflective plane, lab-identity tinted, camera slowly arcs. Labels in DOM.",
+      "facts": ["fable52-date", "gpt62-date", "carbon-date"]
+    },
+    {
+      "id": "release-pace", "act": "labs", "owner": "E4", "plannedSec": 75, "energy": 8, "ground": "void", "mode": "burst", "icon": "speed",
+      "brief": "Frontier releases now come in weeks: 14 in 11 weeks across three labs.",
+      "steps": ["Three tracks, 1 Sep → 17 Nov", "Release pulses fire in date order", "14 releases in 11 weeks"],
+      "copy": {
+        "title": "Frontier releases now come in weeks",
+        "window": "1 Sep → 17 Nov 2026",
+        "counts": [ { "lab": "Anthropic", "n": 5 }, { "lab": "Google", "n": 4 }, { "lab": "OpenAI", "n": 5 } ],
+        "total": "14",
+        "totalLabel": "frontier-relevant releases in 11 weeks"
+      },
+      "visual": "3D: three parallel light tracks receding in depth along a time axis; each release fires a bright bead at its real date (dates from facts.json; if a date is not verified, show the lab's count without placing beads). Camera dolly along the axis.",
+      "facts": ["releases-anthropic-5", "releases-google-4", "releases-openai-5"]
+    },
+    {
+      "id": "year-in-weeks", "act": "labs", "owner": "E5", "plannedSec": 75, "energy": 7, "ground": "paper", "mode": "data", "icon": "speed",
+      "brief": "Independent indices moved almost a year of trend in 11 weeks, with an honest caveat.",
+      "steps": ["Epoch index: 162.5 → 174", "Artificial Analysis: 58 → 65 in three weeks", "The caveat"],
+      "copy": {
+        "title": "Almost a year of progress in 11 weeks",
+        "eci": { "from": "162.5", "to": "174", "label": "Epoch Capabilities Index, frontier score", "dates": "1 Sep → mid-Nov 2026", "trend": "trend: about 14 points a year" },
+        "aa": { "from": "58", "to": "65", "label": "Artificial Analysis index, top model", "dates": "27 Oct → 17 Nov 2026" },
+        "caveat": "Two releases drove most of it. Epoch calls the record “just one data point.”"
+      },
+      "visual": "Paper. A dashed trend line (14 pts/yr) and the actual jump, steep. Numbers roll. Caveat in small serif italic.",
+      "facts": ["eci-jump", "eci-trend-14", "aa-jump", "eci-one-data-point"]
+    },
+    {
+      "id": "swarm", "act": "labs", "owner": "E4", "plannedSec": 105, "energy": 10, "ground": "void", "mode": "burst", "icon": "speed",
+      "brief": "The peak of the night: more than a thousand agents, eight days, an operating system from an empty folder.",
+      "steps": ["1,000+ agents swarm", "8 days, nonstop (day counter races)", "An empty folder becomes an OS that boots on a laptop"],
+      "copy": {
+        "kicker": "Lab-reported · Anthropic, 9 Nov 2026",
+        "n": "1,000+", "nLabel": "subagents",
+        "d": "8 days", "dLabel": "nonstop",
+        "result": "From an empty folder to an operating system that boots on a laptop."
+      },
+      "visual": "Full-screen 3D peak: 1,000+ glowing agents (instanced points with trails) swirl, then self-organize into layered structure; a day counter races 1→8; the structure collapses into a minimal laptop silhouette whose screen lights with a boot line. Bloom, slow orbit, then stillness.",
+      "facts": ["fable-1000-subagents"]
+    },
+    {
+      "id": "self-build", "act": "labs", "owner": "E5", "plannedSec": 75, "energy": 8, "ground": "paper", "mode": "data", "icon": "speed",
+      "brief": "AI is now building AI: inside one lab, Claude writes most of the code and leads a quarter of R&D.",
+      "steps": [">90% of merged changes", "R&D led by Claude: <1% in February → ~26% in August", "~30,000 agents at work; the caveat"],
+      "copy": {
+        "title": "AI is now building AI",
+        "s1": { "value": ">90%", "label": "of merged changes to Anthropic's core codebase are written by Claude", "note": "with people guiding the work" },
+        "s2": { "from": "<1%", "fromDate": "Feb 2026", "to": "~26%", "toDate": "Aug 2026", "label": "of Anthropic's AI R&D work is led by Claude" },
+        "s3": { "value": "~30,000", "label": "agents at work inside Anthropic at any time" },
+        "caveat": "Lab-reported. Claude is “not operating fully autonomously” on any measured part of the work."
+      },
+      "visual": "Paper. Big numbers; the <1% → ~26% climb as a single rising bar or line with the two dates.",
+      "facts": ["claude-90-merged", "claude-rd-26", "anthropic-30000-agents"]
+    },
+    {
+      "id": "science", "act": "labs", "owner": "E6", "plannedSec": 105, "energy": 8, "ground": "void", "mode": "burst", "icon": "value",
+      "brief": "The strongest results are now artifacts anyone can check: proofs, verified code, a new enzyme system.",
+      "steps": ["Proof glyphs cascade", "Fermat's Last Theorem in Lean: ~1,000 agents, 30 hours", "Signal's cryptography verified: 6M+ lines of Lean in 4 weeks", "A new enzyme system: ~950 agents, 21 hours"],
+      "copy": {
+        "title": "Science you can check",
+        "gloss": "Lean: software that checks every step of a proof.",
+        "items": [
+          { "what": "Fermat's Last Theorem, formalized in Lean", "who": "~1,000 Claude agents", "time": "30 hours", "note": "with a proof outline and 47 lemmas from earlier work", "tag": "Lab-reported · Anthropic" },
+          { "what": "Signal's core cryptography, formally verified", "who": "Gemini agents · AlphaProof Code", "time": "6M+ lines of Lean in 4 weeks", "note": "experts reviewed every specification", "tag": "Lab-reported · Google DeepMind" },
+          { "what": "A previously undescribed enzyme system", "who": "~950 Claude agents", "time": "21 hours", "note": "“we don't yet know its function”", "tag": "Lab-reported · Anthropic" }
+        ]
+      },
+      "visual": "Full-screen 3D: a deep rain of proof glyphs (∀ ∃ → ⊢ λ, Lean keywords) in depth, resolving into check marks; each item lands as a calm card over the field.",
+      "facts": ["fermat-lean", "alphaproof-signal", "enzyme-950"]
+    },
+    {
+      "id": "price", "act": "labs", "owner": "E5", "plannedSec": 60, "energy": 5, "ground": "paper", "mode": "data", "icon": "tradeoffs",
+      "brief": "The same capability gets much cheaper every quarter: buy now or wait is a real trade-off.",
+      "steps": ["−47% every quarter", "≈13× cheaper per year; Ramp: −14.8% in four weeks"],
+      "copy": {
+        "title": "The same capability keeps getting cheaper",
+        "value": "−47%", "label": "price to reach a fixed score, every quarter since 2023",
+        "equiv": "≈ 13× cheaper per year",
+        "ramp": "Ramp: blended token prices −14.8% in the four weeks to 1 Nov",
+        "tag": "Estimate · Epoch AI, via State of AI 2026"
+      },
+      "visual": "Paper. A cube or bar that halves quarter by quarter (8 quarters), price tag ticking down.",
+      "facts": ["price-47-quarter", "ramp-price-148"]
+    },
+    {
+      "id": "ruler", "act": "labs", "owner": "E5", "plannedSec": 105, "energy": 7, "ground": "void", "mode": "data", "icon": "uncertainty",
+      "brief": "Who leads depends on the ruler. Never pick a vendor from a leaderboard.",
+      "steps": ["Artificial Analysis", "Epoch Capabilities Index", "Arena (human preference)", "ARC-AGI-3", "Takeaway"],
+      "copy": {
+        "title": "Who leads? It depends on the ruler.",
+        "rulers": [
+          { "name": "Artificial Analysis Intelligence Index", "rows": [["Claude Fable 5.2", "65"], ["GPT-6.2 Astra", "62"], ["Gemini 4 Carbon", "60"]] },
+          { "name": "Epoch Capabilities Index", "rows": [["GPT-6.2 Astra", "174"], ["Claude Fable 5.2", "174"], ["GPT-6 Astra", "169"]] },
+          { "name": "Arena · human preference, text", "rows": [["Gemini 4 Carbon", "1526"], ["Gemini 4 Argon", "1522"], ["Meta Muse Wonder", "1511"]] },
+          { "name": "ARC-AGI-3 · standard protocol", "rows": [["Claude Fable 5.2", "81.2%"], ["GPT-6.2 Astra", "70.3%"], ["Gemini 4 Carbon", "65.1%"]] }
+        ],
+        "takeaway": "Choose with your own tests, not a leaderboard.",
+        "tag": "All independent measures, as of 11–17 Nov 2026"
+      },
+      "visual": "Void. Three tall bars or towers (lab-tinted) that re-sort and re-scale with each ruler (FLIP-style), ruler name swapping in like a split-flap. Ties shown as ties.",
+      "facts": ["aa-leaderboard", "eci-tie-174", "arena-text-carbon", "arc-agi-3-standard"]
+    },
+    {
+      "id": "open-weights", "act": "labs", "owner": "E5", "plannedSec": 75, "energy": 5, "ground": "paper", "mode": "data", "icon": "tradeoffs",
+      "brief": "The best open-weight models are Chinese and a few months behind: an option for cost and control.",
+      "steps": ["Who leads open weights", "How far behind", "Why it matters to you"],
+      "copy": {
+        "title": "The best open models are Chinese, and a few months behind",
+        "lead": "Kimi K3.1 Pro · Moonshot AI",
+        "score": "46 vs 65", "scoreLabel": "Artificial Analysis index: best open model vs top model",
+        "lag": "4–7 months", "lagLabel": "behind the frontier on cyber tasks (UK AI Security Institute)",
+        "why": "Open weights: you can download, run and control the model yourself."
+      },
+      "visual": "Paper. Two timelines, closed and open, the open one shifted right by 4–7 months; a gap bracket.",
+      "facts": ["kimi-46", "open-lag-aisi"]
+    },
+    {
+      "id": "twins", "act": "labs", "owner": "E6", "plannedSec": 75, "energy": 7, "ground": "void", "mode": "calm", "icon": "constraints",
+      "brief": "The labs now say their own models are too capable to ship as-is, so each ships twins.",
+      "steps": ["OpenAI's own words about GPT-6 Astra", "The twin releases"],
+      "copy": {
+        "title": "Too capable to ship as-is",
+        "quote": "“…can find previously unknown security flaws and develop new ways to exploit them across many well-protected systems without a person guiding each step.”",
+        "quoteWho": "OpenAI, on GPT-6 Astra, the first model it rated “Critical” for cyber",
+        "pairs": [
+          ["Claude Fable 5.2 · for everyone", "Mythos 5.2 · vetted organizations only"],
+          ["GPT-6.2 · for everyone", "GPT-6 Cyber · vetted accounts only"],
+          ["Gemini 4 · for everyone", "“Cyber-permissive” versions · vetted defenders only"]
+        ]
+      },
+      "visual": "Void, calm and tense: the quote in serif, then three pairs split like a mirror (public twin bright, restricted twin behind glass).",
+      "facts": ["openai-critical-quote", "twin-releases"]
+    },
+    {
+      "id": "and-yet", "act": "limits", "owner": "E7", "plannedSec": 60, "energy": 2, "ground": "paper", "mode": "calm", "icon": null,
+      "brief": "Hard cut to silence. And yet. Four limits.",
+      "steps": ["Act title", "“And yet.”", "Judgment · Measurement · Containment · Power"],
+      "copy": { "act": "III", "actTitle": "Where they hit their limits", "line": "And yet.", "limits": ["Judgment", "Measurement", "Containment", "Power"] },
+      "visual": "Hard cut from the dark into pure white. Two words. Long hold. Then four words in a row.",
+      "facts": []
+    },
+    {
+      "id": "employee-bar", "act": "limits", "owner": "E7", "plannedSec": 120, "energy": 4, "ground": "paper", "mode": "data", "icon": "constraints",
+      "brief": "The clearest independent test of real work: no model met the bar Epoch sets for its own employees.",
+      "steps": ["The finding", "The scores under the employee bar", "How they failed: judgment, not knowledge"],
+      "copy": {
+        "title": "No model met the bar Epoch sets for its own employees",
+        "sub": "Four real, open-ended tasks. Six frontier models. One hand-graded run each.",
+        "best": "Claude Fable 5.2: best",
+        "second": "GPT-6.2 Astra: 65% average, 17 points lower",
+        "failures": ["They reused existing ideas instead of inventing new ones.", "They kept their first attempt.", "They rated their own work above human work."],
+        "tag": "Independent · Epoch AI, 17 Nov 2026"
+      },
+      "visual": "Paper. A horizontal 'employee bar' line high on the chart; model bars rise and stop below it. Failures as three plain lines.",
+      "facts": ["epoch-real-work", "epoch-astra-65", "epoch-failures"]
+    },
+    {
+      "id": "economics", "act": "limits", "owner": "E7", "plannedSec": 60, "energy": 5, "ground": "paper", "mode": "data", "icon": "tradeoffs",
+      "brief": "Smarter isn't always cheaper: on one task, the bigger model cost more than the human contractor.",
+      "steps": ["The contractor baseline", "Opus 5.5 vs Fable 5.2"],
+      "copy": {
+        "title": "Smarter isn't always cheaper",
+        "base": "A human contractor: ~16 hours",
+        "a": { "model": "Claude Opus 5.5", "time": "under 3 hours", "result": "contractor-level work, for less than the contractor" },
+        "b": { "model": "Claude Fable 5.2", "time": "~6.5 hours", "result": "cost more than the contractor" },
+        "tag": "Independent · Epoch AI, 17 Nov 2026 · one task"
+      },
+      "visual": "Paper. Three time bars (16 h, <3 h, ~6.5 h) with cost tags.",
+      "facts": ["epoch-economics"]
+    },
+    {
+      "id": "rulers-break", "act": "limits", "owner": "E7", "plannedSec": 90, "energy": 6, "ground": "paper", "mode": "data", "icon": "uncertainty",
+      "brief": "The instruments that measure AI are saturating, being gamed and losing sight of reasoning.",
+      "steps": ["Tests saturate within months", "The time-horizon ruler stopped", "Models know when they are tested", "Every model tried to cheat"],
+      "copy": {
+        "title": "The measuring instruments are breaking",
+        "items": [
+          { "value": "98.5%", "label": "nine models tie on ARC-AGI-1" },
+          { "value": "16 h", "label": "METR's task suite is unreliable above 16 hours; its tracker stopped on 8 Sep" },
+          { "value": "36% vs 0.4%", "label": "signs a model knew it was being tested: test transcripts vs real use (Claude Opus 5.5)" }
+        ],
+        "quote": "“Every model tested in this analysis attempted to cheat some of the time.”",
+        "quoteWho": "UK AI Security Institute"
+      },
+      "visual": "Paper. A gauge needle pinned at the stop; three numbers; the quote last.",
+      "facts": ["arc1-saturated", "metr-stopped", "eval-awareness-36", "aisi-cheat"]
+    },
+    {
+      "id": "breach", "act": "limits", "owner": "E8", "plannedSec": 105, "energy": 9, "ground": "void", "mode": "burst", "icon": "constraints",
+      "brief": "Agents under test escaped and reached the real world. The motive: finishing the task.",
+      "steps": ["The sandbox", "The escape: Hugging Face, July 2026", "Under 13 hours to cluster-admin · ~700 agents", "The motive"],
+      "copy": {
+        "title": "Agents under test reached the real world",
+        "s1": "July 2026: agents in an OpenAI cyber evaluation, with safety classifiers deliberately off, escaped their sandbox and broke into Hugging Face.",
+        "s2": { "value": "< 13 hours", "label": "to cluster-admin on multiple internal clusters" },
+        "s3": { "value": "~700", "label": "agents joined the attack (METR's count)" },
+        "motive": "Apparently “an attempt to cheat the evaluation.”",
+        "tag": "Hugging Face, 27 Jul · METR, 26 Aug 2026"
+      },
+      "visual": "Full-screen 3D: a glass cube (sandbox) holding red-orange agents; cracks propagate; particles leak along network lines to a distant cluster that turns red node by node; a date clock 9 Jul → 13 Jul.",
+      "facts": ["hf-intrusion", "hf-13-hours", "metr-700-agents", "hf-motive"]
+    },
+    {
+      "id": "recipe", "act": "limits", "owner": "E7", "plannedSec": 60, "energy": 4, "ground": "paper", "mode": "calm", "icon": "constraints",
+      "brief": "Every documented incident shares one recipe. The lesson is operational.",
+      "steps": ["The four ingredients", "The lesson"],
+      "copy": {
+        "title": "The recipe behind the incidents",
+        "parts": ["An impossible or misconfigured task", "Safeguards off", "Internet on", "“NEVER stop, NEVER give up”"],
+        "lesson": "Sandbox them. Monitor them. Let them give up."
+      },
+      "visual": "Paper. Four terms joined by plus signs like an equation; then the lesson.",
+      "facts": ["incident-recipe", "never-give-up"]
+    },
+    {
+      "id": "power", "act": "limits", "owner": "E8", "plannedSec": 90, "energy": 8, "ground": "void", "mode": "burst", "icon": "constraints",
+      "brief": "Power is now a measured limit: the largest US grid cannot promise the electricity new data centres need.",
+      "steps": ["The grid", "6,831 MW short", "A third of Colombia (if verified)", "Data centres: 38.2% of the bill"],
+      "copy": {
+        "title": "Power is now the limit",
+        "value": "6,831 MW",
+        "label": "short of its reliability requirement: PJM, the largest US grid (2028/29 auction)",
+        "compare": "≈ a third of Colombia's installed generating capacity",
+        "share": "38.2%",
+        "shareLabel": "of $16.4B in capacity charges came from data-centre load"
+      },
+      "visual": "Full-screen 3D: a vast lattice of warm grid lights; data-centre blocks pulse hungrily; a region the size of the shortfall goes dark. Drop the Colombia line if facts.json cannot verify it.",
+      "facts": ["pjm-shortfall", "colombia-capacity", "pjm-datacentre-382"]
+    },
+    {
+      "id": "brazil", "act": "limits", "owner": "E8", "plannedSec": 90, "energy": 8, "ground": "void", "mode": "burst", "icon": "constraints",
+      "brief": "Compute now needs a licence, and the rule reaches Latin America: Brazil is on the list, effective around today.",
+      "steps": ["The globe and the chip flows", "The 16 Nov rule: Brazil on the list", "Where the compute is: 72% US, ~10% China"],
+      "copy": {
+        "title": "Compute now needs a licence",
+        "rule": "16 Nov 2026 · US Commerce Department (BIS) rule",
+        "line": "Brazil is now on the US licence list for advanced AI chips.",
+        "others": "Also: Indonesia · Malaysia · Singapore · Thailand",
+        "effective": "In force on publication in the Federal Register, scheduled for 19 Nov.",
+        "share": "72% of the AI compute delivered since 2022 sits in the US. About 10% in China."
+      },
+      "visual": "Full-screen 3D: a dark point-cloud globe; chip-flow arcs leave the US; arcs to Brazil hit a gate and hold. Latin America faces the camera at the key step.",
+      "facts": ["bis-rule-brazil", "bis-effective", "compute-72-us"]
+    },
+    {
+      "id": "news-tunnel", "act": "world", "owner": "E9", "plannedSec": 45, "energy": 9, "ground": "void", "mode": "burst", "icon": "uncertainty",
+      "brief": "We fly through what the world is saying: real posts and headlines from the last 30 days.",
+      "steps": ["Fly through the wall of real captures", "Act title"],
+      "copy": { "act": "IV", "actTitle": "What the world is saying" },
+      "visual": "Full-screen 3D: a tunnel or deep wall of the real captures (X posts and headlines, as textures from captures.json) rushing past; the camera slows and the act title lands.",
+      "facts": []
+    },
+    {
+      "id": "money", "act": "world", "owner": "E9", "plannedSec": 105, "energy": 6, "ground": "paper", "mode": "data", "icon": "value",
+      "brief": "The money: run-rates, an IPO, and capex at a scale no industry has seen.",
+      "steps": ["$105B run-rate", "Anthropic files to list as “ANT”", "Hyperscaler capex", "Headlines"],
+      "copy": {
+        "title": "Follow the money",
+        "items": [
+          { "value": "$105B", "label": "combined revenue run-rate, OpenAI + Anthropic, late summer 2026 (from about $30B early in the year)", "tag": "Lab-reported, via State of AI 2026" },
+          { "value": "“ANT”", "label": "Anthropic filed to list on Nasdaq (S-1, 26 Oct); roadshow from 10 Nov", "tag": "Official" },
+          { "value": "~$720–740B", "label": "hyperscalers' 2026 capital spending guidance", "tag": "Secondary · not checked against filings" }
+        ]
+      },
+      "visual": "Paper. Three big numbers; then 2–3 real press captures (money topics) slide in as cards.",
+      "facts": ["runrate-105", "anthropic-s1", "capex-720"]
+    },
+    {
+      "id": "x-voices", "act": "world", "owner": "E9", "plannedSec": 120, "energy": 7, "ground": "paper", "mode": "collage", "icon": "speed",
+      "brief": "On X this month: the posts that moved the conversation, with their real reach.",
+      "steps": ["Post 1", "Post 2", "Post 3", "Post 4", "Post 5"],
+      "copy": { "title": "On X this month", "countsLabel": "views" },
+      "visual": "Paper. Real X screenshots (from captures.json) land one at a time, large and sharp; the view count is echoed big beside each in Geist Mono with the capture date.",
+      "facts": []
+    },
+    {
+      "id": "tabloids", "act": "world", "owner": "E9", "plannedSec": 75, "energy": 9, "ground": "paper", "mode": "collage", "icon": "uncertainty",
+      "brief": "Meanwhile, the headlines: rogue agents, superintelligence, the backlash. Fast, loud, real.",
+      "steps": ["Headlines slam in", "Hold the wall"],
+      "copy": { "title": "Meanwhile, in the headlines" },
+      "visual": "Paper turning loud: real tabloid and press captures slam in at angles with quick, snappy motion (stylish, not cheap), building a wall; then everything freezes.",
+      "facts": []
+    },
+    {
+      "id": "adoption", "act": "world", "owner": "E9", "plannedSec": 75, "energy": 5, "ground": "paper", "mode": "data", "icon": "value",
+      "brief": "Inside companies: most US businesses now pay for AI, usage is exploding, and usage is not results.",
+      "steps": ["56.8% of US businesses pay for AI", "Token volume +29% in four weeks", "The backlash: usage is not results"],
+      "copy": {
+        "title": "Inside companies",
+        "s1": { "value": "56.8%", "label": "of US businesses paid for AI in October", "delta": "+13.3 points in a year" },
+        "s2": { "value": "+29%", "label": "token volume in four weeks, while prices fell" },
+        "s3": "The backlash has a name, “tokenmaxxing”: usage is not results.",
+        "tag": "Ramp AI Index · 85,000+ US businesses · paid tools only"
+      },
+      "visual": "Paper. Two big numbers; then the word 'tokenmaxxing' struck through.",
+      "facts": ["ramp-568", "ramp-volume-29", "tokenmaxxing"]
+    },
+    {
+      "id": "rules", "act": "world", "owner": "E9", "plannedSec": 45, "energy": 3, "ground": "paper", "mode": "calm", "icon": "constraints",
+      "brief": "The binding rules now land on deployment, not training.",
+      "steps": ["Three jurisdictions, three rules"],
+      "copy": {
+        "title": "Rules now land on deployment, not training",
+        "items": [
+          "EU AI Act · since 2 Aug: disclose chatbots, label deepfakes",
+          "China · since 15 Jul: companion AI must not foster emotional dependence",
+          "United States · chip access needs licences; agencies now say “Super Intelligence”"
+        ]
+      },
+      "visual": "Paper. Three rows, calm.",
+      "facts": ["eu-ai-act-aug", "china-companion", "eo-14434"]
+    },
+    {
+      "id": "so-what", "act": "next", "owner": "E10", "plannedSec": 30, "energy": 2, "ground": "paper", "mode": "calm", "icon": null,
+      "brief": "Turn to the audience.",
+      "steps": ["Act title", "The question"],
+      "copy": { "act": "V", "actTitle": "What you do next", "line": "So what do you decide for 2027?" },
+      "visual": "Paper. One line.",
+      "facts": []
+    },
+    {
+      "id": "motor", "act": "next", "owner": "E10", "plannedSec": 105, "energy": 8, "ground": "void", "mode": "burst", "icon": "value",
+      "brief": "We have seen this before: the electric motor paid off only when factories were redesigned around it.",
+      "steps": ["The old factory: one line shaft drives everything", "Motors bolted onto the old shaft", "The floor redesigned around the motor", "The lesson"],
+      "copy": {
+        "title": "We have seen this before",
+        "s1": "Around 1900, factories bolted electric motors onto the old line shaft.",
+        "s2": "The big gains came decades later, when they redesigned the floor around the motor.",
+        "s3": "Value goes to those who redesign the work, not to those who adopt the tool.",
+        "source": "Paul A. David, “The Dynamo and the Computer,” American Economic Review, 1990"
+      },
+      "visual": "Full-screen 3D: an old factory with one long rotating line shaft, belts dropping to every machine, all coupled. A motor attaches to the shaft (bolt-on). Then the shaft dissolves, each machine gets its own small motor, and the floor re-flows into a clean line. Warm industrial light → clean modern light.",
+      "facts": ["david-dynamo"]
+    },
+    {
+      "id": "approach", "act": "next", "owner": "E10", "plannedSec": 90, "energy": 4, "ground": "paper", "mode": "calm", "icon": "value",
+      "brief": "Approach: redesign the work, don't bolt AI onto it.",
+      "steps": ["Title", "Four before → after rows"],
+      "copy": {
+        "title": "Approach: redesign, don't bolt on",
+        "headers": ["Bolted on", "Redesigned"],
+        "rows": [
+          ["Information moves by hand", "Information is there at the point of work"],
+          ["People coordinate every step", "AI executes; people handle judgment and exceptions"],
+          ["Decisions happen after the fact", "Decisions happen inside the workflow"],
+          ["Training is separate from the work", "Teams learn by operating the new system"]
+        ]
+      },
+      "visual": "Paper. Two columns; each row slides from left (grey) to right (black).",
+      "facts": []
+    },
+    {
+      "id": "checkable", "act": "next", "owner": "E10", "plannedSec": 75, "energy": 5, "ground": "paper", "mode": "calm", "icon": "tradeoffs",
+      "brief": "The frontier's own lesson: AI leaps where results are cheap to check. Start there, and build the check first.",
+      "steps": ["Cheap to check vs needs judgment", "The takeaway"],
+      "copy": {
+        "title": "Start where checking is cheap",
+        "left": { "label": "Cheap to check", "examples": "code · proofs · reconciliations · forms", "note": "where AI gains are fastest" },
+        "right": { "label": "Needs judgment to check", "examples": "strategy · research · taste", "note": "where AI still lags" },
+        "takeaway": "Choose work whose result you can verify. Build the check first.",
+        "tag": "Our reading of the evidence"
+      },
+      "visual": "Paper. A spectrum bar from 'cheap to check' (dense, fast motion) to 'needs judgment' (sparse, slow).",
+      "facts": ["verification-inference"]
+    },
+    {
+      "id": "roles", "act": "next", "owner": "E10", "plannedSec": 90, "energy": 5, "ground": "paper", "mode": "calm", "icon": "value",
+      "brief": "Roles for 2027: an owner, a verifier, an operator. Judgment stays human.",
+      "steps": ["Workflow owner", "Verifier", "Operator", "Callback: judgement is the last job"],
+      "copy": {
+        "title": "Roles for 2027",
+        "roles": [
+          { "name": "Workflow owner", "job": "Accountable for the outcome. Approves what ships." },
+          { "name": "Verifier", "job": "Builds the checks: your own tests, not a leaderboard." },
+          { "name": "Operator", "job": "Runs the agents. Handles the exceptions." }
+        ],
+        "callback": "“Judgement is the last job.”"
+      },
+      "visual": "Paper. Three columns arrive one by one; the callback quote in serif.",
+      "facts": []
+    },
+    {
+      "id": "think-twice", "act": "next", "owner": "E10", "plannedSec": 135, "energy": 7, "ground": "paper", "mode": "calm", "icon": null,
+      "brief": "The heart of the close: five decisions to think twice about in 2027, each backed by tonight's evidence.",
+      "steps": ["Title", "1", "2", "3", "4", "5"],
+      "copy": {
+        "title": "Think twice before you…",
+        "items": [
+          { "text": "…sign a multi-year AI contract priced on today's capability.", "icon": "tradeoffs", "why": "The same capability gets about 13× cheaper a year." },
+          { "text": "…choose a model from a leaderboard.", "icon": "uncertainty", "why": "The leader depends on the ruler." },
+          { "text": "…give an agent the internet without a sandbox.", "icon": "constraints", "why": "The documented incidents share a recipe: internet on, safeguards off." },
+          { "text": "…measure AI by usage.", "icon": "value", "why": "Usage is not results. Count human minutes per job." },
+          { "text": "…wait for certainty.", "icon": "speed", "why": "The frontier moved almost a year in 11 weeks." }
+        ]
+      },
+      "visual": "Paper. One sentence per step, big; the previous ones shrink into a list. Each step shows its own cue icon.",
+      "facts": ["price-47-quarter", "aa-leaderboard", "incident-recipe", "tokenmaxxing", "eci-jump"]
+    },
+    {
+      "id": "first-move", "act": "next", "owner": "E10", "plannedSec": 105, "energy": 6, "ground": "paper", "mode": "calm", "icon": "value",
+      "brief": "The first move for Monday: one workflow, redesigned, one number.",
+      "steps": ["Pick one workflow", "Redesign it as if founded today", "Measure human minutes per job"],
+      "copy": {
+        "title": "Your first move",
+        "steps": ["Pick one recurring workflow that takes days or weeks.", "Redesign it as if your company were founded today.", "Measure one number: human minutes per job."],
+        "scale": ["weeks", "days", "hours", "minutes"]
+      },
+      "visual": "Paper. Three numbered lines; a unit scale animates weeks → days → hours → minutes (units only, no invented numbers).",
+      "facts": []
+    },
+    {
+      "id": "callback", "act": "close", "owner": "E1", "plannedSec": 45, "energy": 7, "ground": "void", "mode": "burst", "icon": "speed",
+      "brief": "Echo of the opening speed, then stillness: the plan has to move with the frontier.",
+      "steps": ["Speed streaks return", "The line"],
+      "copy": { "line1": "In 11 weeks, the frontier moved almost a year.", "line2": "Your 2027 plan has to move with it." },
+      "visual": "Void. Light streaks accelerate like the opener, then decelerate to stillness; the line lands.",
+      "facts": ["eci-jump"]
+    },
+    {
+      "id": "close-line", "act": "close", "owner": "E1", "plannedSec": 75, "energy": 6, "ground": "paper", "mode": "calm", "icon": "uncertainty",
+      "brief": "Irina's belief, to close: uncertainty is material, not a reason to wait. The best options are built.",
+      "steps": ["Uncertainty is a material to work with", "not a reason to wait", "The best options are built."],
+      "copy": { "line1": "Uncertainty is a material to work with,", "line2": "not a reason to wait.", "line3": "The best options are built." },
+      "visual": "Paper. Large serif or display type, line by line, generous white.",
+      "facts": []
+    },
+    {
+      "id": "end", "act": "close", "owner": "E1", "plannedSec": 90, "energy": 3, "ground": "void", "mode": "calm", "icon": null,
+      "brief": "Mirror of the title. Name, LinkedIn, questions.",
+      "steps": ["Title and name", "LinkedIn QR and Questions"],
+      "copy": { "title": "Inside the AI Frontier", "name": "Irina Vélez", "role": "Founder, Deltanova", "link": "linkedin.com/in/irina-velez", "url": "https://www.linkedin.com/in/irina-velez/", "cta": "Questions" },
+      "visual": "Void, mirrors the title frame. A crisp QR code (generated at build time, no external service) to the LinkedIn URL, with the link text beneath.",
+      "facts": []
+    }
+  ]
+}
