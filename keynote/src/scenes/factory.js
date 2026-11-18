@@ -8,14 +8,14 @@ import { buildCity, FZ } from './_worlds/city.js';
 import { SHOTS as ARRIVAL } from './sf-arrival.js';
 
 const SHOTS = [
-  { px: -9.5, py: 6.4, pz: -11, tx: 1.5, ty: 0.4, tz: -52, shiftX: 300 },
-  { px: 13.5, py: 7.2, pz: -35, tx: 14.2, ty: 4.6, tz: -61, shiftX: 330 },
-  { px: -15, py: 16, pz: -18, tx: 1, ty: 0, tz: -50, shiftX: 330 },
-  { px: -19, py: 13, pz: -22, tx: 0, ty: 0.5, tz: -52, shiftX: 340 },
+  { px: -14, py: 11, pz: -6, tx: 2, ty: 0, tz: -50, shiftX: 360 },
+  { px: 15, py: 10, pz: -24, tx: 14.6, ty: 3.6, tz: -61, shiftX: 520 },
+  { px: -22, py: 24, pz: -14, tx: 2, ty: 0, tz: -50, shiftX: 380 },
+  { px: -25, py: 20, pz: -19, tx: 1, ty: 0, tz: -52, shiftX: 390 },
 ];
 const TOWER_X = (k) => 6.2 + k * 4;
 const TOWER_Z = -61;
-const PER_CUBE = 50; // merged PRs per cube
+const PER_CUBE = 100; // merged PRs per cube
 const PITCH = 0.58;
 
 export default {
@@ -74,11 +74,12 @@ export default {
 
     // ---------- DOM ----------
     const g = 'void';
-    const scrim = C.Scrim.create({ ground: g, side: 'left', extent: 0.72, strength: 0.94 });
+    const scrim = C.Scrim.create({ ground: g, side: 'left', extent: 0.76, strength: 0.96 });
+    const floorScrim = C.Scrim.create({ ground: g, side: 'bottom', extent: 0.22, strength: 0.9 });
     const title = C.Headline.create({ text: copy.title, role: 'h2', ground: g, width: 1000 });
     const sub = C.Headline.create({ text: copy.sub, role: 'lead', ground: g, width: 760, tone: 'muted' });
     const gloss = C.Headline.create({ text: copy.gloss, role: 'body', ground: g, width: 1100, tone: 'muted' });
-    root.append(scrim.el, title.el, sub.el, gloss.el);
+    root.append(scrim.el, floorScrim.el, title.el, sub.el, gloss.el);
     place(title.el, 128, 136);
     place(sub.el, 128, 264);
     place(gloss.el, 128, 872);
@@ -87,10 +88,10 @@ export default {
       const who = C.Kicker.create({ text: s.who || '', ground: g, tone: 'muted' });
       const num = C.BigNumber.create({ display: s.value, label: s.label, size: 'display', ground: g, tone: i === 0 ? 'fg' : 'accent' });
       const detail = C.Headline.create({ text: s.detail || '', role: 'lead', ground: g, width: 900, tone: 'muted' });
-      root.append(who.el, num.el, detail.el);
-      place(who.el, 128, 300);
-      place(num.el, 128, 352);
-      place(detail.el, 128, 688);
+      const col = document.createElement('div');
+      Object.assign(col.style, { position: 'absolute', left: '128px', top: '300px', width: '1000px', display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'flex-start' });
+      col.append(who.el, num.el, detail.el);
+      root.append(col);
       return { who, num, detail, src: factSource(ctx, (beat.facts || [])[i]) };
     });
     const source = C.SourceLine.create({ kind: blocks[0].src.kind, text: blocks[0].src.text, ground: g });
@@ -170,6 +171,7 @@ export default {
 
       // DOM
       show(scrim, 'scrim', true, tl, 0, A);
+      show(floorScrim, 'floorScrim', true, tl, 0, A);
       show(title, 'title', true, tl, A ? (entering ? 2.2 : 0) : 0, A);
       show(sub, 'sub', step === 0, tl, A ? (entering ? 2.6 : 0) : 0, A);
       show(gloss, 'gloss', step === 0, tl, A ? (entering ? 3.2 : 0) : 0, A);
@@ -209,7 +211,7 @@ export default {
       },
       dispose() {
         gsap.killTweensOf([rig.state, tU.uRise, tU.uOpacity, prU.uFront, prU.uOld, prU.uNew, labelLayer]);
-        [scrim, title, sub, gloss, source].forEach((c) => c.destroy());
+        [scrim, floorScrim, title, sub, gloss, source].forEach((c) => c.destroy());
         blocks.forEach((b) => { b.who.destroy(); b.num.destroy(); b.detail.destroy(); });
         world.dispose();
         root.replaceChildren();

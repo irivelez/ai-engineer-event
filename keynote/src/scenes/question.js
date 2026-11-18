@@ -5,8 +5,6 @@
 import { gsap } from 'gsap';
 import { calmScene, el, esc } from './_calm/kit.js';
 
-const NUMERALS = ['I', 'II', 'III', 'IV', 'V'];
-
 export default calmScene('question', (ctx, K) => {
   const { T, C, g, layer, place } = K;
   const { copy } = ctx;
@@ -26,7 +24,8 @@ export default calmScene('question', (ctx, K) => {
   block.append(kicker.el, q.el);
   K.owned.push(kicker, q);
 
-  // ----- the route -----
+  // ----- the route: numerals come from the acts (I–V) in beats.json -----
+  const NUMERALS = (ctx.acts || []).filter((a) => a && a.n).map((a) => a.n);
   const stops = (copy.route || []).slice(0, 5);
   const n = stops.length || 1;
   const LINE_Y = 760;
@@ -39,7 +38,7 @@ export default calmScene('question', (ctx, K) => {
     const x = M + i * pitch;
     const wrap = el('div', '', route);
     Object.assign(wrap.style, { position: 'absolute', left: `${x}px`, top: '0px', width: `${pitch - 32}px` });
-    const num = el('div', 't-label', wrap, esc(NUMERALS[i] || String(i + 1)));
+    const num = el('div', 't-label', wrap, esc(NUMERALS[i] || ''));
     Object.assign(num.style, { position: 'absolute', left: '0px', top: `${LINE_Y - 72}px`, color: i === 0 ? 'var(--g-accent)' : 'var(--g-muted)' });
     const dot = el('div', '', wrap);
     Object.assign(dot.style, { position: 'absolute', left: '0px', top: `${LINE_Y - 9}px`, width: '18px', height: '18px', borderRadius: '50%', background: i === 0 ? 'var(--g-accent)' : 'var(--g-bg)', border: `4px solid ${i === 0 ? 'var(--g-accent)' : 'var(--g-fg)'}`, boxSizing: 'border-box' });

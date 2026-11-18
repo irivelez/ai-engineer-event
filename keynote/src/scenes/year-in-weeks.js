@@ -15,7 +15,7 @@ export default calmScene('year-in-weeks', (ctx, K) => {
   const nb = (x) => String(x || '').replace(/ /g, ' ');
 
   const kicker = K.add(C.Kicker.create({ text: K.actKicker(), ground: g }), M, 120);
-  const title = K.add(C.Headline.create({ text: copy.title || '', role: 'h2', ground: g, width: T.spanW(6) }), M, 192);
+  const title = K.add(C.Headline.create({ text: copy.title || '', role: 'h2', ground: g, width: T.spanW(7) }), M, 192);
 
   // ----- number: "162.5 → 174" (174 rolls, in the accent) -----
   const NY = 456;
@@ -90,9 +90,10 @@ export default calmScene('year-in-weeks', (ctx, K) => {
     d1.setAttribute('cx', xw(WEEKS)); d1.setAttribute('cy', yv(f1));
     tick.setAttribute('x1', xw(WEEKS)); tick.setAttribute('x2', xw(WEEKS));
     tick.setAttribute('y1', CH - PADB); tick.setAttribute('y2', CH - PADB + 12);
-    xl1.style.left = `${xw(WEEKS) - 260}px`;
-    xl1.style.width = '260px';
-    xl1.style.textAlign = 'right';
+    // right-aligned to the tick while there is room, else left-aligned after "1 Sep"
+    const tx = xw(WEEKS);
+    xl1.style.left = `${Math.max(150, tx - 270).toFixed(1)}px`; // continuous: ends at the tick, never over "1 Sep"
+    xl1.style.width = '300px';
     // trend from (0, f0) at perYear/52 per week, drawn to `trend` share of the year
     const wEnd = 52 * state.trend;
     trend.setAttribute('d', `M0,${yv(f0).toFixed(1)} L${xw(wEnd).toFixed(1)},${yv(f0 + (perYear * wEnd) / 52).toFixed(1)}`);

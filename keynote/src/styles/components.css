@@ -5,6 +5,8 @@
 .itaf-hl { color: var(--g-accent); }
 /* SplitText line masks: room for accents and descenders inside the clip, layout unchanged */
 .itaf-line-mask { padding: 0.16em 0 0.24em; margin: -0.16em 0 -0.24em; }
+/* adjacent masks: negative margins collapse to the larger one, so restore the full -0.4em between lines (live = static) */
+.itaf-line-mask + .itaf-line-mask { margin-top: -0.4em; }
 
 /* ---------- Headline ---------- */
 .itaf-headline { margin: 0; color: var(--g-fg); }

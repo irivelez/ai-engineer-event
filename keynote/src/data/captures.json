@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-18T16:08:59-05:00",
+  "generated": "2026-11-18T16:20:51-05:00",
   "window": "Items published 18 Oct – 17 Nov 2026.",
   "method": "Press: one clean headless Chromium per batch (no profile, no login, no paywall bypass); cookie banners rejected, never accepted; notices that offer no reject option and ad slots hidden locally for the screenshot only; sites that answered with a bot block (401/403) were skipped, not evaded. Crop = masthead + headline + dek + date (+ lead image where the date sits under it). X: read-only in the presenter's logged-in Chrome (new tab, no interaction), counts are the exact integers from each post's action bar plus the strings X displayed; crops exclude the viewer's account, avatar and reply box. Long posts were captured in two scrolls of the same post and joined at a blank row.",
   "items": [
@@ -255,20 +255,6 @@
       "why": "The IPO filing as a governance story: the public-benefit promise versus what the S-1 actually commits to."
     },
     {
-      "id": "ap-chip-rule-china",
-      "kind": "press",
-      "file": "media/captures/press/ap-chip-rule-china.webp",
-      "url": "https://apnews.com/article/nvidia-export-controls-chips-china-remote-access-60f868d3bb430b85a8657b27d421096e",
-      "outlet": "AP News",
-      "title": "Trump administration moves to block China from indirect access to American AI technology",
-      "published": "2026-11-16T17:30:04",
-      "published_display": "Updated 2:49 AM GMT-5, November 17, 2026",
-      "captured_at": "2026-11-18T16:02:11-05:00",
-      "topic": "16 Nov US chip rule",
-      "relevance": 5,
-      "why": "The wire version of the 16 Nov chip rule: Washington moves to close China's indirect (remote) access to US AI chips. The same rule puts Brazil on its licence list (see the Exame capture)."
-    },
-    {
       "id": "cnbc-amazon-tokenmaxxing",
       "kind": "press",
       "file": "media/captures/press/cnbc-amazon-tokenmaxxing.webp",
@@ -331,7 +317,7 @@
       "url": "https://www.bbc.com/news/articles/cmp3g37l566po",
       "outlet": "BBC News",
       "title": "Australia considers criminal penalties for rogue AI in wake of OpenAI hack",
-      "published": "",
+      "published": "2026-11-10",
       "published_display": "10 November 2026",
       "captured_at": "2026-11-18T15:32:08-05:00",
       "topic": "Rogue AI agents and regulation",
@@ -351,20 +337,6 @@
       "topic": "Rogue AI agents",
       "relevance": 4,
       "why": "Security vendors now sell a 'kill switch' for internal agents that go rogue: the risk has become a product category."
-    },
-    {
-      "id": "techcrunch-california-sues-openai",
-      "kind": "press",
-      "file": "media/captures/press/techcrunch-california-sues-openai.webp",
-      "url": "https://techcrunch.com/2026/11/16/california-state-ag-sues-openai-over-rogue-agent-incidents/",
-      "outlet": "TechCrunch",
-      "title": "California state AG sues OpenAI over rogue agent incidents",
-      "published": "2026-11-16T20:07:13+00:00",
-      "published_display": "12:07 PM PST · November 16, 2026",
-      "captured_at": "2026-11-18T15:34:22-05:00",
-      "topic": "Rogue AI agents (Hugging Face intrusion)",
-      "relevance": 4,
-      "why": "California's attorney general sues OpenAI over its rogue agent incidents: legal liability for agent behaviour is now real."
     },
     {
       "id": "venturebeat-gpt-62-unusable",
@@ -465,6 +437,20 @@
       "why": "Tabloid temperature: 'AI apocalypse fever grips nation' after outages and hacks."
     },
     {
+      "id": "nypost-california-sues-openai",
+      "kind": "tabloid",
+      "file": "media/captures/press/nypost-california-sues-openai.webp",
+      "url": "https://nypost.com/2026/11/16/us-news/california-sues-openai-after-hugging-face-hack-other-incidents/",
+      "outlet": "New York Post",
+      "title": "OpenAI sued by California after 80 incidents that ‘put public at risk’",
+      "published": "2026-11-16T19:33:21+00:00",
+      "published_display": "Nov. 16, 2026, 2:33 p.m. ET",
+      "captured_at": "2026-11-18T16:14:58-05:00",
+      "topic": "Rogue AI agents (lawsuit)",
+      "relevance": 4,
+      "why": "The tabloid version of the California lawsuit: '80 incidents that put public at risk'."
+    },
+    {
       "id": "thesun-ai-wipe-out-humanity",
       "kind": "tabloid",
       "file": "media/captures/press/thesun-ai-wipe-out-humanity.webp",
@@ -493,6 +479,48 @@
       "why": "The Nvidia scandal in tabloid language, tied to markets and pensions: AI is now front-page gossip."
     },
     {
+      "id": "bloomberglinea-latam-ai-impact",
+      "kind": "latam",
+      "file": "media/captures/press/bloomberglinea-latam-ai-impact.webp",
+      "url": "https://www.bloomberglinea.com/latinoamerica/las-empresas-de-america-latina-adoptan-la-ia-pero-aun-no-logran-medir-su-impacto-economico/",
+      "outlet": "Bloomberg Línea",
+      "title": "Las empresas de América Latina adoptan la IA, pero aún no logran medir su impacto económico",
+      "published": "2026-11-10T06:00:00-05:00",
+      "published_display": "10 de noviembre, 2026 | 06:00 AM (page byline; not visible in the crop)",
+      "captured_at": "2026-11-18T16:10:17-05:00",
+      "topic": "AI adoption in LatAm business",
+      "relevance": 5,
+      "why": "Latin American companies are adopting AI but still cannot measure its economic impact: this audience's own question, in its own press."
+    },
+    {
+      "id": "eleconomista-almacenes-ia-32",
+      "kind": "latam",
+      "file": "media/captures/press/eleconomista-almacenes-ia-32.webp",
+      "url": "https://www.eleconomista.com.mx/tecnologia/almacenes-mexicanos-comprueban-beneficios-32-usos-ia-20261117-844368.html",
+      "outlet": "El Economista (Mexico)",
+      "title": "Almacenes mexicanos solo comprueban beneficios en 32% de sus usos de IA",
+      "published": "2026-11-17T10:48:35-06:00",
+      "published_display": "17 Nov 2026 (page metadata; the date is not visible in the crop)",
+      "captured_at": "2026-11-18T16:10:36-05:00",
+      "topic": "Proving AI value in LatAm business",
+      "relevance": 5,
+      "why": "Mexican retailers can prove benefits in only 32% of their AI uses (MIT and Mecalux study): adoption is not the same as results."
+    },
+    {
+      "id": "exame-brasil-regra-chips",
+      "kind": "latam",
+      "file": "media/captures/press/exame-brasil-regra-chips.webp",
+      "url": "https://exame.com/inteligencia-artificial/eua-brasil-regra-chips-ia-acesso-remoto-china/",
+      "outlet": "Exame (Brazil)",
+      "title": "EUA incluem Brasil em nova regra para chips de IA e miram acesso remoto da China",
+      "published": "2026-11-17T08:45:00-03:00",
+      "published_display": "Publicado em 17 de novembro de 2026 às 08h45",
+      "captured_at": "2026-11-18T16:09:58-05:00",
+      "topic": "16 Nov US chip rule and Brazil",
+      "relevance": 5,
+      "why": "Brazil's business press on the new US rule: Brazil is one of five countries that now need a licence for advanced AI chips, aimed at Chinese firms using foreign data centres."
+    },
+    {
       "id": "portafolio-rappi-agentes-ia",
       "kind": "latam",
       "file": "media/captures/press/portafolio-rappi-agentes-ia.webp",
@@ -519,20 +547,6 @@
       "topic": "AI agents and jobs",
       "relevance": 4,
       "why": "Colombian business press on how AI agents are changing workers' relationship with their jobs (HP global study: 47% already use agents)."
-    },
-    {
-      "id": "expansion-nvidia-sin-huang",
-      "kind": "latam",
-      "file": "media/captures/press/expansion-nvidia-sin-huang.webp",
-      "url": "https://expansion.mx/tecnologia/2026/11/17/presente-y-futuro-de-nvidia-sin-jensen-huang",
-      "outlet": "Expansión (Mexico)",
-      "title": "Las 8 frases para entender el presente y futuro de Nvidia sin Jensen Huang",
-      "published": "2026-11-18T00:36:30.943",
-      "published_display": "mar 17 noviembre 2026 06:36 PM",
-      "captured_at": "2026-11-18T15:48:02-05:00",
-      "topic": "Nvidia after Jensen Huang",
-      "relevance": 3,
-      "why": "Mexican business press on Nvidia's first quarter without its founder: the chip supplier behind every AI budget is in turmoil."
     }
   ]
 }

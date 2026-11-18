@@ -15,7 +15,7 @@ const el = (tag, cls, text) => {
 
 export function momentTitle(m) {
   const c = m.copy || {};
-  return c.title || c.line || c.line1 || c.actTitle || c.fallbackTitle || c.cta || m.id;
+  return m.name || c.title || c.line || c.line1 || c.actTitle || c.fallbackTitle || c.cta || m.id;
 }
 
 export function mountPresenterUI(env) {

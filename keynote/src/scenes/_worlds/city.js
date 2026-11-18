@@ -25,10 +25,10 @@ export function buildCity(ctx, { post } = {}) {
   const rand = H.seeded('city');
   const world = makeWorld({
     fov: 38, far: 600,
-    post: post || { bloom: { intensity: 0.95, threshold: 0.55, smoothing: 0.3, radius: 0.75 }, vignette: { offset: 0.28, darkness: 0.62 } },
+    post: post || { bloom: { intensity: 0.7, threshold: 0.68, smoothing: 0.3, radius: 0.72 }, vignette: { offset: 0.28, darkness: 0.62 } },
   });
   const fogColor = new THREE.Color(FOG);
-  const fogDensity = 0.0105;
+  const fogDensity = 0.0125;
 
   // ---------- sky dome: night horizon glow ----------
   const skyU = { uZenith: { value: new THREE.Color('#05070A') }, uHorizon: { value: new THREE.Color('#14203A') }, uFog: { value: fogColor } };
@@ -82,7 +82,7 @@ export function buildCity(ctx, { post } = {}) {
   // ---------- buildings: one instanced mesh ----------
   const lots = [];
   const NB = 18;
-  const downtown = [4, 26]; // tallest around the avenue the camera glides down
+  const downtown = [14, 30]; // the tallest cluster, right of the boulevard the camera glides down
   for (let kx = -NB; kx <= NB; kx++) {
     for (let kz = -NB; kz <= NB; kz++) {
       const cx = kx * CELL;
@@ -91,11 +91,12 @@ export function buildCity(ctx, { post } = {}) {
       if (rand() < 0.05) continue; // a park
       const d = Math.hypot(cx - downtown[0], cz - downtown[1]);
       const d2 = Math.hypot(cx, cz + 47); // a second cluster framing the factory
-      const base = 1.0 + 15 * Math.exp(-((d / 30) ** 2)) + 7 * Math.exp(-((d2 / 26) ** 2)) + 2.2 * H.noise.simplex3(kx * 0.21, kz * 0.21, 3.1);
+      const base = 1.0 + 18 * Math.exp(-((d / 26) ** 2)) + 7 * Math.exp(-((d2 / 26) ** 2)) + 2.2 * H.noise.simplex3(kx * 0.21, kz * 0.21, 3.1);
       const split = rand();
       const parts = split < 0.3 ? [[0, 0, 4, 4]] : split < 0.62 ? [[-1, 0, 2, 4], [1, 0, 2, 4]] : [[-1, -1, 2, 2], [1, -1, 2, 2], [-1, 1, 2, 2], [1, 1, 2, 2]];
       for (const [ox, oz, w, dd] of parts) {
-        const h = Math.max(0.6, base * (0.45 + 0.9 * rand()));
+        let h = Math.max(0.6, base * (0.45 + 0.9 * rand()));
+        if (Math.abs(cx + ox - STREET(0)) < 6.5 && cz + oz > 24) h = Math.min(h, 6.5); // the glide path stays low-rise
         lots.push([cx + ox, cz + oz, w - 0.35 - rand() * 0.3, dd - 0.35 - rand() * 0.3, h, rand()]);
       }
     }
@@ -103,8 +104,8 @@ export function buildCity(ctx, { post } = {}) {
   const box = new THREE.BoxGeometry(1, 1, 1);
   box.translate(0, 0.5, 0);
   const bU = {
-    uBody: { value: new THREE.Color('#0D1422') }, uWinA: { value: H.color('accent', 1.05) }, uWinB: { value: H.color('light', 0.9) },
-    uGlow: { value: H.color('accent', 0.16) }, uFog: { value: fogColor }, uFogD: { value: fogDensity }, uLit: { value: 0.3 },
+    uBody: { value: new THREE.Color('#0D1422') }, uWinA: { value: H.color('accent', 0.95) }, uWinB: { value: H.color('lightSoft', 0.9) },
+    uGlow: { value: H.color('accent', 0.16) }, uFog: { value: fogColor }, uFogD: { value: fogDensity }, uLit: { value: 0.26 }, uCrown: { value: H.color('accent', 1.5) },
   };
   const bMat = new THREE.ShaderMaterial({
     uniforms: bU,
@@ -116,7 +117,7 @@ export function buildCity(ctx, { post } = {}) {
         vec4 mv = viewMatrix * w; vD = -mv.z; gl_Position = projectionMatrix * mv;
       }`,
     fragmentShader: /* glsl */ `
-      uniform vec3 uBody, uWinA, uWinB, uGlow, uFog; uniform float uFogD, uLit;
+      uniform vec3 uBody, uWinA, uWinB, uGlow, uFog, uCrown; uniform float uFogD, uLit;
       varying vec3 vW; varying vec3 vN; varying float vSeed; varying float vH; varying float vD;
       float hash(vec3 p){ p = fract(p * 0.3183099 + 0.1); p *= 17.0; return fract(p.x * p.y * p.z * (p.x + p.y + p.z)); }
       void main(){
@@ -124,17 +125,22 @@ export function buildCity(ctx, { post } = {}) {
         vec3 col = uBody * (0.5 + 0.34 * abs(n.x) + 0.2 * abs(n.z) + 0.08 * max(n.y, 0.0));
         if (abs(n.y) < 0.5) {
           bool fx = abs(n.x) > 0.5;
-          vec2 g = vec2(fx ? vW.z : vW.x, vW.y) / vec2(0.42, 0.52);
+          // glass towers: lit runs of windows on each floor (strips), never big squares
+          vec2 g = vec2(fx ? vW.z : vW.x, vW.y) / vec2(0.3, 0.36);
           vec2 cell = floor(g); vec2 f = fract(g);
-          float r = hash(vec3(cell, vSeed * 91.0 + (fx ? 3.0 : 7.0)));
-          float lit = step(1.0 - uLit, r);
-          float m = smoothstep(0.16, 0.26, f.x) * (1.0 - smoothstep(0.74, 0.84, f.x)) * smoothstep(0.2, 0.3, f.y) * (1.0 - smoothstep(0.7, 0.8, f.y));
+          float run = hash(vec3(floor(cell.x / 4.0), cell.y, vSeed * 91.0 + (fx ? 3.0 : 7.0)));
+          float r = hash(vec3(cell, vSeed * 37.0 + 1.0));
+          float lit = step(1.0 - uLit, run) * step(0.12, r);
+          float m = smoothstep(0.04, 0.12, f.x) * (1.0 - smoothstep(0.88, 0.96, f.x)) * smoothstep(0.28, 0.36, f.y) * (1.0 - smoothstep(0.66, 0.74, f.y));
           vec2 fw = fwidth(g);
-          float detail = 1.0 - smoothstep(0.14, 0.34, max(fw.x, fw.y));
-          float top = 1.0 - smoothstep(vH - 0.45, vH - 0.2, vW.y);
-          float win = mix(0.24 * uLit, m * lit, detail) * top;
-          vec3 wc = mix(uWinA, uWinB, step(0.7, fract(r * 13.7)));
-          col += wc * win * (0.45 + 0.85 * fract(r * 7.3));
+          float detail = 1.0 - smoothstep(0.16, 0.38, max(fw.x, fw.y));
+          float top = 1.0 - smoothstep(vH - 0.4, vH - 0.15, vW.y);
+          float win = mix(0.42 * uLit, m * lit, detail) * top;
+          vec3 wc = mix(uWinA, uWinB, step(0.55, fract(run * 13.7)));
+          col += wc * win * (0.4 + 0.6 * fract(run * 7.3));
+          // crown light on some tall towers: a thin band under the roof line
+          float crown = (1.0 - smoothstep(0.06, 0.16, vH - vW.y)) * step(8.5, vH) * step(0.5, fract(vSeed * 5.1));
+          col += uCrown * crown;
         }
         col += uGlow * (1.0 - smoothstep(0.0, 1.6, vW.y));
         float f = 1.0 - exp(-pow(uFogD * vD, 2.0));
@@ -168,8 +174,8 @@ export function buildCity(ctx, { post } = {}) {
     avenues.push(new THREE.CatmullRomCurve3([V(96, 0.12, z + 0.56), V(0, 0.12, z + 0.56), V(-96, 0.12, z + 0.56)]));
   }
   const streakGeo = new THREE.SphereGeometry(1, 8, 6);
-  const data = world.add(H.flow({ curves: avenues, count: 1300, size: 0.045, stretch: 11, color: 'accent', intensity: 3.2, speed: [0.012, 0.03], seed: 'city-data', geometry: streakGeo, fadeEnds: false }));
-  const cars = world.add(H.flow({ curves: avenues.slice().reverse(), count: 520, size: 0.04, stretch: 7, color: 'light', intensity: 1.4, speed: [0.008, 0.016], seed: 'city-cars', geometry: streakGeo.clone(), fadeEnds: false }));
+  const data = world.add(H.flow({ curves: avenues, count: 1300, size: 0.045, stretch: 11, color: 'accent', intensity: 2.2, speed: [0.012, 0.03], seed: 'city-data', geometry: streakGeo, fadeEnds: false }));
+  const cars = world.add(H.flow({ curves: avenues.slice().reverse(), count: 520, size: 0.04, stretch: 7, color: 'light', intensity: 1.0, speed: [0.008, 0.016], seed: 'city-cars', geometry: streakGeo.clone(), fadeEnds: false }));
 
   // ---------- the factory floor: lanes and trunk ----------
   const laneCurves = [];
@@ -181,18 +187,18 @@ export function buildCity(ctx, { post } = {}) {
     }
     laneCurves.push(new THREE.CatmullRomCurve3(pts));
   }
-  const rails = laneCurves.map((c) => world.add(H.tube(c, { radius: 0.045, color: 'light', intensity: 0.42, segments: 160, radial: 6 })));
+  const rails = laneCurves.map((c) => world.add(H.tube(c, { radius: 0.05, color: 'lightSoft', intensity: 0.45, segments: 160, radial: 6 })));
   const trunkCurve = new THREE.CatmullRomCurve3([V(0, 0.02, FZ.m1 + 2), V(0, 0.02, FZ.end)]);
-  const trunk = world.add(H.tube(trunkCurve, { radius: 0.16, color: 'accent', intensity: 2.0, segments: 40, radial: 10 }));
+  const trunk = world.add(H.tube(trunkCurve, { radius: 0.13, color: 'accent', intensity: 1.25, segments: 40, radial: 10 }));
   // the gate at the end of the trunk: "main"
-  const gate = new THREE.Mesh(roundedFrameGeometry(THREE, 3.6, 4.6, 0.5, 0.14), new THREE.MeshBasicMaterial({ color: H.color('accent', 2.4), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+  const gate = new THREE.Mesh(roundedFrameGeometry(THREE, 3.6, 4.6, 0.5, 0.14), new THREE.MeshBasicMaterial({ color: H.color('accent', 1.5), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
   gate.position.set(0, 2.3, FZ.end - 0.6);
   world.add(gate);
 
   // PR cubes: GPU instanced, analytic motion along the lanes (no CPU work per frame)
-  const PR = 1500;
-  const prGeo = new THREE.BoxGeometry(0.46, 0.46, 0.46);
-  prGeo.translate(0, 0.25, 0);
+  const PR = 960;
+  const prGeo = new THREE.BoxGeometry(0.36, 0.36, 0.36);
+  prGeo.translate(0, 0.2, 0);
   const aLane = new Float32Array(PR);
   const aOff = new Float32Array(PR);
   const aSpd = new Float32Array(PR);
@@ -205,7 +211,7 @@ export function buildCity(ctx, { post } = {}) {
   prGeo.setAttribute('aHash', new THREE.InstancedBufferAttribute(aHash, 1));
   const prU = {
     uTime: { value: 0 }, uOld: { value: -1 }, uNew: { value: -1 }, uFront: { value: FZ.start + 2 },
-    uNeutral: { value: H.color('light', 1.15) }, uAgent: { value: H.color('accent', 2.1) }, uHuman: { value: H.color('quiet', 1.0) },
+    uNeutral: { value: H.color('lightSoft', 0.55) }, uAgent: { value: H.color('accent', 1.3) }, uHuman: { value: H.color('quiet', 0.6) },
     uFog: { value: fogColor }, uFogD: { value: fogDensity }, uOpacity: { value: 1 },
   };
   const prMat = new THREE.ShaderMaterial({
@@ -225,7 +231,7 @@ export function buildCity(ctx, { post } = {}) {
         float dx = xAt(aLane, z - 0.5) - x;
         float yaw = atan(dx, -0.5);
         float trunk = smoothstep(${(FZ.m1 + 3).toFixed(1)}, ${FZ.m1.toFixed(1)}, z);
-        x += (fract(aHash * 31.7) - 0.5) * 1.1 * trunk;
+        x += (fract(aHash * 31.7) - 0.5) * 1.3 * trunk;
         vec3 p = position;
         float c = cos(yaw), sn = sin(yaw);
         p.xz = mat2(c, -sn, sn, c) * p.xz;

@@ -37,7 +37,7 @@ await withBrowser(async (browser) => {
     }
     for (const s of steps) {
       if (live) {
-        if (s > 0) await page.evaluate((st) => window.__itaf.goto(window.__itaf.state().momentId, st), s);
+        if (s > 0) await page.evaluate((st) => { window.__itaf.goto(window.__itaf.state().momentId, st); }, s);
         await waitSettled(page, 15000).catch(() => {});
         await sleep(400);
       } else {

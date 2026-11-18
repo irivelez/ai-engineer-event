@@ -262,6 +262,20 @@ export default {
     // depth: a faint far field
     const dust = world.add(H.particles({ count: 1400, spread: [80, 44, 50], center: [0, 0, -18], size: 0.07, colors: ['light', 'accent'], intensity: 0.5, drift: 0.5, seed: 'swarm-dust' }));
 
+    // the vortex's core: a soft light that the agents leave as they spawn, quiet once they organize
+    const glowCanvas = document.createElement('canvas');
+    glowCanvas.width = 256; glowCanvas.height = 256;
+    {
+      const g2 = glowCanvas.getContext('2d');
+      const grd = g2.createRadialGradient(128, 128, 0, 128, 128, 128);
+      [[0, 1], [0.18, 0.62], [0.4, 0.22], [0.65, 0.06], [1, 0]].forEach(([p, a2]) => grd.addColorStop(p, `rgba(255,255,255,${a2})`));
+      g2.fillStyle = grd; g2.fillRect(0, 0, 256, 256);
+    }
+    const glowTex = world.track(new THREE.CanvasTexture(glowCanvas));
+    const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: H.color('accent', 0.55), transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending }));
+    core.scale.setScalar(16);
+    world.add(core);
+
     // glass plates: one per day, appear as the layer completes
     const plates = [];
     const frameGeo = roundedFrameGeometry(THREE, PLATE.w, PLATE.d, PLATE.r, 0.06);
@@ -407,6 +421,9 @@ export default {
           plates[L].pm.opacity = on * 0.03;
         }
         dust.update(renderMode ? 0 : time);
+        const sp = U.uSpawn.value;
+        core.material.opacity = (1 - smooth(0, 3, o)) * (1 - U.uLaptop.value) * (0.55 + 1.6 * (1 - sp) * smooth(0, 0.08, sp));
+        core.scale.setScalar(16 * (0.55 + 0.45 * sp));
         rig.update(renderMode ? 0 : time);
       },
       dispose() {

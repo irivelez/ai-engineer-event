@@ -60,6 +60,23 @@ export const FACE = {
   north: { lat: 58, lon: 2 },
 };
 
+// Camera per step for power: target on the surface (PJM faces +z, east = +x, north = +y), looking north.
+// brazil starts from POWER_SHOTS[3] and pulls back to BRAZIL_SHOTS[0]: the camera carries across the cut.
+export const POWER_SHOTS = [
+  { azimuth: 0, polar: 138, radius: 4.6, tx: -0.55, ty: 0.25, tz: 10 },
+  { azimuth: -6, polar: 138, radius: 3.0, tx: -0.3, ty: 0.15, tz: 10 },
+  { azimuth: -4, polar: 136, radius: 3.3, tx: -0.32, ty: 0.15, tz: 10 },
+  { azimuth: 12, polar: 148, radius: 1.9, tx: 0.1, ty: 0.0, tz: 10 },
+];
+export const BRAZIL_SHOTS = [
+  { azimuth: 0, polar: 90, radius: 40, tx: -6.5, ty: -1, tz: 0 },
+  { azimuth: 0, polar: 90, radius: 38, tx: -8.2, ty: 0, tz: 0 },
+  { azimuth: 0, polar: 90, radius: 56, tx: -5.4, ty: -0.4, tz: 0 },
+  { azimuth: 0, polar: 90, radius: 66, tx: 0, ty: -0.4, tz: 0 },
+];
+// s2 looks down on the North Pole: the US upper right, China lower left, both pillars in near-profile.
+export const BRAZIL_FACES = [{ lat: 26, lon: -80 }, { lat: -10, lon: -62 }, { lat: 90, lon: -232 }, { lat: 90, lon: -232 }];
+
 export function buildGridEarth({ makeWorld, H, seed = 'grid-earth', post }) {
   const rand = H.seeded(seed);
   const world = makeWorld({ fog: null, fov: 30, near: 0.05, far: 300, post: post || { bloom: { intensity: 1.1, threshold: 0.58, smoothing: 0.3, radius: 0.8 }, vignette: { offset: 0.3, darkness: 0.6 } } });
@@ -69,7 +86,7 @@ export function buildGridEarth({ makeWorld, H, seed = 'grid-earth', post }) {
 
   // ---------- body, rim, atmosphere ----------
   const body = new THREE.Mesh(new THREE.SphereGeometry(R, 96, 64), new THREE.ShaderMaterial({
-    uniforms: { uBase: { value: new THREE.Color('#06090E') }, uRim: { value: H.color('accent', 0.55) }, uRimAmt: { value: 1 } },
+    uniforms: { uBase: { value: new THREE.Color('#05080C') }, uRim: { value: H.color('accent', 0.2) }, uRimAmt: { value: 1 } },
     vertexShader: /* glsl */ `
       varying vec3 vN; varying vec3 vV;
       void main() { vec4 w = modelMatrix * vec4(position, 1.0); vN = normalize(mat3(modelMatrix) * normal); vV = normalize(cameraPosition - w.xyz); gl_Position = projectionMatrix * viewMatrix * w; }`,
@@ -79,7 +96,7 @@ export function buildGridEarth({ makeWorld, H, seed = 'grid-earth', post }) {
   }));
   body.renderOrder = -2;
   earth.add(body);
-  const atmo = new THREE.Mesh(new THREE.SphereGeometry(R * 1.045, 96, 64), new THREE.ShaderMaterial({
+  const atmo = new THREE.Mesh(new THREE.SphereGeometry(R * 1.03, 96, 64), new THREE.ShaderMaterial({
     uniforms: { uCol: { value: H.color('accent', 1.0) }, uAmt: { value: 1 } },
     transparent: true, depthWrite: false, side: THREE.BackSide, blending: THREE.AdditiveBlending,
     vertexShader: /* glsl */ `
@@ -87,7 +104,7 @@ export function buildGridEarth({ makeWorld, H, seed = 'grid-earth', post }) {
       void main() { vec4 w = modelMatrix * vec4(position, 1.0); vN = normalize(mat3(modelMatrix) * normal); vV = normalize(cameraPosition - w.xyz); gl_Position = projectionMatrix * viewMatrix * w; }`,
     fragmentShader: /* glsl */ `
       uniform vec3 uCol; uniform float uAmt; varying vec3 vN; varying vec3 vV;
-      void main() { float d = dot(normalize(vN), normalize(vV)); float f = pow(clamp(1.0 + d * 1.0, 0.0, 1.0), 6.0); gl_FragColor = vec4(uCol, f * 0.55 * uAmt); }`,
+      void main() { float d = dot(normalize(vN), normalize(vV)); float f = pow(clamp(1.0 + d * 1.0, 0.0, 1.0), 9.0); gl_FragColor = vec4(uCol, f * 0.38 * uAmt); }`,
   }));
   earth.add(atmo);
 
@@ -112,7 +129,7 @@ export function buildGridEarth({ makeWorld, H, seed = 'grid-earth', post }) {
   landGeo.setAttribute('aCode', new THREE.Float32BufferAttribute(lc, 1));
   const landU = {
     uScale: { value: 1000 }, uPx: { value: 1 }, uSize: { value: 0.05 }, uMaxPx: { value: 4.5 },
-    uBase: { value: H.color('lightSoft', 0.62) }, uUS: { value: H.color('light', 0.9) }, uBR: { value: H.color('limit', 2.1) },
+    uBase: { value: H.color('lightSoft', 0.74) }, uUS: { value: H.color('light', 0.9) }, uBR: { value: H.color('limit', 2.1) },
     uLatam: { value: H.color('light', 1.0) }, uCN: { value: H.color('light', 0.9) }, uAsia: { value: H.color('limit', 1.6) },
     uW: { value: new THREE.Vector4(0, 0, 0, 0) }, // US, Brazil, rest of LatAm, Asia4 highlight weights
     uWCN: { value: 0 }, uAlpha: { value: 1 }, uCenter: { value: new THREE.Vector3() },
@@ -284,8 +301,8 @@ export function buildGridEarth({ makeWorld, H, seed = 'grid-earth', post }) {
         vec3 hot = mix(uWarm, uGold, uMoney);
         float side = 1.0 - abs(vN.y);
         vec3 col = uBody * (0.5 + 0.5 * max(vN.z, 0.0));
-        col += hot * (0.18 + 0.82 * vPulse) * (0.35 + 0.65 * vY) * 0.6;
-        col += hot * smoothstep(0.86, 1.0, vY) * (0.5 + vPulse);
+        col += hot * (0.12 + 0.5 * vPulse) * vY * vY * 0.3 * side;
+        col += hot * smoothstep(0.9, 1.0, vY) * (0.6 + 1.2 * vPulse);
         gl_FragColor = vec4(col, 1.0);
       }`,
   }), dcList.length);
@@ -362,6 +379,7 @@ export function buildGridEarth({ makeWorld, H, seed = 'grid-earth', post }) {
   const flowPts = flowPoints({
     H, tex: flowTex, rows: flowCurves.length, rowClass: flowIsDC, perRow: 26, trail: 4, trailStep: 0.012, speed: [0.05, 0.09], size: 0.013,
     colA: H.color('light', 1.5), colB: H.color('caution', 2.6), seed: `${seed}-flow`, maxPx: 7,
+    dark: { u: lightU.uDark, c: ll(DARK_C[0], DARK_C[1], R * 1.004), r: R * darkRadius * D2R },
   });
   earth.add(flowPts.points);
 
@@ -374,7 +392,7 @@ export function buildGridEarth({ makeWorld, H, seed = 'grid-earth', post }) {
     const a = ll(o[0], o[1], 1);
     const b = ll(d.at[0], d.at[1], 1);
     const ang = a.angleTo(b);
-    const lift = 0.1 + ang * 0.22;
+    const lift = 0.03 + ang * 0.085;
     const pts = [];
     for (let k = 0; k <= 48; k++) {
       const t = k / 48;
@@ -383,15 +401,25 @@ export function buildGridEarth({ makeWorld, H, seed = 'grid-earth', post }) {
     }
     const curve = new THREE.CatmullRomCurve3(pts);
     arcCurves.push(curve);
-    const gateU = d.gate ? 0.8 : 2;
+    let gateU = 2;
+    if (d.gate) {
+      const want = d.gate === 'br' ? 3 : 6;
+      gateU = 0.92;
+      for (let k = 4; k <= 196; k++) {
+        const q = slerp(a, b, k / 200, ang);
+        const la = Math.asin(Math.max(-1, Math.min(1, q.y))) / D2R;
+        const lo = Math.atan2(q.x, q.z) / D2R;
+        if (landAt(la, lo) === want) { gateU = Math.max(0.3, k / 200 - 0.025); break; }
+      }
+    }
     arcGate.push(gateU);
     if (d.gate) gateRings.push({ curve, u: gateU, gate: d.gate });
   });
   const arcTex = curveTexture(arcCurves, 160);
   world.track(arcTex);
   const arcPts = flowPoints({
-    H, tex: arcTex, rows: arcCurves.length, rowGate: arcGate, perRow: 46, trail: 5, trailStep: 0.008, speed: [0.06, 0.11], size: 0.05,
-    colA: H.color('accent', 2.2), colB: H.color('accent', 2.2), colHeld: H.color('alert', 2.4), seed: `${seed}-arcs`, maxPx: 8, hold: 0.55,
+    H, tex: arcTex, rows: arcCurves.length, rowGate: arcGate, perRow: 40, trail: 5, trailStep: 0.007, speed: [0.05, 0.09], size: 0.1,
+    colA: H.color('accent', 2.4), colB: H.color('accent', 2.4), colHeld: H.color('alert', 2.6), seed: `${seed}-arcs`, maxPx: 11, hold: 0.6,
   });
   earth.add(arcPts.points);
   const arcLineSegs = [];
@@ -399,7 +427,7 @@ export function buildGridEarth({ makeWorld, H, seed = 'grid-earth', post }) {
     const pts = c.getSpacedPoints(64);
     for (let k = 0; k < pts.length - 1; k++) arcLineSegs.push(pts[k].x, pts[k].y, pts[k].z, pts[k + 1].x, pts[k + 1].y, pts[k + 1].z);
   });
-  const arcLines = fatLines({ positions: arcLineSegs, width: 2, color: H.color('accent', 0.5), opacity: 0 });
+  const arcLines = fatLines({ positions: arcLineSegs, width: 2, color: H.color('accent', 0.42), opacity: 0 });
   earth.add(arcLines);
   const ringSegs = [];
   const tng = new THREE.Vector3();
@@ -423,19 +451,19 @@ export function buildGridEarth({ makeWorld, H, seed = 'grid-earth', post }) {
   earth.add(gates);
 
   // ---------- compute pillars (US 72 : China ~10), heights to scale ----------
-  const pillarU = { uCol: { value: H.color('accent', 2.0) }, uAmt: { value: 0 } };
+  const pillarU = { uCol: { value: H.color('accent', 3.2) }, uAmt: { value: 0 } };
   const pillarMat = new THREE.ShaderMaterial({
     uniforms: pillarU, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide,
     vertexShader: /* glsl */ `varying float vY; varying vec3 vN; varying vec3 vV;
       void main() { vY = uv.y; vec4 w = modelMatrix * vec4(position, 1.0); vN = normalize(mat3(modelMatrix) * normal); vV = normalize(cameraPosition - w.xyz); gl_Position = projectionMatrix * viewMatrix * w; }`,
     fragmentShader: /* glsl */ `uniform vec3 uCol; uniform float uAmt; varying float vY; varying vec3 vN; varying vec3 vV;
-      void main() { float edge = 0.35 + 0.65 * pow(1.0 - abs(dot(normalize(vN), normalize(vV))), 1.5); float grow = step(vY, uAmt);
-        float a = (0.85 - 0.55 * vY) * edge * grow; gl_FragColor = vec4(uCol, a); }`,
+      void main() { float core = pow(abs(dot(normalize(vN), normalize(vV))), 2.0); float grow = step(vY, uAmt);
+        float a = (1.0 - 0.6 * vY) * core * grow; gl_FragColor = vec4(uCol, a); }`,
   });
   const pillars = [];
   [[38.5, -97.5, 72], [34.5, 104.0, 10]].forEach(([la, lo, share]) => {
     const h = share * 0.085;
-    const geo = new THREE.CylinderGeometry(0.16, 0.16, h, 32, 1, true).translate(0, h / 2, 0);
+    const geo = new THREE.CylinderGeometry(0.24, 0.24, h, 32, 1, true).translate(0, h / 2, 0);
     const m = new THREE.Mesh(geo, pillarMat);
     const p = ll(la, lo, R);
     m.position.copy(p);
@@ -485,7 +513,7 @@ function slerp(a, b, t, ang) {
 
 // GPU particles along baked curves. Class 1 rows can tint toward colB (uMixB); class 0 dims with uDimA.
 // Gated rows (rowGate < 1) stop at their gate when uGate = 1 and pile up there in colHeld.
-function flowPoints({ H, tex, rows, rowClass = null, rowGate = null, perRow = 30, trail = 4, trailStep = 0.01, speed = [0.05, 0.1], size = 0.02, colA, colB, colHeld = null, seed, maxPx = 8, hold = 0 }) {
+function flowPoints({ H, tex, rows, rowClass = null, rowGate = null, perRow = 30, trail = 4, trailStep = 0.01, speed = [0.05, 0.1], size = 0.02, colA, colB, colHeld = null, seed, maxPx = 8, hold = 0, dark = null }) {
   const rand = H.seeded(seed);
   const n = rows * perRow * trail;
   const aRow = new Float32Array(n);
@@ -523,13 +551,14 @@ function flowPoints({ H, tex, rows, rowClass = null, rowGate = null, perRow = 30
     uCurves: { value: tex }, uCurveSize: { value: new THREE.Vector2(tex.image.width, tex.image.height) },
     uColA: { value: colA }, uColB: { value: colB }, uColHeld: { value: colHeld || colA }, uMixB: { value: 0 }, uDimA: { value: 1 },
     uAlpha: { value: 0 }, uGate: { value: 0 }, uHold: { value: hold }, uTrailStep: { value: trailStep }, uTrailN: { value: trail },
+    uDark: dark ? dark.u : { value: 0 }, uDarkC: { value: dark ? dark.c : new THREE.Vector3(0, 0, 1e6) }, uDarkR: { value: dark ? dark.r : 0 },
   };
   const points = new THREE.Points(geo, new THREE.ShaderMaterial({
     uniforms, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
     vertexShader: /* glsl */ `
       attribute float aRow, aOff, aSpd, aTr, aCls, aGate, aSeed;
-      uniform float uTime, uScale, uPx, uSize, uMaxPx, uMixB, uDimA, uAlpha, uGate, uHold, uTrailStep, uTrailN;
-      uniform vec3 uColA, uColB, uColHeld;
+      uniform float uTime, uScale, uPx, uSize, uMaxPx, uMixB, uDimA, uAlpha, uGate, uHold, uTrailStep, uTrailN, uDark, uDarkR;
+      uniform vec3 uColA, uColB, uColHeld, uDarkC;
       varying vec3 vColor; varying float vAlpha;
       ${CURVE_GLSL}
       void main() {
@@ -544,9 +573,10 @@ function flowPoints({ H, tex, rows, rowClass = null, rowGate = null, perRow = 30
         a = held > 0.5 ? (aTr < 0.5 ? 1.0 - smoothstep(gateU + uHold * 0.6, gateU + uHold, u) : 0.0) : a;
         a *= (1.0 - aTr / uTrailN);
         a *= mix(uDimA, 1.0, aCls);
+        a *= 1.0 - uDark * 0.95 * (1.0 - smoothstep(uDarkR * 0.8, uDarkR * 1.05, distance(p, uDarkC)));
         vec4 mv = modelViewMatrix * vec4(p, 1.0);
         gl_Position = projectionMatrix * mv;
-        float sz = uSize * (1.0 - 0.45 * aTr / uTrailN) * (1.0 + held * 0.5);
+        float sz = uSize * (1.0 - 0.45 * aTr / uTrailN) * (1.0 + held * 1.3);
         gl_PointSize = clamp(sz * uScale / max(0.001, -mv.z), 2.0 * uPx, uMaxPx * uPx);
         vec3 c = mix(uColA, uColB, aCls * uMixB);
         vColor = mix(c, uColHeld, held);

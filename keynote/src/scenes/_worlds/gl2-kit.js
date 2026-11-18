@@ -129,3 +129,47 @@ export function place(el, x, y, w) {
   if (w) el.style.width = `${w}px`;
   return el;
 }
+
+/** '< 13 hours' → { figure: '< 13', unit: 'hours' } (spaces inside the figure become no-break spaces). */
+export function splitFigure(str) {
+  const m = /^([<>~≈]?\s*[$€]?[\d.,]+\s*[%×+]?)\s*(.*)$/.exec(String(str || '').trim());
+  if (!m) return { figure: String(str || ''), unit: '' };
+  return { figure: m[1].trim().replace(/ /g, '\u00A0'), unit: m[2] };
+}
+
+// Crops for captures whose page header is not the point (natural size [w, h], crop [x0, y0, x1, y1] in px).
+export const CROPS = {
+  'exame-brasil-regra-chips': { size: [1600, 1785], crop: [80, 1110, 1560, 1450] },
+  'x-openai-securing-training-environment': { size: [868, 1510], crop: [0, 296, 868, 486] },
+  'nypost-california-sues-openai': { size: [1600, 829], crop: [170, 450, 1580, 700] },
+  'verge-data-centers-electricity': { size: [1600, 1221], crop: [20, 470, 1580, 870] },
+  'verge-claude-fable-52': { size: [1600, 1221], crop: [20, 470, 1580, 870] },
+};
+
+/** captures.json entry → { outlet, date, captured, views } strings (all from the manifest). */
+export function captureInfo(m) {
+  if (!m) return {};
+  const views = m.counts && m.counts.displayed && m.counts.displayed.views;
+  return {
+    who: m.outlet || m.author || '',
+    date: fmtDate(String(m.published || '').slice(0, 10)),
+    captured: fmtDate(String(m.captured_at || '').slice(0, 10)),
+    views: views ? `${views} views` : '',
+  };
+}
+
+/** A CaptureCard showing only the crop of a capture (the card height follows the crop). */
+export function croppedCard(C, { id, src, alt, width, meta }) {
+  const card = C.CaptureCard.create({ src, alt, variant: 'void', meta, width });
+  const c = CROPS[id];
+  if (c) {
+    const [w] = c.size;
+    const [x0, y0, x1, y1] = c.crop;
+    const k = width / (x1 - x0);
+    const frame = card.el.querySelector('.cap-frame');
+    const img = card.el.querySelector('.cap-img');
+    frame.style.height = `${Math.round((y1 - y0) * k)}px`;
+    Object.assign(img.style, { width: `${Math.round(w * k)}px`, maxWidth: 'none', marginLeft: `${-Math.round(x0 * k)}px`, marginTop: `${-Math.round(y0 * k)}px` });
+  }
+  return card;
+}

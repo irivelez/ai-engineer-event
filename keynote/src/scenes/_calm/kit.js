@@ -82,6 +82,10 @@ const CSS = `
 .ca-rule { position:absolute; height:2px; background: var(--g-rule); transform-origin: 0 50%; }
 .ca-card { position:absolute; background: var(--g-card); border-radius: 24px; }
 .ca-swatch { display:inline-block; width:24px; height:24px; border-radius:4px; vertical-align: -2px; margin-right: 16px; }
+/* Line masks: each mask is padded 0.16em/0.24em and pulled back by equal negative margins, but sibling margins
+   COLLAPSE (-0.24em and -0.16em → -0.24em, not -0.40em), so after a live line-mask reveal every later line sat
+   0.16em lower than the settled (render) frame. Give the follower the full overlap so live == render. */
+.ca-layer .itaf-line-mask + .itaf-line-mask { margin-top: -0.4em; }
 `;
 export function ensureCSS() {
   if (document.getElementById('calm-a-kit-css')) return;

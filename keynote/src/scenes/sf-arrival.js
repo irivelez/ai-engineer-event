@@ -7,10 +7,10 @@ import { buildCity, STREET } from './_worlds/city.js';
 
 const X = STREET(0); // the avenue the camera glides down
 export const SHOTS = {
-  glideFrom: { px: X, py: 1.5, pz: 84, tx: X, ty: 2.7, tz: 0, shiftX: 0 },
-  glide: { px: X, py: 2.1, pz: 47, tx: X - 0.6, ty: 3.6, tz: 0, shiftX: 0 },
-  rise: { px: -30, py: 46, pz: 70, tx: 4, ty: 0, tz: -10, shiftX: 300 },
-  hold: { px: -33, py: 42, pz: 63, tx: 3, ty: 0, tz: -14, shiftX: 320 },
+  glideFrom: { px: X, py: 16.5, pz: 104, tx: X + 2.5, ty: 9, tz: 30, shiftX: 0 },
+  glide: { px: X, py: 12.5, pz: 64, tx: X + 4, ty: 8.5, tz: 6, shiftX: 0 },
+  rise: { px: -24, py: 60, pz: 62, tx: 9, ty: 0, tz: -2, shiftX: 360 },
+  hold: { px: -26, py: 57, pz: 56, tx: 8, ty: 0, tz: -6, shiftX: 370 },
 };
 
 export default {
@@ -28,7 +28,7 @@ export default {
     const acts = ctx.acts || [];
     const numbered = acts.filter((a) => a.n);
     const actIndex = Math.max(0, numbered.findIndex((a) => a.id === beat.act));
-    const scrim = C.Scrim.create({ ground: g, side: 'left', extent: 0.74, strength: 0.94 });
+    const scrim = C.Scrim.create({ ground: g, side: 'left', extent: 0.8, strength: 0.96 });
     const act = C.ActTitle.create({ numeral: copy.act, title: copy.actTitle, index: actIndex, total: numbered.length || 5, ground: g, width: 1240 });
     const event = C.Kicker.create({ text: [copy.event, copy.place, copy.dates].filter(Boolean).join(' · '), ground: g, tone: 'fg' });
     const f1 = splitFigure(copy.stat1);

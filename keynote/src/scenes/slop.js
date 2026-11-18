@@ -33,24 +33,26 @@ export default calmScene('slop', (ctx, K) => {
   place(point, M, 520, LEFT_W);
   const pointB = K.maskLines(point, pointParts.map((p, i) => ({ html: esc(p), cls: i === pointParts.length - 1 ? 'ca-accent' : 'ca-fg' })), { stagger: 0.12 });
 
-  // ----- the still (real broadcast frame) with a slow push-in -----
+  // ----- the still (real broadcast frame, never cropped) with a slow push-in of the whole framed card -----
   const stillSrc = ctx.assets.sf('lauren-tan-11k-prs');
   const meta = ctx.assets.sfMeta('lauren-tan-11k-prs') || {};
   let still = null;
-  let img = null;
+  const stillWrap = el('div', '');
+  place(stillWrap, RX, RY, RW, RH);
+  stillWrap.style.transformOrigin = '62% 40%'; // toward her October bar
   if (stillSrc) {
-    still = K.add(C.CaptureCard.create({ src: stillSrc, alt: meta.description || copy.talk || '', variant: 'void', ground: g, width: RW }), RX, RY);
-    img = still.el.querySelector('.cap-img');
+    still = C.CaptureCard.create({ src: stillSrc, alt: meta.description || copy.talk || '', variant: 'void', ground: g, width: RW });
+    stillWrap.appendChild(still.el);
+    K.owned.push(still);
   }
-  const PUSH = { scale: 1.07, xPercent: -2.4, yPercent: 1.2, transformOrigin: '50% 50%' };
   let pushTween = null;
   const startPush = () => {
-    if (!img || R) return;
+    if (R) return;
     if (pushTween) pushTween.kill();
-    gsap.set(img, { scale: 1, xPercent: 0, yPercent: 0, transformOrigin: '50% 50%' });
-    pushTween = gsap.to(img, { ...PUSH, duration: 16, ease: 'sine.inOut' });
+    gsap.set(stillWrap, { scale: 1 });
+    pushTween = gsap.to(stillWrap, { scale: 1.035, duration: 16, ease: 'sine.inOut' });
   };
-  const settlePush = () => { if (pushTween) { pushTween.kill(); pushTween = null; } if (img) gsap.set(img, PUSH); };
+  const settlePush = () => { if (pushTween) { pushTween.kill(); pushTween = null; } gsap.set(stillWrap, { scale: 1 }); };
 
   // her line, as the still's caption
   const cap = el('div', '');

@@ -3,6 +3,8 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #000; }
 body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; cursor: default; }
 .stage { position: fixed; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; overflow: hidden; contain: layout paint; user-select: none; -webkit-user-select: none; }
 .stage-moments, .stage-hud, .stage-overlay { position: absolute; inset: 0; }
+/* the moments layer is its own stacking context, so the HUD cue and overlays always paint above it */
+.stage-moments { z-index: 0; }
 .stage-hud, .stage-overlay { pointer-events: none; }
 .stage-overlay > * { pointer-events: auto; }
 .moment { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }

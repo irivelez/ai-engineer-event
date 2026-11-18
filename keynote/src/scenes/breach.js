@@ -4,29 +4,30 @@
 // (the intrusion window in facts.json). Numbers land on a left scrim; the motive closes on calm.
 import { gsap } from 'gsap';
 import * as THREE from 'three';
-import { fatLines, polylineSegments, curveTexture, CURVE_GLSL, POINT_FRAG, pointScale, factsSource, provKind, place } from './_worlds/gl2-kit.js';
+import { fatLines, polylineSegments, curveTexture, CURVE_GLSL, POINT_FRAG, pointScale, factsSource, provKind, place, splitFigure, croppedCard, captureInfo } from './_worlds/gl2-kit.js';
 
 const HALF = 1.3; // sandbox half-size
 const CENTER = new THREE.Vector3(0, 1.38, 0);
-const IMPACT = new THREE.Vector3(HALF, 1.6, 0.25); // on the +x wall
+const IMPACT = new THREE.Vector3(0.3, 1.62, HALF); // on the front (+z) wall, facing the camera
 const AGENTS = 1200; // METR: ~1,200 agents coordinating
 const LEAKERS = 700; // METR: 700 joined the attack
 
 // Clusters: centre, footprint, and the floor route that reaches each one (Manhattan trace).
 const CLUSTERS = [
-  { c: [9.6, 0, -0.6], route: [[3.0, 0.2], [5.4, 0.2], [5.4, -0.6], [7.4, -0.6]] },
-  { c: [12.4, 0, -5.4], route: [[3.0, 0.2], [4.6, 0.2], [4.6, -5.4], [10.2, -5.4]] },
-  { c: [8.6, 0, -10.6], route: [[3.0, 0.2], [3.8, 0.2], [3.8, -10.6], [6.4, -10.6]] },
+  { c: [4.0, 0, -12.0], route: [[1.3, 2.4], [2.9, 2.4], [2.9, -7.0], [4.0, -7.0], [4.0, -9.9]] },
+  { c: [7.5, 0, -16.5], route: [[1.3, 2.62], [3.3, 2.62], [3.3, -5.0], [7.5, -5.0], [7.5, -14.4]] },
+  { c: [1.0, 0, -21.0], route: [[1.3, 2.18], [2.5, 2.18], [2.5, -8.6], [1.0, -8.6], [1.0, -18.9]] },
 ];
-const RACK_COLS = 6;
+const RACK_COLS = 8;
 const RACK_ROWS = 4;
 
 // Camera per step (spherical rig around a target).
 const SHOTS = [
-  { azimuth: 34, polar: 79, radius: 10.5, tx: -1.9, ty: 1.25, tz: -0.4 },
-  { azimuth: 16, polar: 66, radius: 25, tx: 3.6, ty: 0.2, tz: -5.2 },
-  { azimuth: 2, polar: 62, radius: 17.5, tx: 6.1, ty: 0.3, tz: -6.4 },
-  { azimuth: 10, polar: 55, radius: 28, tx: 4.2, ty: -0.4, tz: -5.6 },
+  { azimuth: 18, polar: 80, radius: 10.5, tx: -2.3, ty: 1.25, tz: 0 },
+  { azimuth: 10, polar: 70, radius: 27, tx: -3.2, ty: -0.6, tz: -8 },
+  { azimuth: 4, polar: 63, radius: 19, tx: 0.2, ty: -0.2, tz: -15.5 },
+  { azimuth: 8, polar: 58, radius: 32, tx: -3.0, ty: -1.5, tz: -9 },
+  { azimuth: 6, polar: 54, radius: 38, tx: -1.0, ty: -1.5, tz: -9 },
 ];
 
 function roundedManhattan(pts, r = 0.45) {
@@ -95,7 +96,7 @@ export default {
             col += uRed * 0.20 * uAgentPool * exp(-dc * dc / 5.0);
             for (int i = 0; i < 3; i++) {
               float d = length(vW.xz - uClusters[i]);
-              float pool = exp(-d * d / 9.0);
+              float pool = exp(-d * d / 6.0);
               float hot = clamp(uInfect * 3.0 - float(i), 0.0, 1.0);
               col += mix(uCool * 0.035, uRed * 0.16, hot) * pool;
             }
@@ -118,11 +119,11 @@ export default {
         void main() { float f = pow(1.0 - abs(dot(normalize(vN), normalize(vV))), 3.0); gl_FragColor = vec4(uTint, (0.035 + 0.22 * f) * uOpacity); }`,
     });
     const hidden = new THREE.MeshBasicMaterial({ visible: false });
-    const box = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2, HALF * 2, HALF * 2), [hidden, glassMat, glassMat, glassMat, glassMat, glassMat]);
+    const box = new THREE.Mesh(new THREE.BoxGeometry(HALF * 2, HALF * 2, HALF * 2), [glassMat, glassMat, glassMat, glassMat, hidden, glassMat]);
     box.position.copy(CENTER);
     world.add(box);
 
-    // Spider-web shards on the +x wall: polar cells around the impact, clamped to the square.
+    // Spider-web shards on the front wall: polar cells around the impact, clamped to the square.
     const K = 15; // rays
     const M = 8; // rings
     const ang = [];
@@ -133,16 +134,16 @@ export default {
       for (let m = 1; m <= M; m++) row.push(Math.pow(m / M, 1.35) * 3.0 * (0.86 + rand() * 0.28));
       ringR.push(row);
     }
-    const iz = IMPACT.z - CENTER.z;
+    const ix = IMPACT.x - CENTER.x;
     const iy = IMPACT.y - CENTER.y;
     const P = (k, m) => {
       const kk = k % K;
       const r = ringR[kk][m];
-      let z = iz + Math.cos(ang[kk]) * r;
+      let x = ix + Math.cos(ang[kk]) * r;
       let y = iy + Math.sin(ang[kk]) * r;
-      z = Math.max(-HALF, Math.min(HALF, z));
+      x = Math.max(-HALF, Math.min(HALF, x));
       y = Math.max(-HALF, Math.min(HALF, y));
-      return [HALF + 0.004, y, z];
+      return [x, y, HALF + 0.004];
     };
     const sPos = [];
     const sBary = [];
@@ -199,7 +200,7 @@ export default {
           vec3 p = position;
           if (k > 0.0) {
             vec3 local = rot(p - aCen, aRand - 0.5, k * (2.0 + aRand.x * 3.0));
-            vec3 drift = vec3(0.9 + aRand.y * 1.8, (aRand.z - 0.5) * 1.2 - k * 1.1, (aRand.x - 0.5) * 1.6) * k;
+            vec3 drift = vec3((aRand.x - 0.5) * 1.6, (aRand.z - 0.5) * 1.2 - k * 1.1, 0.9 + aRand.y * 1.8) * k;
             p = aCen + local * (1.0 - 0.5 * k) + drift;
           }
           vGone = k;
@@ -236,29 +237,30 @@ export default {
 
     // ---------- network routes ----------
     const routes = CLUSTERS.map((k) => {
-      const pts = [IMPACT.clone(), new THREE.Vector3(2.15, 1.1, IMPACT.z), new THREE.Vector3(2.75, 0.04, 0.2)];
-      const air = new THREE.CatmullRomCurve3([CENTER.clone(), ...pts]);
       const floorPts = k.route.map(([x, z]) => new THREE.Vector3(x, 0.04, z));
-      floorPts.push(new THREE.Vector3(k.c[0] - 1.6, 0.04, k.c[2]));
+      const f0 = floorPts[0];
+      const air = new THREE.CatmullRomCurve3([CENTER.clone(), IMPACT.clone(), new THREE.Vector3(0.55, 1.05, 2.0), new THREE.Vector3(f0.x - 0.35, 0.06, f0.z), f0.clone()]);
       const ground = roundedManhattan(floorPts, 0.5);
       const path = new THREE.CurvePath();
       path.add(air);
-      path.add(new THREE.LineCurve3(new THREE.Vector3(2.75, 0.04, 0.2), floorPts[0]));
       ground.curves.forEach((c) => path.add(c));
-      path.add(new THREE.LineCurve3(floorPts[floorPts.length - 1], new THREE.Vector3(k.c[0] - 1.1, 0.7, k.c[2])));
-      return { path, ground: [new THREE.Vector3(2.75, 0.04, 0.2), ...ground.getSpacedPoints(90)] };
+      const last = floorPts[floorPts.length - 1];
+      path.add(new THREE.LineCurve3(last, new THREE.Vector3(last.x, 0.55, last.z - 0.5)));
+      return { path, ground: ground.getSpacedPoints(120) };
     });
     const traceSegs = [];
     routes.forEach((r) => polylineSegments(r.ground, traceSegs));
-    const traces = world.add(fatLines({ positions: traceSegs, width: 3, color: H.color('lightSoft', 0.55), opacity: 1 }));
+    const traceCool = H.color('lightSoft', 0.55);
+    const traceHot = H.color('alert', 0.7);
+    const traces = world.add(fatLines({ positions: traceSegs, width: 3, color: traceCool.clone(), opacity: 1 }));
     const curveTex = curveTexture(routes.map((r) => r.path), 192);
     world.track(curveTex);
 
     // ---------- racks: three clusters, rack by rack infection ----------
-    const rackGeo = new THREE.BoxGeometry(0.44, 1.25, 0.72).translate(0, 0.625, 0);
+    const rackGeo = new THREE.BoxGeometry(0.3, 0.86, 0.48).translate(0, 0.43, 0);
     const nRacks = CLUSTERS.length * RACK_COLS * RACK_ROWS;
     const rackU = {
-      uInfect: { value: 0 }, uBody: { value: new THREE.Color('#121821') }, uCool: { value: H.color('lightSoft', 1.05) }, uHot: { value: H.color('alert', 2.2) },
+      uInfect: { value: 0 }, uBody: { value: new THREE.Color('#0F141B') }, uCool: { value: H.color('lightSoft', 0.95) }, uHot: { value: H.color('alert', 2.1) },
       uLight: { value: new THREE.Vector3(-0.4, 0.85, 0.5).normalize() },
     };
     const racks = new THREE.InstancedMesh(rackGeo, new THREE.ShaderMaterial({
@@ -283,13 +285,13 @@ export default {
           vec3 col = uBody * lam;
           vec3 led = mix(uCool, uHot, vHot) * (1.0 + vFlash * 1.6);
           if (vFront > 0.5) {
-            float row = abs(fract(vUv.y * 5.0) - 0.5);
-            float bar = smoothstep(0.17, 0.11, row) * step(0.16, vUv.x) * step(vUv.x, 0.84) * step(0.06, vUv.y) * step(vUv.y, 0.94);
-            col = mix(col, led, bar);
-            col += led * 0.05;
-          } else {
-            col += uHot * 0.05 * vHot;
+            float row = abs(fract(vUv.y * 6.0) - 0.5);
+            float bar = smoothstep(0.17, 0.11, row) * step(0.18, vUv.x) * step(vUv.x, 0.6) * step(0.05, vUv.y) * step(vUv.y, 0.95);
+            float dotLed = smoothstep(0.17, 0.11, row) * smoothstep(0.12, 0.07, abs(vUv.x - 0.78));
+            col = mix(col, led * 0.55, bar);
+            col = mix(col, led, dotLed * step(0.05, vUv.y) * step(vUv.y, 0.95));
           }
+          col += uHot * 0.025 * vHot;
           gl_FragColor = vec4(col, 1.0);
         }`,
     }), nRacks);
@@ -300,13 +302,13 @@ export default {
     let ri = 0;
     const rackPos = [];
     CLUSTERS.forEach((k, ci) => {
-      const entry = new THREE.Vector3(k.c[0] - 1.6, 0, k.c[2]);
-      const yaw = 0.22; // racks face roughly toward the camera
+      const entry = new THREE.Vector3(k.route[k.route.length - 1][0], 0, k.route[k.route.length - 1][1]);
+      const yaw = 0.12; // racks face roughly toward the camera
       q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), yaw);
       const local = [];
       for (let r = 0; r < RACK_ROWS; r++) {
         for (let c = 0; c < RACK_COLS; c++) {
-          const p = new THREE.Vector3(k.c[0] + (c - (RACK_COLS - 1) / 2) * 0.62, 0, k.c[2] + (r - (RACK_ROWS - 1) / 2) * 1.15);
+          const p = new THREE.Vector3(k.c[0] + (c - (RACK_COLS - 1) / 2) * 0.42, 0, k.c[2] + (r - (RACK_ROWS - 1) / 2) * 0.95);
           local.push(p);
         }
       }
@@ -342,9 +344,9 @@ export default {
         aRoute[i] = r;
         aLeak[i] = r * 0.24 + rand() * 0.36;
         const k = CLUSTERS[r];
-        aTarget[i * 3] = k.c[0] + (rand() - 0.5) * 4.0;
-        aTarget[i * 3 + 1] = 0.25 + rand() * 1.5;
-        aTarget[i * 3 + 2] = k.c[2] + (rand() - 0.5) * 4.6;
+        aTarget[i * 3] = k.c[0] + (rand() - 0.5) * 3.6;
+        aTarget[i * 3 + 1] = 0.15 + rand() * 1.1;
+        aTarget[i * 3 + 2] = k.c[2] + (rand() - 0.5) * 3.8;
       } else {
         aLeak[i] = -1;
       }
@@ -407,10 +409,12 @@ export default {
     const title = C.Headline.create({ text: copy.title, role: 'h2', ground: 'void', width: spanW(6) });
     place(title.el, space.margin, 192);
     const s1 = C.Headline.create({ text: copy.s1, role: 'body', ground: 'void', width: spanW(6) });
-    place(s1.el, space.margin, 470);
-    const num13 = C.BigNumber.create({ display: copy.s2.value, label: copy.s2.label, kind: provKind(f13 && f13.label), size: 'h1', ground: 'void', width: spanW(6) });
+    place(s1.el, space.margin, 300);
+    const fig13 = splitFigure(copy.s2.value);
+    const fig700 = splitFigure(copy.s3.value);
+    const num13 = C.BigNumber.create({ display: fig13.figure, unit: fig13.unit || undefined, label: copy.s2.label, kind: provKind(f13 && f13.label), size: 'h1', ground: 'void', width: spanW(6) });
     place(num13.el, space.margin, 150);
-    const num700 = C.BigNumber.create({ display: copy.s3.value, label: copy.s3.label, kind: provKind(f700 && f700.label), size: 'h1', ground: 'void', width: spanW(6) });
+    const num700 = C.BigNumber.create({ display: fig700.figure, unit: fig700.unit || undefined, label: copy.s3.label, kind: provKind(f700 && f700.label), size: 'h1', ground: 'void', width: spanW(6) });
     place(num700.el, space.margin, 560);
     const motive = C.Headline.create({ text: copy.motive, role: 'h2', ground: 'void', width: spanW(7), highlight: 'an attempt to cheat the evaluation.' });
     place(motive.el, space.margin, 404);
@@ -436,7 +440,19 @@ export default {
     gsap.set(clock, { autoAlpha: 0 });
     let dayShown = 0;
 
-    const parts = [title, s1, num13, num700, motive, source, motiveSrc];
+    // Not a one-off (director's pick): OpenAI's own post, 23 Oct, as a calm last state.
+    const CARD_ID = 'x-openai-securing-training-environment';
+    const cardSrc = ctx.assets.capture(CARD_ID);
+    const cardMeta = ctx.assets.captureMeta(CARD_ID);
+    const ci = captureInfo(cardMeta);
+    const CARD_STEP = ctx.beat.steps.length >= 5 ? 4 : -1;
+    const card = cardSrc && CARD_STEP > 0 ? croppedCard(C, { id: CARD_ID, src: cardSrc, alt: (cardMeta && cardMeta.title) || '', width: spanW(9), meta: { counts: ci.views, captured: ci.captured } }) : null;
+    if (card) place(card.el, (1920 - spanW(9)) / 2, 300);
+    const srcCard = card ? C.SourceLine.create({ kind: 'labReported', text: [ci.who, ci.date].filter(Boolean).join(' · '), ground: 'void' }) : null;
+    if (srcCard) place(srcCard.el, space.margin, space.footer.y);
+    const scrimC = C.Scrim.create({ ground: 'void', side: 'center', extent: 1.1, strength: 0.9 });
+    root.append(scrimC.el);
+    const parts = [title, s1, num13, num700, motive, source, motiveSrc, card, srcCard].filter(Boolean);
     parts.forEach((p) => root.append(p.el));
     gsap.set([scrimL.el, scrimB.el], { autoAlpha: 0 });
 
@@ -464,12 +480,18 @@ export default {
       tl.to(U.leak, { value: broken ? 1 : 0, duration: forward ? 6.4 : D(0.5), ease: 'none' }, forward ? 1.3 : 0);
       tl.to(U.infect, { value: broken ? 1 : 0, duration: forward ? 5.6 : D(0.5), ease: 'none', onUpdate: setDay }, forward ? 2.8 : 0);
       tl.to(floorU.uAgentPool, { value: broken ? 0.42 : 1, duration: forward ? 5 : D(0.5) }, forward ? 1.5 : 0);
-      tl.to(world.post.bloom, { intensity: step === 3 ? 0.55 : 1.15, duration: D(1.1) }, 0);
+      const tc = broken ? traceHot : traceCool;
+      tl.to(traces.material.color, { r: tc.r, g: tc.g, b: tc.b, duration: forward ? 4.5 : D(0.5) }, forward ? 1.6 : 0);
+      const calm = step === CARD_STEP;
+      tl.to(world.post.bloom, { intensity: step >= 3 ? 0.55 : 1.15, duration: D(1.1) }, 0);
 
-      tl.add(scrimL.set({ visible: true }, { animate }), 0);
+      tl.add(scrimL.set({ visible: !calm }, { animate }), 0);
+      tl.add(scrimC.set({ visible: calm }, { animate }), D(calm ? 0.2 : 0));
+      if (card) tl.add(card.set({ visible: calm }, { animate }), D(calm ? 0.9 : 0));
+      if (srcCard) tl.add(srcCard.set({ visible: calm }, { animate }), D(calm ? 1.4 : 0));
       tl.add(scrimB.set({ visible: step >= 1 }, { animate }), 0);
-      tl.add(title.set({ visible: step <= 1 }, { animate }), step <= 1 ? D(0.3) : 0);
-      tl.add(s1.set({ visible: step === 1 }, { animate }), D(0.6));
+      tl.add(title.set({ visible: step === 0 }, { animate }), step === 0 ? D(0.3) : 0);
+      tl.add(s1.set({ visible: step === 1 }, { animate }), D(step === 1 ? 0.7 : 0));
       tl.add(num13.set({ visible: step === 2 }, { animate }), D(step === 2 ? 0.9 : 0));
       tl.add(num700.set({ visible: step === 2 }, { animate }), D(step === 2 ? 1.25 : 0));
       tl.add(motive.set({ visible: step === 3 }, { animate }), D(step === 3 ? 1.0 : 0));
@@ -497,10 +519,11 @@ export default {
         rig.update(time);
       },
       dispose() {
-        gsap.killTweensOf([rig.state, U.crack, U.hole, U.leak, U.infect, floorU.uAgentPool, world.post.bloom, clock]);
+        gsap.killTweensOf([rig.state, U.crack, U.hole, U.leak, U.infect, floorU.uAgentPool, world.post.bloom, clock, traces.material.color]);
         parts.forEach((p) => p.destroy());
         scrimL.destroy();
         scrimB.destroy();
+        scrimC.destroy();
         world.dispose();
         root.replaceChildren();
       },

@@ -46,23 +46,24 @@ export default calmScene('lean-harness', (ctx, K) => {
   const bars = LINES.map(([ind, w], i) => {
     const b = el('div', '', block);
     const x = ind * 40;
-    Object.assign(b.style, { position: 'absolute', left: `${x}px`, top: `${i * LH}px`, width: `${Math.round((BW - x) * w)}px`, height: `${BH}px`, borderRadius: '7px', backgroundColor: G.quiet, border: `2px solid ${G.quiet}`, boxSizing: 'border-box' });
+    Object.assign(b.style, { position: 'absolute', left: `${x}px`, top: `${i * LH}px`, width: `${Math.round((BW - x) * w)}px`, height: `${BH}px`, borderRadius: '7px', backgroundColor: G.quiet, transformOrigin: '0 50%' });
     return b;
   });
   const keep = KEEP.map((i) => bars[i]);
   const gone = bars.filter((_, i) => !KEEP.includes(i));
-  // Deleted lines stay as ghosts (2 px outlines in the rule colour), so the still frame says "90 % gone".
+  // Deleted lines flatten to 2 px traces (scaleY 1/7), so the still frame still says "90 % gone".
+  const FLAT = 2 / BH;
   const blockB = K.block(block, {
     enter(tl) {
-      gsap.set(bars, { autoAlpha: 1, x: 0, backgroundColor: G.quiet, borderColor: G.quiet });
+      gsap.set(bars, { autoAlpha: 1, x: 0, scaleY: 1, backgroundColor: G.quiet });
       tl.fromTo(bars, { autoAlpha: 0, x: -12 }, { autoAlpha: 1, x: 0, duration: 0.6, ease: 'power3.out', stagger: 0.025 }, 0);
       // delete: bottom-first, like a selection being removed
-      tl.to([...gone].reverse(), { backgroundColor: 'rgba(255,255,255,0)', borderColor: G.rule, duration: 0.35, ease: 'power2.in', stagger: 0.05 }, 1.1);
-      tl.to(keep, { backgroundColor: G.fg, borderColor: G.fg, duration: 0.6, ease: 'power2.inOut' }, 2.1);
+      tl.to([...gone].reverse(), { scaleY: FLAT, duration: 0.35, ease: 'power2.in', stagger: 0.05 }, 1.1);
+      tl.to(keep, { backgroundColor: G.fg, duration: 0.6, ease: 'power2.inOut' }, 2.1);
     },
     settle() {
-      gsap.set(gone, { autoAlpha: 1, x: 0, backgroundColor: 'rgba(255,255,255,0)', borderColor: G.rule });
-      gsap.set(keep, { autoAlpha: 1, x: 0, backgroundColor: G.fg, borderColor: G.fg });
+      gsap.set(gone, { autoAlpha: 1, x: 0, scaleY: FLAT, backgroundColor: G.quiet });
+      gsap.set(keep, { autoAlpha: 1, x: 0, scaleY: 1, backgroundColor: G.fg });
     },
   });
 
