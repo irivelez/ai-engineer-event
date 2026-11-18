@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>AI Engineer CODE Summit 2026 · Day One, retold</title>
+<style>
+/* =========================================================
+   FONTS (bundled locally so the keynote runs offline)
+   Newsreader = the human voice (quotes) · Archivo = names & titles
+   Doto = the broadcast's dot-matrix LED (numbers, timecodes) · Plex Mono = labels
+   ========================================================= */
+@font-face{font-family:'Newsreader';src:url(fonts/newsreader-var.woff2) format('woff2');font-weight:200 800;font-style:normal;font-display:block}
+@font-face{font-family:'Newsreader';src:url(fonts/newsreader-italic-var.woff2) format('woff2');font-weight:200 800;font-style:italic;font-display:block}
+@font-face{font-family:'Archivo';src:url(fonts/archivo-var.woff2) format('woff2');font-weight:100 900;font-stretch:62% 125%;font-display:block}
+@font-face{font-family:'Doto';src:url(fonts/doto-var.woff2) format('woff2');font-weight:100 900;font-display:block}
+@font-face{font-family:'Plex Mono';src:url(fonts/plexmono-400.woff2) format('woff2');font-weight:400;font-display:block}
+@font-face{font-family:'Plex Mono';src:url(fonts/plexmono-500.woff2) format('woff2');font-weight:500;font-display:block}
+
+/* =========================================================
+   VIEWPORT BASE: fixed 1920x1080 stage scaled as a whole
+   ========================================================= */
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#000}
+.deck-viewport{position:fixed;inset:0;overflow:hidden;background:#000}
+.deck-stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;background:#000}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;display:block;visibility:hidden;opacity:0;pointer-events:none;background:#000}
+.slide.active{visibility:visible;opacity:1;pointer-events:auto;z-index:2}
+img,video,canvas,svg{max-width:100%;max-height:100%}
+
+/* =========================================================
+   TOKENS
+   ========================================================= */
+:root{
+  --ink:#050605; --panel:#0b0e0c;
+  --bone:#ECE8DE; --ash:#8f938c; --dim:#50544f; --line:rgba(236,232,222,.14);
+  --led:#EADB8C; --led-glow:rgba(234,219,140,.42); --rec:#ff4d3d;
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;
+  --sans:'Archivo','Helvetica Neue',Arial,sans-serif;
+  --mono:'Plex Mono',ui-monospace,Menlo,monospace;
+  --dot:'Doto','Plex Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-cam:cubic-bezier(.33,.08,.2,1);
+}
+.deck-stage{color:var(--bone);font-family:var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+
+/* Slide cross-dissolve: the outgoing slide fades, the incoming one rises from black */
+.slide{transition:opacity .85s var(--ease),visibility 0s linear .85s}
+.slide.active{transition:opacity 1.1s var(--ease) .12s,visibility 0s}
+
+/* =========================================================
+   ATMOSPHERE: film grain + vignette over everything
+   ========================================================= */
+.grain{position:absolute;inset:-60%;z-index:80;pointer-events:none;opacity:.075;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}17%{transform:translate(-4%,2%)}33%{transform:translate(3%,-3%)}50%{transform:translate(-2%,-5%)}67%{transform:translate(5%,1%)}83%{transform:translate(-5%,4%)}100%{transform:translate(0,0)}}
+.vignette{position:absolute;inset:0;z-index:79;pointer-events:none;background:radial-gradient(120% 95% at 50% 46%,transparent 58%,rgba(0,0,0,.62) 100%)}
+
+/* =========================================================
+   CHROME: event slug, replay bug, counter, broadcast timeline
+   ========================================================= */
+.chrome{position:absolute;z-index:70;font:500 17px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--ash);transition:opacity .8s var(--ease)}
+.chrome.slug{left:120px;top:54px}
+.chrome.slug b{color:var(--bone);font-weight:500}
+.chrome.bug{right:120px;top:54px;display:flex;align-items:center;gap:14px}
+.chrome.bug i{width:12px;height:12px;border-radius:50%;background:var(--rec);box-shadow:0 0 12px var(--rec);animation:blink 2.4s steps(1) infinite}
+@keyframes blink{0%,60%{opacity:1}61%,100%{opacity:.25}}
+.chrome.count{right:120px;bottom:104px;letter-spacing:.18em;font-size:16px}
+.chrome.count b{color:var(--bone);font-weight:500}
+.stage-quiet .chrome,.stage-quiet .timeline{opacity:0}
+.on-shot .chrome.slug,.on-shot .chrome.bug{opacity:0}
+
+/* The day as a 09:00 to 18:00 broadcast ruler. The playhead travels to each moment's real clock time. */
+.timeline{position:absolute;left:120px;right:120px;bottom:44px;height:44px;z-index:70;transition:opacity .8s var(--ease)}
+.tl-base{position:absolute;left:0;right:0;bottom:12px;height:1px;background:var(--line)}
+.tl-tick{position:absolute;bottom:12px;width:1px;height:7px;background:rgba(236,232,222,.22)}
+.tl-tick.h{height:13px;background:rgba(236,232,222,.4)}
+.tl-hour{position:absolute;bottom:-14px;transform:translateX(-50%);font:500 13px/1 var(--mono);letter-spacing:.08em;color:var(--dim)}
+.tl-act{position:absolute;bottom:31px;height:3px;background:rgba(236,232,222,.12);transition:background .8s var(--ease)}
+.tl-act span{position:absolute;left:0;bottom:9px;font:500 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--dim);white-space:nowrap;transition:color .8s var(--ease)}
+.tl-act.on{background:var(--led);box-shadow:0 0 10px var(--led-glow)}
+.tl-act.on span{color:var(--led)}
+.tl-dot{position:absolute;bottom:9px;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:rgba(236,232,222,.3);cursor:pointer;transition:background .4s,transform .4s}
+.tl-dot:hover{background:var(--bone);transform:scale(1.6)}
+.tl-dot.on{background:var(--led);box-shadow:0 0 8px var(--led-glow)}
+.tl-head{position:absolute;bottom:4px;width:2px;height:58px;margin-left:-1px;background:linear-gradient(to top,var(--led),rgba(234,219,140,.25));box-shadow:0 0 14px var(--led-glow);transition:left 1.25s var(--ease),opacity .6s}
+.tl-head b{position:absolute;bottom:64px;left:50%;transform:translateX(-50%);font:700 26px/1 var(--dot);letter-spacing:.06em;color:var(--led);text-shadow:0 0 12px var(--led-glow);white-space:nowrap;padding:4px 8px;background:rgba(0,0,0,.55)}
+.tl-head.off{opacity:0}
+
+/* =========================================================
+   SHARED TEXT PIECES
+   ========================================================= */
+.kicker{display:flex;align-items:center;gap:16px;font:500 20px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ash)}
+.kicker .tag{color:var(--led)}
+.kicker .sep{width:26px;height:1px;background:var(--dim)}
+.kicker a{color:var(--ash);text-decoration:none;border-bottom:1px solid var(--dim);padding-bottom:3px}
+.kicker a:hover{color:var(--led);border-color:var(--led)}
+.q{font-family:var(--serif);font-weight:370;color:var(--bone);font-variation-settings:'opsz' 72;letter-spacing:-.012em;text-wrap:balance}
+.q em{font-style:italic;color:var(--led)}
+.w{display:inline-block;opacity:0;transform:translateY(16px);filter:blur(9px)}
+.active .w{animation:wIn 1s var(--ease) forwards;animation-delay:calc(var(--d0,1.2s) + var(--i) * var(--st,28ms))}
+@keyframes wIn{to{opacity:1;transform:none;filter:blur(0)}}
+.who{font:600 27px/1.25 var(--sans);color:var(--bone);font-stretch:105%}
+.who span{font-weight:400;color:var(--ash)}
+.talk{font:italic 300 26px/1.3 var(--serif);color:var(--ash);font-variation-settings:'opsz' 24}
+.rv{opacity:0;transform:translateY(22px);transition:opacity 1s var(--ease),transform 1.2s var(--ease)}
+.active .rv{opacity:1;transform:none;transition-delay:var(--d,0s)}
+
+/* =========================================================
+   SLIDE: SHOT (a real frame from the stream, the camera pushes toward the key element)
+   ========================================================= */
+.cam{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;will-change:transform}
+.cam img{display:block;width:1920px;height:1080px;max-width:none;max-height:none}
+.s-shot.active .cam{animation:push var(--dur,13s) var(--ease-cam) .15s forwards}
+@keyframes push{from{transform:translate(0,0) scale(1)}to{transform:translate(var(--tx),var(--ty)) scale(var(--s))}}
+.fbox{position:absolute;pointer-events:none}
+.fbox i{position:absolute;width:30px;height:30px;border:3px solid var(--led);opacity:0;filter:drop-shadow(0 0 7px var(--led-glow))}
+.fbox i:nth-child(1){left:-12px;top:-12px;border-right:0;border-bottom:0;transform-origin:0 0}
+.fbox i:nth-child(2){right:-12px;top:-12px;border-left:0;border-bottom:0;transform-origin:100% 0}
+.fbox i:nth-child(3){left:-12px;bottom:-12px;border-right:0;border-top:0;transform-origin:0 100%}
+.fbox i:nth-child(4){right:-12px;bottom:-12px;border-left:0;border-top:0;transform-origin:100% 100%}
+.active .fbox i{animation:bracket .8s var(--ease) 2s forwards}
+@keyframes bracket{from{opacity:0;transform:scale(2.2)}to{opacity:1;transform:scale(1)}}
+.s-shot .topshade{position:absolute;left:0;right:0;top:0;height:170px;background:linear-gradient(to bottom,rgba(0,0,0,.62),rgba(0,0,0,0))}
+.s-shot .topshade::after{content:'';position:absolute;left:0;right:0;top:910px;height:170px;background:linear-gradient(to top,rgba(0,0,0,.85),rgba(0,0,0,0))}
+/* scrim height follows the measured caption (--cs = caption block + its margin) */
+.s-shot .scrim{position:absolute;inset:0;opacity:0;transition:opacity 1.5s var(--ease);
+  background:linear-gradient(to top,#000 0px,rgba(0,0,0,.96) calc(var(--cs,430px) - 30px),rgba(0,0,0,.8) calc(var(--cs,430px) + 8px),rgba(0,0,0,.35) calc(var(--cs,430px) + 36px),rgba(0,0,0,0) calc(var(--cs,430px) + 80px))}
+.s-shot.cap-top .scrim{background:linear-gradient(to bottom,#000 0px,rgba(0,0,0,.96) calc(var(--cs,430px) - 30px),rgba(0,0,0,.8) calc(var(--cs,430px) + 8px),rgba(0,0,0,.35) calc(var(--cs,430px) + 36px),rgba(0,0,0,0) calc(var(--cs,430px) + 80px)),linear-gradient(to top,rgba(0,0,0,.7),rgba(0,0,0,0) 150px)}
+.s-shot.active .scrim{opacity:1;transition-delay:1.9s}
+.s-shot .cap{position:absolute;left:120px;bottom:160px;width:1500px}
+.s-shot.cap-top .cap{bottom:auto;top:118px}
+.s-shot .cap .kicker{margin-bottom:26px}
+.s-shot .q{font-size:60px;line-height:1.1;max-width:1480px}
+.s-shot .q.long{font-size:50px}
+.s-shot .meta{display:flex;align-items:baseline;gap:24px;margin-top:28px}
+.clean .s-shot .scrim,.clean .s-shot .cap{opacity:0!important;transition:opacity .4s}
+
+/* =========================================================
+   SLIDE: QUOTE CARD (designed, for lines without a supporting slide)
+   ========================================================= */
+.s-quote .bg{position:absolute;inset:-40px;background-size:cover;background-position:center;filter:blur(16px) brightness(.26) saturate(.7);transform:scale(1.08)}
+.s-quote.active .bg{animation:drift 16s linear forwards}
+@keyframes drift{from{transform:scale(1.08) translateX(0)}to{transform:scale(1.16) translateX(-30px)}}
+.s-quote .mark{position:absolute;left:104px;top:120px;font:italic 400 300px/1 var(--serif);color:var(--led);opacity:0;text-shadow:0 0 40px var(--led-glow);transition:opacity 1.4s var(--ease) .3s}
+.s-quote.active .mark{opacity:.9}
+.s-quote .body{position:absolute;left:170px;right:220px;top:50%;transform:translateY(-54%)}
+.s-quote .q{font-size:84px;line-height:1.06}
+.s-quote .q.long{font-size:66px;line-height:1.1}
+.s-quote .attr{display:flex;align-items:center;gap:30px;margin-top:56px}
+.s-quote .face{width:128px;height:128px;border-radius:50%;background-size:cover;background-position:center;border:2px solid rgba(236,232,222,.25);filter:saturate(.85)}
+.s-quote .kicker{margin-top:16px}
+
+/* =========================================================
+   SLIDE: STAT (a number in broadcast LED, with its receipt frame)
+   ========================================================= */
+.s-stat .grid-bg{position:absolute;inset:0;opacity:.5;background-image:radial-gradient(rgba(236,232,222,.10) 1.2px,transparent 1.4px);background-size:22px 22px;mask-image:radial-gradient(80% 80% at 30% 50%,#000 30%,transparent 75%)}
+.s-stat .left{position:absolute;left:150px;top:150px;width:930px}
+.s-stat .num{font:800 280px/0.9 var(--dot);color:var(--led);text-shadow:0 0 34px var(--led-glow);letter-spacing:-.02em;white-space:nowrap}
+.s-stat .num.mid{font-size:210px}
+.s-stat .num.small{font-size:150px}
+.s-stat .label{margin-top:34px;font:700 50px/1.08 var(--sans);font-stretch:112%;letter-spacing:-.01em;color:var(--bone);text-wrap:balance}
+.s-stat .ctx{margin-top:30px;max-width:880px}
+.s-stat .ctx .q{font-size:36px;font-style:italic;font-weight:330;color:#cfcbc2;line-height:1.25}
+.s-stat .who{margin-top:34px}
+.s-stat .receipt{position:absolute;right:120px;top:206px;width:704px}
+.s-stat .receipt .frame{width:704px;height:396px;background-size:cover;background-position:center;border:1px solid rgba(236,232,222,.22);box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.s-stat .receipt .kicker{margin-top:20px;font-size:16px}
+
+/* =========================================================
+   SLIDE: VERSUS (then vs now / belief vs reality)
+   ========================================================= */
+.s-versus .vt{position:absolute;left:190px;right:190px;top:150px;font:500 22px/1.4 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--led)}
+.s-versus .wrap{position:absolute;left:120px;right:120px;top:230px;bottom:240px;display:grid;grid-template-columns:1fr 1fr;gap:0}
+.s-versus .col{padding:0 70px;display:flex;flex-direction:column;justify-content:center}
+.s-versus .col+.col{border-left:1px solid rgba(234,219,140,.5)}
+.s-versus .lab{font:800 46px/1 var(--dot);letter-spacing:.08em;color:var(--dim);margin-bottom:34px}
+.s-versus .col.now .lab{color:var(--led);text-shadow:0 0 18px var(--led-glow)}
+.s-versus .q{font-size:62px;line-height:1.08}
+.s-versus .col.then .q{color:#a9a69e}
+.s-versus .foot{position:absolute;left:190px;bottom:148px}
+
+/* =========================================================
+   SLIDE: ACT CARD (chapter of the day)
+   ========================================================= */
+.s-act .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(234,219,140,.13) 1.3px,transparent 1.6px);background-size:26px 26px;mask-image:radial-gradient(70% 70% at 50% 50%,#000 10%,transparent 80%);opacity:0;transition:opacity 2s var(--ease)}
+.s-act.active .dots{opacity:1}
+.s-act .inner{position:absolute;left:150px;right:150px;top:190px}
+.s-act .num{font:800 54px/1 var(--dot);letter-spacing:.14em;color:var(--led);text-shadow:0 0 16px var(--led-glow)}
+.s-act .num span{color:var(--ash);font:500 22px/1 var(--mono);letter-spacing:.2em;margin-left:28px;text-shadow:none;vertical-align:middle}
+.s-act h2{margin:38px 0 0;font:850 168px/0.94 var(--sans);font-stretch:125%;text-transform:uppercase;white-space:nowrap;letter-spacing:.42em;opacity:0;transition:letter-spacing 2.2s var(--ease),opacity 1.6s var(--ease)}
+.s-act.active h2{letter-spacing:.02em;opacity:1}
+.s-act .rule{height:2px;width:100%;margin:46px 0 40px;background:linear-gradient(90deg,var(--led),rgba(234,219,140,0));transform:scaleX(0);transform-origin:0 50%;transition:transform 1.6s var(--ease) .5s}
+.s-act.active .rule{transform:scaleX(1)}
+.s-act .sub{font:italic 330 50px/1.2 var(--serif);color:#d8d4ca;max-width:1400px}
+.s-act .cast{margin-top:40px;font:500 21px/1.7 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ash);max-width:1560px}
+.s-act .rundown{margin-top:46px;display:grid;grid-template-columns:1fr;row-gap:14px;max-width:900px}
+.s-act .rundown.two{grid-template-columns:1fr 1fr;column-gap:80px;max-width:1620px}
+.s-act .rd{display:grid;grid-template-columns:96px auto 1fr;column-gap:22px;align-items:baseline;border-bottom:1px solid rgba(236,232,222,.08);padding-bottom:12px}
+.s-act .rd b{font:700 24px/1 var(--dot);color:var(--led);letter-spacing:.04em}
+.s-act .rd span{font:600 24px/1.2 var(--sans);color:var(--bone);font-stretch:104%;white-space:nowrap}
+.s-act .rd i{font:italic 330 23px/1.2 var(--serif);color:var(--ash);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* =========================================================
+   SLIDE: COLD OPEN + TITLE
+   ========================================================= */
+.s-cold .clock{position:absolute;left:0;right:0;top:300px;text-align:center;font:800 120px/1 var(--dot);color:var(--led);letter-spacing:.06em;text-shadow:0 0 30px var(--led-glow)}
+.s-cold .clock small{display:block;margin-top:26px;font:500 20px/1 var(--mono);letter-spacing:.3em;color:var(--ash);text-shadow:none}
+.s-cold .body{position:absolute;left:220px;right:220px;top:560px;text-align:center}
+.s-cold .q{font-size:76px;line-height:1.08}
+.s-cold .who{margin-top:44px;font-size:24px;letter-spacing:.02em}
+.s-title .bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.34) saturate(.8)}
+.s-title.active .bg{animation:drift 20s linear forwards}
+.s-title .shade{position:absolute;inset:0;background:linear-gradient(to top,#000 4%,rgba(0,0,0,.2) 60%,rgba(0,0,0,.65)),linear-gradient(to right,rgba(0,0,0,.75),rgba(0,0,0,0) 70%)}
+.s-title .inner{position:absolute;left:150px;bottom:212px;width:1620px}
+.s-title .eyebrow{font:500 22px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:var(--led)}
+.s-title h1{margin:40px 0 0;font:340 150px/0.98 var(--serif);font-variation-settings:'opsz' 72;letter-spacing:-.025em;color:var(--bone);text-wrap:balance}
+.s-title h1 em{font-style:italic;font-weight:300;color:var(--led)}
+.s-title .sub{margin-top:40px;font:400 30px/1.4 var(--sans);color:#cbc7bd;max-width:1200px}
+.s-title .facts{margin-top:46px;display:flex;gap:56px;font:500 19px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--ash)}
+.s-title .facts b{color:var(--bone);font-weight:500}
+.sweep{position:absolute;inset:0;pointer-events:none;background:linear-gradient(100deg,transparent 30%,rgba(234,219,140,.10) 45%,rgba(255,255,255,.16) 50%,rgba(234,219,140,.10) 55%,transparent 70%);transform:translateX(-120%)}
+.active .sweep{animation:sweep 3.4s var(--ease) 1.4s forwards}
+@keyframes sweep{to{transform:translateX(120%)}}
+
+/* =========================================================
+   SLIDE: NUMBERS (the day, counted)
+   ========================================================= */
+.s-numbers .head{position:absolute;left:150px;top:150px}
+.s-numbers .head h3{margin:22px 0 0;font:340 84px/1 var(--serif);letter-spacing:-.02em}
+.s-numbers .cells{position:absolute;left:150px;right:150px;top:390px;display:grid;grid-template-columns:repeat(3,1fr);column-gap:70px;row-gap:64px}
+.s-numbers .cell{border-top:1px solid var(--line);padding-top:26px}
+.s-numbers .n{font:800 98px/1 var(--dot);color:var(--led);text-shadow:0 0 22px var(--led-glow);white-space:nowrap}
+.s-numbers .l{margin-top:18px;font:500 27px/1.25 var(--sans);color:var(--bone);text-wrap:balance}
+.s-numbers .src{margin-top:12px;font:500 16px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ash)}
+
+/* =========================================================
+   SLIDE: FINALE + CREDITS ROLL
+   ========================================================= */
+.s-finale .body{position:absolute;left:180px;right:180px;top:50%;transform:translateY(-58%);text-align:center}
+.s-finale .q{font-size:118px;line-height:1.02;font-style:italic;font-weight:320}
+.s-finale .who{margin-top:56px;font-size:26px}
+.s-finale .bg{position:absolute;inset:-40px;background-size:cover;background-position:center;filter:blur(18px) brightness(.17) saturate(.55);transform:scale(1.06)}
+.s-finale.active .bg{animation:drift 18s linear forwards}
+.s-finale .sub{margin:40px auto 0;max-width:1200px;font:italic 330 38px/1.3 var(--serif);color:#cfcbc2}
+.ctx-line{margin-top:18px;font:400 24px/1.4 var(--sans);color:var(--ash);max-width:1320px}
+.s-stat .ctx-line{max-width:880px}
+.s-quote .note{margin-bottom:40px;font:500 20px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--led);max-width:1300px}
+.s-credits .roll{position:absolute;left:0;right:0;top:1080px;text-align:center}
+.s-credits.active .roll{animation:roll var(--roll,46s) linear forwards}
+@keyframes roll{to{transform:translateY(calc(-100% - 1180px))}}
+.s-credits h4{margin:0 0 70px;font:500 22px/1 var(--mono);letter-spacing:.34em;color:var(--led);text-transform:uppercase}
+.s-credits .p{margin:0 0 30px;display:grid;grid-template-columns:1fr 1fr;column-gap:46px;align-items:baseline}
+.s-credits .p b{justify-self:end;font:600 34px/1.2 var(--sans);font-stretch:108%}
+.s-credits .p span{justify-self:start;font:italic 330 30px/1.2 var(--serif);color:var(--ash)}
+.s-credits .end{margin-top:140px;font:500 18px/1.9 var(--mono);letter-spacing:.14em;color:var(--ash);text-transform:uppercase}
+.s-credits .end a{color:var(--led);text-decoration:none}
+.s-credits .big{margin:0 0 110px;font:340 96px/1 var(--serif);letter-spacing:-.02em}
+
+/* =========================================================
+   OVERLAYS: autoplay bar, help, overview grid
+   ========================================================= */
+.ap{position:fixed;left:0;top:0;height:3px;width:0;background:var(--led);box-shadow:0 0 10px var(--led-glow);z-index:200}
+.hint{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:200;font:500 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:rgba(236,232,222,.45);transition:opacity 1.2s;pointer-events:none;white-space:nowrap}
+.hint.gone{opacity:0}
+.overview{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.94);overflow:auto;padding:48px;display:none}
+.overview.open{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;align-content:start}
+.ov{cursor:pointer;border:1px solid rgba(236,232,222,.15);background:#0b0d0c;color:var(--bone);font:500 12px/1.35 var(--mono);text-align:left;padding:0;overflow:hidden}
+.ov:hover,.ov.on{border-color:var(--led)}
+.ov div{aspect-ratio:16/9;background:#111 center/cover no-repeat;position:relative}
+.ov div span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:14px;text-align:center;font:600 15px/1.25 var(--sans);color:var(--led);text-transform:uppercase;letter-spacing:.06em}
+.ov p{margin:0;padding:10px 12px;color:var(--ash)}
+.ov p b{color:var(--bone);font-weight:500}
+
+/* =========================================================
+   GATE: press play (fullscreen + autoplay) or step through by hand
+   ========================================================= */
+.gate{position:fixed;inset:0;z-index:400;background:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .9s var(--ease),visibility 0s linear .9s}
+.gate.gone{opacity:0;visibility:hidden;pointer-events:none}
+.g-in{text-align:center;color:var(--bone);padding:24px}
+.g-eyebrow{font:500 clamp(10px,1vw,15px)/1.4 var(--mono);letter-spacing:.32em;text-transform:uppercase;color:var(--ash)}
+.g-title{margin:clamp(16px,2.2vw,32px) 0 0;font:340 clamp(34px,5.6vw,96px)/1 var(--serif);letter-spacing:-.02em;font-variation-settings:'opsz' 72}
+.g-title em{font-style:italic;color:var(--led)}
+.g-play{margin:clamp(28px,3.8vw,58px) auto 0;display:flex;align-items:center;gap:18px;background:none;border:1px solid rgba(234,219,140,.45);color:var(--led);padding:14px 28px 14px 16px;border-radius:999px;font:500 clamp(11px,1vw,15px)/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;cursor:pointer;animation:pulse 2.6s ease-in-out infinite}
+.g-play i{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--led);color:#000;font-style:normal;font-size:16px;box-shadow:0 0 24px var(--led-glow)}
+.g-play small{color:var(--ash);letter-spacing:.16em}
+@keyframes pulse{0%,100%{box-shadow:0 0 22px rgba(234,219,140,.10)}50%{box-shadow:0 0 60px rgba(234,219,140,.30)}}
+.g-alt{margin-top:22px;font:500 clamp(9px,.85vw,13px)/1.7 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.g-alt b{color:var(--ash);font-weight:500}
+
+/* =========================================================
+   SLIDE: MONTAGE (the whole day in flash cuts; the clock races 09:00 to 18:00)
+   ========================================================= */
+.chrome-off .chrome{opacity:0}
+.s-montage .mf{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0}
+.s-montage .mf.on{opacity:1;animation:mfz .3s linear forwards}
+@keyframes mfz{from{transform:scale(1.07);filter:brightness(1.3) contrast(1.06)}to{transform:scale(1.01);filter:brightness(.9)}}
+.s-montage .mshade{position:absolute;inset:0;pointer-events:none;background:radial-gradient(110% 95% at 50% 45%,rgba(0,0,0,0) 45%,rgba(0,0,0,.7))}
+.s-montage .mclock{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:16px 34px;background:rgba(0,0,0,.7);font:800 104px/1 var(--dot);letter-spacing:.06em;color:var(--led);text-shadow:0 0 34px var(--led-glow);opacity:0;transition:opacity .4s}
+.s-montage.active .mclock{opacity:1;transition-delay:.2s}
+.s-montage.done .mclock{opacity:0;transition-delay:0s}
+.s-montage .mtitle{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;opacity:0;transition:opacity 1.3s var(--ease)}
+.s-montage.done .mtitle{opacity:1;transition-delay:.4s}
+.s-montage .mtitle b{display:block;font:850 96px/1 var(--sans);font-stretch:125%;text-transform:uppercase;letter-spacing:.03em;color:var(--bone)}
+.s-montage .mtitle span{display:block;margin-top:34px;font:500 22px/1 var(--mono);letter-spacing:.3em;text-transform:uppercase;color:var(--led)}
+.timeline.fast .tl-head{transition:left .1s linear,opacity .6s}
+
+/* Act cards: a film strip of the chapter's real frames drifts behind the title */
+.s-act .strip{position:absolute;left:0;right:0;top:262px;height:240px;overflow:hidden;opacity:0;transition:opacity 2.4s var(--ease) .3s;-webkit-mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent);mask-image:linear-gradient(90deg,transparent,#000 16%,#000 84%,transparent)}
+.s-act.active .strip{opacity:.19}
+.s-act .track{display:flex;gap:14px;width:max-content;animation:strip 70s linear infinite;animation-play-state:paused}
+.s-act.active .track{animation-play-state:running}
+.s-act .track i{display:block;width:426px;height:240px;flex:none;background-size:cover;background-position:center;filter:grayscale(.35)}
+@keyframes strip{to{transform:translateX(-50%)}}
+.s-act .inner{z-index:1}
+
+/* Rack focus: every frame starts soft and snaps sharp as the camera moves in */
+.s-shot .cam img{filter:blur(9px) brightness(.55)}
+.s-shot.active .cam img{animation:rack 1.5s var(--ease) .05s forwards}
+@keyframes rack{to{filter:blur(0) brightness(1)}}
+
+/* LED numbers power on with a flicker before they count */
+.s-stat.active .num,.s-numbers.active .n{animation:ledOn .75s steps(1) both}
+@keyframes ledOn{0%{opacity:0}14%{opacity:.85}26%{opacity:.12}40%{opacity:1}54%{opacity:.3}68%{opacity:1}}
+
+/* =========================================================
+   SLIDE: TRIO (three lines the day kept coming back to)
+   ========================================================= */
+.s-trio .head{position:absolute;left:150px;top:150px}
+.s-trio .head h3{margin:22px 0 0;font:340 84px/1 var(--serif);letter-spacing:-.02em}
+.s-trio .three{position:absolute;left:150px;right:150px;top:410px;display:grid;grid-template-columns:repeat(3,1fr);column-gap:84px}
+.s-trio .col{border-top:2px solid rgba(234,219,140,.55);padding-top:36px}
+.s-trio .col .q{font-size:60px;line-height:1.06}
+.s-trio .col .who{margin-top:36px;font-size:23px}
+.s-trio .col .kicker{margin-top:14px;font-size:16px}
+
+/* =========================================================
+   SLIDE: MOSAIC (every frame of the day, filling in as it happened)
+   ========================================================= */
+.s-mosaic .tiles{position:absolute;inset:0;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr)}
+.s-mosaic .tiles i{background-size:cover;background-position:center;opacity:0;transform:scale(1.1);transition:opacity .9s var(--ease),transform 1.6s var(--ease)}
+.s-mosaic.active .tiles i{opacity:.66;transform:none;transition-delay:calc(var(--k) * 42ms)}
+.s-mosaic .veil{position:absolute;inset:0;opacity:0;transition:opacity 1.8s var(--ease) 2.9s;background:radial-gradient(62% 58% at 50% 50%,rgba(0,0,0,.93) 0%,rgba(0,0,0,.78) 55%,rgba(0,0,0,.4) 100%)}
+.s-mosaic.active .veil{opacity:1}
+.s-mosaic .end{position:absolute;left:0;right:0;top:50%;transform:translateY(-52%);text-align:center}
+.s-mosaic .end h1{margin:0;font:340 132px/1 var(--serif);letter-spacing:-.025em;font-variation-settings:'opsz' 72}
+.s-mosaic .end h1 em{font-style:italic;color:var(--led)}
+.s-mosaic .end p{margin:40px 0 0;font:500 21px/1.9 var(--mono);letter-spacing:.24em;text-transform:uppercase;color:#b9b5ab}
+.s-mosaic .end a{color:var(--led);text-decoration:none;border-bottom:1px solid rgba(234,219,140,.45)}
+
+/* =========================================================
+   REDUCED MOTION: keep the dissolves, drop the camera moves
+   ========================================================= */
+@media (prefers-reduced-motion:reduce){
+  .grain{animation:none}
+  .s-shot.active .cam,.s-quote.active .bg,.s-title.active .bg{animation:none}
+  .w{opacity:1;transform:none;filter:none}.active .w{animation:none}
+  .s-act h2{letter-spacing:.02em}
+  .s-credits.active .roll{animation-duration:90s}
+  .s-shot .cam img,.s-shot.active .cam img{filter:none;animation:none}
+  .s-act .track{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="deck-viewport">
+  <div class="deck-stage" id="stage">
+    <div class="slides" id="slides"></div>
+    <div class="chrome slug" id="slug"></div>
+    <div class="chrome bug"><i></i><span id="bug"></span></div>
+    <div class="chrome count" id="count"></div>
+    <div class="timeline" id="timeline"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+  </div>
+</div>
+<div class="ap" id="ap"></div>
+<div class="hint" id="hint">← → navigate · A autoplay · H clean frame · G overview · F fullscreen</div>
+<div class="overview" id="overview"></div>
+<div class="gate gone" id="gate"><div class="g-in">
+  <div class="g-eyebrow">AI Engineer CODE Summit 2026 · Day One · San Francisco</div>
+  <div class="g-title">A year that felt like <em>a decade</em></div>
+  <button class="g-play" id="gplay" type="button"><i>▶</i><span>Play the cinematic cut</span><small>about 14 min · fullscreen</small></button>
+  <div class="g-alt">or press <b>→</b> to step through it · <b>A</b> autoplay · <b>G</b> overview · <b>H</b> clean frame</div>
+</div></div>
+<script src="deck-data.js"></script>
+<script>
+/* =========================================================
+   ENGINE: renders DECK.slides, drives navigation, timeline, camera, counters
+   ========================================================= */
+(() => {
+  const D = window.DECK;
+  const $ = (s, r = document) => r.querySelector(s);
+  const stage = $('#stage'), host = $('#slides');
+  const VIDEO = D.meta.video;
+  const CLOCK0 = D.meta.clockStart || 9 * 3600; // wall-clock (PST) at stream t=0
+  const T_END = D.meta.timelineEnd || 9 * 3600; // ruler length in stream seconds
+
+  /* ---------- helpers ---------- */
+  // Image resolver: the single-file build registers embedded frames in window.__IMG.
+  // Each data URI becomes one short blob: URL, so frames reused by the montage, strips and mosaic stay light.
+  if (window.__IMG) {
+    for (const k in window.__IMG) {
+      const d = window.__IMG[k]; if (!d.startsWith('data:')) continue;
+      const comma = d.indexOf(','), mime = d.slice(5, d.indexOf(';')), bin = atob(d.slice(comma + 1));
+      const arr = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+      window.__IMG[k] = URL.createObjectURL(new Blob([arr], { type: mime }));
+    }
+  }
+  const IMG = p => (window.__IMG && window.__IMG[p]) || p;
+  const esc =s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const hms = t => { t = Math.round(t); const h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60; return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; };
+  const clock = (t, sec = false) => { const c = Math.round(CLOCK0 + t); const h = Math.floor(c / 3600) % 24, m = Math.floor(c % 3600 / 60), s = c % 60; return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}` + (sec ? `:${String(s).padStart(2,'0')}` : ''); };
+  const yt = t => `${VIDEO}&t=${Math.max(0, Math.floor(t) - 2)}s`;
+  // Split text into word spans for the staggered reveal. *word* becomes an accent (italic, LED).
+  // Spacing follows the source text, so punctuation right after an accent stays attached ("shifted.", "today?").
+  const words = (text, d0 = 1.2, st = 28) => {
+    let i = 0, out = '';
+    esc(text).split(/(\*[^*]+\*)/).filter(p => p !== '').forEach(part => {
+      const accent = /^\*[^*]+\*$/.test(part), raw = accent ? part.slice(1, -1) : part;
+      const ws = raw.trim().split(/\s+/).filter(Boolean).map(w => `<span class="w" style="--i:${i++}">${w}</span>`).join(' ');
+      if (!ws) { out += /\s/.test(raw) ? ' ' : ''; return; }
+      out += (out && /^\s/.test(raw) && !/\s$/.test(out) ? ' ' : '') + (accent ? `<em>${ws}</em>` : ws) + (/\s$/.test(raw) ? ' ' : '');
+    });
+    return `<span style="--d0:${d0}s;--st:${st}ms;display:contents">${out.trim()}</span>`;
+  };
+  const kicker = (s, extra = '') => {
+    const bits = [];
+    if (s.tag) bits.push(`<span class="tag">${esc(s.tag)}</span>`);
+    if (s.t != null) bits.push(`<span>${clock(s.t)} PST</span>`, `<a href="${yt(s.t)}" target="_blank" rel="noopener" title="Watch this moment on YouTube">▶ ${hms(s.t)}</a>`);
+    return `<div class="kicker">${bits.join('<span class="sep"></span>')}${extra}</div>`;
+  };
+  const who = s => s.speaker ? `<div class="who">${esc(s.speaker)}${s.org ? ` <span>· ${esc(s.org)}</span>` : ''}</div>` : '';
+  const talk = s => s.talk ? `<div class="talk">${esc(s.talk)}</div>` : '';
+
+  /* ---------- camera: push toward focus box without revealing edges ---------- */
+  function camVars(f, capTop) {
+    if (!f) f = [0.25, 0.08, 0.7, 0.7];
+    const [x, y, w, h] = f;
+    let s = Math.min(0.80 / Math.max(w, 0.05), 0.56 / Math.max(h, 0.05));
+    s = Math.max(1.07, Math.min(1.42, s));
+    const fx = (x + w / 2) * 1920, fy = (y + h / 2) * 1080;
+    // keep the key element clear of the caption band (bottom by default, top when capTop)
+    let tx = 960 - s * fx, ty = (capTop ? 640 : 380) - s * fy;
+    tx = Math.min(0, Math.max(1920 * (1 - s), tx));
+    ty = Math.min(0, Math.max(1080 * (1 - s), ty));
+    return `--s:${s.toFixed(3)};--tx:${tx.toFixed(1)}px;--ty:${ty.toFixed(1)}px`;
+  }
+  // Circle portrait cut from a full frame: faceBox = [x, y, w] (square region, 0-1 of frame width/height)
+  const faceStyle = (img, b, D = 128) => {
+    if (!b) return `background-image:url('${IMG(img)}')`;
+    const k = D / (b[2] * 1920);
+    return `background-image:url('${IMG(img)}');background-size:${(1920 * k).toFixed(1)}px ${(1080 * k).toFixed(1)}px;background-position:${(-b[0] * 1920 * k).toFixed(1)}px ${(-b[1] * 1080 * k).toFixed(1)}px`;
+  };
+  const fbox = f => f ?`<div class="fbox" style="left:${f[0]*1920}px;top:${f[1]*1080}px;width:${f[2]*1920}px;height:${f[3]*1080}px"><i></i><i></i><i></i><i></i></div>` : '';
+  const qcls = (q, lim) => (q || '').length > lim ? 'q long' : 'q';
+
+  // Every frame the deck uses, once each, in the order the day happened (montage + closing mosaic)
+  const DAY = (() => {
+    const seen = new Set(), out = [];
+    D.slides.filter(x => x.img && x.t != null).sort((a, b) => a.t - b.t)
+      .forEach(x => { if (!seen.has(x.img)) { seen.add(x.img); out.push({ img: x.img, t: x.t }); } });
+    return out;
+  })();
+  // Each act card gets a film strip of the frames in its chapter (repeated so the loop never shows a gap)
+  D.slides.forEach((s, i) => {
+    if (s.type !== 'act') return;
+    const imgs = [];
+    for (let k = i + 1; k < D.slides.length && D.slides[k].type !== 'act'; k++) {
+      const p = D.slides[k].img; if (p && !imgs.includes(p)) imgs.push(p);
+    }
+    let base = imgs.slice(); while (imgs.length && base.length < 6) base = base.concat(imgs);
+    s._strip = base;
+  });
+
+  /* ---------- renderers, one per slide type ---------- */
+  const R = {
+    montage: s => `
+      ${DAY.map(f => `<div class="mf" data-t="${f.t}" style="background-image:url('${IMG(f.img)}')"></div>`).join('')}
+      <div class="mshade"></div>
+      <div class="mclock">${clock(0, true)}</div>
+      <div class="mtitle"><b>${esc(s.line1)}</b><span>${esc(s.line2)}</span></div>`,
+    trio: s => `
+      <div class="head"><div class="kicker rv" style="--d:.2s"><span class="tag">${esc(s.eyebrow)}</span></div><h3 class="rv" style="--d:.4s">${esc(s.title)}</h3></div>
+      <div class="three">${s.items.map((it, k) => `
+        <div class="col rv" style="--d:${.9 + k * .8}s"><div class="q">${words(it.quote, 1.1 + k * .8, 40)}</div>
+        <div class="who">${esc(it.speaker)} <span>· ${esc(it.org)}</span></div>${kicker({ t: it.t })}</div>`).join('')}
+      </div>`,
+    mosaic: s => `
+      <div class="tiles">${Array.from({ length: 64 }, (_, k) => DAY[k % DAY.length]).map((f, k) => `<i style="--k:${k};background-image:url('${IMG(f.img)}')"></i>`).join('')}</div>
+      <div class="veil"></div>
+      <div class="end"><h1 class="rv" style="--d:3.2s">${s.titleHtml}</h1>
+        <p class="rv" style="--d:3.9s">${esc(s.sub)}<br><a href="${VIDEO}" target="_blank" rel="noopener">▶ Watch the full broadcast</a></p></div>`,
+    cold: s => `
+      <div class="clock" data-clock="${s.from || 0}|${s.to || 0}">${s.clockFrom || ''}<small>${esc(s.place || '')}</small></div>
+      <div class="body"><div class="q">${words(s.quote, 2.6, 60)}</div>
+      <div class="who rv" style="--d:${s.whoDelay || 5}s">${esc(s.speaker)} <span>· ${esc(s.org || '')}</span></div></div>`,
+    title: s => `
+      <div class="bg" style="background-image:url('${IMG(s.img)}')"></div><div class="shade"></div><div class="sweep"></div>
+      <div class="inner">
+        <div class="eyebrow rv" style="--d:.4s">${esc(s.eyebrow)}</div>
+        <h1 class="rv" style="--d:.8s">${s.titleHtml}</h1>
+        <div class="sub rv" style="--d:1.4s">${esc(s.sub)}</div>
+        <div class="facts rv" style="--d:1.9s">${(s.facts || []).map(f => `<span><b>${esc(f[0])}</b> ${esc(f[1])}</span>`).join('')}</div>
+      </div>`,
+    act: s => `
+      <div class="dots"></div>
+      ${s._strip && s._strip.length ? `<div class="strip"><div class="track">${s._strip.concat(s._strip).map(p => `<i style="background-image:url('${IMG(p)}')"></i>`).join('')}</div></div>` : ''}
+      <div class="inner">
+        <div class="num rv" style="--d:.2s">${esc(s.num)}<span>${esc(s.span || '')}</span></div>
+        <h2>${esc(s.title)}</h2>
+        <div class="rule"></div>
+        <div class="sub rv" style="--d:1.1s">${esc(s.sub)}</div>
+        ${s.cast ? `<div class="cast rv" style="--d:1.6s">${esc(s.cast)}</div>` : ''}
+        ${s.rundown ? `<div class="rundown${s.rundown.length > 4 ? ' two' : ''}">${s.rundown.map((r, k) => `<div class="rd rv" style="--d:${1.5 + k * .09}s"><b>${esc(r[0])}</b><span>${esc(r[1])}</span><i>${esc(r[2] || '')}</i></div>`).join('')}</div>` : ''}
+      </div>`,
+    shot: s => `
+      <div class="cam" style="${camVars(s.focus, s.capTop)};--dur:${s.dur || 13}s"><img src="${IMG(s.img)}" alt="${esc(s.alt || s.quote || '')}" decoding="async">${fbox(s.focus)}</div>
+      <div class="topshade"></div>
+      <div class="scrim"></div>
+      <div class="cap">
+        <div class="rv" style="--d:2.1s">${kicker(s)}</div>
+        <div class="${qcls(s.quote, 150)}">${words(s.quote, 2.3, 24)}</div>
+        <div class="meta rv" style="--d:${2.6 + Math.min(2.2, (s.quote || '').split(' ').length * 0.024)}s">${who(s)}${talk(s)}</div>
+        ${s.ctx ? `<div class="ctx-line rv" style="--d:${3 + Math.min(2.2, (s.quote || '').split(' ').length * 0.024)}s">${esc(s.ctx)}</div>` : ''}
+      </div>`,
+    quote: s => `
+      <div class="bg" style="background-image:url('${IMG(s.img)}')"></div>
+      <div class="mark">“</div>
+      <div class="body">
+        ${s.note ? `<div class="note rv" style="--d:.3s">${esc(s.note)}</div>` : ''}
+        <div class="${qcls(s.quote, 120)}">${words(s.quote, s.note ? 1.1 : .7, 34)}</div>
+        <div class="attr rv" style="--d:${1.2 + Math.min(2.6, (s.quote || '').split(' ').length * 0.034)}s">
+          ${s.face ? `<div class="face" style="${faceStyle(s.face, s.faceBox)}"></div>` : ''}
+          <div>${who(s)}${kicker(s)}</div>
+        </div>
+      </div>`,
+    stat: s => `
+      <div class="grid-bg"></div>
+      <div class="left">
+        <div class="num ${s.size || ''}" data-count="${esc(s.value)}">${esc(s.value)}</div>
+        <div class="label rv" style="--d:.9s">${esc(s.label)}</div>
+        ${s.quote ? `<div class="ctx"><div class="q">${words('“' + s.quote + '”', 1.5, 22)}</div></div>` : ''}
+        ${s.ctx ? `<div class="ctx-line rv" style="--d:2s">${esc(s.ctx)}</div>` : ''}
+        <div class="rv" style="--d:2.4s">${who(s)}</div>
+      </div>
+      ${s.img ? `<div class="receipt rv" style="--d:1.3s"><div class="frame" style="background-image:url('${IMG(s.img)}')"></div>${kicker({ ...s, tag: 'the frame' })}</div>` : ''}`,
+    versus: s => `
+      ${s.title ? `<div class="vt rv" style="--d:.1s">${esc(s.title)}</div>` : ''}
+      <div class="wrap">
+        <div class="col then"><div class="lab rv" style="--d:.3s">${esc(s.left.label)}</div><div class="q">${words(s.left.text, .6, 30)}</div></div>
+        <div class="col now"><div class="lab rv" style="--d:1.6s">${esc(s.right.label)}</div><div class="q">${words(s.right.text, 1.9, 30)}</div></div>
+      </div>
+      <div class="foot rv" style="--d:3s">${who(s)}${kicker(s)}</div>`,
+    numbers: s => `
+      <div class="head"><div class="kicker rv" style="--d:.2s"><span class="tag">${esc(s.eyebrow)}</span></div><h3 class="rv" style="--d:.4s">${esc(s.title)}</h3></div>
+      <div class="cells">${s.items.map((it, k) => `
+        <div class="cell rv" style="--d:${.6 + k * .18}s"><div class="n" data-count="${esc(it.value)}">${esc(it.value)}</div><div class="l">${esc(it.label)}</div><div class="src">${esc(it.src)}</div></div>`).join('')}
+      </div>`,
+    finale: s => `
+      ${s.img ? `<div class="bg" style="background-image:url('${IMG(s.img)}')"></div>` : ''}
+      <div class="body"><div class="q">${words(s.quote, .8, 70)}</div>
+      ${s.sub ? `<div class="sub rv" style="--d:${(s.whoDelay || 3.4) - .9}s">${esc(s.sub)}</div>` : ''}
+      <div class="who rv" style="--d:${s.whoDelay || 3.4}s">${esc(s.speaker)} <span>· ${esc(s.org || '')}</span></div>
+      <div class="rv" style="--d:${(s.whoDelay || 3.4) + .4}s;margin-top:18px;display:flex;justify-content:center">${kicker(s)}</div></div>`,
+    credits: s => `
+      <div class="roll" style="--roll:${s.seconds || 46}s">
+        ${s.bigline ? `<div class="big">${esc(s.bigline)}</div>` : ''}
+        <h4>${esc(s.heading)}</h4>
+        ${s.people.map(p => `<div class="p"><b>${esc(p[0])}</b><span>${esc(p[1])}</span></div>`).join('')}
+        <div class="end">${s.endHtml}</div>
+      </div>`
+  };
+
+  /* ---------- build ---------- */
+  const els = D.slides.map((s, i) => {
+    if (s.type === 'shot' && s.capTop == null && s.focus) s.capTop = (s.focus[1] + s.focus[3] / 2) > 0.6;
+    const el = document.createElement('section');
+    el.className = `slide s-${s.type}${s.capTop ? ' cap-top' : ''}`;
+    el.setAttribute('aria-label', `${i + 1}: ${s.speaker || s.title || s.type}`);
+    el.innerHTML = R[s.type](s);
+    host.appendChild(el);
+    return el;
+  });
+  $('#slug').innerHTML = D.meta.slugHtml;
+  $('#bug').textContent = D.meta.bug;
+
+  /* ---------- timeline ---------- */
+  const tl = $('#timeline');
+  const pct = t => `${(Math.max(0, Math.min(T_END, t)) / T_END * 100).toFixed(3)}%`;
+  let tlHtml = '<div class="tl-base"></div>';
+  for (let m = 0; m <= T_END / 60; m += 30) {
+    const h = m % 60 === 0;
+    tlHtml += `<div class="tl-tick${h ? ' h' : ''}" style="left:${pct(m * 60)}"></div>`;
+    if (h) tlHtml += `<div class="tl-hour" style="left:${pct(m * 60)}">${clock(m * 60)}</div>`;
+  }
+  (D.acts || []).forEach(a => { tlHtml += `<div class="tl-act" data-act="${a.id}" style="left:${pct(a.from)};width:calc(${pct(a.to)} - ${pct(a.from)} - 6px)"><span>${esc(a.short || a.title)}</span></div>`; });
+  D.slides.forEach((s, i) => { if (s.t != null && s.type !== 'cold') tlHtml += `<div class="tl-dot" data-i="${i}" style="left:${pct(s.t)}" title="${esc((s.speaker || '') + ' · ' + clock(s.t))}"></div>`; });
+  tlHtml += '<div class="tl-head off" id="head"><b id="headT"></b></div>';
+  tl.innerHTML = tlHtml;
+  tl.addEventListener('click', e => { const d = e.target.closest('.tl-dot'); if (d) { e.stopPropagation(); go(+d.dataset.i); } });
+  const head = $('#head'), headT = $('#headT');
+
+  /* ---------- fit stage to viewport ---------- */
+  function fit() {
+    const k = Math.min(innerWidth / 1920, innerHeight / 1080);
+    stage.style.transform = `translate(${(innerWidth - 1920 * k) / 2}px,${(innerHeight - 1080 * k) / 2}px) scale(${k})`;
+  }
+  addEventListener('resize', fit); fit();
+
+  /* ---------- counters (LED count-up keeps prefixes, suffixes, separators) ---------- */
+  // Shrink an LED number until its final value fits its column (measured once, at full value)
+  function fitNum(el) {
+    if (el.dataset.fit) return; el.dataset.fit = 1;
+    const max = el.parentElement.clientWidth; el.textContent = el.dataset.count;
+    const w = el.scrollWidth; if (w > max) el.style.fontSize = `${Math.floor(parseFloat(getComputedStyle(el).fontSize) * max / w * 0.97)}px`;
+  }
+  function countUp(el) {
+    fitNum(el);
+    const raw = el.dataset.count; const m = raw.match(/^(.*?)([\d][\d,]*\.?\d*)(.*)$/);
+    if (!m) return;
+    const [, pre, num, post] = m; const target = parseFloat(num.replace(/,/g, '')); const dec = (num.split('.')[1] || '').length; const commas = num.includes(',');
+    const t0 = performance.now(), dur = 1700;
+    const fmt = v => { let s = v.toFixed(dec); if (commas) s = s.replace(/\B(?=(\d{3})+(?!\d))/g, ','); return pre + s + post; };
+    (function tick(now) { const p = Math.min(1, (now - t0) / dur); const e = 1 - Math.pow(2, -10 * p); el.textContent = fmt(target * (p >= 1 ? 1 : e)); if (p < 1 && el.isConnected) requestAnimationFrame(tick); })(t0);
+  }
+  function runClock(el) {
+    const [a, b] = el.dataset.clock.split('|').map(Number); const small = el.querySelector('small').outerHTML;
+    if (!(b > a)) return; let t = a; el.innerHTML = clock(t, true) + small;
+    const iv = setInterval(() => { t++; el.innerHTML = clock(t, true) + small; if (t >= b) clearInterval(iv); }, 640);
+  }
+
+  /* ---------- navigation ---------- */
+  let cur = -1, apOn = false, apTimer = null;
+  function go(n) {
+    n = Math.max(0, Math.min(els.length - 1, n));
+    if (n === cur) return;
+    if (cur >= 0) els[cur].classList.remove('active');
+    const el = els[n]; void el.offsetWidth; el.classList.add('active');
+    cur = n; const s = D.slides[n];
+    el.querySelectorAll('[data-count]').forEach(countUp);
+    el.querySelectorAll('[data-clock]').forEach(runClock);
+    stage.classList.toggle('stage-quiet', !!s.quiet);
+    stage.classList.toggle('on-shot', s.type === 'shot');
+    stage.classList.toggle('chrome-off', !!s.chromeOff);
+    $('#count').innerHTML = `<b>${String(n + 1).padStart(2, '0')}</b> / ${String(els.length).padStart(2, '0')}`;
+    // timeline: playhead to the moment's clock time (the LED label scrubs through the hours), light its act
+    clearTimeout(montT); tl.classList.remove('fast');
+    const t = s.t != null ? s.t : (s.act && s.type === 'act' ? (D.acts.find(a => a.id === s.act) || {}).from : null);
+    if (s.type === 'montage') runMontage(el, s);
+    else if (t != null) setHead(t); else head.classList.add('off');
+    const actId = s.act || actOf(n);
+    tl.querySelectorAll('.tl-act').forEach(a => a.classList.toggle('on', a.dataset.act === actId));
+    tl.querySelectorAll('.tl-dot').forEach(d => d.classList.toggle('on', +d.dataset.i === n));
+    history.replaceState(null, '', `#${n + 1}`);
+    $('#overview').querySelectorAll('.ov').forEach((o, k) => o.classList.toggle('on', k === n));
+    // preload next frames
+    [n + 1, n + 2].forEach(k => { const x = D.slides[k]; if (x && x.img) { const im = new Image(); im.src = IMG(x.img); } });
+    if (apOn) schedule();
+  }
+  function actOf(n) { for (let k = n; k >= 0; k--) if (D.slides[k].act) return D.slides[k].act; return null; }
+  const next = () => go(cur + 1), prev = () => go(cur - 1);
+
+  /* ---------- playhead: glide to a time; the LED label counts through every minute in between ---------- */
+  let headShown = null, headRAF = 0;
+  function setHead(t, instant) {
+    head.classList.remove('off'); head.style.left = pct(t);
+    cancelAnimationFrame(headRAF);
+    const from = headShown == null ? t : headShown;
+    if (instant || Math.abs(t - from) < 1) { headShown = t; headT.textContent = clock(t, true); return; }
+    const t0 = performance.now(), dur = 1150;
+    const step = now => {
+      const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      headShown = from + (t - from) * e; headT.textContent = clock(headShown, true);
+      if (p < 1) headRAF = requestAnimationFrame(step);
+    };
+    headRAF = requestAnimationFrame(step);
+  }
+
+  /* ---------- montage: flash-cut through every frame of the day in order, then the title card ---------- */
+  let montT = null;
+  function runMontage(el, s) {
+    const fr = [...el.querySelectorAll('.mf')], ck = el.querySelector('.mclock'), me = cur;
+    el.classList.remove('done'); fr.forEach(f => f.classList.remove('on'));
+    ck.textContent = clock(0, true); setHead(0, true); tl.classList.add('fast');
+    let k = -1; const step = s.step || 110;
+    const tick = () => {
+      if (cur !== me) return;
+      if (k >= 0) fr[k].classList.remove('on');
+      k++;
+      if (k < fr.length) {
+        fr[k].classList.add('on'); const t = +fr[k].dataset.t;
+        ck.textContent = clock(t, true); setHead(t, true);
+        montT = setTimeout(tick, step);
+      } else {
+        el.classList.add('done'); tl.classList.remove('fast'); setHead(T_END - 1, true);
+        montT = setTimeout(() => { if (cur === me) next(); }, s.hold || 3400);
+      }
+    };
+    montT = setTimeout(tick, 900);
+  }
+
+  /* ---------- autoplay: dwell scales with the words on screen ---------- */
+  function dwell(s) {
+    if (s.dwell) return s.dwell * 1000;
+    const txt = [s.quote, s.label, s.sub, s.left && s.left.text, s.right && s.right.text].filter(Boolean).join(' ');
+    const base = { cold: 9, title: 8, act: 7, shot: 7.5, quote: 6.5, stat: 8, versus: 8, trio: 13, numbers: 12, finale: 8, credits: (s.seconds || 46) + 2, mosaic: 16 }[s.type] || 7;
+    return (base + txt.split(/\s+/).length * 0.21) * 1000;
+  }
+  function schedule() {
+    clearTimeout(apTimer); const bar = $('#ap');
+    if (D.slides[cur].type === 'montage') { bar.style.transition = 'none'; bar.style.width = '0'; return; } // the montage advances itself
+    const ms = dwell(D.slides[cur]);
+    bar.style.transition = 'none'; bar.style.width = '0'; void bar.offsetWidth;
+    bar.style.transition = `width ${ms}ms linear`; bar.style.width = '100%';
+    apTimer = setTimeout(() => { if (cur < els.length - 1) next(); else toggleAP(false); }, ms);
+  }
+  function toggleAP(v = !apOn) { apOn = v; if (apOn) schedule(); else { clearTimeout(apTimer); const b = $('#ap'); b.style.transition = 'none'; b.style.width = '0'; } }
+
+  /* ---------- overview grid ---------- */
+  const ov = $('#overview');
+  ov.innerHTML = D.slides.map((s, i) => `<button class="ov" data-i="${i}"><div style="${s.img ? `background-image:url('${IMG(s.img)}')` : ''}">${s.img ? '' : `<span>${esc(s.title || s.label || s.type)}</span>`}</div><p><b>${String(i + 1).padStart(2, '0')}</b> ${esc(s.speaker || s.title || s.eyebrow || s.type)}</p></button>`).join('');
+  ov.addEventListener('click', e => { const b = e.target.closest('.ov'); if (b) { ov.classList.remove('open'); go(+b.dataset.i); } });
+
+  /* ---------- input ---------- */
+  /* ---------- gate: shown on a fresh open; Play = fullscreen + autoplay, → = step through ---------- */
+  const gate = $('#gate'); let gated = !location.hash;
+  if (gated) gate.classList.remove('gone');
+  function openGate(play) {
+    if (!gated) return; gated = false; gate.classList.add('gone'); hideHint();
+    if (play) { try { const r = document.documentElement.requestFullscreen?.(); if (r && r.catch) r.catch(() => {}); } catch (_) {} }
+    go(0); if (play) toggleAP(true);
+  }
+  gate.addEventListener('click', () => openGate(true));
+
+  addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key;
+    if (gated) {
+      if (['Enter', ' ', 'a', 'A'].includes(k)) { e.preventDefault(); openGate(k !== 'a' && k !== 'A' ? true : false); if (k === 'a' || k === 'A') toggleAP(true); }
+      else if (['ArrowRight', 'PageDown'].includes(k)) { e.preventDefault(); openGate(false); }
+      return;
+    }
+    if (ov.classList.contains('open') && (k === 'Escape' || k === 'g' || k === 'G')) { ov.classList.remove('open'); return; }
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].includes(k)) { e.preventDefault(); next(); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].includes(k)) { e.preventDefault(); prev(); }
+    else if (k === 'Home') go(0); else if (k === 'End') go(els.length - 1);
+    else if (k === 'a' || k === 'A') toggleAP();
+    else if (k === 'h' || k === 'H') stage.classList.toggle('clean');
+    else if (k === 'g' || k === 'G') ov.classList.add('open');
+    else if (k === 'f' || k === 'F') { if (!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); }
+    hideHint();
+  });
+  stage.addEventListener('click', e => { if (e.target.closest('a,.tl-dot')) return; const r = stage.getBoundingClientRect(); (e.clientX - r.left < r.width * 0.3 ? prev : next)(); hideHint(); });
+  let sx = null; addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  addEventListener('touchend', e => { if (sx == null) return; const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) (dx < 0 ? next : prev)(); sx = null; });
+  let hintT = setTimeout(hideHint, 6000); function hideHint() { clearTimeout(hintT); $('#hint').classList.add('gone'); }
+
+  /* ---------- start (after fonts, so the first reveal is set in the right faces) ---------- */
+  // Camera: measure each caption, then frame the focus box inside the clear area it leaves.
+  // If the box is taller than that area, keep its top edge in view (titles and headlines live there).
+  function aimCameras() {
+    D.slides.forEach((s, i) => {
+      if (s.type !== 'shot') return;
+      const el = els[i], cam = el.querySelector('.cam'), cap = el.querySelector('.cap');
+      const f = s.focus || [0.25, 0.08, 0.7, 0.7], capH = cap.offsetHeight;
+      const top = s.capTop ? 118 + capH + 60 : 92, bot = s.capTop ? 1000 : 1080 - 160 - capH - 50;
+      const room = Math.max(220, bot - top);
+      let k = s.zoom || Math.min(0.86 / f[2], 0.94 * room / (f[3] * 1080));
+      k = Math.max(1.05, Math.min(1.45, k));
+      const fx = (f[0] + f[2] / 2) * 1920, fy = (f[1] + f[3] / 2) * 1080;
+      let tx = 960 - k * fx;
+      let ty = s.camY != null ? s.camY - k * fy : (f[3] * 1080 * k > room ? top - k * f[1] * 1080 : (top + bot) / 2 - k * fy);
+      // The frame may slide past its edge only where the caption's scrim is already opaque black,
+      // so the camera can lift (or lower) the key element clear of the caption without ever showing a seam.
+      const cs = (s.capTop ? 118 : 160) + capH;
+      const minTy = s.capTop ? 1080 * (1 - k) : Math.min(1080 * (1 - k), (1080 - cs + 30) - 1080 * k);
+      const maxTy = s.capTop ? Math.max(0, cs - 30) : 0;
+      tx = Math.min(0, Math.max(1920 * (1 - k), tx)); ty = Math.min(maxTy, Math.max(minTy, ty));
+      cam.style.setProperty('--s', k.toFixed(3)); cam.style.setProperty('--tx', `${tx.toFixed(1)}px`); cam.style.setProperty('--ty', `${ty.toFixed(1)}px`);
+      el.style.setProperty('--cs', `${cs}px`);
+    });
+  }
+  // Act titles: shrink any title wider than its column, measured at its final letter-spacing
+  function fitActTitles() {
+    document.querySelectorAll('.s-act h2').forEach(h => {
+      h.style.transition = 'none'; h.style.letterSpacing = '.02em';
+      const max = h.parentElement.clientWidth, w = h.scrollWidth;
+      if (w > max) h.style.fontSize = `${Math.floor(parseFloat(getComputedStyle(h).fontSize) * max / w * 0.97)}px`;
+      h.style.letterSpacing = ''; void h.offsetWidth; h.style.transition = '';
+    });
+  }
+  const start = () => { fitActTitles(); aimCameras(); if (!gated) go(Math.max(0, (parseInt(location.hash.slice(1), 10) || 1) - 1)); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+  addEventListener('hashchange', () => { const n = (parseInt(location.hash.slice(1), 10) || 1) - 1; if (n !== cur) go(n); });
+  window.__deck = { go, get cur() { return cur; }, count: els.length };
+})();
+</script>
+</body>
+</html>
