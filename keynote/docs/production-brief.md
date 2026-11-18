@@ -7,7 +7,7 @@ Read this, then `docs/scene-guide.md` (how to write a scene), `docs/design-syste
 - **Calm moments (PAPER) = OpenAI DevDay 2026.** White, black type, one idea on screen, generous white space, everything on the 12-column grid, baselines aligned. Motion is quiet and motivated: line-mask reveals, odometer numbers, nothing decorative. If you can remove an element and the idea survives, remove it.
 - **Burst moments (VOID) = NVIDIA GTC Berlin 2026.** Full-screen 3D with depth, light as material, slow confident camera, bloom with restraint, particles as soft light (never square dots), motion that carries the idea (the swarm organizes, the sandbox cracks, the grid goes dark). Numbers land big and calm on a scrim, never over busy 3D.
 - **The rhythm** is the point: a calm moment should feel like silence after a burst, and a burst should feel like a door opening.
-- Reference frames (look at them before you start, never copy them into the repo): `/private/tmp/claude-501/-Users-irina-AI-driven-OS-projects-ai-engineer-event/839b685b-f9b9-4b77-a2a2-6ce2aa40e805/scratchpad/refs/key/` (gtc-*.jpg, devday-*.jpg, map.txt). Style frame A: `docs/style-frames/A-employee-bar.png`.
+- Reference frames (look at them before you start, never copy them into the repo): `<scratch>/refs/key/` (gtc-*.jpg, devday-*.jpg, map.txt). Style frame A: `docs/style-frames/A-employee-bar.png`.
 
 ## Rules that are not negotiable
 

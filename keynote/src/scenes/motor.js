@@ -108,7 +108,7 @@ export default {
     const smallMotorMat = lit({ a: '#2E3A4A', b: '#3C4A5E' });
 
     // ---------- hall ----------
-    const floor = new THREE.Mesh(new THREE.PlaneGeometry(40, 16).rotateX(-Math.PI / 2), floorMat);
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(90, 70).rotateX(-Math.PI / 2), floorMat);
     world.add(floor);
     const wall = new THREE.Mesh(new THREE.PlaneGeometry(40, 9).translate(0, 4.5, -5.4), wallMat);
     world.add(wall);
@@ -275,7 +275,8 @@ export default {
       fragmentShader: 'varying vec2 vUv; void main(){ vec2 d = (vUv - 0.5) * 2.0; float a = 1.0 - smoothstep(0.35, 1.0, length(d)); gl_FragColor = vec4(0.0, 0.0, 0.0, a * 0.6); }',
     });
     const shadows = new THREE.InstancedMesh(new THREE.PlaneGeometry(2.0, 1.5).rotateX(-Math.PI / 2).translate(0, 0.012, 0), shadowMat, NM);
-    [bases, legs, heads, tails, works, wheels, smalls, smRings, shadows].forEach((im) => { im.instanceMatrix.setUsage(THREE.DynamicDrawUsage); im.frustumCulled = false; world.add(im); });
+    const MOVING = [bases, legs, heads, tails, works, wheels, smalls, smRings, shadows];
+    MOVING.forEach((im) => { im.instanceMatrix.setUsage(THREE.DynamicDrawUsage); im.frustumCulled = false; world.add(im); });
     const oldPos = [];
     const newPos = [];
     const delay = new Float32Array(NM);
@@ -351,7 +352,7 @@ export default {
         v.x += -0.19;
         smRings.setMatrixAt(i, m4.compose(v, q, sc));
       }
-      for (const im of [bases, legs, heads, tails, works, wheels, smalls, smRings, shadows]) im.instanceMatrix.needsUpdate = true;
+      for (let j = 0; j < MOVING.length; j++) MOVING[j].instanceMatrix.needsUpdate = true;
     }
 
     // ---------- DOM: film captions over a bottom scrim ----------
@@ -360,10 +361,10 @@ export default {
     root.append(scrim.el);
     const title = C.Headline.create({ text: copy.title, role: 'h2', ground: 'void', width: spanW(10) });
     place(title.el, space.margin, 808);
-    const s1 = C.Headline.create({ text: copy.s1, role: 'body', ground: 'void', width: spanW(10) });
-    place(s1.el, space.margin, 812);
-    const s2 = C.Headline.create({ text: copy.s2, role: 'body', ground: 'void', width: spanW(10) });
-    place(s2.el, space.margin, 812);
+    const s1 = C.Headline.create({ text: copy.s1, role: 'lead', ground: 'void', width: spanW(10) });
+    place(s1.el, space.margin, 788);
+    const s2 = C.Headline.create({ text: copy.s2, role: 'lead', ground: 'void', width: spanW(10) });
+    place(s2.el, space.margin, 788);
     const s3 = C.Headline.create({ text: copy.s3, role: 'h2', ground: 'void', width: spanW(10), highlight: 'redesigning the work' });
     place(s3.el, space.margin, 700);
     const src = C.SourceLine.create({ kind: provKind(fDavid && fDavid.label), text: copy.source || factsSource(fDavid), ground: 'void' });

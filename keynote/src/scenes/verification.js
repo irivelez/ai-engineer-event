@@ -1,6 +1,6 @@
 // verification (calm-a, PAPER data): when agents write the work, checking it is the bottleneck, and the AI
 // judges hallucinate too.
-// Step 0: title + "8 of 80".
+// Step 0: title + "8 of 80", and the 80 talks as 80 squares with the 8 lit.
 // Step 1: 500 steps fill a 25 × 20 grid; the 65 % the judge got right settle in the accent (13 full rows).
 // Step 2: the right ones step back to quiet; the 118 bad steps it accepted flip to the limit colour.
 // Step 3: the number makes room for the line, in serif. The grid stays as the evidence.
@@ -70,6 +70,30 @@ export default calmScene('verification', (ctx, K) => {
   });
   const baseB = K.block(base, { rise: 12 });
 
+  // step 0: the 80 talks as 80 squares (10 × 8), the 8 about verification lit in the accent
+  const [hitN, ofN] = String(copy.stat || '').split(/\s+of\s+/).map((x) => parseInt(x, 10));
+  const N80 = ofN || 80;
+  const HIT = hitN || 8;
+  const C80 = 10;
+  const P80 = GW / C80;
+  const S80 = Math.round(P80 - 14);
+  const g80 = el('div', '');
+  place(g80, GX, GY, GW, Math.ceil(N80 / C80) * P80);
+  const cells80 = Array.from({ length: N80 }, (_, i) => {
+    const c = el('div', '', g80);
+    Object.assign(c.style, { position: 'absolute', left: `${((i % C80) * P80).toFixed(1)}px`, top: `${(Math.floor(i / C80) * P80).toFixed(1)}px`, width: `${S80}px`, height: `${S80}px`, borderRadius: '6px', backgroundColor: i < HIT ? G.accent : G.quiet });
+    return c;
+  });
+  const g80B = K.block(g80, {
+    enter(tl) {
+      gsap.set(cells80.slice(0, HIT), { backgroundColor: G.quiet });
+      tl.fromTo(cells80, { autoAlpha: 0, scale: 0.5 }, { autoAlpha: 1, scale: 1, duration: 0.5, ease: 'power3.out', stagger: { each: 0.008, from: 'start' } }, 0);
+      tl.fromTo(cells80.slice(0, HIT), { backgroundColor: G.quiet }, { backgroundColor: G.accent, duration: 0.5, ease: 'power2.inOut', stagger: 0.06, immediateRender: false }, 0.9);
+    },
+    settle() { gsap.set(cells80, { autoAlpha: 1, scale: 1 }); gsap.set(cells80.slice(0, HIT), { backgroundColor: G.accent }); },
+    exit(tl) { tl.to(g80, { autoAlpha: 0, duration: 0.35, ease: 'power2.in' }, 0); },
+  });
+
   // colour states per step
   function paint(step, anim, tl) {
     const st = (cs, color, at, stagger = 0) => {
@@ -102,6 +126,7 @@ export default calmScene('verification', (ctx, K) => {
     { c: n1, on: (s) => s === 1, at: 1.0 },
     { c: n2, on: (s) => s === 2, at: 0.4 },
     { c: quote, on: (s) => s >= 3, at: 0.1 },
+    { c: g80B, on: (s) => s === 0, at: 0.4 },
     { c: baseB, on: (s) => s >= 1, at: 0 },
     { c: gridB, on: (s) => s >= 1, at: 0.1 },
   ]);

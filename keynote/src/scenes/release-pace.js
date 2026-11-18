@@ -9,13 +9,13 @@ import { CAM as LABS_CAM } from './three-labs.js';
 
 // Side view: the tracks run along -z, so from +x the time axis reads left (1 Sep) → right (17 Nov).
 const SHOTS = [
-  { px: 55.4, py: 34.5, pz: -22.8, tx: 0, ty: -1.5, tz: -22.8, shiftX: 72, shiftY: 10 },
-  { px: 55.8, py: 32.5, pz: -23.4, tx: 0, ty: -1.5, tz: -23.4, shiftX: 72, shiftY: 10 },
-  { px: 55.4, py: 34.5, pz: -22.8, tx: 0, ty: -1.5, tz: -22.8, shiftX: 72, shiftY: -100 },
+  { px: 80.9, py: 51.1, pz: -22.8, tx: 0, ty: -1.5, tz: -22.8, fov: 22, shiftX: 36, shiftY: 10 },
+  { px: 82.3, py: 48.9, pz: -23.4, tx: 0, ty: -1.5, tz: -23.4, fov: 22, shiftX: 36, shiftY: 10 },
+  { px: 80.9, py: 51.1, pz: -22.8, tx: 0, ty: -1.5, tz: -22.8, fov: 22, shiftX: 36, shiftY: -100 },
 ];
 const sphericalToLook = (c) => {
   const D = Math.PI / 180;
-  return { px: c.tx + c.r * Math.sin(c.pol * D) * Math.sin(c.az * D), py: c.ty + c.r * Math.cos(c.pol * D), pz: c.tz + c.r * Math.sin(c.pol * D) * Math.cos(c.az * D), tx: c.tx, ty: c.ty, tz: c.tz, shiftX: c.shiftX || 0, shiftY: c.shiftY || 0 };
+  return { px: c.tx + c.r * Math.sin(c.pol * D) * Math.sin(c.az * D), py: c.ty + c.r * Math.cos(c.pol * D), pz: c.tz + c.r * Math.sin(c.pol * D) * Math.cos(c.az * D), tx: c.tx, ty: c.ty, tz: c.tz, fov: c.fov || 30, shiftX: c.shiftX || 0, shiftY: c.shiftY || 0 };
 };
 
 export default {
@@ -64,12 +64,13 @@ export default {
 
     // ---------- DOM ----------
     const g = 'void';
-    const scrim = C.Scrim.create({ ground: g, side: 'left', extent: 0.66, strength: 0.94 });
+    const scrim = C.Scrim.create({ ground: g, side: 'top', extent: 0.34, strength: 0.94 }); //    title + window
+    const scrimB = C.Scrim.create({ ground: g, side: 'bottom', extent: 0.46, strength: 0.94 }); // the total, step 2
     const title = C.Headline.create({ text: copy.title, role: 'h2', ground: g, width: 1660 });
     const windowK = C.Kicker.create({ text: copy.window, ground: g, tone: 'muted' });
     const tf = splitFigure(copy.total);
     const total = C.BigNumber.create({ display: tf.figure, label: copy.totalLabel, size: 'display', ground: g, tone: 'accent' });
-    root.append(scrim.el, title.el, windowK.el, total.el);
+    root.append(scrim.el, scrimB.el, title.el, windowK.el, total.el);
     place(title.el, 128, 112);
     place(windowK.el, 128, 228);
     place(total.el, 128, 620);
@@ -155,6 +156,7 @@ export default {
       if (!A) setBeads(step >= 1);
 
       show(scrim, 'scrim', true, tl, 0, A);
+      show(scrimB, 'scrimB', step === 2, tl, 0, A);
       show(title, 'title', true, tl, A && entering ? 2.0 : 0, A);
       show(windowK, 'window', step <= 1, tl, A && entering ? 2.6 : 0, A);
       show(total, 'total', step === 2, tl, A ? 0.6 : 0, A);
@@ -184,7 +186,7 @@ export default {
       },
       dispose() {
         gsap.killTweensOf([rig.state, state, labelLayer, ...trackLabels.map((t) => t.n), ...beads.flatMap((b) => [b.bead.scale, b.ring.scale, b.ring.material])]);
-        [scrim, title, windowK, total, source].forEach((c) => c.destroy());
+        [scrim, scrimB, title, windowK, total, source].forEach((c) => c.destroy());
         world.dispose();
         root.replaceChildren();
       },

@@ -104,6 +104,9 @@ export function splitLines(el, linesClass = 'itaf-line') {
   const original = el.innerHTML;
   // 1. wrap words in inline spans, remembering the inline wrapper each word sat in
   const words = [];
+  // `gap`: whether whitespace preceded the word in the original text, so the rebuild never adds a
+  // space between tokens that touched across an inline wrapper (e.g. highlighted "2027" then "?").
+  let gap = false;
   const walk = (node, wrapper) => {
     [...node.childNodes].forEach((n) => {
       if (n.nodeType === 3) {
@@ -111,10 +114,11 @@ export function splitLines(el, linesClass = 'itaf-line') {
         const frag = document.createDocumentFragment();
         parts.forEach((p) => {
           if (!p) return;
-          if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(p)); return; }
+          if (/^\s+$/.test(p)) { gap = true; frag.appendChild(document.createTextNode(p)); return; }
           const s = document.createElement('span');
           s.textContent = p;
-          words.push({ s, wrapper });
+          words.push({ s, wrapper, gap });
+          gap = false;
           frag.appendChild(s);
         });
         n.replaceWith(frag);
@@ -144,7 +148,7 @@ export function splitLines(el, linesClass = 'itaf-line') {
     line.className = linesClass;
     line.style.whiteSpace = 'nowrap';
     g.forEach((w, i) => {
-      if (i) line.appendChild(document.createTextNode(' '));
+      if (i && w.gap) line.appendChild(document.createTextNode(' '));
       if (w.wrapper) {
         const wrap = w.wrapper.cloneNode(false);
         wrap.textContent = w.s.textContent;

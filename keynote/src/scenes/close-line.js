@@ -5,7 +5,7 @@
 //         at h1, "built" in the accent: from belief to conviction.
 import { gsap } from 'gsap';
 import { calmScene, el, esc } from './_calm/kit.js';
-import { ensureCSS } from './_calm-b/kit.js';
+import { ensureCSS, accentWord, clearAccent } from './_calm-b/kit.js';
 
 export default calmScene('close-line', (ctx, K) => {
   ensureCSS();
@@ -18,7 +18,7 @@ export default calmScene('close-line', (ctx, K) => {
   const SIZE = 104;
   const LH = 120;
   const Y0 = Math.round((1080 - 2 * LH) / 2 - 43); // the pair, optically centred
-  const Y2 = 208; // where the pair rests once line 3 arrives
+  const Y2 = 252; // where the pair rests once line 3 arrives (the three lines optically centred)
   const pair = el('div', '');
   place(pair, 0, 0, 1920, 1080);
   pair.style.pointerEvents = 'none';
@@ -43,7 +43,7 @@ export default calmScene('close-line', (ctx, K) => {
   // line 3: Geist h1, the last word in the accent
   const words = String(copy.line3 || '').trim().split(/\s+/);
   const last = (words[words.length - 1] || '').replace(/[.!?…]+$/, '');
-  const l3 = K.add(C.Headline.create({ text: copy.line3 || '', role: 'h1', ground: g, width: W, highlight: last || undefined }), M, Y2 + 2 * LH + 120, W);
+  const l3 = K.add(C.Headline.create({ text: copy.line3 || '', role: 'h1', ground: g, width: W }), M, Y2 + 2 * LH + 120, W);
 
   const apply = K.stepper([
     { c: b1, on: () => true },
@@ -54,7 +54,9 @@ export default calmScene('close-line', (ctx, K) => {
   function go(step, animate, info = {}) {
     const anim = animate && !R;
     const tl = gsap.timeline();
+    clearAccent(l3.el);
     apply(step, anim, tl, info);
+    if (step >= 2) accentWord(l3.el, last); // after the line split, so "built." keeps its spacing
     const up = step >= 2;
     const y = up ? Y2 - Y0 : 0;
     const col = { color: up ? G.muted : G.fg };

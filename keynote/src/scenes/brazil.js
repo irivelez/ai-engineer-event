@@ -16,7 +16,6 @@ export default {
     const { world, U, linkMats } = g;
 
     const fRule = ctx.facts('bis-rule-brazil');
-    const fEff = ctx.facts('bis-effective');
     const fShare = ctx.facts('compute-72-us');
 
     // ---------- DOM ----------
@@ -27,13 +26,14 @@ export default {
     place(title.el, space.margin, 192);
     const kicker = C.Kicker.create({ text: copy.rule, ground: 'void', tone: 'muted' });
     place(kicker.el, space.margin, 128, spanW(6));
-    const line = C.Headline.create({ text: copy.line, role: 'lead', ground: 'void', width: spanW(6), highlight: 'Brazil' });
+    // non-breaking hyphen: the line-mask splitter treats 'US-headquartered' as one word (live and render then wrap alike)
+    const line = C.Headline.create({ text: String(copy.line || '').replace(/-/g, '\u2011'), role: 'lead', ground: 'void', width: spanW(6), highlight: 'Brazil' });
     place(line.el, space.margin, 244);
     // separators stay with the word before them, so a line never starts with '·'
     const others = C.Headline.create({ text: String(copy.others || '').replace(/ · /g, '\u00A0· '), role: 'body', ground: 'void', width: spanW(6), tone: 'muted' });
-    place(others.el, space.margin, 508);
+    place(others.el, space.margin, 572);
     const effective = C.Headline.create({ text: copy.effective, role: 'body', ground: 'void', width: spanW(6) });
-    place(effective.el, space.margin, 676);
+    place(effective.el, space.margin, 732);
     const share = C.Headline.create({ text: copy.share, role: 'lead', ground: 'void', width: spanW(6), highlight: '72%' });
     place(share.el, space.margin, 330);
     const shareChip = C.ProvenanceChip.create({ kind: provKind(fShare && fShare.label), ground: 'void' });
@@ -56,7 +56,6 @@ export default {
     root.append(scrimC.el);
     const parts = [title, kicker, line, others, effective, share, shareChip, srcRule, srcShare, card, srcCard].filter(Boolean);
     parts.forEach((p) => root.append(p.el));
-    void fEff; // the effective-date line is copy; its fact (bis-effective) shares the rule's source
 
     // ---------- camera + globe pose ----------
     const rig = H.cameraRig(world.camera, { ...BRAZIL_SHOTS[0], breathe: renderMode ? 0 : 0.25 });
@@ -90,11 +89,11 @@ export default {
       tl.to(U.flowAlpha, { value: 0.8, duration: D(2) }, 0);
       tl.to(U.hungry, { value: 1, duration: D(0.5) }, 0);
       // chips leave the US
-      tl.to(U.arcAlpha, { value: step >= 2 ? 0.4 : 1, duration: D(1.6) }, D(pull ? 2.4 : 0));
-      tl.to(linkMats.arcs, { opacity: step >= 2 ? 0.2 : 0.55, duration: D(1.6) }, D(pull ? 2.2 : 0));
+      tl.to(U.arcAlpha, { value: step >= 2 ? 0.16 : 1, duration: D(1.6) }, D(pull ? 2.4 : 0));
+      tl.to(linkMats.arcs, { opacity: step >= 2 ? 0.08 : 0.55, duration: D(1.6) }, D(pull ? 2.2 : 0));
       // the rule: gates close on Brazil (and the four Asian countries)
       tl.to(U.gate, { value: step >= 1 ? 1 : 0, duration: D(step === 1 ? 1.0 : 0.5) }, D(step === 1 ? 2.2 : 0));
-      tl.to(linkMats.gates, { opacity: step === 1 ? 1 : step >= 2 ? 0.35 : 0, duration: D(0.8) }, D(step === 1 ? 2.0 : 0));
+      tl.to(linkMats.gates, { opacity: step === 1 ? 1 : step >= 2 ? 0.12 : 0, duration: D(0.8) }, D(step === 1 ? 2.0 : 0));
       tl.to(U.landW.value, { x: step >= 2 ? 1 : 0, y: step >= 1 ? 1 : 0, z: step === 1 ? 0.6 : 0, w: step >= 1 ? 1 : 0, duration: D(1.2) }, D(step === 1 ? 1.6 : 0.4));
       tl.to(U.landWCN, { value: step >= 2 ? 1 : 0, duration: D(1.2) }, D(0.4));
       // where the compute is: pillars grow to scale

@@ -4,11 +4,11 @@
 // simulation): position = f(time, per-agent orbit, organize progress, laptop progress), so render mode and
 // goto(i, { animate:false }) are exact.
 import { gsap } from 'gsap';
-import { factSource, splitFigure, place, makeRig, SOFT_POINT_FRAG, roundedRectPoints, roundedFrameGeometry, roundedRectGeometry, smooth } from './_worlds/gl1-kit.js';
+import { factSource, splitFigure, place, makeRig, SOFT_POINT_FRAG, roundedRectPoints, smooth } from './_worlds/gl1-kit.js';
 
 const LAYERS = 8;
-const PER = 256; // agents per layer: 96 on the outline + 160 on the inner grid
-const N = LAYERS * PER; // 2,048 agents ("1,000+")
+const PER = 384; // agents per layer: 176 on the outline + 208 on the inner grid (16 × 13)
+const N = LAYERS * PER; // 3,072 agents ("1,000+")
 const T = 14; // trail samples per agent (head + 13)
 const DAY = 0.8; // seconds per day while the counter races
 const LAYER_Y = (k) => -2.8 + k * 0.8;
@@ -20,7 +20,7 @@ const LAP = { w: 11.6, d: 7.6, r: 0.6, thick: 0.34, sw: 11.2, sh: 7.2, sr: 0.45,
 
 // Camera per step (spherical, degrees; shiftX = lens shift in stage px so the object sits right of the text).
 const CAM = [
-  { az: -14, pol: 63, r: 31, tx: 0, ty: 0.6, tz: 0, shiftX: 360, orbitAmp: 16 },
+  { az: -14, pol: 63, r: 30, tx: 0, ty: 0.6, tz: 0, shiftX: 420, orbitAmp: 16 },
   { az: -33, pol: 64, r: 31, tx: 0, ty: 0.2, tz: 0, shiftX: 380, orbitAmp: 9 },
   { az: -18, pol: 76, r: 30.5, tx: 0, ty: 1.9, tz: -0.4, shiftX: 470, orbitAmp: 0 },
 ];
@@ -33,7 +33,7 @@ const VERT = /* glsl */ `
   attribute vec3 aU;       // orbit plane basis
   attribute vec3 aV;
   attribute vec4 aMisc;    // seed, organize start, trail index, laptop delay
-  attribute float aBright; // brightness in the laptop
+  attribute vec2 aBr;      // brightness in the laptop (x) and in the layers (y)
   varying vec3 vColor;
   varying float vAlpha;
   SIMPLEX
@@ -82,7 +82,7 @@ const VERT = /* glsl */ `
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
     gl_Position = projectionMatrix * mv;
     float depth = max(0.5, -mv.z);
-    float size = uSize * (0.75 + 0.5 * fract(seed * 7.13)) * (k < 0.5 ? 1.0 : 0.45 + 0.5 * fall);
+    float size = uSize * (0.75 + 0.5 * fract(seed * 7.13)) * (k < 0.5 ? 1.0 : 0.42 + 0.5 * fall);
     size *= mix(1.0, 1.25, oh * (1.0 - lh));
     size *= mix(1.0, 0.82, l);
     gl_PointSize = clamp(size * uScale / depth, 2.0, 48.0);
@@ -93,8 +93,11 @@ const VERT = /* glsl */ `
     // twinkle while they work inside the layers (soft, per agent, never in sync)
     float tw = 0.5 + 0.5 * sin(uTime * (1.3 + 2.1 * fract(seed * 5.3)) + seed * 40.0);
     float work = mix(1.0, 0.62 + 0.55 * tw * tw, uTwinkle * oh * (1.0 - lh));
-    float bright = mix(1.0, aBright, l) * work;
-    float a = (k < 0.5 ? 1.0 : 0.62 * pow(fall, 1.25)) * trailVis * sp;
+    // each agent flashes as it snaps into its layer, then settles to its place in the grid
+    float arr = uOrganize - (aMisc.y + 0.55);
+    float flash = 1.0 + 1.7 * step(0.0, arr) * exp(-arr * 2.6) * (1.0 - lh);
+    float bright = mix(mix(1.0, aBr.y, oh * (1.0 - lh)), aBr.x, l) * work * flash;
+    float a = (k < 0.5 ? 1.0 : 0.72 * pow(fall, 1.2)) * trailVis * sp;
     a *= smoothstep(0.6, 3.0, depth);
     vColor = c * uIntensity * bright;
     vAlpha = a;
@@ -133,23 +136,26 @@ export default {
     // ---------- world ----------
     const world = makeWorld({
       fov: 32,
-      post: { bloom: { intensity: 0.85, threshold: 0.6, smoothing: 0.3, radius: 0.72 }, vignette: { offset: 0.3, darkness: 0.62 } },
+      post: { bloom: { intensity: 1.05, threshold: 0.55, smoothing: 0.3, radius: 0.8 }, vignette: { offset: 0.3, darkness: 0.66 } },
     });
-    world.scene.background = H.gradientTexture([['#0A0F1E', 0], ['#05070A', 1]], { radial: true });
+    world.scene.background = H.gradientTexture([['#080B15', 0], ['#05070A', 1]], { radial: true });
 
     // ---------- targets ----------
     const struct = new Float32Array(N * 3);
     const layerOf = new Uint8Array(N);
-    const outline = roundedRectPoints(THREE, PLATE.w - 0.3, PLATE.d - 0.3, PLATE.r, 96);
+    const structBright = new Float32Array(N);
+    const OUT = 176;
+    const outline = roundedRectPoints(THREE, PLATE.w - 0.3, PLATE.d - 0.3, PLATE.r, OUT);
     for (let L = 0; L < LAYERS; L++) {
       for (let j = 0; j < PER; j++) {
         const i = L * PER + j;
         let x;
         let z;
-        if (j < 96) { x = outline[j].x; z = outline[j].y; } else {
-          const g = j - 96; // 16 × 10 grid
+        if (j < OUT) { x = outline[j].x; z = outline[j].y; structBright[i] = 1.0; } else {
+          const g = j - OUT; // 16 × 13 grid: the agents themselves draw each layer
           x = -4.5 + (g % 16) * 0.6;
-          z = -2.7 + Math.floor(g / 16) * 0.6;
+          z = -2.7 + Math.floor(g / 16) * 0.45;
+          structBright[i] = 0.6;
         }
         struct[i * 3] = x; struct[i * 3 + 1] = LAYER_Y(L); struct[i * 3 + 2] = z;
         layerOf[i] = L;
@@ -163,20 +169,20 @@ export default {
     const cosT = Math.cos(LAP.tilt);
     const sinT = Math.sin(LAP.tilt);
     const lid = (u, v) => [u, YB + v * cosT, LAP.hingeZ - v * sinT];
-    roundedRectPoints(THREE, LAP.sw, LAP.sh, LAP.sr, 640).forEach((pt) => {
+    roundedRectPoints(THREE, LAP.sw, LAP.sh, LAP.sr, 960).forEach((pt) => {
       const v = pt.y + LAP.sh / 2 + 0.15;
       lap.push(lid(pt.x, v)); lapBright.push(1.0); lapDelay.push(0.3 + 0.24 * (v / (LAP.sh + 0.3)));
     });
-    roundedRectPoints(THREE, LAP.w, LAP.d, LAP.r, 560).forEach((pt) => { lap.push([pt.x, YB, pt.y]); lapBright.push(0.9); lapDelay.push(0.02); });
-    roundedRectPoints(THREE, LAP.w, LAP.d, LAP.r, 300).forEach((pt) => { lap.push([pt.x, YB - LAP.thick, pt.y]); lapBright.push(0.42); lapDelay.push(0.0); });
-    roundedRectPoints(THREE, 3.8, 2.3, 0.25, 140).forEach((pt) => { lap.push([pt.x, YB + 0.001, pt.y + 2.15]); lapBright.push(0.55); lapDelay.push(0.12); });
+    roundedRectPoints(THREE, LAP.w, LAP.d, LAP.r, 840).forEach((pt) => { lap.push([pt.x, YB, pt.y]); lapBright.push(0.9); lapDelay.push(0.02); });
+    roundedRectPoints(THREE, LAP.w, LAP.d, LAP.r, 450).forEach((pt) => { lap.push([pt.x, YB - LAP.thick, pt.y]); lapBright.push(0.42); lapDelay.push(0.0); });
+    roundedRectPoints(THREE, 3.8, 2.3, 0.25, 210).forEach((pt) => { lap.push([pt.x, YB + 0.001, pt.y + 2.15]); lapBright.push(0.55); lapDelay.push(0.12); });
     {
       const need = N - lap.length; // keyboard: five dashed rows (key gaps)
-      const rows = 5;
+      const rows = 6;
       const per = Math.ceil(need / rows);
       let made = 0;
       for (let r = 0; r < rows && made < need; r++) {
-        const z = -2.95 + r * 0.56;
+        const z = -3.0 + r * 0.48;
         for (let c = 0; c < per * 2 && made < need; c++) {
           const x = -4.7 + c * 0.072;
           if (x > 4.7) break;
@@ -202,14 +208,14 @@ export default {
     const aU = new Float32Array(V * 3);
     const aV = new Float32Array(V * 3);
     const aMisc = new Float32Array(V * 4);
-    const aBright = new Float32Array(V);
+    const aBr = new Float32Array(V * 2);
     const n = new THREE.Vector3();
     const u = new THREE.Vector3();
     const v = new THREE.Vector3();
     const e = new THREE.Euler();
     for (let i = 0; i < N; i++) {
       // a vortex with three loose arms: mostly rigid rotation (the arms persist), a little shear
-      const r0 = 1.4 + 9.0 * Math.pow(rand(), 0.72);
+      const r0 = 1.4 + 8.2 * Math.pow(rand(), 0.72);
       e.set((rand() - 0.5) * 0.42, 0, (rand() - 0.5) * 0.42);
       n.set(0, 1, 0).applyEuler(e).normalize();
       u.set(0, 0, 1).cross(n).normalize();
@@ -230,7 +236,8 @@ export default {
         aU.set([u.x, u.y, u.z], vi * 3);
         aV.set([v.x, v.y, v.z], vi * 3);
         aMisc.set([seed, orgStart, k, delay], vi * 4);
-        aBright[vi] = lapBright[li];
+        aBr[vi * 2] = lapBright[li];
+        aBr[vi * 2 + 1] = structBright[i];
       }
     }
     const geo = new THREE.BufferGeometry();
@@ -240,10 +247,10 @@ export default {
     geo.setAttribute('aU', new THREE.BufferAttribute(aU, 3));
     geo.setAttribute('aV', new THREE.BufferAttribute(aV, 3));
     geo.setAttribute('aMisc', new THREE.BufferAttribute(aMisc, 4));
-    geo.setAttribute('aBright', new THREE.BufferAttribute(aBright, 1));
+    geo.setAttribute('aBr', new THREE.BufferAttribute(aBr, 2));
     const U = {
-      uTime: { value: 0 }, uScale: { value: 1000 }, uSize: { value: 0.12 }, uSpawn: { value: 1 }, uOrganize: { value: 0 }, uOrgRate: { value: 0 },
-      uLaptop: { value: 0 }, uLapRate: { value: 0 }, uTrailDt: { value: 0.05 }, uIntensity: { value: 1.9 }, uTwinkle: { value: renderMode ? 0 : 1 },
+      uTime: { value: 0 }, uScale: { value: 1000 }, uSize: { value: 0.14 }, uSpawn: { value: 1 }, uOrganize: { value: 0 }, uOrgRate: { value: 0 },
+      uLaptop: { value: 0 }, uLapRate: { value: 0 }, uTrailDt: { value: 0.05 }, uIntensity: { value: 3.0 }, uTwinkle: { value: renderMode ? 0 : 1 },
       uColA: { value: H.color('accent') }, uColB: { value: H.color('light') },
     };
     const mat = new THREE.ShaderMaterial({
@@ -272,24 +279,11 @@ export default {
       g2.fillStyle = grd; g2.fillRect(0, 0, 256, 256);
     }
     const glowTex = world.track(new THREE.CanvasTexture(glowCanvas));
-    const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: H.color('accent', 0.55), transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending }));
-    core.scale.setScalar(16);
-    world.add(core);
-
-    // glass plates: one per day, appear as the layer completes
-    const plates = [];
-    const frameGeo = roundedFrameGeometry(THREE, PLATE.w, PLATE.d, PLATE.r, 0.06);
-    const fillGeo = roundedRectGeometry(THREE, PLATE.w, PLATE.d, PLATE.r);
-    for (let L = 0; L < LAYERS; L++) {
-      const fm = new THREE.MeshBasicMaterial({ color: H.color('accent', 1.25), transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false, side: THREE.DoubleSide });
-      const pm = new THREE.MeshBasicMaterial({ color: H.color('accent', 1), transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false, side: THREE.DoubleSide });
-      const frame = new THREE.Mesh(frameGeo, fm);
-      const fill = new THREE.Mesh(fillGeo, pm);
-      frame.rotation.x = -Math.PI / 2; fill.rotation.x = -Math.PI / 2;
-      frame.position.y = LAYER_Y(L); fill.position.y = LAYER_Y(L) - 0.01;
-      world.add(frame, fill);
-      plates.push({ fm, pm });
-    }
+    const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: H.color('accent', 2.2), transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending }));
+    const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: H.color('accent', 0.32), transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending }));
+    core.scale.setScalar(3.2);
+    halo.scale.setScalar(19);
+    world.add(halo, core);
 
     // the lid's screen light + boot line
     const screenU = { uScreen: { value: 0 }, uBoot: { value: 0 }, uColA: { value: H.color('accent') }, uColB: { value: H.color('light') }, uSize: { value: new THREE.Vector2(LAP.sw - 0.5, LAP.sh - 0.5) } };
@@ -312,7 +306,7 @@ export default {
     // ---------- DOM ----------
     const g = 'void';
     const src = factSource(ctx, (beat.facts || [])[0], copy.kicker);
-    const scrim = C.Scrim.create({ ground: g, side: 'left', extent: 0.78, strength: 0.95 });
+    const scrim = C.Scrim.create({ ground: g, side: 'left', extent: 0.66, strength: 0.95 });
     const floor = C.Scrim.create({ ground: g, side: 'bottom', extent: 0.24, strength: 0.9 }); // keeps the footer band calm
     const n1 = C.BigNumber.create({ display: copy.n, label: copy.nLabel, size: 'display', ground: g });
     const dParts = splitFigure(copy.d);
@@ -412,18 +406,12 @@ export default {
         lastOrg = U.uOrganize.value;
         lastLap = U.uLaptop.value;
         const o = U.uOrganize.value;
-        const fade = 1 - smooth(0, 0.3, U.uLaptop.value);
-        const newest = Math.min(LAYERS - 1, Math.floor(o - 0.55));
-        for (let L = 0; L < LAYERS; L++) {
-          const on = smooth(L + 0.55, L + 1.0, o) * fade;
-          const lead = L === newest && o < LAYERS ? 1 : 0.55 + 0.45 * smooth(LAYERS - 0.2, LAYERS, o) * (L === LAYERS - 1 ? 1 : 0.4);
-          plates[L].fm.opacity = on * 0.9 * lead;
-          plates[L].pm.opacity = on * 0.03;
-        }
         dust.update(renderMode ? 0 : time);
         const sp = U.uSpawn.value;
-        core.material.opacity = (1 - smooth(0, 3, o)) * (1 - U.uLaptop.value) * (0.55 + 1.6 * (1 - sp) * smooth(0, 0.08, sp));
-        core.scale.setScalar(16 * (0.55 + 0.45 * sp));
+        const live = (1 - smooth(0, 3, o)) * (1 - U.uLaptop.value);
+        core.material.opacity = live * (0.85 + 1.2 * (1 - sp) * smooth(0, 0.08, sp));
+        halo.material.opacity = live * (0.7 + 0.3 * sp);
+        core.scale.setScalar(3.2 * (0.6 + 0.4 * sp));
         rig.update(renderMode ? 0 : time);
       },
       dispose() {

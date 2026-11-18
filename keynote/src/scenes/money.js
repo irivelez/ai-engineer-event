@@ -1,15 +1,16 @@
 // money (calm-b, PAPER data): follow the money. Run-rates, an IPO, capex at a scale no industry has seen.
-// Steps 0–2: one figure per step at display size (odometer digits), its label at lead size and its own chip +
-//            source under it (lab-reported / official / secondary, with the secondary caveat kept).
+// Steps 0–2: one figure per step at display size (odometer digits); its label at lead size with its own chip +
+//            source (lab-reported / official / secondary, the secondary caveat kept) sits beside the figure when
+//            there is room (so the frame is used edge to edge), under it when the figure is wide.
 // Step 3: the headlines: the real X post of the S-1 filing and AP's story on it slide in as cards.
 import { gsap } from 'gsap';
 import { calmScene, el, esc } from './_calm/kit.js';
-import { actLine, ensureCSS, sourceOf, tagSource, capCard } from './_calm-b/kit.js';
+import { actLine, ensureCSS, sourceOf, tagSource, capCard, capMeta } from './_calm-b/kit.js';
 
 // Captures for the headlines step (director's curation), with crops in image px.
 const CARDS = [
-  { id: 'x-anthropic-s1-ipo', segs: [[0, 262]], width: 868 * 0.92, tilt: -1.2 },
-  { id: 'ap-anthropic-ipo-filing', segs: [[0, 65], [185, 1000]], width: 760, tilt: 1.0 },
+  { id: 'x-anthropic-s1-ipo', segs: [[0, 262]], width: 760, tilt: -0.8, x: { counts: false, captured: false } },
+  { id: 'ap-anthropic-ipo-filing', segs: [[0, 65], [185, 1000]], width: 856, tilt: 0.6 },
 ];
 
 export default calmScene('money', (ctx, K) => {
@@ -35,19 +36,54 @@ export default calmScene('money', (ctx, K) => {
     return { kind, text };
   });
 
-  // ----- the big figure, one per step -----
-  const FIG_Y = 344;
-  const figs = items.map((it, i) => K.add(C.BigNumber.create({ display: String(it.value || '').replace(/ /g, ' '), label: it.label || '', kind: srcs[i].kind, source: srcs[i].text, size: 'display', ground: g }), M, FIG_Y, T.spanW(12)));
-  figs.forEach((f) => { const lb = f.el.querySelector('.bn-label'); if (lb) lb.style.maxWidth = `${T.spanW(9)}px`; });
+  // ----- the big figure, one per step; its label + provenance beside it when there is room, else under it -----
+  const FIG_Y = 456;
+  const FIG_H = T.type.display.size * T.type.display.line; // 216
+  const figs = items.map((it, i) => {
+    const fig = K.add(C.BigNumber.create({ display: String(it.value || '').replace(/ /g, ' '), size: 'display', ground: g }), M, FIG_Y);
+    const side = el('div', '');
+    // non-breaking hyphens inside words and codes ("run-rate", "S-1"): a label never breaks at them
+    const lab = el('div', 'cb-body48 balance', side, esc(String(it.label || '').replace(/(\w)-(\w)/g, '$1\u2011$2')));
+    lab.style.color = G.fg;
+    const meta = el('div', 'cb-src', side, `${C.chipHTML(srcs[i].kind)}<span class="t-source">${esc(srcs[i].text)}</span>`);
+    meta.classList.add(`ground-${g}`);
+    meta.style.marginTop = '24px';
+    place(side, M, FIG_Y + FIG_H + 24, T.spanW(12));
+    const sideB = K.block(side, { rise: 20 });
+    return { fig, side, sideB, lab };
+  });
+  function layout() {
+    figs.forEach((f) => {
+      const figEl = f.fig.el.querySelector('.bn-figure');
+      const w = figEl ? figEl.offsetWidth : 800; // layout px (the stage scale does not apply)
+      const x = M + Math.ceil(w) + 72;
+      const room = 1920 - M - x;
+      if (room >= 640) {
+        // beside: the label block is vertically centred on the figure
+        f.side.style.left = `${x}px`;
+        f.side.style.width = `${room}px`;
+        f.side.style.whiteSpace = 'normal';
+        const h = f.side.offsetHeight || 200;
+        f.side.style.top = `${Math.round(FIG_Y + FIG_H / 2 - h / 2 + 8)}px`;
+      } else {
+        f.side.style.left = `${M}px`;
+        f.side.style.width = `${T.spanW(12)}px`;
+        f.side.style.top = `${FIG_Y + FIG_H + 24}px`;
+      }
+    });
+  }
+  layout();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
 
   // ----- step 3: the headlines -----
   const cards = [];
   CARDS.forEach((spec) => {
-    const c = capCard(ctx, spec.id, { width: spec.width, segs: spec.segs, tilt: spec.tilt, ground: g });
+    const m = ctx.assets.captureMeta(spec.id);
+    const c = capCard(ctx, spec.id, { width: spec.width, segs: spec.segs, tilt: spec.tilt, ground: g, meta: spec.x ? capMeta(m, spec.x) : undefined });
     if (c) cards.push({ c, spec });
   });
   // layout: two cards side by side under the title, slightly overlapping, centred vertically in 300–944
-  const AREA_TOP = 316;
+  const AREA_TOP = 312;
   const gap = 48;
   const totalW = cards.reduce((s, x) => s + x.spec.width, 0) + gap * Math.max(0, cards.length - 1);
   let x = Math.max(M, Math.round((1920 - totalW) / 2));
@@ -64,7 +100,7 @@ export default calmScene('money', (ctx, K) => {
   const parts = [
     { c: kicker, on: () => true },
     { c: title, on: () => true, at: 0.08 },
-    ...figs.map((f, i) => ({ c: f, on: (s) => s === i, at: 0.3 })),
+    ...figs.flatMap((f, i) => [{ c: f.fig, on: (s) => s === i, at: 0.3 }, { c: f.sideB, on: (s) => s === i, at: 0.75 }]),
     ...cards.map(({ c }, i) => ({ c, on: (s) => s >= 3, at: 0.35 + i * 0.3 })),
   ];
   const apply = K.stepper(parts);

@@ -1,11 +1,12 @@
-# calm-a report (draft, updated at the end)
+# calm-a report (17:15)
 
-**Done (first pass, 16:25):** all 19: title, question, sf-topics, slop, lean-harness, org, verification, last-job, year-in-weeks, self-build, price, ruler, open-weights, twins, and-yet, employee-bar, economics, rulers-break, recipe. Shared helpers: `src/scenes/_calm/kit.js`. Smoke (title→last-job): pass, zero console errors. Zoom sim: SSIM ≥ 0.996 on the densest frames.
+**Done:** all 19 built and polished: title, question, sf-topics, slop, lean-harness, org, verification, last-job, year-in-weeks, self-build, price, ruler, open-weights, twins, and-yet, employee-bar, economics, rulers-break, recipe. Shared helpers: `src/scenes/_calm/kit.js`. There are no GL moments, so no fps runs. Smoke (all 19) passes: 53 steps forward, 52 back, zero console errors. Live end states match render within 0.2 % of pixels; the rest is ambient motion. Zoom sim SSIM ≥ 0.996, and no text is under 26 px. Final shots: scratchpad `shots/final`.
 
 **Decisions**
-- title reuses `fitFilmTitle`: ink box 584–1340 × 508–570 vs the film's 584–1341 (mean pixel diff 0.8/255). Step 2 opens white inside the moment, so question starts on white.
-- `ctx.facts(id)` returned null for every id (engine bug, fixed by the lead 16:00); the kit keeps a fallback.
-- employee-bar shows Fable at 82 % = copy's 65 % + "17 points lower" (as style frame A); the ceiling label is the title's own phrase.
-- No hardcoded copy: route numerals come from the acts; recipe's "+" signs are operators.
+- title reuses `fitFilmTitle`: ink box 584–1340 × 508–570, vs the film's 584–1341 (mean pixel diff 0.8/255). Step 2 opens white, so question starts on white.
+- year-in-weeks plots only the two known points, plus the trend over the same 11 weeks; the gap is bracketed.
+- employee-bar: Fable's 82 % = copy's 65 % + "17 points lower" (as style frame A). Staff line and note come from `barLabel`/`barNote`.
+- Director critique items 1–6 done (recipe dark card, org evidence still, display-size heroes).
+- Found and reported, lead fixed: `ctx.facts` index, HUD z-order, line-mask margin collapse, `shoot.mjs --live`.
 
-**Missing / open:** see final version.
+**Open:** two employee-bar contrast flags are checker false positives; I checked both by eye.

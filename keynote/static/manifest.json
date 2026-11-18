@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-18T21:01:18.066Z",
+ "generatedAt": "2026-11-18T22:38:53.015Z",
  "size": [
   1920,
   1080
@@ -585,7 +585,7 @@
    "n": 26,
    "id": "breach",
    "step": 0,
-   "steps": 4,
+   "steps": 5,
    "file": "static/frames/26-breach-0.webp",
    "ground": "void"
   },
@@ -593,7 +593,7 @@
    "n": 26,
    "id": "breach",
    "step": 1,
-   "steps": 4,
+   "steps": 5,
    "file": "static/frames/26-breach-1.webp",
    "ground": "void"
   },
@@ -601,7 +601,7 @@
    "n": 26,
    "id": "breach",
    "step": 2,
-   "steps": 4,
+   "steps": 5,
    "file": "static/frames/26-breach-2.webp",
    "ground": "void"
   },
@@ -609,8 +609,16 @@
    "n": 26,
    "id": "breach",
    "step": 3,
-   "steps": 4,
+   "steps": 5,
    "file": "static/frames/26-breach-3.webp",
+   "ground": "void"
+  },
+  {
+   "n": 26,
+   "id": "breach",
+   "step": 4,
+   "steps": 5,
+   "file": "static/frames/26-breach-4.webp",
    "ground": "void"
   },
   {
@@ -665,7 +673,7 @@
    "n": 29,
    "id": "brazil",
    "step": 0,
-   "steps": 3,
+   "steps": 4,
    "file": "static/frames/29-brazil-0.webp",
    "ground": "void"
   },
@@ -673,7 +681,7 @@
    "n": 29,
    "id": "brazil",
    "step": 1,
-   "steps": 3,
+   "steps": 4,
    "file": "static/frames/29-brazil-1.webp",
    "ground": "void"
   },
@@ -681,8 +689,16 @@
    "n": 29,
    "id": "brazil",
    "step": 2,
-   "steps": 3,
+   "steps": 4,
    "file": "static/frames/29-brazil-2.webp",
+   "ground": "void"
+  },
+  {
+   "n": 29,
+   "id": "brazil",
+   "step": 3,
+   "steps": 4,
+   "file": "static/frames/29-brazil-3.webp",
    "ground": "void"
   },
   {
@@ -777,7 +793,7 @@
    "n": 33,
    "id": "tabloids",
    "step": 0,
-   "steps": 2,
+   "steps": 3,
    "file": "static/frames/33-tabloids-0.webp",
    "ground": "paper"
   },
@@ -785,8 +801,16 @@
    "n": 33,
    "id": "tabloids",
    "step": 1,
-   "steps": 2,
+   "steps": 3,
    "file": "static/frames/33-tabloids-1.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 33,
+   "id": "tabloids",
+   "step": 2,
+   "steps": 3,
+   "file": "static/frames/33-tabloids-2.webp",
    "ground": "paper"
   },
   {

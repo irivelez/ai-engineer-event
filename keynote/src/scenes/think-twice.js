@@ -105,10 +105,11 @@ export default calmScene('think-twice', (ctx, K) => {
       gsap.killTweensOf([gr.grp, gr.ic, gr.why]);
       if (i === k) {
         gsap.set(gr.grp, { autoAlpha: 1, x: 0, y: 0, scale: 1 });
-        gsap.set([gr.ic, gr.why], { autoAlpha: 1, y: 0, scale: 1 });
+        gsap.set([gr.ic, gr.why], { autoAlpha: 1, x: 0, y: 0, scale: 1 });
         gr.hl.set({ visible: true }, { animate: false });
       } else {
         gsap.set(gr.grp, { autoAlpha: 0, x: 0, y: 0, scale: 1 });
+        gsap.set([gr.ic, gr.why], { autoAlpha: 1, x: 0, y: 0, scale: 1 });
         gr.hl.set({ visible: false }, { animate: false });
       }
     });
@@ -122,6 +123,8 @@ export default calmScene('think-twice', (ctx, K) => {
     const tv = step >= 1 ? { y: TITLE_Y1 - TITLE_Y0, scale: SMALL } : { y: 0, scale: 1 };
     if (anim) tl.to(title.el, { ...tv, duration: 1.0, ease: 'power3.inOut' }, 0);
     else { gsap.killTweensOf(title.el, 'y,scale'); gsap.set(title.el, tv); }
+    // once the decisions start, the title steps back to muted: the decision is the one idea on screen
+    tl.add(title.set({ dim: step >= 1 }, { animate: anim }), anim ? 0.2 : 0);
     tl.add(stripB.set({ visible: step >= 1 }, { animate: anim }), anim ? 0.3 : 0);
 
     if (!anim) {
@@ -140,7 +143,7 @@ export default calmScene('think-twice', (ctx, K) => {
     cur = k;
     // slots: colours and the accent underline travel with the step
     slots.forEach((sl, i) => {
-      tl.to(sl.s, { color: slotColor(i, k), duration: 0.5, ease: 'power2.out' }, i === prev ? 0.55 : 0.3);
+      tl.to(sl.s, { color: slotColor(i, k), duration: 0.4, ease: 'power2.out' }, i === prev ? 0.72 : 0.3);
       const on = i === k;
       tl.to(sl.u, { scaleX: on ? 1 : 0, autoAlpha: on ? 1 : 0, duration: on ? 0.6 : 0.3, ease: on ? 'expo.out' : 'power2.in' }, on ? 0.7 : 0);
     });
@@ -149,15 +152,21 @@ export default calmScene('think-twice', (ctx, K) => {
       const o = groups[prev];
       gsap.killTweensOf([o.grp]);
       if (k === prev + 1) {
-        // shrink down into its slot
+        // the decision goes into the list: its words lift away, its cue icon flies down into its slot
         const sl = slots[prev];
-        const s = 44 / ICON;
-        tl.to(o.grp, { x: sl.x - 960, y: SLOT_Y - o.top, scale: s, duration: 0.8, ease: 'power3.inOut' }, 0);
-        tl.to(o.grp, { autoAlpha: 0, duration: 0.35, ease: 'power1.in' }, 0.45);
+        gsap.killTweensOf([o.ic, o.why, o.hl.el]);
+        tl.to([o.hl.el, o.why], { autoAlpha: 0, y: -16, duration: 0.35, ease: 'power2.in' }, 0);
+        tl.to(o.ic, { x: sl.x - 22 - (960 - ICON / 2), y: SLOT_Y - o.top, scale: 44 / ICON, transformOrigin: '0 0', duration: 0.75, ease: 'power3.inOut' }, 0.05);
+        tl.to(o.ic, { autoAlpha: 0, duration: 0.15, ease: 'none' }, 0.7);
       } else {
         tl.to(o.grp, { autoAlpha: 0, y: -12, duration: 0.45, ease: 'power2.in' }, 0);
       }
-      tl.add(() => { o.hl.set({ visible: false }, { animate: false }); gsap.set(o.grp, { x: 0, y: 0, scale: 1 }); }, 0.85);
+      tl.add(() => {
+        o.hl.set({ visible: false }, { animate: false });
+        gsap.set(o.grp, { autoAlpha: 0, x: 0, y: 0, scale: 1 });
+        gsap.set(o.ic, { autoAlpha: 1, x: 0, y: 0, scale: 1 });
+        gsap.set(o.why, { autoAlpha: 1, y: 0 });
+      }, 0.86);
     }
     // the incoming decision
     if (k >= 0 && k !== prev) {

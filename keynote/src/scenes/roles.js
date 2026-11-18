@@ -16,7 +16,7 @@ export default calmScene('roles', (ctx, K) => {
   const kicker = K.add(C.Kicker.create({ text: actLine(ctx), ground: g }), M, 120);
   const title = K.add(C.Headline.create({ text: copy.title || '', role: 'h2', ground: g, width: T.spanW(10) }), M, 192, T.spanW(10));
 
-  const TOP = 392;
+  const TOP = 440; // the three columns sit optically centred under the title (they rise at the callback)
   const cols = (copy.roles || []).slice(0, 3).map((r, i) => {
     const x = T.colX(i * 4);
     const box = el('div', '');
@@ -63,7 +63,7 @@ export default calmScene('roles', (ctx, K) => {
     apply(step, anim, tl, info);
     const back = step >= 3;
     // the callback needs air: the columns rise a little as they step back
-    const lift = { y: back ? -48 : 0 };
+    const lift = { y: back ? -96 : 0 };
     if (anim) tl.to(cols.map((c) => c.box), { ...lift, duration: 0.9, ease: 'power3.inOut' }, 0);
     else { gsap.killTweensOf(cols.map((c) => c.box), 'y'); gsap.set(cols.map((c) => c.box), lift); }
     cols.forEach((c, i) => {

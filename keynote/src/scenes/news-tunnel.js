@@ -98,7 +98,6 @@ export default {
     }
     const tunnel = new THREE.Group();
     world.add(tunnel);
-    const placed = [];
     const nTunnel = cards.length ? Math.min(66, cards.length * 2) : 0;
     for (let i = 0; i < nTunnel; i++) {
       const card = cards[(i * 7) % cards.length];
@@ -115,11 +114,9 @@ export default {
       mesh.scale.set(w, w * card.aspect, 1);
       card.meshes.push(mesh);
       tunnel.add(mesh);
-      placed.push(mesh);
     }
     // final fanned arc (GTC 58:01): a convex fan, the centre card nearest and largest
     const NARC = Math.min(11, cards.length);
-    const arcCards = [];
     for (let k = 0; k < NARC; k++) {
       const card = cards[(k * 5 + 3) % cards.length];
       const mesh = new THREE.Mesh(cardGeo, cardMaterial(card));
@@ -132,7 +129,6 @@ export default {
       mesh.scale.set(w, w * card.aspect, 1);
       card.meshes.push(mesh);
       tunnel.add(mesh);
-      arcCards.push(mesh);
     }
     const dust = world.add(H.particles({ count: 2600, spread: [16, 12, 140], center: [0, 0.4, -55], size: 0.035, colors: ['light', 'accent'], intensity: 0.6, drift: 0.25, seed: 'news-dust' }));
 
@@ -170,8 +166,9 @@ export default {
       }
       tl.to(CAM, { y: step === 1 ? 1.0 : 0.5, lookAhead: step === 1 ? 16 : 12, duration: D(5), ease: 'power2.inOut', onUpdate: applyCam }, 0);
       tl.to(world.post.bloom, { intensity: step === 1 ? 0.6 : 0.85, duration: D(2) }, 0);
-      tl.add(scrim.set({ visible: step === 1 }, { animate }), D(step === 1 ? 3.6 : 0));
-      tl.add(act.set({ visible: step === 1 }, { animate }), D(step === 1 ? 4.4 : 0));
+      // the fan of real headlines holds for a beat before the act title lands
+      tl.add(scrim.set({ visible: step === 1 }, { animate }), D(step === 1 ? 7.4 : 0));
+      tl.add(act.set({ visible: step === 1 }, { animate }), D(step === 1 ? 8.0 : 0));
       if (!animate) tl.call(applyCam, null, 0.0011);
       return tl;
     }

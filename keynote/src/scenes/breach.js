@@ -24,7 +24,7 @@ const RACK_ROWS = 4;
 // Camera per step (spherical rig around a target).
 const SHOTS = [
   { azimuth: 18, polar: 80, radius: 10.5, tx: -2.3, ty: 1.25, tz: 0 },
-  { azimuth: 10, polar: 70, radius: 27, tx: -3.2, ty: -0.6, tz: -8 },
+  { azimuth: 10, polar: 70, radius: 27, tx: -4.4, ty: -0.6, tz: -8 },
   { azimuth: 4, polar: 63, radius: 19, tx: 0.2, ty: -0.2, tz: -15.5 },
   { azimuth: 8, polar: 58, radius: 32, tx: -3.0, ty: -1.5, tz: -9 },
   { azimuth: 6, polar: 54, radius: 38, tx: -1.0, ty: -1.5, tz: -9 },
@@ -260,7 +260,7 @@ export default {
     const rackGeo = new THREE.BoxGeometry(0.3, 0.86, 0.48).translate(0, 0.43, 0);
     const nRacks = CLUSTERS.length * RACK_COLS * RACK_ROWS;
     const rackU = {
-      uInfect: { value: 0 }, uBody: { value: new THREE.Color('#0F141B') }, uCool: { value: H.color('lightSoft', 0.95) }, uHot: { value: H.color('alert', 2.1) },
+      uInfect: { value: 0 }, uBody: { value: new THREE.Color('#0F141B') }, uCool: { value: H.color('lightSoft', 0.95) }, uHot: { value: H.color('alert', 1.5) },
       uLight: { value: new THREE.Vector3(-0.4, 0.85, 0.5).normalize() },
     };
     const racks = new THREE.InstancedMesh(rackGeo, new THREE.ShaderMaterial({
@@ -291,7 +291,6 @@ export default {
             col = mix(col, led * 0.55, bar);
             col = mix(col, led, dotLed * step(0.05, vUv.y) * step(vUv.y, 0.95));
           }
-          col += uHot * 0.025 * vHot;
           gl_FragColor = vec4(col, 1.0);
         }`,
     }), nRacks);
@@ -342,7 +341,7 @@ export default {
         const r = li % 3;
         li++;
         aRoute[i] = r;
-        aLeak[i] = r * 0.24 + rand() * 0.36;
+        aLeak[i] = r * 0.14 + rand() * 0.36; // ≤ 0.64: every leaker has arrived when uLeak reaches 1
         const k = CLUSTERS[r];
         aTarget[i * 3] = k.c[0] + (rand() - 0.5) * 3.6;
         aTarget[i * 3 + 1] = 0.15 + rand() * 1.1;
@@ -408,8 +407,8 @@ export default {
     const { colX, spanW, space } = tokens;
     const title = C.Headline.create({ text: copy.title, role: 'h2', ground: 'void', width: spanW(6) });
     place(title.el, space.margin, 192);
-    const s1 = C.Headline.create({ text: copy.s1, role: 'body', ground: 'void', width: spanW(6) });
-    place(s1.el, space.margin, 300);
+    const s1 = C.Headline.create({ text: copy.s1, role: 'lead', ground: 'void', width: spanW(7) });
+    place(s1.el, space.margin, 268);
     const fig13 = splitFigure(copy.s2.value);
     const fig700 = splitFigure(copy.s3.value);
     const num13 = C.BigNumber.create({ display: fig13.figure, unit: fig13.unit || undefined, label: copy.s2.label, kind: provKind(f13 && f13.label), size: 'h1', ground: 'void', width: spanW(6) });
@@ -478,7 +477,7 @@ export default {
       tl.to(U.crack, { value: broken ? 1 : 0, duration: forward ? 1.3 : D(0.4), ease: 'expo.out' }, forward ? 0.25 : 0);
       tl.to(U.hole, { value: broken ? 1 : 0, duration: forward ? 1.7 : D(0.4), ease: 'power2.out' }, forward ? 1.05 : 0);
       tl.to(U.leak, { value: broken ? 1 : 0, duration: forward ? 6.4 : D(0.5), ease: 'none' }, forward ? 1.3 : 0);
-      tl.to(U.infect, { value: broken ? 1 : 0, duration: forward ? 5.6 : D(0.5), ease: 'none', onUpdate: setDay }, forward ? 2.8 : 0);
+      tl.to(U.infect, { value: broken ? 1 : 0, duration: forward ? 5.0 : D(0.5), ease: 'none', onUpdate: setDay }, forward ? 3.6 : 0);
       tl.to(floorU.uAgentPool, { value: broken ? 0.42 : 1, duration: forward ? 5 : D(0.5) }, forward ? 1.5 : 0);
       const tc = broken ? traceHot : traceCool;
       tl.to(traces.material.color, { r: tc.r, g: tc.g, b: tc.b, duration: forward ? 4.5 : D(0.5) }, forward ? 1.6 : 0);
@@ -497,7 +496,7 @@ export default {
       tl.add(motive.set({ visible: step === 3 }, { animate }), D(step === 3 ? 1.0 : 0));
       tl.add(source.set({ visible: step >= 1 && step <= 2 }, { animate }), D(step >= 1 ? 1.4 : 0));
       tl.add(motiveSrc.set({ visible: step === 3 }, { animate }), D(step === 3 ? 1.5 : 0));
-      tl.to(clock, { autoAlpha: step >= 1 && step <= 2 ? 1 : 0, duration: D(step >= 1 ? 0.6 : 0.3) }, forward ? 2.6 : 0);
+      tl.to(clock, { autoAlpha: step >= 1 && step <= 2 ? 1 : 0, duration: D(step >= 1 ? 0.6 : 0.3) }, forward ? 3.3 : 0);
       if (!animate) tl.call(setDay, null, 0.001);
       cur = step;
       return tl;

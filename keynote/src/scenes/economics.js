@@ -28,8 +28,8 @@ export default calmScene('economics', (ctx, K) => {
   const NAME_W = T.spanW(4);
   const BX = T.colX(4);
   const BMAX = T.colX(11) - BX - 230;
-  const Y0 = 372;
-  const PITCH = 188;
+  const Y0 = 360;
+  const PITCH = 196;
   const els = rows.map((r, i) => {
     const y = Y0 + i * PITCH;
     const box = el('div', '');
@@ -38,11 +38,11 @@ export default calmScene('economics', (ctx, K) => {
     Object.assign(nm.style, { position: 'absolute', left: `${M}px`, top: `${y}px`, width: `${NAME_W}px`, color: G.fg, fontWeight: i === 2 ? '600' : '520' });
     const w = (r.h / maxH) * BMAX;
     const bar = el('div', '', box);
-    Object.assign(bar.style, { position: 'absolute', left: `${BX}px`, top: `${y + 4}px`, width: `${w}px`, height: '56px', borderRadius: '0 4px 4px 0', background: r.color, transformOrigin: '0 50%' });
+    Object.assign(bar.style, { position: 'absolute', left: `${BX}px`, top: `${y - 4}px`, width: `${w}px`, height: '64px', borderRadius: '0 4px 4px 0', background: r.color, transformOrigin: '0 50%' });
     const val = el('div', 't-lead tnum ca-nowrap', box, esc(r.time || ''));
     Object.assign(val.style, { position: 'absolute', left: `${BX + w + 24}px`, top: `${y - 4}px`, color: G.fg });
-    const res = r.result ? el('div', 'ca-sans40', box, esc(r.result)) : null;
-    if (res) Object.assign(res.style, { position: 'absolute', left: `${BX}px`, top: `${y + 80}px`, width: `${T.spanW(8)}px`, color: r.resTone, fontWeight: i === 2 ? '600' : '460' });
+    const res = r.result ? el('div', 't-body', box, esc(r.result)) : null;
+    if (res) Object.assign(res.style, { position: 'absolute', left: `${BX}px`, top: `${y + 76}px`, width: `${T.spanW(8)}px`, color: r.resTone, fontWeight: i === 2 ? '600' : '440' });
     return K.block(box, {
       enter(tl) {
         tl.fromTo(nm, { autoAlpha: 0, x: -12 }, { autoAlpha: 1, x: 0, duration: 0.8, ease: 'expo.out' }, 0);

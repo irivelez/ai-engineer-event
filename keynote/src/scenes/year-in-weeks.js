@@ -1,7 +1,7 @@
 // year-in-weeks (calm-a, PAPER data): almost a year of progress in 11 weeks (Epoch Capabilities Index).
-// Step 0: the frontier score climbs 162.5 → 174 over 11 weeks (the chart spans those 11 weeks; 174 rolls in).
-// Step 1: the x-axis zooms out to a full year and the dashed trend (about 14 points a year) draws across:
-//         the 11-week climb turns steep, and a guide shows how far along the trend 174 would sit.
+// Step 0: the two points we know, 162.5 on 1 Sep and 174 in mid-Nov, joined by a straight line (174 rolls in).
+// Step 1: the trend over the same 11 weeks (about 14 points a year, so ≈ 165.5 by mid-Nov) draws dashed; the
+//         gap at the right edge, bracketed in the accent, is the story.
 // Step 2: the caveat, in serif.
 import { gsap } from 'gsap';
 import { calmScene, el, svgEl, esc, factSource } from './_calm/kit.js';
@@ -37,7 +37,7 @@ export default calmScene('year-in-weeks', (ctx, K) => {
   });
   const lab = el('div', '');
   place(lab, M, NY + 160, LW);
-  lab.innerHTML = `<div class="t-body" style="color:${G.fg}">${esc(E.label || '')}</div><div class="t-label" style="margin-top:16px;color:${G.muted}">${esc(E.dates || '')}</div>`;
+  lab.innerHTML = `<div class="t-body" style="color:${G.fg}">${esc(E.label || '')}</div>`; // dates live on the chart's axis
   const labB = K.block(lab, { rise: 16 });
   const caveat = el('div', 'pretty');
   place(caveat, M, NY + 360, LW);
@@ -45,101 +45,86 @@ export default calmScene('year-in-weeks', (ctx, K) => {
   caveat.innerHTML = esc(copy.caveat || '');
   const caveatB = K.block(caveat, { rise: 16 });
 
-  // ----- chart -----
+  // ----- chart: only what we know. Two points (162.5 on 1 Sep, 174 in mid-Nov) joined by a straight line;
+  // step 1 adds the trend over the same 11 weeks (about 14 points a year → ≈ 165.5) and brackets the gap. -----
   const f0 = parseFloat(E.from) || 162.5;
   const f1 = parseFloat(E.to) || 174;
   const perYear = parseFloat(String(E.trend || '').replace(/[^\d.]/g, '')) || 14;
   const WEEKS = 11;
-  const CX = T.colX(7);
-  const CW = T.spanW(5);
-  const CY = 248;
-  const CH = 600;
+  const fT = f0 + (perYear * WEEKS) / 52; // where the trend would be by mid-Nov
+  const CX = T.colX(6) + 40;
+  const CW = T.colX(11) + T.space.col - CX - 230; // room on the right for the end labels
+  const CY = 236;
+  const CH = 640;
   const PADT = 40;
-  const PADB = 64;
+  const PADB = 72;
   const YMIN = 160;
-  const YMAX = 178;
+  const YMAX = 176;
   const chart = el('div', '');
-  place(chart, CX, CY, CW, CH + 60);
-  const svg = svgEl('svg', { width: CW, height: CH, viewBox: `0 0 ${CW} ${CH}` }, chart);
+  place(chart, CX, CY, CW + 230, CH + 60);
+  const svg = svgEl('svg', { width: CW + 230, height: CH, viewBox: `0 0 ${CW + 230} ${CH}` }, chart);
   svg.style.overflow = 'visible';
   const yv = (v) => PADT + (1 - (v - YMIN) / (YMAX - YMIN)) * (CH - PADT - PADB);
+  const xw = (w) => (w / WEEKS) * CW;
   const base = svgEl('line', { x1: 0, x2: CW, y1: CH - PADB, y2: CH - PADB, stroke: G.muted, 'stroke-width': 2 }, svg);
-  const trend = svgEl('path', { fill: 'none', stroke: G.muted, 'stroke-width': 4, 'stroke-dasharray': '2 14', 'stroke-linecap': 'round' }, svg);
-  const guide = svgEl('path', { fill: 'none', stroke: G.quiet, 'stroke-width': 2, 'stroke-dasharray': '8 10' }, svg);
-  const actual = svgEl('path', { fill: 'none', stroke: G.accent, 'stroke-width': 6, 'stroke-linecap': 'round' }, svg);
-  const d0 = svgEl('circle', { r: 9, fill: G.bg, stroke: G.accent, 'stroke-width': 4 }, svg);
-  const d1 = svgEl('circle', { r: 11, fill: G.accent }, svg);
-  const tick = svgEl('line', { stroke: G.muted, 'stroke-width': 2 }, svg);
-  const [dStart, dEnd] = String(E.dates || '').split('→').map((s) => s.trim());
+  const tick0 = svgEl('line', { x1: 0, x2: 0, y1: CH - PADB, y2: CH - PADB + 14, stroke: G.muted, 'stroke-width': 2 }, svg);
+  const tick1 = svgEl('line', { x1: CW, x2: CW, y1: CH - PADB, y2: CH - PADB + 14, stroke: G.muted, 'stroke-width': 2 }, svg);
+  const trend = svgEl('path', { d: `M0,${yv(f0).toFixed(1)} L${CW},${yv(fT).toFixed(1)}`, fill: 'none', stroke: G.muted, 'stroke-width': 5, 'stroke-dasharray': '2 14', 'stroke-linecap': 'round' }, svg);
+  const actual = svgEl('path', { d: `M0,${yv(f0).toFixed(1)} L${CW},${yv(f1).toFixed(1)}`, fill: 'none', stroke: G.accent, 'stroke-width': 6, 'stroke-linecap': 'round' }, svg);
+  const d0 = svgEl('circle', { cx: 0, cy: yv(f0), r: 10, fill: G.bg, stroke: G.accent, 'stroke-width': 4 }, svg);
+  const d1 = svgEl('circle', { cx: CW, cy: yv(f1), r: 12, fill: G.accent }, svg);
+  const dT = svgEl('circle', { cx: CW, cy: yv(fT), r: 9, fill: G.bg, stroke: G.muted, 'stroke-width': 4 }, svg);
+  // the gap at the right edge: a bracket from the trend's end up to 174
+  const gx = CW + 40;
+  const gap = svgEl('g', {}, svg);
+  svgEl('line', { x1: gx, x2: gx, y1: yv(fT), y2: yv(f1), stroke: G.accent, 'stroke-width': 4, 'stroke-linecap': 'round' }, gap);
+  svgEl('line', { x1: gx - 12, x2: gx, y1: yv(fT), y2: yv(fT), stroke: G.accent, 'stroke-width': 4, 'stroke-linecap': 'round' }, gap);
+  svgEl('line', { x1: gx - 12, x2: gx, y1: yv(f1), y2: yv(f1), stroke: G.accent, 'stroke-width': 4, 'stroke-linecap': 'round' }, gap);
+  const [dStart, dEnd] = String(E.dates || '').split('→').map((t) => t.trim());
   const xl0 = el('div', 't-label', chart, esc(dStart || ''));
+  Object.assign(xl0.style, { position: 'absolute', top: `${CH - PADB + 24}px`, left: '0px', color: G.muted, whiteSpace: 'nowrap' });
   const xl1 = el('div', 't-label', chart, esc(dEnd || ''));
-  Object.assign(xl0.style, { position: 'absolute', top: `${CH - PADB + 16}px`, left: '0px', color: G.muted, whiteSpace: 'nowrap' });
-  Object.assign(xl1.style, { position: 'absolute', top: `${CH - PADB + 16}px`, color: G.muted, whiteSpace: 'nowrap' });
-  const trendL = el('div', 't-label', chart, esc(E.trend || ''));
-  Object.assign(trendL.style, { position: 'absolute', color: G.muted, whiteSpace: 'nowrap', textTransform: 'none', fontFamily: 'var(--f-sans)', letterSpacing: '0' });
-  const v0 = el('div', 't-label tnum', chart, esc(E.from || ''));
-  Object.assign(v0.style, { position: 'absolute', color: G.muted });
-
-  // zoom state z: 0 = x spans 11 weeks, 1 = x spans 52 weeks
-  const state = { z: 0, trend: 0 };
-  function draw() {
-    const span = WEEKS + (52 - WEEKS) * state.z;
-    const xw = (w) => (w / span) * CW;
-    actual.setAttribute('d', `M0,${yv(f0).toFixed(1)} L${xw(WEEKS).toFixed(1)},${yv(f1).toFixed(1)}`);
-    d0.setAttribute('cx', 0); d0.setAttribute('cy', yv(f0));
-    d1.setAttribute('cx', xw(WEEKS)); d1.setAttribute('cy', yv(f1));
-    tick.setAttribute('x1', xw(WEEKS)); tick.setAttribute('x2', xw(WEEKS));
-    tick.setAttribute('y1', CH - PADB); tick.setAttribute('y2', CH - PADB + 12);
-    // right-aligned to the tick while there is room, else left-aligned after "1 Sep"
-    const tx = xw(WEEKS);
-    xl1.style.left = `${Math.max(150, tx - 270).toFixed(1)}px`; // continuous: ends at the tick, never over "1 Sep"
-    xl1.style.width = '300px';
-    // trend from (0, f0) at perYear/52 per week, drawn to `trend` share of the year
-    const wEnd = 52 * state.trend;
-    trend.setAttribute('d', `M0,${yv(f0).toFixed(1)} L${xw(wEnd).toFixed(1)},${yv(f0 + (perYear * wEnd) / 52).toFixed(1)}`);
-    const wMeet = ((f1 - f0) / perYear) * 52; // when the trend would reach 174 (≈ 43 weeks)
-    const gEnd = Math.min(wMeet, wEnd);
-    guide.setAttribute('d', state.trend > 0 ? `M${xw(WEEKS).toFixed(1)},${yv(f1).toFixed(1)} L${xw(Math.max(WEEKS, gEnd)).toFixed(1)},${yv(f1).toFixed(1)}` : '');
-    trendL.style.left = `${Math.min(CW - 420, xw(wEnd) - 420)}px`;
-    trendL.style.top = `${yv(f0 + (perYear * wEnd) / 52) - 64}px`;
-    trendL.style.width = '420px';
-    trendL.style.textAlign = 'right';
-    v0.style.left = '24px';
-    v0.style.top = `${yv(f0) + 18}px`;
-  }
-  draw();
-  let len = 0;
+  Object.assign(xl1.style, { position: 'absolute', top: `${CH - PADB + 24}px`, left: `${CW - 400}px`, width: '400px', textAlign: 'right', color: G.muted, whiteSpace: 'nowrap' });
+  const v0 = el('div', 't-lead tnum', chart, esc(E.from || ''));
+  Object.assign(v0.style, { position: 'absolute', left: '24px', top: `${yv(f0) + 16}px`, color: G.muted });
+  const v1 = el('div', 't-lead tnum', chart, esc(E.to || ''));
+  Object.assign(v1.style, { position: 'absolute', left: `${CW - 160}px`, width: '130px', textAlign: 'right', top: `${yv(f1) - 36}px`, color: G.accent, fontWeight: '600' });
+  const trendL = el('div', 'ca-sans32 pretty', chart, esc(E.trend || ''));
+  Object.assign(trendL.style, { position: 'absolute', left: `${gx + 20}px`, width: '210px', top: `${yv(fT) - 30}px`, color: G.muted });
+  let lenA = 0;
   const chartB = K.block(chart, {
     enter(tl) {
-      state.z = 0; state.trend = 0; draw();
-      len = actual.getTotalLength() || 700;
-      gsap.set([trend, guide, trendL], { autoAlpha: 0 });
-      tl.fromTo(base, { scaleX: 0, transformOrigin: '0 50%' }, { scaleX: 1, duration: 0.8, ease: 'expo.out' }, 0);
-      tl.fromTo([xl0, xl1, v0], { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.08 }, 0.2);
-      tl.fromTo(d0, { scale: 0, transformOrigin: '50% 50%' }, { scale: 1, duration: 0.4, ease: 'power3.out' }, 0.3);
-      tl.fromTo(actual, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 0.4);
-      tl.fromTo(d1, { scale: 0, transformOrigin: '50% 50%' }, { scale: 1, duration: 0.5, ease: 'power3.out' }, 1.7);
+      lenA = lenA || actual.getTotalLength() || 900;
+      gsap.set([trend, dT, gap, trendL], { autoAlpha: 0 });
+      tl.fromTo([base, tick0, tick1], { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, ease: 'power2.out' }, 0);
+      tl.fromTo([xl0, xl1], { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.08 }, 0.15);
+      tl.fromTo([d0, v0], { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5, ease: 'power3.out' }, 0.3);
+      tl.fromTo(actual, { strokeDasharray: lenA, strokeDashoffset: lenA }, { strokeDashoffset: 0, duration: 1.4, ease: 'power2.inOut' }, 0.45);
+      tl.fromTo([d1, v1], { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5, ease: 'power3.out' }, 1.75);
     },
     settle() {
-      gsap.set(base, { scaleX: 1 });
-      gsap.set([xl0, xl1, v0], { autoAlpha: 1, y: 0 });
-      gsap.set([d0, d1], { scale: 1 });
+      gsap.set([base, tick0, tick1, xl0, xl1, d0, v0, d1, v1], { autoAlpha: 1, y: 0 });
       gsap.set(actual, { strokeDasharray: 'none', strokeDashoffset: 0 });
     },
   });
-
-  function zoom(step, anim, tl) {
-    const z = step >= 1 ? 1 : 0;
-    const tr = step >= 1 ? 1 : 0;
-    if (anim && (state.z !== z || state.trend !== tr)) {
-      gsap.set(actual, { strokeDasharray: 'none' });
-      if (tr) gsap.set([trend, guide], { autoAlpha: 1 });
-      tl.to(state, { z, duration: 1.4, ease: 'power3.inOut', onUpdate: draw }, 0.1);
-      tl.to(state, { trend: tr, duration: tr ? 1.8 : 0.6, ease: tr ? 'power2.inOut' : 'power2.in', onUpdate: draw }, tr ? 1.2 : 0);
-      tl.to(trendL, { autoAlpha: tr, duration: 0.6, ease: 'power2.out' }, tr ? 2.6 : 0);
-    } else if (!anim) {
-      state.z = z; state.trend = tr; draw();
-      gsap.set([trend, guide, trendL], { autoAlpha: tr });
+  // step 1: the trend over the same weeks, and the gap bracket
+  function showTrend(on, anim, tl) {
+    const full = `M0,${yv(f0).toFixed(1)} L${CW},${yv(fT).toFixed(1)}`;
+    if (anim && on) {
+      const p = { t: 0 };
+      const draw = () => trend.setAttribute('d', `M0,${yv(f0).toFixed(1)} L${(CW * p.t).toFixed(1)},${yv(f0 + (fT - f0) * p.t).toFixed(1)}`);
+      tl.set([trend, dT, gap, trendL], { autoAlpha: 0 }, 0);
+      tl.add(() => { p.t = 0; draw(); }, 0.1);
+      tl.set(trend, { autoAlpha: 1 }, 0.1);
+      tl.to(p, { t: 1, duration: 1.4, ease: 'power2.inOut', onUpdate: draw }, 0.1);
+      tl.fromTo(dT, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, 1.4);
+      tl.fromTo(gap, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5, ease: 'power2.out' }, 1.6);
+      tl.fromTo(trendL, { autoAlpha: 0, x: -8 }, { autoAlpha: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 1.7);
+    } else if (anim && !on) {
+      tl.to([trend, dT, gap, trendL], { autoAlpha: 0, duration: 0.4, ease: 'power2.in' }, 0);
+    } else {
+      trend.setAttribute('d', full);
+      gsap.set([trend, dT, gap, trendL], { autoAlpha: on ? 1 : 0, x: 0 });
     }
   }
 
@@ -157,11 +142,12 @@ export default calmScene('year-in-weeks', (ctx, K) => {
     { c: caveatB, on: (s) => s >= 2, at: 0.1 },
   ]);
 
+  let trendOn = false;
   function go(step, animate, info = {}) {
     const anim = animate && !R;
     const tl = gsap.timeline();
     apply(step, anim, tl, info);
-    zoom(step, anim, tl);
+    if (anim ? (step >= 1) !== trendOn : true) { showTrend(step >= 1, anim, tl); trendOn = step >= 1; }
     foot.show(step === 0 ? sJump : step === 1 ? sTrend : sCave, anim, tl, 0.6);
     return tl;
   }

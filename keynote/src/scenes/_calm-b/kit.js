@@ -202,3 +202,36 @@ export function capCard(ctx, id, opts = {}) {
   card.meta = m;
   return card;
 }
+
+/**
+ * Wrap the first occurrence of `word` inside `el` in <span class="cls">, without touching spacing.
+ * Why: components/_core.js splitLines() rebuilds each line by joining word tokens with ' ', so a highlight
+ * span next to punctuation gains spaces in live mode ("2027 ?", "“ tokenmaxxing ”:"). Scenes pass no
+ * `highlight` to Headline and call this after every Headline state change instead (render and live alike).
+ */
+export function accentWord(el, word, cls = 'itaf-hl') {
+  if (!el || !word || el.querySelector(`.${cls}`)) return null;
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  let n;
+  while ((n = walker.nextNode())) {
+    const i = n.data.indexOf(word);
+    if (i < 0) continue;
+    const r = document.createRange();
+    r.setStart(n, i);
+    r.setEnd(n, i + word.length);
+    const s = document.createElement('span');
+    s.className = cls;
+    r.surroundContents(s);
+    return s;
+  }
+  return null;
+}
+
+/** Undo accentWord (call before a Headline state change, so a re-split never sees the span as a wrapper). */
+export function clearAccent(el, cls = 'itaf-hl') {
+  if (!el) return;
+  const spans = el.querySelectorAll(`.${cls}`);
+  if (!spans.length) return;
+  spans.forEach((s) => s.replaceWith(document.createTextNode(s.textContent)));
+  el.normalize();
+}

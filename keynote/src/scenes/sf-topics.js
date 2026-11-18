@@ -16,20 +16,20 @@ export default calmScene('sf-topics', (ctx, K) => {
   const hlSet = new Set(copy.highlight || []);
   const max = Math.max(...items.map((d) => d.value), 1);
   const X0 = M;
-  const LABEL_W = 640;
+  const LABEL_W = 820;
   const BAR_X = X0 + LABEL_W;
-  const BAR_MAX = 560;
-  const ROW_H = 48;
-  const BAR_H = 28;
-  const TOP = 336;
+  const BAR_MAX = 420;
+  const ROW_H = 52;
+  const BAR_H = 32;
+  const TOP = 320;
   const chart = el('div', '');
   place(chart, 0, 0, 1920, 1080);
   const axis = el('div', '', chart);
   Object.assign(axis.style, { position: 'absolute', left: `${BAR_X}px`, top: `${TOP}px`, width: '2px', height: `${items.length * ROW_H}px`, background: G.muted });
   const rows = items.map((d, i) => {
     const y = TOP + i * ROW_H;
-    const label = el('div', 'ca-sans32 ca-nowrap', chart, esc(d.label));
-    Object.assign(label.style, { position: 'absolute', left: `${X0}px`, top: `${y + (ROW_H - 40) / 2}px`, width: `${LABEL_W - 32}px`, color: G.fg });
+    const label = el('div', 'ca-sans40 ca-nowrap', chart, esc(d.label));
+    Object.assign(label.style, { position: 'absolute', left: `${X0}px`, top: `${y + (ROW_H - 48) / 2}px`, width: `${LABEL_W - 32}px`, color: G.fg });
     const w = (d.value / max) * BAR_MAX;
     const bar = el('div', '', chart);
     Object.assign(bar.style, { position: 'absolute', left: `${BAR_X + 2}px`, top: `${y + (ROW_H - BAR_H) / 2}px`, width: `${w}px`, height: `${BAR_H}px`, background: G.quiet, borderRadius: '0 4px 4px 0', transformOrigin: '0 50%' });
@@ -56,7 +56,7 @@ export default calmScene('sf-topics', (ctx, K) => {
   const [head, ...rest] = String(copy.takeaway || '').split(':');
   const tx = T.colX(8);
   const take = el('div', '');
-  place(take, tx, 420, T.spanW(4));
+  place(take, tx, TOP + 4 * ROW_H + 40, T.spanW(4));
   take.innerHTML =
     `<div class="t-h1 tnum" style="color:${G.accent};white-space:nowrap">${esc(head.trim())}</div>` +
     `<div class="t-lead balance" style="margin-top:24px;color:${G.fg}">${esc(rest.join(':').trim())}</div>`;

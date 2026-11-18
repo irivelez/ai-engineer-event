@@ -573,7 +573,7 @@ function flowPoints({ H, tex, rows, rowClass = null, rowGate = null, perRow = 30
         a = held > 0.5 ? (aTr < 0.5 ? 1.0 - smoothstep(gateU + uHold * 0.6, gateU + uHold, u) : 0.0) : a;
         a *= (1.0 - aTr / uTrailN);
         a *= mix(uDimA, 1.0, aCls);
-        a *= 1.0 - uDark * 0.95 * (1.0 - smoothstep(uDarkR * 0.8, uDarkR * 1.05, distance(p, uDarkC)));
+        if (uDarkR > 0.0) a *= 1.0 - uDark * 0.95 * (1.0 - smoothstep(uDarkR * 0.8, uDarkR * 1.05, distance(p, uDarkC)));
         vec4 mv = modelViewMatrix * vec4(p, 1.0);
         gl_Position = projectionMatrix * mv;
         float sz = uSize * (1.0 - 0.45 * aTr / uTrailN) * (1.0 + held * 1.3);

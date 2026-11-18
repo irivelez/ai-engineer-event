@@ -1,8 +1,9 @@
 // x-voices (calm-b, PAPER collage): on X this month, the posts that moved the conversation, with their real reach.
-// One real post per step, large and sharp on the right (shown at ≤ 1:1 so it stays crisp). On the left its
-// view count, echoed big in Geist Mono from captures.json (the exact integer), rolling from the previous
-// post's count; under it the capture date (counts move), the author and the post date. Footer: an OFFICIAL
-// chip (the platform's own counter) and the post's URL. Long posts are cropped to their key paragraphs.
+// One real post per step: the capture is the hero, 960 px wide on the right (1.1× the 868 px capture, so its
+// text reads over Zoom). On the left, secondary, its view count echoed big in Geist Mono from captures.json
+// (the exact integer), rolling from the previous post's count; under it the capture date (counts move), the
+// author and the post date. Footer: an OFFICIAL chip (the platform's own counter) and the post's URL.
+// Long posts are cropped to their key paragraphs plus X's own date/views line and counts row.
 import { gsap } from 'gsap';
 import { calmScene, el, esc } from './_calm/kit.js';
 import { actLine, ensureCSS, capCard, dayOf, authorParts } from './_calm-b/kit.js';
@@ -10,14 +11,14 @@ import { actLine, ensureCSS, capCard, dayOf, authorParts } from './_calm-b/kit.j
 // Director's curation and order (18 Nov). segs in image px; karpathy: first and last paragraph.
 const POSTS = [
   { id: 'x-sama-control-of-the-future', segs: null },
-  { id: 'x-openai-securing-training-environment', segs: [[0, 685]] },
-  { id: 'x-sundarpichai-gemini-4-carbon', segs: [[0, 499]] },
-  { id: 'x-karpathy-hackertube', segs: [[0, 253], [880, 995]] },
+  { id: 'x-openai-securing-training-environment', segs: [[0, 476], [1395, 1510]] }, // ¶1–2 (the model that got out) + date/views + counts
+  { id: 'x-sundarpichai-gemini-4-carbon', segs: [[0, 149], [1405, 1521]] }, //        ¶1 + date/views + counts
+  { id: 'x-karpathy-hackertube', segs: [[0, 253], [880, 995], [1503, 1618]] }, //    first and last ¶ + date/views + counts
   { id: 'x-satyanadella-agentic-insider', segs: null },
 ];
 
 const CSS = `
-.cb-xv-num .bn-figure { font-family: var(--f-mono); font-size: 112px; font-weight: 500; letter-spacing: -0.03em; }
+.cb-xv-num .bn-figure { font-family: var(--f-mono); font-size: 96px; font-weight: 500; letter-spacing: -0.03em; }
 `;
 
 export default calmScene('x-voices', (ctx, K) => {
@@ -32,7 +33,7 @@ export default calmScene('x-voices', (ctx, K) => {
   const title = K.add(C.Headline.create({ text: copy.title || '', role: 'h2', ground: g, width: T.spanW(6) }), M, 192, T.spanW(6));
 
   // ----- the posts that exist in this build, in order -----
-  const CARD_W = 868;
+  const CARD_W = 960;
   const CARD_X = 1920 - M - CARD_W;
   const posts = [];
   POSTS.forEach((p) => {
@@ -41,7 +42,7 @@ export default calmScene('x-voices', (ctx, K) => {
     const m = card.meta || {};
     const a = authorParts(m.author);
     const h = card.height || 600;
-    const y = Math.round(176 + Math.max(0, (944 - 176 - h) / 2));
+    const y = Math.round(208 + Math.max(0, (944 - 208 - h) / 2));
     place(card.el, CARD_X, y, CARD_W);
     K.owned.push(card);
     posts.push({ card, m, a, views: (m.counts && m.counts.views) || 0 });
@@ -49,18 +50,19 @@ export default calmScene('x-voices', (ctx, K) => {
   const post = (step) => posts[Math.min(step, posts.length - 1)] || null;
 
   // ----- left panel: the count, the capture date, the author -----
-  const NUM_Y = 392;
+  const NUM_Y = 412; // the count block (number → handle, ~330 px) sits optically centred beside the post
+  const LW = CARD_X - 64 - M;
   const first = post(0);
-  const num = K.add(C.BigNumber.create({ value: first ? first.views : 0, size: 'h1', ground: g, className: 'cb-xv-num' }), M, NUM_Y, 760);
+  const num = K.add(C.BigNumber.create({ value: first ? first.views : 0, size: 'h1', ground: g, className: 'cb-xv-num' }), M, NUM_Y, LW);
   const lab = el('div', 't-label', null, '');
   lab.style.color = G.muted;
-  place(lab, M, NUM_Y + 136, 760);
+  place(lab, M, NUM_Y + 120, LW);
   const name = el('div', 't-lead', null, '');
   Object.assign(name.style, { color: G.fg, fontWeight: '600' });
-  place(name, M, NUM_Y + 236, 760);
+  place(name, M, NUM_Y + 212, LW);
   const handle = el('div', 't-label', null, '');
   handle.style.color = G.muted;
-  place(handle, M, NUM_Y + 316, 760);
+  place(handle, M, NUM_Y + 292, LW);
   const meta = el('div', '');
   place(meta, 0, 0, 1920, 1080);
   meta.append(lab, name, handle);
@@ -102,16 +104,26 @@ export default calmScene('x-voices', (ctx, K) => {
     // cards: the old one slides out to the left, the new one lands from the right
     posts.forEach((q, i) => {
       if (i === k && (prev !== k || !q.card.shown)) {
-        tl.add(() => { q.card.set({ visible: true }, { animate: false }); }, 0.3);
-        tl.fromTo(q.card.el, { autoAlpha: 0, x: 120, rotation: 0 }, { autoAlpha: 1, x: 0, duration: 1.1, ease: 'expo.out', immediateRender: false }, 0.3);
+        // visible now (CaptureCard.set kills tweens on its element), hidden by the tween's from-state until 0.3 s
+        gsap.killTweensOf(q.card.el);
+        q.card.set({ visible: true }, { animate: false });
+        tl.fromTo(q.card.el, { autoAlpha: 0, x: 120, rotation: 0 }, { autoAlpha: 1, x: 0, duration: 1.1, ease: 'expo.out', immediateRender: true }, 0.3);
       } else if (i !== k && q.card.shown) {
         tl.to(q.card.el, { autoAlpha: 0, x: -80, duration: 0.45, ease: 'power2.in' }, 0);
         tl.add(() => { q.card.set({ visible: false }, { animate: false }); gsap.set(q.card.el, { x: 0 }); }, 0.46);
       }
     });
     // the number rolls from the previous count
+    const fmt = (v) => new Intl.NumberFormat('en-US').format(v || 0);
+    const prevViews = prev >= 0 && posts[prev] ? posts[prev].views : null;
+    const sameShape = prevViews != null && fmt(prevViews).replace(/\d/g, '0') === fmt(p.views).replace(/\d/g, '0');
     if (!num.shown) { num.set({ value: p.views }, { animate: false }); gsap.set(num.el, { autoAlpha: 0 }); tl.add(num.set({ visible: true }, { animate: true }), 0.4); }
-    else tl.add(num.set({ value: p.views }, { animate: true }), 0.45);
+    else if (sameShape) tl.add(num.set({ value: p.views }, { animate: true }), 0.45); // digits roll from the old count
+    else {
+      // a count of another length: BigNumber would swap its digits at once, so the old count steps out first
+      tl.to(num.el, { autoAlpha: 0, y: -8, duration: 0.3, ease: 'power2.in' }, 0.05);
+      tl.add(() => { num.set({ visible: false }, { animate: false }); num.set({ value: p.views }, { animate: false }); num.set({ visible: true }, { animate: true }); }, 0.45);
+    }
     // the meta swaps under it
     if (!metaB.shown) { fill(p); tl.add(metaB.set({ visible: true }, { animate: true }), 0.7); }
     else {

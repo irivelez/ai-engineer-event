@@ -39,13 +39,23 @@ export default calmScene('employee-bar', (ctx, K) => {
   const gap = parseFloat((/(\d+(?:\.\d+)?)\s*points?\s*lower/i.exec(sRest || '') || [])[1]) || 0;
   const bVal = sVal + gap; // the best score = second + the stated gap
   const sNote = String(sRest || '').split(',').slice(1).join(',').trim() || sRest;
-  const barLabel = (/the bar .*$/i.exec(copy.title || '') || [''])[0];
+  const barLabel = copy.barLabel || (/the bar .*$/i.exec(copy.title || '') || [''])[0];
   const chart = K.add(C.BarChart.create({
     orientation: 'vertical', ground: g, width: T.spanW(5), height: 600, barWidth: 136, unit: '%',
     data: [{ id: 'best', label: bName || '', value: bVal, note: bNote || '' }, { id: 'second', label: sName || '', value: sVal, note: sNote || '' }],
     highlight: 'best', max: 100,
     threshold: { value: 100, label: barLabel, tone: 'fg' },
   }), T.colX(7), 200);
+  // ceiling label in sans (mono caps ran ~920 px into the title column); chart notes up to the 30 px label floor
+  const th = chart.el.querySelector('.bc-th-label');
+  if (th) Object.assign(th.style, { fontFamily: 'var(--f-sans)', textTransform: 'none', letterSpacing: '0', fontWeight: '600', fontSize: '32px' });
+  chart.el.querySelectorAll('.bc-note').forEach((n) => Object.assign(n.style, { fontSize: '32px', lineHeight: '40px', fontFamily: 'var(--f-sans)' }));
+  // barNote: small, under the staff line (the line's position is illustrative)
+  const note = el('div', '');
+  place(note, T.colX(7), 200 + 72 + 16, T.spanW(5));
+  Object.assign(note.style, { fontFamily: 'var(--f-sans)', fontSize: '26px', lineHeight: '32px', fontWeight: '460', color: G.muted });
+  note.innerHTML = esc(copy.barNote || '');
+  const noteB = K.block(note, { rise: 8 });
 
   const foot = K.footer();
   const tagS = tagSource(copy.tag);
@@ -58,6 +68,7 @@ export default calmScene('employee-bar', (ctx, K) => {
     { c: subB, on: (s) => s < 2, at: 0.4 },
     { c: failB, on: (s) => s >= 2, at: 0.1 },
     { c: chart, on: (s) => s >= 1, at: 0.1 },
+    { c: noteB, on: (s) => s >= 1, at: 1.0 },
   ]);
 
   function go(step, animate, info = {}) {

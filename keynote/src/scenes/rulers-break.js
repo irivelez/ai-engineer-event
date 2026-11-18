@@ -15,9 +15,9 @@ export default calmScene('rulers-break', (ctx, K) => {
   const kicker = K.add(C.Kicker.create({ text: K.actKicker(), ground: g }), M, 120);
   const title = K.add(C.Headline.create({ text: copy.title || '', role: 'h2', ground: g, width: T.spanW(10) }), M, 192);
 
-  const Y0 = 432;
-  const PITCH = 150;
-  const LX = T.colX(5);
+  const Y0 = 412;
+  const PITCH = 176;
+  const LX = T.colX(6);
   const rows = items.map((it, i) => {
     const y = Y0 + i * PITCH;
     const box = el('div', '');
@@ -25,12 +25,12 @@ export default calmScene('rulers-break', (ctx, K) => {
     const rule = el('div', '', box);
     Object.assign(rule.style, { position: 'absolute', left: `${M}px`, top: `${y}px`, width: `${1920 - 2 * M}px`, height: '2px', background: G.rule, transformOrigin: '0 50%' });
     const num = C.BigNumber.create({ display: nb(it.value), size: 'h1', ground: g });
-    const wrap = el('div', '', box); // h2-sized figure (88 / 128) that keeps the odometer
-    Object.assign(wrap.style, { position: 'absolute', left: `${M}px`, top: `${y + 20}px`, transform: 'scale(0.6875)', transformOrigin: '0 0' });
+    const wrap = el('div', '', box);
+    Object.assign(wrap.style, { position: 'absolute', left: `${M}px`, top: `${y + 22}px` });
     wrap.appendChild(num.el);
     K.owned.push(num);
     const lab = el('div', 'ca-sans40 pretty', box, esc(it.label || ''));
-    Object.assign(lab.style, { position: 'absolute', left: `${LX}px`, top: `${y + 28}px`, width: `${T.spanW(7)}px`, color: G.fg });
+    Object.assign(lab.style, { position: 'absolute', left: `${LX}px`, top: `${y + 30}px`, width: `${T.spanW(6)}px`, color: G.fg });
     const b = K.block(box, {
       enter(tl) {
         tl.fromTo(rule, { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: 'expo.out' }, 0);
@@ -46,10 +46,9 @@ export default calmScene('rulers-break', (ctx, K) => {
   });
 
   // a gauge pinned at its stop, beside the first reading (saturation)
-  const GX = T.colX(3);
   const gauge = el('div', '');
-  place(gauge, GX, Y0 + 18, 200, 120);
-  const gs = svgEl('svg', { width: 200, height: 120, viewBox: '0 0 200 120' }, gauge);
+  place(gauge, 1920 - M - 236, Y0 + 18, 236, 142);
+  const gs = svgEl('svg', { width: 236, height: 142, viewBox: '0 0 200 120' }, gauge);
   svgEl('path', { d: 'M20,104 A80,80 0 0 1 180,104', fill: 'none', stroke: G.rule, 'stroke-width': 10, 'stroke-linecap': 'round' }, gs);
   const arc = svgEl('path', { d: 'M20,104 A80,80 0 0 1 180,104', fill: 'none', stroke: G.limit, 'stroke-width': 10, 'stroke-linecap': 'round' }, gs);
   const needle = svgEl('line', { x1: 100, y1: 104, x2: 100, y2: 36, stroke: G.fg, 'stroke-width': 6, 'stroke-linecap': 'round' }, gs);

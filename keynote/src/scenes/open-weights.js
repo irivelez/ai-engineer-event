@@ -38,29 +38,29 @@ export default calmScene('open-weights', (ctx, K) => {
   const whyB = K.block(why, { rise: 16 });
 
   // ----- right: step 0 bars -----
-  const RX = T.colX(7);
-  const RW = T.spanW(5);
+  const RX = T.colX(6) + 48;
+  const RW = 1920 - M - RX;
   const [axisName, pair] = String(copy.scoreLabel || '').split(':');
   const [openName, topName] = String(pair || '').split(' vs ').map((s) => s.trim());
   const [vOpen, vTop] = String(copy.score || '').split('vs').map((s) => parseFloat(s) || 0);
   const bars = el('div', '');
-  place(bars, RX, 456, RW, 400);
+  place(bars, RX, 440, RW, 480);
   const cap = el('div', 't-label', bars, esc((axisName || '').trim()));
   Object.assign(cap.style, { position: 'absolute', left: '0', top: '0', color: G.muted });
-  const BMAX = RW - 120;
+  const BMAX = RW - 140;
   const rowsData = [
     { name: topName, v: vTop, color: G.quiet, text: G.muted },
     { name: openName, v: vOpen, color: G.accent, text: G.fg },
   ];
   const max = Math.max(vTop, vOpen, 1);
   const rowEls = rowsData.map((d, i) => {
-    const y = 72 + i * 150;
-    const nm = el('div', 't-body', bars, esc(d.name || ''));
+    const y = 80 + i * 196;
+    const nm = el('div', 't-lead', bars, esc(d.name || ''));
     Object.assign(nm.style, { position: 'absolute', left: '0', top: `${y}px`, color: d.text });
     const b = el('div', '', bars);
-    Object.assign(b.style, { position: 'absolute', left: '0', top: `${y + 72}px`, height: '48px', width: `${(d.v / max) * BMAX}px`, borderRadius: '0 4px 4px 0', background: d.color, transformOrigin: '0 50%' });
-    const v = el('div', 't-lead tnum', bars, esc(String(d.v)));
-    Object.assign(v.style, { position: 'absolute', left: `${(d.v / max) * BMAX + 20}px`, top: `${y + 60}px`, color: d.text });
+    Object.assign(b.style, { position: 'absolute', left: '0', top: `${y + 88}px`, height: '72px', width: `${(d.v / max) * BMAX}px`, borderRadius: '0 4px 4px 0', background: d.color, transformOrigin: '0 50%' });
+    const v = el('div', 't-h2 tnum', bars, esc(String(d.v)));
+    Object.assign(v.style, { position: 'absolute', left: `${(d.v / max) * BMAX + 24}px`, top: `${y + 76}px`, color: d.text });
     return { nm, b, v };
   });
   const barsB = K.block(bars, {
@@ -79,9 +79,9 @@ export default calmScene('open-weights', (ctx, K) => {
   const lagNums = String(copy.lag || '').match(/\d+(?:\.\d+)?/g) || ['4', '7'];
   const lo = parseFloat(lagNums[0]) || 4;
   const hi = parseFloat(lagNums[1] || lagNums[0]) || 7;
-  const CH = 500;
+  const CH = 540;
   const lag = el('div', '');
-  place(lag, RX, 372, RW, CH + 80);
+  place(lag, RX, 380, RW, CH + 40);
   const svg = svgEl('svg', { width: RW, height: CH, viewBox: `0 0 ${RW} ${CH}` }, lag);
   svg.style.overflow = 'visible';
   const MONTHS = 24;

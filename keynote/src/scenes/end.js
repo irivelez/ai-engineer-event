@@ -91,12 +91,13 @@ export default calmScene('end', (ctx, K) => {
 
   const QPX = 408;
   const qr = qrSVG(copy.url || copy.link || '', QPX);
-  const QX = 1920 - M - qr.size;
+  const QCX = (T.colX(8) + 1920 - M) / 2; // card and link share a centre inside columns 8–11, so the link stays inside the margin
+  const QX = Math.round(QCX - qr.size / 2);
   const QY = 292;
   const card = el('div', '', qWrap, qr.html);
   Object.assign(card.style, { position: 'absolute', left: `${QX}px`, top: `${QY}px`, width: `${qr.size}px`, height: `${qr.size}px`, borderRadius: '24px', overflow: 'hidden', background: '#FFFFFF', boxShadow: '0 0 0 2px rgba(238,242,246,0.22), 0 32px 96px -24px rgba(147,170,255,0.20)' });
   const link = el('div', 'cb-nowrap', qWrap, esc(copy.link || ''));
-  Object.assign(link.style, { position: 'absolute', left: `${QX + qr.size / 2}px`, top: `${QY + qr.size + 32}px`, transform: 'translateX(-50%)', fontFamily: mono, fontSize: '32px', lineHeight: '40px', fontWeight: '500', letterSpacing: '0.01em', color: G.fg });
+  Object.assign(link.style, { position: 'absolute', left: `${QCX}px`, top: `${QY + qr.size + 32}px`, transform: 'translateX(-50%)', fontFamily: mono, fontSize: '32px', lineHeight: '40px', fontWeight: '500', letterSpacing: '0.01em', color: G.fg });
 
   const qB = K.block(qWrap, {
     enter(tl) {

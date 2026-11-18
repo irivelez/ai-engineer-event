@@ -1,10 +1,11 @@
 // rules (calm-b, PAPER calm): the binding rules now land on deployment, not training. One step, three rows.
 // Each row: a 2 px rule, the jurisdiction and date in mono caps, the rule itself in a sentence. The US row has
 // the CNBC clipping beside it (the "super intelligence" rebrand on earnings calls), with its PRESS chip.
-// All three rules are primary texts: one OFFICIAL chip in the footer names the three publishers and dates.
+// All three rules are primary texts: one OFFICIAL chip in the footer names the three publishers and dates
+// (compact, one line).
 import { gsap } from 'gsap';
 import { calmScene, el, esc } from './_calm/kit.js';
-import { actLine, ensureCSS, sourceOf, capCard, capMeta, srcHTML } from './_calm-b/kit.js';
+import { actLine, ensureCSS, sourceOf, capCard, capMeta, srcHTML, fmtDate, accentWord, clearAccent } from './_calm-b/kit.js';
 
 const CLIP = { id: 'cnbc-superintelligence-earnings', segs: [[0, 146], [533, 976]] };
 
@@ -27,7 +28,7 @@ export default calmScene('rules', (ctx, K) => {
 
   const kicker = K.add(C.Kicker.create({ text: actLine(ctx), ground: g }), M, 120);
   const hl = /\bdeployment\b/.exec(String(copy.title || ''));
-  const title = K.add(C.Headline.create({ text: copy.title || '', role: 'h2', ground: g, width: T.spanW(10), highlight: hl ? hl[0] : undefined }), M, 192, T.spanW(10));
+  const title = K.add(C.Headline.create({ text: copy.title || '', role: 'h2', ground: g, width: T.spanW(10) }), M, 192, T.spanW(10));
 
   const TOP = 440;
   const rows = (copy.items || []).slice(0, 3).map((s) => {
@@ -96,8 +97,20 @@ export default calmScene('rules', (ctx, K) => {
 
   // ----- footer: one OFFICIAL chip, three primary sources -----
   const foot = K.footer();
+  // compact: 'European Commission 31 Jul · Xinhua 15 Jul · Federal Register via govinfo 2 Oct 2026' (one year when
+  // all three share it), so the three primary sources fit the footer band on one line
   const srcs = (ctx.beat.facts || []).map((id) => sourceOf(ctx, id)).filter(Boolean);
-  const src = srcs.length ? { kind: srcs[0].kind, text: srcs.map((s) => s.text).join('  ·  ') } : null;
+  const pubs = srcs.map((s) => {
+    const f = s.fact || {};
+    const pub = (f.source && f.source.publisher) || s.text.split(' · ')[0];
+    const day = fmtDate((f.source && f.source.date) || f.asOf || '');
+    return { pub, day, year: (day.match(/\d{4}$/) || [''])[0] };
+  });
+  const oneYear = pubs.length && pubs.every((p) => p.year && p.year === pubs[0].year);
+  const src = srcs.length ? {
+    kind: srcs[0].kind,
+    text: pubs.map((p, i) => `${p.pub} ${oneYear && i < pubs.length - 1 ? p.day.replace(/\s\d{4}$/, '') : p.day}`.trim()).join(' · '),
+  } : null;
 
   const parts = [
     { c: kicker, on: () => true },
@@ -110,7 +123,9 @@ export default calmScene('rules', (ctx, K) => {
   function go(step, animate, info = {}) {
     const anim = animate && !R;
     const tl = gsap.timeline();
+    clearAccent(title.el);
     apply(step, anim, tl, info);
+    accentWord(title.el, hl && hl[0]); // after the line split, so "deployment," keeps its spacing
     foot.show(src, anim, tl, 1.3);
     return tl;
   }

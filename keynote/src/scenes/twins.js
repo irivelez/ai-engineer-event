@@ -24,7 +24,7 @@ export default calmScene('twins', (ctx, K) => {
   // ----- the mirror -----
   const MID = 960;
   const ROW0 = 372;
-  const PITCH = 184;
+  const PITCH = 188;
   const pairs = (copy.pairs || []).slice(0, 3);
   const mirror = el('div', '');
   place(mirror, 0, 0, 1920, 1080);
@@ -40,13 +40,13 @@ export default calmScene('twins', (ctx, K) => {
     const [rn, rq] = split(priv);
     const left = el('div', '', mirror);
     Object.assign(left.style, { position: 'absolute', left: `${M}px`, width: `${MID - 56 - M}px`, top: `${y}px`, textAlign: 'right' });
-    left.innerHTML = `<div class="t-lead ca-nowrap" style="color:${G.fg};font-weight:600">${esc(pn)}</div><div class="t-label" style="margin-top:12px;color:${G.muted}">${esc(pq)}</div>`;
+    left.innerHTML = `<div class="t-lead ca-nowrap" style="color:${G.fg};font-weight:600">${esc(pn)}</div><div class="ca-sans40" style="margin-top:8px;color:${G.muted}">${esc(pq)}</div>`;
     const pane = el('div', '', mirror);
-    Object.assign(pane.style, { position: 'absolute', left: `${MID + 32}px`, width: `${1920 - M - MID - 32}px`, top: `${y - 20}px`, height: `${PITCH - 24}px`, borderRadius: '16px', background: G.card, boxShadow: `inset 0 0 0 2px ${G.rule}`, overflow: 'hidden' });
+    Object.assign(pane.style, { position: 'absolute', left: `${MID + 32}px`, width: `${1920 - M - MID - 32}px`, top: `${y - 20}px`, height: `${PITCH - 20}px`, borderRadius: '16px', background: G.card, boxShadow: `inset 0 0 0 2px ${G.rule}`, overflow: 'hidden' });
     const inner = el('div', '', pane);
     Object.assign(inner.style, { position: 'absolute', left: '32px', right: '32px', top: '20px' });
     inner.innerHTML = rn
-      ? `<div class="t-lead ca-nowrap" style="color:${G.muted};font-weight:600">${esc(rn)}</div><div class="t-label" style="margin-top:12px;color:${G.muted}">${esc(rq)}</div>`
+      ? `<div class="t-lead ca-nowrap" style="color:${G.muted};font-weight:600">${esc(rn)}</div><div class="ca-sans40" style="margin-top:8px;color:${G.muted}">${esc(rq)}</div>`
       : `<div class="t-body" style="color:${G.muted};font-weight:520">${esc(rq)}</div>`;
     return { left, pane };
   });

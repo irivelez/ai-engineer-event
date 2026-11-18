@@ -14,22 +14,24 @@ export default calmScene('recipe', (ctx, K) => {
   const kicker = K.add(C.Kicker.create({ text: K.actKicker(), ground: g }), M, 120);
   const title = K.add(C.Headline.create({ text: copy.title || '', role: 'h2', ground: g, width: 1920 - 2 * M }), M, 192);
 
-  // ----- the card -----
-  const CW = T.spanW(8);
+  // ----- the card: GTC's typed policy card, dark on paper (void card colours, light mono type) -----
+  const D = T.grounds.void;
+  const CW = T.spanW(9);
   const PAD = 48;
-  const LH = 64;
+  const LH = 72;
+  const CARD_Y = 320;
   const card = el('div', '');
-  place(card, M, 336, CW, PAD * 2 + parts.length * LH);
-  Object.assign(card.style, { background: G.card, borderRadius: '24px', boxShadow: `inset 0 0 0 2px ${G.rule}` });
+  place(card, M, CARD_Y, CW, PAD * 2 + parts.length * LH);
+  Object.assign(card.style, { background: D.card, borderRadius: '24px', boxShadow: `0 0 0 2px ${D.rule}, 0 24px 64px -24px rgba(11,15,20,0.45)` });
   const lines = parts.map((p, i) => {
     const row = el('div', '', card);
-    Object.assign(row.style, { position: 'absolute', left: `${PAD}px`, top: `${PAD + i * LH}px`, height: `${LH}px`, display: 'flex', alignItems: 'center', fontFamily: 'var(--f-mono)', fontSize: '44px', lineHeight: `${LH}px`, fontWeight: '460', letterSpacing: '0', whiteSpace: 'pre', color: G.fg });
+    Object.assign(row.style, { position: 'absolute', left: `${PAD}px`, top: `${PAD + i * LH}px`, height: `${LH}px`, display: 'flex', alignItems: 'center', fontFamily: 'var(--f-mono)', fontSize: '48px', lineHeight: `${LH}px`, fontWeight: '460', letterSpacing: '-0.01em', whiteSpace: 'pre', color: D.fg });
     const op = el('span', '', row, i === 0 ? '  ' : '+ ');
-    op.style.color = G.accent;
+    op.style.color = D.accent;
     op.style.fontWeight = '600';
     const txt = el('span', '', row, '');
     const cur = el('span', '', row, '');
-    Object.assign(cur.style, { display: 'inline-block', width: '0.6em', height: '1.05em', marginLeft: '4px', background: G.accent, verticalAlign: 'middle', visibility: 'hidden' });
+    Object.assign(cur.style, { display: 'inline-block', width: '0.6em', height: '1.05em', marginLeft: '6px', background: D.accent, verticalAlign: 'middle', visibility: 'hidden' });
     return { row, op, txt, cur, text: String(p) };
   });
   let blink = null;
@@ -73,7 +75,7 @@ export default calmScene('recipe', (ctx, K) => {
   const hl = sentences.length > 1 ? sentences[sentences.length - 1] : undefined;
   // the last sentence on its own line ("Sandbox them. Monitor them. / Let them give up.")
   const lesText = hl ? `${lesson.slice(0, lesson.lastIndexOf(hl)).trim()}\n${hl}` : lesson;
-  const les = K.add(C.Headline.create({ text: lesText, role: 'h2', ground: g, width: 1920 - 2 * M, highlight: hl }), M, 336 + PAD * 2 + parts.length * LH + 56);
+  const les = K.add(C.Headline.create({ text: lesText, role: 'h2', ground: g, width: 1920 - 2 * M, highlight: hl }), M, CARD_Y + PAD * 2 + parts.length * LH + 40);
   les.el.style.whiteSpace = 'pre-line';
 
   const foot = K.footer();

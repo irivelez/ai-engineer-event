@@ -4,16 +4,16 @@
 // Step 1: +29 % joins it on the right: token volume in four weeks, while prices fell. Same source (Ramp).
 // Step 2: the numbers step away. "The backlash against “tokenmaxxing”: usage is not results." with
 //         "tokenmaxxing" struck through in the accent; on the right, the press that says so: CNBC on Amazon's
-//         memo and the Latin American proof points (Bloomberg Línea, El Economista), each with a PRESS chip.
+//         memo and the Latin American proof points (Bloomberg Línea, El Economista); one PRESS line names all three.
 import { gsap } from 'gsap';
 import { calmScene, el, esc } from './_calm/kit.js';
-import { actLine, ensureCSS, sourceOf, capCard, capMeta, srcHTML } from './_calm-b/kit.js';
+import { actLine, ensureCSS, sourceOf, capCard, capMeta, accentWord, clearAccent } from './_calm-b/kit.js';
 
 // clippings for step 2 (director's curation): crops keep masthead + headline, skip ad slots and tickers
 const CLIPS = [
   { id: 'cnbc-amazon-tokenmaxxing', segs: [[0, 146], [534, 895]] },
   { id: 'bloomberglinea-latam-ai-impact', segs: [[0, 190], [385, 640]] },
-  { id: 'eleconomista-almacenes-ia-32', segs: [[64, 196], [262, 470]] },
+  { id: 'eleconomista-almacenes-ia-32', segs: [[64, 196], [262, 484]] },
 ];
 
 const STRIKE_CSS = `
@@ -51,37 +51,34 @@ export default calmScene('adoption', (ctx, K) => {
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeDelta);
 
   // ----- step 2: the backlash -----
-  const back = K.add(C.Headline.create({ text: copy.s3 || '', role: 'h2', ground: g, width: T.spanW(6), highlight: 'tokenmaxxing', className: 'cb-strike' }), M, 344, T.spanW(6));
+  const back = K.add(C.Headline.create({ text: copy.s3 || '', role: 'h2', ground: g, width: T.spanW(7), className: 'cb-strike' }), M, 344, T.spanW(7));
   const strikeEls = () => [...back.el.querySelectorAll('.itaf-hl')];
 
-  const CX = T.colX(6) + 48;
+  // the clippings: stacked in the right columns, no captions (one PRESS line in the footer names them all)
+  const CX = T.colX(7) + 32;
   const CW = 1920 - M - CX;
+  const GAP = 16;
   const clips = [];
   CLIPS.forEach((spec) => {
     const c = capCard(ctx, spec.id, { width: CW, segs: spec.segs, ground: g, caption: false });
-    if (!c) return;
-    const wrap = el('div', '');
-    wrap.appendChild(c.el);
-    const m = c.meta || {};
-    const cap = el('div', 'cb-src', wrap, srcHTML(C, { kind: 'press', text: [m.outlet, capMeta(m).date].filter(Boolean).join(' · ') }));
-    cap.classList.add(`ground-${g}`);
-    cap.style.marginTop = '16px';
-    clips.push({ c, wrap, h: (c.height || 160) + 16 + 44 });
+    if (c) clips.push({ c, h: c.height || 180, m: c.meta || {} });
   });
-  const GAP = 28;
-  const totalH = clips.reduce((s, x) => s + x.h, 0) + GAP * Math.max(0, clips.length - 1);
-  let y = Math.max(300, Math.round(300 + (944 - 300 - totalH) / 2));
-  const clipBlocks = clips.map((x) => {
-    place(x.wrap, CX, y, CW);
+  const totalH = clips.reduce((t, x) => t + x.h, 0) + GAP * Math.max(0, clips.length - 1);
+  let y = Math.round(312 + Math.max(0, (944 - 312 - totalH) / 2));
+  const clipBlocks = clips.map((x, i) => {
+    place(x.c.el, CX, y, CW);
+    x.c.el.style.zIndex = String(10 + i);
     y += x.h + GAP;
-    return K.block(x.wrap, {
+    K.owned.push(x.c);
+    return K.block(x.c.el, {
       enter(tl) {
         x.c.set({ visible: true }, { animate: false });
-        tl.fromTo(x.wrap, { autoAlpha: 0, x: 48 }, { autoAlpha: 1, x: 0, duration: T.motion.calmIn.dur, ease: T.motion.calmIn.ease }, 0);
+        tl.fromTo(x.c.el, { autoAlpha: 0, x: 56 }, { autoAlpha: 1, x: 0, duration: T.motion.calmIn.dur, ease: T.motion.calmIn.ease }, 0);
       },
-      settle() { x.c.set({ visible: true }, { animate: false }); },
+      settle() { x.c.set({ visible: true }, { animate: false }); gsap.set(x.c.el, { x: 0 }); },
     });
   });
+  const pressSrc = clips.length ? { kind: 'press', text: clips.map((x) => [x.m.outlet, capMeta(x.m).date].filter(Boolean).join(', ')).join(' · ') } : null;
 
   const foot = K.footer();
   const ramp = sourceOf(ctx, facts[0]);
@@ -102,14 +99,16 @@ export default calmScene('adoption', (ctx, K) => {
   function go(step, animate, info = {}) {
     const anim = animate && !R;
     const tl = gsap.timeline();
+    clearAccent(back.el);
     apply(step, anim, tl, info);
     const want = step >= 2;
+    if (want) accentWord(back.el, 'tokenmaxxing'); // after the line split, so the quotes keep their spacing
     if (!anim) { gsap.set(strikeEls(), { backgroundSize: want ? '100% 0.09em' : '0% 0.09em' }); }
     else if (want && struck !== true) {
       tl.add(() => { gsap.fromTo(strikeEls(), { backgroundSize: '0% 0.09em' }, { backgroundSize: '100% 0.09em', duration: 0.7, ease: 'power3.inOut' }); }, 1.05);
-    }
+    } else if (want) gsap.set(strikeEls(), { backgroundSize: '100% 0.09em' }); // the accent span was rebuilt: keep the strike
     struck = want;
-    foot.show(step <= 1 ? rampSrc : null, anim, tl, 0.8);
+    foot.show(step <= 1 ? rampSrc : pressSrc, anim, tl, 0.8);
     return tl;
   }
   return { go };
