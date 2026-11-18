@@ -1,0 +1,76 @@
+/* Base styles: Inside the AI Frontier (owner: DD). Load after tokens.css.
+   Fonts are relative url()s; the build inlines them as data URIs (file:// cannot fetch fonts). */
+
+@font-face {
+  font-family: "Geist";
+  src: url(../fonts/Geist-Variable.woff2) format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url(../fonts/GeistMono-Variable.woff2) format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+/* Newsreader italic only, optical size pinned at 60 (quotes are set 64–96 px). */
+@font-face {
+  font-family: "Newsreader";
+  src: url(../fonts/NewsreaderItalic-Variable.woff2) format("woff2");
+  font-weight: 300 600;
+  font-style: italic;
+  font-display: block;
+}
+
+/* ---------- grounds ----------
+   .ground-paper / .ground-void set the --g-* colours (tokens.css). Only a root that also has
+   .itaf paints the ground; components carry the ground class for colours alone. */
+.ground-paper, .ground-void { color: var(--g-fg); }
+.itaf.ground-paper, .itaf.ground-void { background: var(--g-bg); }
+.itaf, .itaf * { box-sizing: border-box; }
+.itaf {
+  font-family: var(--f-sans);
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  text-rendering: geometricPrecision; /* identical glyph metrics at every stage scale */
+  -webkit-text-size-adjust: none;
+}
+
+/* ---------- type roles (stage px) ---------- */
+.t-mega, .t-display, .t-h1, .t-h2, .t-lead, .t-body { font-family: var(--f-sans); margin: 0; }
+.t-mega    { font-size: var(--t-mega-size);    line-height: var(--t-mega-line);    letter-spacing: var(--t-mega-track);    font-weight: var(--t-mega-weight); }
+.t-display { font-size: var(--t-display-size); line-height: var(--t-display-line); letter-spacing: var(--t-display-track); font-weight: var(--t-display-weight); }
+.t-h1      { font-size: var(--t-h1-size);      line-height: var(--t-h1-line);      letter-spacing: var(--t-h1-track);      font-weight: var(--t-h1-weight); }
+.t-h2      { font-size: var(--t-h2-size);      line-height: var(--t-h2-line);      letter-spacing: var(--t-h2-track);      font-weight: var(--t-h2-weight); }
+.t-lead    { font-size: var(--t-lead-size);    line-height: var(--t-lead-line);    letter-spacing: var(--t-lead-track);    font-weight: var(--t-lead-weight); }
+.t-body    { font-size: var(--t-body-size);    line-height: var(--t-body-line);    letter-spacing: var(--t-body-track);    font-weight: var(--t-body-weight); }
+.t-label   { font-family: var(--f-mono); font-size: var(--t-label-size);  line-height: var(--t-label-line);  letter-spacing: var(--t-label-track);  font-weight: var(--t-label-weight); text-transform: uppercase; margin: 0; }
+.t-source  { font-family: var(--f-mono); font-size: var(--t-source-size); line-height: var(--t-source-line); letter-spacing: var(--t-source-track); font-weight: var(--t-source-weight); margin: 0; }
+.t-quote   { font-family: var(--f-serif); font-style: italic; font-size: var(--t-quote-size); line-height: var(--t-quote-line); letter-spacing: var(--t-quote-track); font-weight: var(--t-quote-weight); margin: 0; }
+
+.t-muted  { color: var(--g-muted); }
+.t-accent { color: var(--g-accent); }
+.tnum     { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
+.balance  { text-wrap: balance; }
+.pretty   { text-wrap: pretty; }
+
+/* ---------- grid ---------- */
+.grid12 {
+  position: absolute; inset: 0;
+  padding: var(--s-top) var(--s-margin) var(--s-bottom);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--s-gutter);
+  align-content: start;
+}
+.layer { position: absolute; inset: 0; }
+.center-optical { /* single-line moments: centred, lifted 4% so the line reads as centred, not low */
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 0 var(--s-margin) 86px; text-align: center;
+}
+
+/* ---------- scrim for text over 3D ---------- */
+.itaf-scrim { position: absolute; pointer-events: none; }

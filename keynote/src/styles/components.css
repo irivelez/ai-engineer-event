@@ -1,0 +1,154 @@
+/* Component styles (owner: DD). Colours come only from the --g-* ground variables, so every
+   component is right on PAPER and VOID without a second stylesheet. */
+
+/* ---------- shared ---------- */
+.itaf-hl { color: var(--g-accent); }
+/* SplitText line masks: room for accents and descenders inside the clip, layout unchanged */
+.itaf-line-mask { padding: 0.16em 0 0.24em; margin: -0.16em 0 -0.24em; }
+
+/* ---------- Headline ---------- */
+.itaf-headline { margin: 0; color: var(--g-fg); }
+.itaf-headline.tone-muted { color: var(--g-muted); }
+.itaf-headline.tone-accent { color: var(--g-accent); }
+
+/* ---------- Kicker ---------- */
+.itaf-kicker { display: flex; align-items: center; gap: 20px; color: var(--g-muted); }
+.itaf-kicker.tone-accent { color: var(--g-accent); }
+.itaf-kicker.tone-fg { color: var(--g-fg); }
+.itaf-kicker .k-rule { flex: none; width: 40px; height: 2px; background: currentColor; }
+.itaf-kicker .k-text { display: block; }
+
+/* ---------- ActTitle ---------- */
+.itaf-act { color: var(--g-fg); }
+.itaf-act .act-meta { display: flex; gap: 0.5em; color: var(--g-accent); }
+.itaf-act .act-track { display: flex; gap: 8px; height: 4px; margin: 32px 0 56px; }
+.itaf-act .act-seg { flex: 1; height: 100%; border-radius: 2px; overflow: hidden; background: var(--g-rule); }
+.itaf-act .act-seg-fill { display: block; height: 100%; }
+.itaf-act .is-past .act-seg-fill { background: var(--g-quiet); }
+.itaf-act .is-now .act-seg-fill { background: var(--g-accent); }
+.itaf-act .act-title { margin: 0; }
+
+/* ---------- BigNumber ---------- */
+.itaf-bignum { color: var(--g-fg); }
+.itaf-bignum .bn-head { display: flex; align-items: baseline; gap: 32px; }
+.itaf-bignum .bn-figure { white-space: nowrap; line-height: var(--bn-lh); }
+.itaf-bignum.size-display .bn-figure { --bn-lh: calc(var(--t-display-line) * 1em); }
+.itaf-bignum.size-mega .bn-figure { --bn-lh: calc(var(--t-mega-line) * 1em); }
+.itaf-bignum.size-h1 .bn-figure { --bn-lh: calc(var(--t-h1-line) * 1em); }
+.itaf-bignum .bn-col { display: inline-block; vertical-align: top; height: var(--bn-lh); overflow: clip; }
+.itaf-bignum .bn-strip { display: block; }
+.itaf-bignum .bn-strip > span { display: block; height: var(--bn-lh); }
+.itaf-bignum .bn-static { display: inline-block; vertical-align: top; height: var(--bn-lh); }
+.itaf-bignum.tone-accent .bn-figure { color: var(--g-accent); }
+.itaf-bignum .bn-unit { color: var(--g-muted); white-space: nowrap; }
+.itaf-bignum .bn-label { margin: 24px 0 0; max-width: 1100px; color: var(--g-fg); }
+.itaf-bignum .bn-meta { display: flex; align-items: center; gap: 20px; margin-top: 40px; color: var(--g-muted); }
+.itaf-bignum.is-center { text-align: center; }
+.itaf-bignum.is-center .bn-head, .itaf-bignum.is-center .bn-meta { justify-content: center; }
+.itaf-bignum.is-center .bn-label { margin-left: auto; margin-right: auto; }
+
+/* ---------- ProvenanceChip + SourceLine ---------- */
+.itaf-chip {
+  display: inline-flex; align-items: center; gap: 10px; flex: none;
+  height: 44px; padding: 0 14px 0 12px;
+  border: 2px solid currentColor; border-radius: var(--r-chip);
+  font-family: var(--f-mono); font-size: 26px; line-height: 1; font-weight: 540;
+  letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;
+  color: var(--g-muted);
+}
+.itaf-chip .chip-mark { flex: none; width: 16px; height: 16px; }
+.itaf-chip .chip-text { position: relative; top: 1px; }
+.chip-independent { color: var(--g-verified); }
+.chip-labReported { color: var(--g-caution); }
+.chip-secondary { color: var(--g-muted); }
+.chip-official { color: var(--g-accent); }
+.chip-estimate { color: var(--g-limit); }
+.chip-press { color: var(--g-muted); }
+.itaf-chip-wrap { display: inline-flex; }
+.itaf-source-line { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; color: var(--g-muted); }
+.itaf-source-line .sl-prefix { text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ---------- Quote ---------- */
+.itaf-quote { margin: 0; color: var(--g-fg); }
+.itaf-quote .q-body { position: relative; }
+.itaf-quote .q-open { position: absolute; right: 100%; top: 0; margin-right: 0.06em; color: var(--g-accent); }
+.itaf-quote .q-text { margin: 0; }
+.itaf-quote .q-cite { display: flex; align-items: baseline; margin-top: 48px; color: var(--g-fg); }
+.itaf-quote .q-rule { flex: none; align-self: center; width: 48px; height: 2px; margin-right: 24px; background: var(--g-muted); }
+.itaf-quote .q-who { flex: none; white-space: nowrap; }
+.itaf-quote .q-org { flex: 1 1 auto; color: var(--g-muted); white-space: pre-wrap; }
+.itaf-quote .q-mark { color: inherit; padding: 0; background: linear-gradient(var(--g-accent), var(--g-accent)) no-repeat 0 94% / 0% 0.08em; }
+
+/* ---------- CaptureCard ---------- */
+.itaf-capture { margin: 0; }
+.itaf-capture .cap-frame { position: relative; overflow: hidden; border-radius: 16px; }
+.itaf-capture .cap-img { display: block; width: 100%; height: auto; }
+.itaf-capture.v-paper .cap-frame {
+  background: #FFFFFF;
+  box-shadow: 0 0 0 2px rgba(11, 15, 20, 0.07), 0 2px 4px rgba(11, 15, 20, 0.04),
+              0 12px 24px -4px rgba(11, 15, 20, 0.08), 0 40px 80px -24px rgba(11, 15, 20, 0.20);
+}
+.itaf-capture.v-void .cap-frame {
+  background: #0D1218;
+  box-shadow: 0 0 0 2px rgba(238, 242, 246, 0.22), 0 32px 96px -24px rgba(147, 170, 255, 0.20);
+}
+.itaf-capture .cap-meta { margin-top: 24px; color: var(--g-muted); }
+
+/* ---------- BarChart ---------- */
+.itaf-barchart { position: relative; color: var(--g-fg); }
+.itaf-barchart .bc-axis { position: absolute; left: var(--bc-label-w); top: 0; bottom: 0; width: 2px; background: var(--g-muted); }
+.itaf-barchart .bc-row { display: flex; align-items: center; min-height: var(--bc-row-h); padding: 4px 0; }
+.itaf-barchart .bc-label { flex: none; width: var(--bc-label-w); padding-right: 32px; display: flex; flex-direction: column; line-height: 1.15; color: var(--g-muted); }
+.itaf-barchart .bc-note { color: var(--g-muted); margin-top: 8px; text-transform: none; letter-spacing: 0.01em; font-weight: 460; }
+.itaf-barchart .is-hl .bc-label { color: var(--g-fg); font-weight: 600; }
+.itaf-barchart .bc-track { position: relative; flex: 1; height: var(--bc-bar-h); }
+.itaf-barchart .bc-bar { position: absolute; left: 2px; top: 0; height: 100%; border-radius: 0 var(--r-bar) var(--r-bar) 0; transform-origin: 0 50%; }
+.itaf-barchart .bc-value {
+  position: absolute; top: calc((var(--bc-bar-h) - 40px) / 2); white-space: nowrap;
+  text-transform: none; letter-spacing: 0; color: var(--g-muted);
+}
+.itaf-barchart .is-hl .bc-value { color: var(--g-fg); font-weight: 600; }
+
+/* vertical bars */
+.itaf-barchart.is-vertical .bc-plot { position: relative; height: var(--bc-plot-h); }
+.itaf-barchart.is-vertical .bc-col { position: absolute; bottom: 0; height: 100%; }
+.itaf-barchart.is-vertical .bc-bar { position: absolute; left: 0; right: 0; bottom: 2px; top: auto; width: auto; border-radius: var(--r-bar) var(--r-bar) 0 0; transform-origin: 50% 100%; }
+.itaf-barchart.is-vertical .bc-value { left: 0; right: 0; top: auto; text-align: center; }
+.itaf-barchart.is-vertical .bc-base { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--g-muted); }
+.itaf-barchart.is-vertical .bc-xlabels { position: relative; height: 128px; margin-top: 24px; }
+.itaf-barchart.is-vertical .bc-label { position: absolute; top: 0; width: auto; padding: 0 12px; text-align: center; align-items: center; }
+.itaf-barchart.is-vertical .bc-label.is-hl { color: var(--g-fg); font-weight: 600; }
+/* threshold: a reference line the bars are read against (4 px: it is the point of the chart) */
+.itaf-barchart .bc-th { position: absolute; z-index: 1; pointer-events: none; color: var(--g-alert); }
+.itaf-barchart.is-vertical .bc-th { left: 0; right: 0; height: 4px; margin-bottom: -1px; background: currentColor; border-radius: 2px; }
+.itaf-barchart.is-horizontal .bc-th { top: 0; bottom: 0; width: 4px; margin-left: -1px; background: currentColor; border-radius: 2px; }
+.itaf-barchart .bc-th-label { position: absolute; white-space: nowrap; color: currentColor; }
+.itaf-barchart.is-vertical .bc-th-label { right: 0; bottom: 16px; }
+.itaf-barchart.is-horizontal .bc-th-label { left: 16px; top: -48px; }
+.itaf-barchart .bc-th.tone-alert { color: var(--g-alert); }
+.itaf-barchart .bc-th.tone-limit { color: var(--g-limit); }
+.itaf-barchart .bc-th.tone-fg { color: var(--g-fg); }
+.itaf-barchart .bc-th.tone-accent { color: var(--g-accent); }
+.itaf-barchart .bc-th.tone-verified { color: var(--g-verified); }
+
+/* ---------- BeforeAfter ---------- */
+.itaf-ba { color: var(--g-fg); }
+.itaf-ba .ba-row { display: grid; grid-template-columns: 5fr 3fr 1fr 3fr; column-gap: 32px; align-items: baseline; padding: 28px 0; border-top: 2px solid var(--g-rule); }
+.itaf-ba .ba-head { padding: 0 0 20px; border-top: 0; color: var(--g-muted); }
+.itaf-ba .ba-before { color: var(--g-fg); transition: color 0.6s; }
+.itaf-ba.is-after .ba-before { color: var(--g-muted); }
+.itaf-ba .ba-arrow { color: var(--g-accent); text-align: center; }
+.itaf-ba .ba-after { color: var(--g-fg); font-weight: 600; }
+.itaf-ba .ba-after-h { color: var(--g-accent); }
+
+/* ---------- StepList ---------- */
+.itaf-steps { position: relative; list-style: none; margin: 0; padding: 0 0 0 40px; color: var(--g-muted); }
+.itaf-steps .st-item { display: flex; align-items: baseline; gap: 32px; padding: 16px 0; }
+.itaf-steps .st-n { flex: none; min-width: 2.4em; color: var(--g-muted); }
+.itaf-steps .st-text { color: var(--g-muted); }
+.itaf-steps .is-active .st-text { color: var(--g-fg); }
+.itaf-steps .is-active .st-n { color: var(--g-accent); }
+.itaf-steps .st-bar { position: absolute; left: 0; top: 0; width: 4px; height: 0; border-radius: 2px; background: var(--g-accent); }
+
+/* ---------- Scrim ---------- */
+.itaf-scrim { position: absolute; inset: 0; pointer-events: none; }

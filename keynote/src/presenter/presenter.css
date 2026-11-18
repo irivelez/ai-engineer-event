@@ -1,0 +1,8 @@
+/* Audience-window notes overlay (N), inside the 1920×1080 stage. */
+.notes-overlay { position: absolute; right: 32px; top: 32px; bottom: 32px; width: 720px; box-sizing: border-box; padding: 36px 40px; border-radius: 16px;
+  background: rgba(11, 15, 20, 0.92); color: #F2F5FA; z-index: 6; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+.notes-head { font-size: 26px; opacity: .75; letter-spacing: .01em; }
+.notes-clock { font-size: 64px; font-weight: 600; margin: 8px 0 20px; font-variant-numeric: tabular-nums; }
+.notes-body { margin: 0; padding: 0 0 0 28px; font-size: 30px; line-height: 1.38; }
+.notes-body li { margin: 0 0 14px; }
+.notes-transition { margin-top: 18px; font-size: 26px; color: #93AAFF; }

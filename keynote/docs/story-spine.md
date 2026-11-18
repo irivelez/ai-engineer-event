@@ -38,11 +38,11 @@ Rhythm rules: never two bursts in a row without a calm beat, except at the Act I
 | 3 | 02:15 | Open | `question` | paper | 3 | — | One question frames the night, then the five stops of the route. |
 | 4 | 03:45 | I | `sf-arrival` | void | 8 | Speed | We land in San Francisco, three days of the AI Engineer Code Summit, where builders ship AI-written code at volume. |
 | 5 | 04:45 | I | `sf-topics` | paper | 4 | — | What 80 talks were about: shipping AI-written code at volume dominates. |
-| 6 | 06:00 | I | `factory` | void | 9 | Speed | The software factory: agents write, test and ship; people set direction and check. Three real numbers from the stage. |
-| 7 | 08:00 | I | `slop` | void | 6 | Trade-offs | The most-watched talk of the summit: humans no longer read most of the code, and quality went up. Speed versus control. |
+| 6 | 06:00 | I | `factory` | void | 9 | Speed | The software factory: agents write, test and ship; people set direction and check. Real numbers from the stage. |
+| 7 | 08:00 | I | `slop` | void | 6 | Trade-offs | The most-watched talk of the summit: volume up 13×, and quality went up too. Speed without losing control. |
 | 8 | 09:00 | I | `lean-harness` | paper | 5 | Trade-offs | Better models need less scaffolding: a Google DeepMind engineer deleted 90% of his harness and the agent got better. |
-| 9 | 10:00 | I | `org` | paper | 6 | Value | It is not just code: companies are reorganizing around the agent. |
-| 10 | 11:15 | I | `verification` | paper | 6 | Constraints | When agents write the code, the bottleneck becomes checking it, and even AI judges hallucinate. |
+| 9 | 10:00 | I | `org` | paper | 6 | Value | Not just code: companies are reorganizing around the agent. Amp passed $100M ARR with 21 people. |
+| 10 | 11:15 | I | `verification` | paper | 6 | Constraints | When agents write the work, the bottleneck becomes checking it, and the AI judges hallucinate too. |
 | 11 | 12:45 | I | `last-job` | paper | 3 | Value | The line that closes San Francisco: judgment is the last job. |
 | 12 | 13:30 | II | `three-labs` | void | 7 | — | Three labs share the frontier; each shipped its flagship in the last six weeks. |
 | 13 | 14:30 | II | `release-pace` | void | 8 | Speed | Frontier releases now come in weeks: 14 in 11 weeks across three labs. |
