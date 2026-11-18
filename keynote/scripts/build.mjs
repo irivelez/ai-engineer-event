@@ -227,6 +227,7 @@ const html = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%2305070A%27/%3E%3Cpath d=%27M9 9l7 7-7 7M17 9l7 7-7 7%27 stroke=%27%2393AAFF%27 stroke-width=%273%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}${only.length ? ` · dev: ${only.join(',')}` : ''}</title>
 <style>html,body{margin:0;height:100%;background:#000;overflow:hidden}</style>

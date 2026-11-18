@@ -79,7 +79,7 @@ let css = '';
 for (const f of out.outputFiles) { if (f.path.endsWith('.js')) js += f.text; else if (f.path.endsWith('.css')) css += f.text; }
 const data = JSON.stringify({ beats: { title: beats.title, acts: beats.acts, icons: beats.icons, moments: beats.moments.map(({ id, n, act, ground, plannedSec, icon, steps, brief, mode, copy }) => ({ id, n, act, ground, plannedSec, icon, steps, brief, mode, copy })) }, notes, frames }).replace(/</g, '\\u003c');
 const page = `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%2305070A%27/%3E%3Cpath d=%27M9 9l7 7-7 7M17 9l7 7-7 7%27 stroke=%27%2393AAFF%27 stroke-width=%273%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${beats.title} · static</title><style>html,body{margin:0;height:100%;background:#000;overflow:hidden}${css.replace(/<\/style/gi, '<\\/style')}</style></head>
 <body><script>window.__ITAF_STATIC__=${data};</script><script>${js.replace(/<\/script/gi, '<\\/script').replace(/<!--/g, '<\\!--')}</script></body></html>
 `;
