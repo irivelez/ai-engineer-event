@@ -2,6 +2,7 @@
 // Opener check (A1): pure black before the first →, film plays with sound after it, holds the last frame;
 // ?novideo=1 fallback lands on the film's title box (ink x 584–1341, y 508–570). Writes PNGs to --out.
 // Usage: node scripts/check-opener.mjs [index.html] --out <dir>
+import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -11,7 +12,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2);
 const html = path.resolve(argv.find((a) => a.endsWith('.html')) || path.join(ROOT, 'index.html'));
 const oi = argv.indexOf('--out');
-const out = path.resolve(oi >= 0 ? argv[oi + 1] : path.join(ROOT, 'docs/qa/opener'));
+const out = path.resolve(oi >= 0 ? argv[oi + 1] : path.join(os.tmpdir(), 'itaf-qa', 'opener'));
 fs.mkdirSync(out, { recursive: true });
 
 // White-pixel bounding box of the title (in-page canvas read of a screenshot).
@@ -60,7 +61,9 @@ await withBrowser(async (browser) => {
     report.filmEnd = { box: await inkBox(page, png), state: await page.evaluate(() => window.__itaf.director.current.inst.state) };
   }
   console.log('film phase done:', JSON.stringify(report.afterPress));
-  await ctx.close();
+  // Stop the film before leaving: closing a context with live media playback can stall headless Chrome.
+  await page.evaluate(() => { const v = document.querySelector('video'); if (v) { v.pause(); v.removeAttribute('src'); v.load(); } }).catch(() => {});
+  await page.goto('about:blank').catch(() => {});
   // fallback in a fresh context (the film's decoder and audio are gone)
   const ctx2 = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
   const page2 = await ctx2.newPage();
@@ -82,7 +85,7 @@ await withBrowser(async (browser) => {
   png = await page2.screenshot({ path: path.join(out, '6-render-mode.png') });
   report.renderMode = { box: await inkBox(page2, png) };
   report.errors = [...errors, ...errors2];
-  await ctx2.close();
+  console.log('fallback phase done');
 }, { timeoutMs: 120000 });
 report.target = { x0: 584, y0: 508, x1: 1341, y1: 570 };
 console.log(JSON.stringify(report, null, 1));

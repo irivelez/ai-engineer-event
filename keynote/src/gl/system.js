@@ -1,16 +1,30 @@
 // The one WebGL renderer for the whole keynote (A1).
 // - Created lazily by the first GL scene; returns null if WebGL is unavailable (GL moments then show static frames).
 // - Postprocessing chain (pmndrs/postprocessing 6.39): RenderPass → EffectPass(Bloom mipmap, Vignette, AgX tone
-//   mapping) → EffectPass(SMAA on the tone-mapped image). Renderer tone mapping stays NoToneMapping and frame
+//   mapping) → EffectPass(SMAA on the tone-mapped image, then a 1-LSB display-space dither). Renderer tone mapping stays NoToneMapping and frame
 //   buffers are HalfFloat, as the postprocessing README requires.
 // - The canvas is 1920×1080 stage px inside the scaled stage (pixel-aligned with the DOM); its drawing buffer is
 //   stage scale × pixelRatio, pixelRatio = min(devicePixelRatio, 1.5), dropping to 1.0 when p95 frame time
 //   > 18 ms for 2 s.
 // - Renders only when the director asks (a GL moment is visible and the tab is not hidden).
 import * as THREE from 'three';
-import { EffectComposer, RenderPass, EffectPass, BloomEffect, VignetteEffect, ToneMappingEffect, ToneMappingMode, SMAAEffect, SMAAPreset } from 'postprocessing';
+import { EffectComposer, RenderPass, EffectPass, BloomEffect, VignetteEffect, ToneMappingEffect, ToneMappingMode, SMAAEffect, SMAAPreset, Effect, BlendFunction } from 'postprocessing';
 import { makeWorldFactory } from './world.js';
 import * as helpers from './helpers.js';
+
+// 1-LSB ordered dither (interleaved gradient noise) applied in display space: kills banding in large dark
+// gradients without visible grain (Zoom-safe). Runs last, after SMAA.
+class DitherEffect extends Effect {
+  constructor() {
+    super('DitherEffect', /* glsl */ `
+      float itafIgn(vec2 p) { return fract(52.9829189 * fract(dot(p, vec2(0.06711056, 0.00583715)))); }
+      void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
+        vec3 s = pow(max(inputColor.rgb, vec3(0.0)), vec3(1.0 / 2.2));
+        s += (itafIgn(gl_FragCoord.xy) - 0.5) / 255.0;
+        outputColor = vec4(pow(max(s, vec3(0.0)), vec3(2.2)), inputColor.a);
+      }`, { blendFunction: BlendFunction.NORMAL });
+  }
+}
 
 const DEFAULT_POST = { bloom: { intensity: 0.9, threshold: 0.62, smoothing: 0.25, radius: 0.72 }, vignette: { offset: 0.3, darkness: 0.55 } };
 
@@ -47,7 +61,8 @@ export function createGLSystem({ stage, tokens, params, fonts, onFatal }) {
   const tone = new ToneMappingEffect({ mode: ToneMappingMode.AGX });
   const smaa = new SMAAEffect({ preset: SMAAPreset.HIGH });
   const mainPass = new EffectPass(placeholderCam, bloom, vignette, tone);
-  const aaPass = new EffectPass(placeholderCam, smaa);
+  const dither = new DitherEffect();
+  const aaPass = new EffectPass(placeholderCam, smaa, dither);
   composer.addPass(renderPass);
   composer.addPass(mainPass);
   composer.addPass(aaPass);
@@ -68,7 +83,9 @@ export function createGLSystem({ stage, tokens, params, fonts, onFatal }) {
   }
   stage.onResize(resize);
 
-  // Adaptive pixel ratio: p95 > 18 ms over a 2 s window → 1.0.
+  // Adaptive pixel ratio: p95 frame time > 18 ms over a 2 s window → 1.0. Intervals are snapped to whole
+  // vsyncs first: raw rAF deltas jitter ±2 ms around 16.7 ms even at a perfect 60 fps, so a raw p95 would
+  // always read ~18.5 ms and drop the ratio for nothing. Snapped, p95 > 18 ms means > 5% of frames missed.
   const frames = [];
   let windowStart = performance.now();
   let lastFrame = 0;
@@ -78,7 +95,9 @@ export function createGLSystem({ stage, tokens, params, fonts, onFatal }) {
     if (now - windowStart < 2000) return;
     if (frames.length > 30 && pixelRatio > 1) {
       const sorted = frames.slice().sort((a, b) => a - b);
-      const p95 = sorted[Math.floor(sorted.length * 0.95)];
+      const vsync = sorted[Math.floor(sorted.length / 2)] > 12 ? 1000 / 60 : 1000 / 120;
+      const snapped = sorted.map((d) => Math.max(1, Math.round(d / vsync)) * vsync);
+      const p95 = snapped[Math.floor(snapped.length * 0.95)];
       if (p95 > 18) {
         pixelRatio = 1;
         resize();

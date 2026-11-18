@@ -1,6 +1,6 @@
 // Kicker: the small mono line above an idea. It names the section, never decorates.
 // Kicker.create({ text: 'Act II · What the frontier labs show', ground: 'paper', tone: 'accent' })
-import { gsap, motion, root, esc, play, liftOut, kill } from './_core.js';
+import { gsap, motion, root, esc, play, liftOut, kill, withVisible } from './_core.js';
 
 /**
  * @param {object} o
@@ -42,7 +42,7 @@ export function create(o = {}) {
     destroy() { kill(el, ruleEl, textEl); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 export default { create };

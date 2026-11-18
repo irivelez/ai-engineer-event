@@ -4,6 +4,7 @@
 // N notes overlay, T timer, P opens the presenter window).
 import { createSync, readTimer, writeTimer } from './sync.js';
 import { mountPresenterUI } from './ui.js';
+import { formatClock } from './format.js';
 
 export function isPresenterHash() {
   return typeof location !== 'undefined' && location.hash === '#presenter';
@@ -15,19 +16,15 @@ export function mountPresenter(env = {}) {
   return true;
 }
 
-export function formatClock(ms) {
-  const neg = ms < 0;
-  const s = Math.floor(Math.abs(ms) / 1000);
-  const h = Math.floor(s / 3600);
-  const m = Math.floor((s % 3600) / 60);
-  const ss = String(s % 60).padStart(2, '0');
-  return `${neg ? '−' : ''}${h ? `${h}:${String(m).padStart(2, '0')}` : m}:${ss}`;
-}
+export { formatClock };
 
 export function attachAudience(director, env = {}) {
   const { stage, data, tokens } = env;
   let win = null;
+  let keyHandler = null;
   const sync = createSync('audience', { getPeer: () => win });
+  // Heartbeat: the presenter shows the link as live while states keep arriving.
+  const heartbeat = setInterval(() => broadcast(), 10000);
   let timer = readTimer();
 
   const broadcast = () => {
@@ -59,6 +56,7 @@ export function attachAudience(director, env = {}) {
         else startOrResetTimer();
         break;
       case 'hello': broadcast(); break;
+      case 'key': if (keyHandler && typeof msg.key === 'string') keyHandler(msg.key); break;
       default:
     }
   });
@@ -131,6 +129,7 @@ export function attachAudience(director, env = {}) {
     openPresenter,
     get timer() { return timer; },
     get presenterWindow() { return win; },
-    dispose() { sync.close(); clearInterval(notesTimer); },
+    setKeyHandler(fn) { keyHandler = fn; },
+    dispose() { sync.close(); clearInterval(notesTimer); clearInterval(heartbeat); },
   };
 }

@@ -6,6 +6,8 @@ function indexFacts(facts) {
   if (!facts) return map;
   const list = Array.isArray(facts) ? facts : Array.isArray(facts.facts) ? facts.facts : null;
   if (list) list.forEach((f) => f && f.id && map.set(f.id, f));
+  // facts.json is { asOf, facts: { <id>: {...} } }: index the inner map by id.
+  else if (facts.facts && typeof facts.facts === 'object') Object.entries(facts.facts).forEach(([id, f]) => f && typeof f === 'object' && map.set(id, { id, ...f }));
   else if (typeof facts === 'object') Object.entries(facts).forEach(([id, f]) => f && typeof f === 'object' && map.set(id, { id, ...f }));
   return map;
 }
@@ -55,6 +57,7 @@ export function makeContextFactory({ data, tokens, components, icons, assets, fo
       acts,
       beats: all,
       notes: (data.notes && data.notes[m.id]) || null,
+      frames: data.frames || [],
       facts: (id) => facts.get(id) || null,
       tokens,
       ground,

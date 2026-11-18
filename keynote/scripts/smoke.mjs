@@ -3,7 +3,7 @@
 //   1. zero console errors / page errors / failed requests
 //   2. every step of every moment, forward with real key presses (→) and back (←)
 //   3. ?m=<id>&s=<step>, ?m=<number>, ?render=1 (ready flag, deterministic start)
-// Usage: node scripts/smoke.mjs [index.html] [--moments a,b] [--quick]
+// Usage: node scripts/smoke.mjs [index.html|static.html] [--quick] [--static]
 //   --quick  drive navigation through window.__itaf instead of key presses (faster, no animations)
 import path from 'node:path';
 import fs from 'node:fs';
@@ -14,6 +14,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const argv = process.argv.slice(2);
 const html = path.resolve(argv.find((a) => a.endsWith('.html')) || path.join(ROOT, 'index.html'));
 const quick = argv.includes('--quick');
+const isStatic = argv.includes('--static') || path.basename(html).startsWith('static');
 if (!fs.existsSync(html)) { console.error(`smoke: ${html} not found (run node scripts/build.mjs)`); process.exit(1); }
 
 const fails = [];
@@ -48,7 +49,7 @@ await withBrowser(async (browser) => {
   const fwdMs = Date.now() - t0;
   let missing = 0;
   for (const m of moments) {
-    const st = await page.evaluate((mid) => { const r = window.__itaf.director.recs.get(mid); return r ? r.steps : null; }, m);
+    const st = await page.evaluate((mid) => { const recs = window.__itaf.director.recs; const r = recs ? recs.get(mid) : null; return r ? r.steps : null; }, m);
     const got = seen.get(m);
     if (!got) { missing++; fails.push(`forward: moment ${m} never shown`); continue; }
     if (st != null) for (let s = 0; s < st; s++) if (!got.has(s)) { missing++; fails.push(`forward: ${m} step ${s} never shown`); }
@@ -78,6 +79,7 @@ await withBrowser(async (browser) => {
   s = await probe(`?m=3`);
   const third = await page.evaluate(() => (window.__itaf.director.moments.find((m) => m.n === 3) || {}).id);
   check(s.momentId === third, `?m=3 → ${s.momentId}, expected ${third}`);
+  if (!isStatic) {
   s = await probe(`?render=1&m=${moments[moments.length - 1]}&s=0`);
   check(s.momentId === moments[moments.length - 1], `?render=1 → ${s.momentId}`);
   const ready = await page.evaluate(() => document.documentElement.dataset.ready);
@@ -85,6 +87,7 @@ await withBrowser(async (browser) => {
   s = await probe(`?only=${moments.slice(0, 2).join(',')}`);
   const onlyN = await page.evaluate(() => window.__itaf.director.moments.length);
   check(onlyN === Math.min(2, moments.length), `?only= kept ${onlyN} moments`);
+  }
 
   for (const e of errors) fails.push(e);
   await ctx.close();

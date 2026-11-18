@@ -26,6 +26,7 @@ export function createDirector(env) {
   let glOwner = null;     // rec whose wrapper holds the GL canvas
   let autoCall = null;
   let idleHandle = null;
+  let enteredAt = Date.now(); // when the current moment came on screen (presenter: time in moment)
   const events = new Map();
 
   const on = (name, fn) => {
@@ -119,8 +120,12 @@ export function createDirector(env) {
     if (trans && trans.from && trans.from !== cur) out.push(trans.from);
     return out;
   }
+  // Per-frame CPU work time (scene updates + GL submit), read by scripts/fps.mjs via __itaf.frameStats().
+  const work = new Float32Array(600);
+  let workN = 0;
   function tick(time, deltaTime) {
     if (params.render) return;
+    const t0 = performance.now();
     const dt = Math.min(deltaTime / 1000, 0.1);
     const vis = visibleRecs();
     for (const r of vis) {
@@ -132,15 +137,22 @@ export function createDirector(env) {
     }
     const gl = getGL(false);
     if (gl && glOwner && !glOwner.freeze && vis.includes(glOwner) && glOwner.inst.world && !document.hidden) gl.render(glOwner.inst.world, dt);
+    work[workN++ % work.length] = performance.now() - t0;
   }
   gsap.ticker.add(tick);
+  function frameStats(reset) {
+    const n = Math.min(workN, work.length);
+    const a = Array.from(work.slice(0, n)).sort((x, y) => x - y);
+    if (reset) workN = 0;
+    return n ? { frames: n, meanMs: a.reduce((x, y) => x + y, 0) / n, p95Ms: a[Math.floor(n * 0.95)], maxMs: a[n - 1] } : null;
+  }
 
   // ---------- state ----------
   function state() {
     if (!cur) return null;
     return {
       momentId: cur.id, momentIndex: cur.i, number: cur.m.n || cur.i + 1, step, steps: cur.steps, total: N,
-      ground: cur.m.ground, icon: cur.m.icon || null, act: cur.m.act, at: Date.now(),
+      ground: cur.m.ground, icon: cur.m.icon || null, act: cur.m.act, enteredAt, at: Date.now(),
     };
   }
   const emitChange = () => emit('change', state());
@@ -201,6 +213,7 @@ export function createDirector(env) {
 
     cur = to;
     step = s;
+    enteredAt = Date.now();
     to.wrapper.style.zIndex = String(++z);
     gsap.set(to.wrapper, { visibility: 'visible', opacity: 1, clipPath: 'none' });
     to.root.style.visibility = '';
@@ -336,7 +349,7 @@ export function createDirector(env) {
   }
 
   return {
-    on, next, prev, goto, show, gotoStep, state, settled, dropGL,
+    on, next, prev, goto, show, gotoStep, state, settled, dropGL, frameStats,
     get current() { return cur; },
     get step() { return step; },
     get moments() { return moments; },

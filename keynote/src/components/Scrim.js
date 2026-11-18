@@ -1,7 +1,7 @@
 // Scrim: the calm area text needs over 3D. An eased (non-linear) gradient of the ground colour,
 // so there is no visible edge and no banding step for Zoom's encoder to exaggerate.
 // const s = Scrim.create({ ground: 'void', side: 'left', extent: 0.55 }); ctx.root.prepend(s.el); tl.add(s.in(), 0);
-import { gsap, motion, root, play, kill, grounds } from './_core.js';
+import { gsap, motion, root, play, kill, grounds, withVisible } from './_core.js';
 
 // Eased alpha curve ("scrim gradient"): position → relative opacity.
 const CURVE = [[0, 1], [0.19, 0.962], [0.34, 0.857], [0.47, 0.704], [0.565, 0.534], [0.65, 0.38], [0.73, 0.244], [0.802, 0.134], [0.861, 0.064], [0.91, 0.024], [0.95, 0.006], [1, 0]];
@@ -45,7 +45,7 @@ export function create(o = {}) {
     destroy() { kill(el); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 /** Shorthand: a ready, visible scrim element. */

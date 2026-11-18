@@ -17,7 +17,12 @@ export default {
     img.addEventListener('error', () => { img.style.display = 'none'; note.style.display = ''; });
     img.addEventListener('load', () => { img.style.display = ''; note.style.display = 'none'; });
     root.append(img, note);
-    const show = (s) => { img.src = `static/frames/${nn}-${beat.id}-${s}.webp`; };
+    const known = new Set(ctx.frames || []);
+    const show = (s) => {
+      const f = `static/frames/${nn}-${beat.id}-${s}.webp`;
+      if (known.has(f)) img.src = f;
+      else { img.removeAttribute('src'); img.style.display = 'none'; note.style.display = ''; }
+    };
     return {
       steps,
       enter() { show(0); return null; },

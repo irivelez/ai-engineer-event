@@ -548,10 +548,10 @@
       "ground": "paper",
       "mode": "data",
       "icon": "speed",
-      "brief": "Independent indices moved almost a year of trend in 11 weeks, with an honest caveat.",
+      "brief": "Epoch’s independent index moved almost a year of trend in 11 weeks, with an honest caveat.",
       "steps": [
         "Epoch index: 162.5 → 174",
-        "Artificial Analysis: 58 → 65 in three weeks",
+        "Against the trend: about 14 points a year",
         "The caveat"
       ],
       "copy": {
@@ -563,19 +563,12 @@
           "dates": "1 Sep → mid-Nov 2026",
           "trend": "trend: about 14 points a year"
         },
-        "aa": {
-          "from": "58",
-          "to": "65",
-          "label": "Artificial Analysis index, top model",
-          "dates": "27 Oct → 17 Nov 2026"
-        },
         "caveat": "Two releases drove most of it. Epoch calls the record “just one data point.”"
       },
-      "visual": "Paper. A dashed trend line (14 pts/yr) and the actual jump, steep. Numbers roll. Caveat in small serif italic.",
+      "visual": "Paper. A dashed trend line (about 14 points a year) and the actual jump from 162.5 to 174, steep. Numbers roll. Caveat in small serif italic.",
       "facts": [
         "eci-jump",
         "eci-trend-14",
-        "aa-jump",
         "eci-one-data-point"
       ]
     },
@@ -673,7 +666,7 @@
             "what": "Fermat's Last Theorem, formalized in Lean",
             "who": "~1,000 Claude agents",
             "time": "30 hours",
-            "note": "with a proof outline and 47 lemmas from earlier work",
+            "note": "with a one-line proof sketch and 47 lemmas from earlier work",
             "tag": "Lab-reported · Anthropic"
           },
           {
@@ -873,7 +866,7 @@
       ],
       "copy": {
         "title": "Too capable to ship as-is",
-        "quote": "“…can find previously unknown security flaws and develop new ways to exploit them across many well-protected systems without a person guiding each step.”",
+        "quote": "“…with the right tools and access, GPT-6 Astra can find previously unknown security flaws and develop new ways to exploit them across many well-protected systems without a person guiding each step.”",
         "quoteWho": "OpenAI, on GPT-6 Astra, the first model it rated “Critical” for cyber",
         "pairs": [
           [
@@ -885,8 +878,8 @@
             "GPT-6 Cyber · vetted accounts only"
           ],
           [
-            "Gemini 4 · for everyone",
-            "“Cyber-permissive” versions · vetted defenders only"
+            "Gemini 4 Carbon · for everyone since 10 Nov",
+            "Released first to “a subset of cyber defenders”"
           ]
         ]
       },
@@ -947,12 +940,14 @@
         "second": "GPT-6.2 Astra: 65% average, 17 points lower",
         "failures": [
           "They reused existing ideas instead of inventing new ones.",
-          "They kept their first attempt.",
+          "They mostly kept their first attempt.",
           "They rated their own work above human work."
         ],
+        "barLabel": "The standard Epoch expects of its own staff",
+        "barNote": "Line position illustrative: Epoch judged each task against its staff standard, not one score.",
         "tag": "Independent · Epoch AI, 17 Nov 2026"
       },
-      "visual": "Paper. A horizontal 'employee bar' line high on the chart; model bars rise and stop below it. Failures as three plain lines.",
+      "visual": "Paper. A horizontal 'employee bar' line high on the chart; model bars rise and stop below it (the line has no value on the axis: copy.barNote says so in small type). Failures as three plain lines.",
       "facts": [
         "epoch-real-work",
         "epoch-astra-65",
@@ -1089,7 +1084,7 @@
         "The lesson"
       ],
       "copy": {
-        "title": "The recipe behind the incidents",
+        "title": "The recipe that keeps recurring",
         "parts": [
           "An impossible or misconfigured task",
           "Safeguards off",
@@ -1153,7 +1148,7 @@
       "copy": {
         "title": "Compute now needs a licence",
         "rule": "16 Nov 2026 · US Commerce Department (BIS) rule",
-        "line": "Brazil is now on the US licence list for advanced AI chips.",
+        "line": "Advanced AI chips bound for Brazil now need a US licence, except for US-headquartered buyers.",
         "others": "Also: Indonesia · Malaysia · Singapore · Thailand",
         "effective": "In force on publication in the Federal Register, scheduled for 19 Nov.",
         "share": "72% of the AI compute delivered since 2022 sits in the US. About 10% in China."
@@ -1299,7 +1294,7 @@
           "value": "+29%",
           "label": "token volume in four weeks, while prices fell"
         },
-        "s3": "The backlash has a name, “tokenmaxxing”: usage is not results.",
+        "s3": "The backlash against “tokenmaxxing”: usage is not results.",
         "tag": "Ramp AI Index · 85,000+ US businesses · paid tools only"
       },
       "visual": "Paper. Two big numbers; then the word 'tokenmaxxing' struck through.",
@@ -1379,7 +1374,7 @@
         "title": "We have seen this before",
         "s1": "Around 1900, factories bolted electric motors onto the old line shaft.",
         "s2": "The big gains came decades later, when they redesigned the floor around the motor.",
-        "s3": "Value goes to those who redesign the work, not to those who adopt the tool.",
+        "s3": "The gains came from redesigning the work around the motor, not from adding the motor.",
         "source": "Paul A. David, “The Dynamo and the Computer,” American Economic Review, 1990"
       },
       "visual": "Full-screen 3D: an old factory with one long rotating line shaft, belts dropping to every machine, all coupled. A motor attaches to the shaft (bolt-on). Then the shaft dissolves, each machine gets its own small motor, and the floor re-flows into a clean line. Warm industrial light → clean modern light.",
@@ -1534,7 +1529,7 @@
           {
             "text": "…give an agent the internet without a sandbox.",
             "icon": "constraints",
-            "why": "The documented incidents share a recipe: internet on, safeguards off."
+            "why": "Most documented incidents share a recipe: internet on, safeguards off."
           },
           {
             "text": "…measure AI by usage.",

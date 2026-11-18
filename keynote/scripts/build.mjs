@@ -154,6 +154,9 @@ function dataModule() {
     beats: { ...beats, moments: beats.moments.filter((m) => momentIds.includes(m.id)) },
     facts: readJSON(path.join(SRC, 'data/facts.json'), null),
     notes: readJSON(path.join(SRC, 'data/notes.json'), null),
+    // static frames that exist (scripts/render-static.mjs): the presenter thumbnails and the GL fallback
+    // only request these, so a missing frame never becomes a console error.
+    frames: ((readJSON(path.join(ROOT, 'static/manifest.json'), null) || {}).frames || []).map((f) => f.file),
   };
   return `export default ${J(data)};`;
 }

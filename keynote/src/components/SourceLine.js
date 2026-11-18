@@ -1,6 +1,6 @@
 // SourceLine: who says so and when, in mono at the 26 px floor. With `kind` it leads with the chip.
 // SourceLine.create({ kind: 'independent', text: 'Epoch AI · 17 Nov 2026', ground: 'paper' })
-import { gsap, motion, root, esc, play, kill } from './_core.js';
+import { gsap, motion, root, esc, play, kill, withVisible } from './_core.js';
 import { chipHTML } from './ProvenanceChip.js';
 
 /**
@@ -48,7 +48,7 @@ export function create(o = {}) {
     destroy() { kill(el, parts()); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 export default { create };

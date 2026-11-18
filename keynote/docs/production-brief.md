@@ -31,6 +31,7 @@ Read this, then `docs/scene-guide.md` (how to write a scene), `docs/design-syste
 ## Machine discipline (8 GB RAM, crashed twice today)
 
 - One Playwright/Chromium browser at a time across the whole team: `mkdir $S/browser.lock` before launching (retry every 15 s; a lock older than 15 min is stale: remove it), `rmdir` right after closing the browser. Never leave a browser or server running.
+- Never use `pkill -f`, `killall` or any pattern-based kill: other team members run as processes whose command lines contain many of the same words. Kill only the PIDs you started yourself.
 - Never commit or push; the director commits. Never edit files you don't own: engine (`src/engine`, `src/gl`, `scripts`, `src/presenter`), design (`src/design`, `src/styles`, `src/components`, `src/fonts`), facts (`src/data/facts.json`, `notes.json`), media (`media/`, `data/captures.json`, `data/sf-stills.json`), director (`data/beats.json`, docs). Need a change there? SendMessage the owner or "team-lead".
 
 ## Report

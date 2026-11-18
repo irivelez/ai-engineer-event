@@ -1,7 +1,7 @@
 // Quote: Newsreader italic, the opening mark hangs in the margin so the text edge stays on the grid.
 // Attribution in Geist Mono: speaker in fg, org in muted, after a 48 px rule.
 // Quote.create({ text: 'We are not slowing down.', speaker: 'Dario Amodei', org: 'Anthropic', ground: 'paper' })
-import { gsap, motion, root, esc, play, splitLines, linesIn, riseIn, liftOut, kill } from './_core.js';
+import { gsap, motion, root, esc, play, splitLines, linesIn, riseIn, liftOut, kill, withVisible, T } from './_core.js';
 
 /**
  * @param {object} o
@@ -9,10 +9,10 @@ import { gsap, motion, root, esc, play, splitLines, linesIn, riseIn, liftOut, ki
  * @param {string} [o.speaker] @param {string} [o.org] @param {string} [o.when]  e.g. '12 Nov 2026'
  * @param {number} [o.size]          font-size override in px (56–112; default type.quote 80)
  * @param {'paper'|'void'} [o.ground]
- * @param {number} [o.width]         default 9 columns
+ * @param {number} [o.width]         default 9 columns (1240)
  */
 export function create(o = {}) {
-  const el = root('itaf-quote', { ...o, tag: 'figure', width: o.width || 1312 });
+  const el = root('itaf-quote', { ...o, tag: 'figure', width: o.width || T.spanW(9) });
   const meta = [o.org, o.when].filter(Boolean).map(esc).join(' · ');
   el.innerHTML =
     `<div class="q-body t-quote"${o.size ? ` style="font-size:${Math.max(56, Math.min(112, o.size))}px"` : ''}>` +
@@ -56,7 +56,7 @@ export function create(o = {}) {
     destroy() { kill(el, open, text, cite); if (split) split.revert(); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 export default { create };

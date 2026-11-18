@@ -1,7 +1,7 @@
 // Headline: one idea, revealed line by line out of its own mask (DevDay line-mask).
 // const hl = Headline.create({ text: 'Code is not the bottleneck.', role: 'h1', ground: 'paper', highlight: 'not' });
 // root.append(hl.el); tl.add(hl.in());
-import { gsap, motion, root, markup, play, splitLines, linesIn, riseIn, liftOut, kill } from './_core.js';
+import { gsap, motion, root, markup, play, splitLines, linesIn, riseIn, liftOut, kill, withVisible } from './_core.js';
 
 /**
  * @param {object} o
@@ -23,6 +23,7 @@ export function create(o = {}) {
   el.innerHTML = markup(text, highlight);
   let split = null;
 
+  const settle = () => { kill(el); if (split) { split.revert(); split = null; } gsap.set(el, { autoAlpha: 1, y: 0 }); };
   const resplit = () => { if (split) split.revert(); split = splitLines(el); return split; };
 
   const api = {
@@ -34,7 +35,7 @@ export function create(o = {}) {
         const s = resplit();
         if (s) linesIn(sub, s.lines);
         else riseIn(sub, el);
-      }, () => { kill(el); gsap.set(el, { autoAlpha: 1, y: 0 }); });
+      }, settle);
     },
     out(tl, at) {
       return play(tl, at, (sub) => liftOut(sub, el), () => gsap.set(el, { autoAlpha: 0 }));
@@ -66,7 +67,7 @@ export function create(o = {}) {
     destroy() { kill(el); if (split) split.revert(); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 export default { create };

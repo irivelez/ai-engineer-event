@@ -2,7 +2,7 @@
 // row by row, with an accent arrow between. The old value stays visible (muted) so the change reads.
 // BeforeAfter.create({ rows: [{ label: 'Time to ship a feature', before: '6 weeks', after: '4 days' }], ground: 'paper' })
 //   step 0: set({ stage: 'before' })   step 1: set({ stage: 'after' })
-import { gsap, motion, root, esc, play, kill, T } from './_core.js';
+import { gsap, motion, root, esc, play, kill, T, withVisible } from './_core.js';
 
 /**
  * @param {object} o
@@ -65,7 +65,7 @@ export function create(o = {}) {
     destroy() { kill(el, q('.ba-row'), afterParts()); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 export default { create };

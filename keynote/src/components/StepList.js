@@ -1,7 +1,7 @@
 // StepList: a real sequence (order matters), so it is numbered. The current step is in fg with an
 // accent bar that travels to it; done steps stay readable in muted; later steps wait in muted.
 // StepList.create({ items: ['Pick one task', 'Write the check first', 'Let the agent run'], active: 0, ground: 'paper' })
-import { gsap, motion, root, esc, play, kill } from './_core.js';
+import { gsap, motion, root, esc, play, kill, withVisible, T } from './_core.js';
 
 /**
  * @param {object} o
@@ -9,11 +9,11 @@ import { gsap, motion, root, esc, play, kill } from './_core.js';
  * @param {number} [o.active=-1]       index of the current step (-1: none)
  * @param {boolean} [o.numbered=true]
  * @param {'body'|'lead'|'h2'} [o.role='lead']
- * @param {number} [o.width]           default 9 columns
+ * @param {number} [o.width]           default 9 columns (1240)
  * @param {'paper'|'void'} [o.ground]
  */
 export function create(o = {}) {
-  const el = root(`itaf-steps role-${o.role || 'lead'}`, { ...o, tag: 'ol', width: o.width || 1312 });
+  const el = root(`itaf-steps role-${o.role || 'lead'}`, { ...o, tag: 'ol', width: o.width || T.spanW(9) });
   const numbered = o.numbered !== false;
   el.innerHTML = (o.items || []).map((t, i) =>
     `<li class="st-item">${numbered ? `<span class="st-n t-label tnum">${String(i + 1).padStart(2, '0')}</span>` : ''}<span class="st-text t-${o.role || 'lead'}">${esc(t)}</span></li>`).join('') +
@@ -57,7 +57,7 @@ export function create(o = {}) {
     destroy() { kill(el, items, bar); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 export default { create };

@@ -8,7 +8,7 @@
 //   orientation: 'vertical', colorMode: 'accent', highlight: 'fable', unit: '%',
 //   threshold: { value: 100, label: "Epoch's bar for its own staff", tone: 'alert' }, ground: 'paper' })
 import { scaleLinear, scaleBand } from 'd3-scale';
-import { gsap, motion, root, esc, play, kill, T } from './_core.js';
+import { gsap, motion, root, esc, play, kill, T, withVisible } from './_core.js';
 
 const LABS = ['anthropic', 'openai', 'google'];
 
@@ -22,9 +22,9 @@ const LABS = ['anthropic', 'openai', 'google'];
  * @param {{value:number,label?:string,tone?:'alert'|'limit'|'fg'|'accent'|'verified'}} [o.threshold]
  * @param {string} [o.unit]           appended to value labels ('%', '×', ' h')
  * @param {(v:number)=>string} [o.format]
- * @param {number} [o.width]          default 10 columns (1440)
+ * @param {number} [o.width]          default 10 columns (1381)
  * @param {number} [o.height]         vertical only: plot height (default 560)
- * @param {number} [o.labelWidth=400] horizontal only
+ * @param {number} [o.labelWidth=440] horizontal only
  * @param {number} [o.rowHeight=96] @param {number} [o.barHeight=48]   horizontal only
  * @param {number} [o.barWidth=176]   vertical only
  * @param {'body'|'lead'|'label'} [o.labelRole]   default: body (horizontal), label (vertical)
@@ -43,7 +43,7 @@ export function create(o = {}) {
   let threshold = o.threshold || null;
 
   // geometry
-  const labelW = o.labelWidth ?? 400;
+  const labelW = o.labelWidth ?? 440;
   const rowH = o.rowHeight ?? 96;
   const barH = Math.min(o.barHeight ?? 48, rowH - 8);
   const valueRoom = 220;
@@ -83,9 +83,13 @@ export function create(o = {}) {
         data.map((d, i) => {
           const cx = band(d.id) + band.bandwidth() / 2;
           const hgt = len(d.value);
+          // Value inside the bar top when it fits (keeps clear of a threshold line above), else above it.
+          const lineH = T.type[valueRole] ? T.type[valueRole].size * T.type[valueRole].line : 72;
+          const inside = hgt >= lineH + 48; // contrast inside: see components.css (on-accent / on-quiet / ground colour on lab marks)
+          const vb = inside ? hgt - 20 - lineH : hgt + 16;
           return `<div class="bc-col${isHL(d, i) ? ' is-hl' : ''}" data-id="${esc(d.id)}" style="left:${(cx - w / 2).toFixed(1)}px;width:${w.toFixed(1)}px">` +
             `<div class="bc-bar" style="height:${hgt.toFixed(1)}px;background:${fill(d, i)}"></div>` +
-            `<div class="bc-value t-${valueRole} tnum" style="bottom:${(hgt + 16).toFixed(1)}px">${valueText(d)}</div></div>`;
+            `<div class="bc-value t-${valueRole} tnum${inside ? ' is-inside' : ''}" style="bottom:${vb.toFixed(1)}px">${valueText(d)}</div></div>`;
         }).join('') +
         `<div class="bc-base" aria-hidden="true"></div></div>` +
         `<div class="bc-xlabels">` +
@@ -122,7 +126,7 @@ export function create(o = {}) {
     gsap.set([...marks(), ...labels(), ...values(), ...th()], { autoAlpha: 1, x: 0, y: 0 });
     gsap.set(bars(), { scaleX: 1, scaleY: 1 });
     gsap.set(axis(), { scaleX: 1, scaleY: 1 });
-    gsap.set(all('.bc-th-label'), { autoAlpha: 1, x: 0 });
+    if (th().length) gsap.set(all('.bc-th-label'), { autoAlpha: 1, x: 0 });
   };
 
   const api = {
@@ -169,7 +173,7 @@ export function create(o = {}) {
     destroy() { settle(); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 export default { create };

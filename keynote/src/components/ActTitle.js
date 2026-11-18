@@ -2,7 +2,7 @@
 // past acts are filled, the current act lights in the accent, future acts wait in the rule colour.
 // So the structure says something true: where we are in the five-act route.
 // ActTitle.create({ numeral: 'II', title: 'What the frontier labs show', index: 1, total: 5, ground: 'void' })
-import { gsap, motion, root, esc, play, splitLines, linesIn, riseIn, liftOut, kill, T } from './_core.js';
+import { gsap, motion, root, esc, play, splitLines, linesIn, riseIn, liftOut, kill, T, withVisible } from './_core.js';
 
 /**
  * @param {object} o
@@ -11,7 +11,7 @@ import { gsap, motion, root, esc, play, splitLines, linesIn, riseIn, liftOut, ki
  * @param {number} o.index           0-based act index on the route
  * @param {number} [o.total=5]
  * @param {'paper'|'void'} [o.ground]
- * @param {number} [o.width]         default 10 columns (1440 px)
+ * @param {number} [o.width]         default 10 columns (1381 px)
  */
 export function create(o = {}) {
   const total = o.total || 5;
@@ -57,7 +57,7 @@ export function create(o = {}) {
     destroy() { kill(el, meta, segEls, fills, title); if (split) split.revert(); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 export default { create };

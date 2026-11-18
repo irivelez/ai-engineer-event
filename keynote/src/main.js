@@ -53,6 +53,7 @@ function boot() {
     return gl;
   };
 
+  if (components && typeof components.setRenderMode === 'function') components.setRenderMode(params.render);
   const makeCtx = makeContextFactory({ data, tokens, components, icons, assets, fonts, params, moments });
   director = createDirector({ stage, moments, scenes, placeholder, staticScene, makeCtx, hud, params, tokens, getGL });
   const overlays = createOverlays({ stage, director, tokens, params });
@@ -69,6 +70,7 @@ function boot() {
     goto: (m, s = 0, opts) => director.goto(m, s, opts),
     state: () => director.state(),
     settled: () => director.settled(),
+    frameStats: (reset) => director.frameStats(reset),
     glInfo: () => (gl ? gl.info() : null),
     gsap, // QA tools only (e.g. globalTimeline.timeScale)
   });
@@ -87,8 +89,10 @@ function boot() {
     document.documentElement.dataset.ready = '1';
   };
   const fontsReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
-  fontsReady.then(() => {
+  fontsReady.then(async () => {
     if (params.render) {
+      // GL text (troika) lays out asynchronously: wait for it, then render the settled frame once.
+      if (gl) await Promise.race([gl.api.helpers.whenReady(), new Promise((r) => setTimeout(r, 4000))]);
       director.renderOnce();
       requestAnimationFrame(() => requestAnimationFrame(markReady));
     } else {

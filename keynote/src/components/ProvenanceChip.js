@@ -1,7 +1,7 @@
 // ProvenanceChip: every number on stage wears one. Mono caps in a 2 px stamp, a small shape that
 // encodes the kind (so it never rests on colour alone), the kind's colour from the ground.
 // ProvenanceChip.create({ kind: 'labReported', ground: 'paper' })
-import { gsap, motion, root, esc, play, kill, provenance } from './_core.js';
+import { gsap, motion, root, esc, play, kill, provenance, withVisible } from './_core.js';
 
 const MARKS = {
   dot: '<circle cx="8" cy="8" r="5.5" fill="currentColor"/>',
@@ -58,7 +58,7 @@ export function create(o = {}) {
     destroy() { kill(el, chip, text); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 export default { create, chipHTML, kinds };

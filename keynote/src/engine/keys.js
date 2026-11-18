@@ -14,9 +14,13 @@ export function bindKeys({ director, overlays, hud, audience, stage, openPresent
     }
   }
 
+  // handle(key, event?) is also called for keys pressed in the presenter window (remote: no event).
   function onKey(e) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
-    const k = e.key;
+    handle(e.key, e);
+  }
+  function handle(k, ev) {
+    const e = ev || { repeat: false, preventDefault() {} };
     // overlays first
     if (overlays.open === 'grid' && overlays.gridKey(k)) return e.preventDefault();
     if (k === 'Escape') {
@@ -88,6 +92,7 @@ export function bindKeys({ director, overlays, hud, audience, stage, openPresent
     }
   }
   window.addEventListener('keydown', onKey);
+  if (audience && audience.setKeyHandler) audience.setKeyHandler((k) => { if (k !== 'f' && k !== 'F' && k !== 'F5' && k !== 'p' && k !== 'P') handle(k); });
 
   function onClick(e) {
     if (e.button !== 0) return;
@@ -97,5 +102,5 @@ export function bindKeys({ director, overlays, hud, audience, stage, openPresent
     director.next();
   }
   stage.el.addEventListener('click', onClick);
-  return { dispose() { window.removeEventListener('keydown', onKey); stage.el.removeEventListener('click', onClick); } };
+  return { handle, dispose() { window.removeEventListener('keydown', onKey); stage.el.removeEventListener('click', onClick); } };
 }

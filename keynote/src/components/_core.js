@@ -165,3 +165,33 @@ export function linesIn(sub, lines, { dur = motion.calmIn.dur, ease = motion.cal
 }
 
 export function kill(...targets) { targets.flat().forEach((t) => t && gsap.killTweensOf(t)); }
+
+/**
+ * Adds the shared `visible` state to a component's set():
+ *   set({ visible: true }, { animate })  → in() when animating, else the exact final state at once
+ *   set({ visible: false }, { animate }) → out() when animating, else hidden at once
+ * Also forces animate:false in render mode, so every set() is deterministic there.
+ */
+export function withVisible(api, settle) {
+  const base = api.set.bind(api);
+  const baseIn = api.in.bind(api);
+  const baseOut = api.out.bind(api);
+  let shown = false;
+  api.in = (tl, at) => { shown = true; return baseIn(tl, at); };
+  api.out = (tl, at) => { shown = false; return baseOut(tl, at); };
+  api.set = (state = {}, opt = {}) => {
+    const animate = opt.animate !== false && !isRender();
+    const { visible, ...rest } = state;
+    const tl = Object.keys(rest).length ? base(rest, { ...opt, animate }) : gsap.timeline();
+    if (visible === true) {
+      if (!animate) { shown = true; settle(); }
+      else if (!shown) { shown = true; baseIn(tl, 0); } // already shown: nothing replays
+    } else if (visible === false) {
+      if (!animate) { shown = false; kill(api.el); gsap.set(api.el, { autoAlpha: 0 }); }
+      else if (shown) { shown = false; baseOut(tl, 0); }
+    }
+    return tl;
+  };
+  Object.defineProperty(api, 'shown', { get: () => shown });
+  return api;
+}

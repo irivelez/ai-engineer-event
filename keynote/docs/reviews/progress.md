@@ -1,0 +1,7 @@
+15:59 · calm-a · title · done · /private/tmp/claude-501/-Users-irina-AI-driven-OS-projects-ai-engineer-event--claude-worktrees-frontier-keynote/839b685b-f9b9-4b77-a2a2-6ce2aa40e805/scratchpad/shots/title
+15:59 · calm-a · question · done · /private/tmp/claude-501/-Users-irina-AI-driven-OS-projects-ai-engineer-event--claude-worktrees-frontier-keynote/839b685b-f9b9-4b77-a2a2-6ce2aa40e805/scratchpad/shots/a2
+15:59 · calm-a · sf-topics · done · /private/tmp/claude-501/-Users-irina-AI-driven-OS-projects-ai-engineer-event--claude-worktrees-frontier-keynote/839b685b-f9b9-4b77-a2a2-6ce2aa40e805/scratchpad/shots/a1
+15:59 · calm-a · slop · done · /private/tmp/claude-501/-Users-irina-AI-driven-OS-projects-ai-engineer-event--claude-worktrees-frontier-keynote/839b685b-f9b9-4b77-a2a2-6ce2aa40e805/scratchpad/shots/a3
+15:59 · calm-a · lean-harness · done · /private/tmp/claude-501/-Users-irina-AI-driven-OS-projects-ai-engineer-event--claude-worktrees-frontier-keynote/839b685b-f9b9-4b77-a2a2-6ce2aa40e805/scratchpad/shots/a3
+15:59 · calm-a · org · done · /private/tmp/claude-501/-Users-irina-AI-driven-OS-projects-ai-engineer-event--claude-worktrees-frontier-keynote/839b685b-f9b9-4b77-a2a2-6ce2aa40e805/scratchpad/shots/a3
+15:59 · calm-a · last-job · done · /private/tmp/claude-501/-Users-irina-AI-driven-OS-projects-ai-engineer-event--claude-worktrees-frontier-keynote/839b685b-f9b9-4b77-a2a2-6ce2aa40e805/scratchpad/shots/a3

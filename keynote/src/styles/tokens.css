@@ -98,6 +98,8 @@
   --g-alert: #FF4D3A;
   --g-caution: #F0C674;
   --g-quiet: #5C6674;
+  --g-on-accent: #05070A;
+  --g-on-quiet: #EEF2F6;
   --g-rule: #252C36;
   --g-card: #0D1218;
   --g-scrim: rgba(5,7,10,0.78);
@@ -115,6 +117,8 @@
   --g-alert: #C8321F;
   --g-caution: #8A6100;
   --g-quiet: #848D99;
+  --g-on-accent: #FFFFFF;
+  --g-on-quiet: #0B0F14;
   --g-rule: #D9DEE4;
   --g-card: #F3F5F8;
   --g-scrim: rgba(255,255,255,0.86);

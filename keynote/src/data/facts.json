@@ -11,561 +11,1587 @@
     },
     "verified": {
       "live": "Re-read on the public page on 18 Nov 2026 (checkedAt gives the time).",
-      "doc-only": "Traced to the research dossier's reading of the public page on 17 Nov 2026; not re-read today.",
+      "doc-only": "Traced to our research notes' reading of the public page on 17 Nov 2026; not re-read today.",
       "failed": "Could not be confirmed; see caveat."
     }
   },
   "facts": {
     "sf-sessions": {
       "claim": "The AI Engineer Code Summit in San Francisco (10–12 Nov 2026) ran 80 sessions over three days.",
-      "value": 80, "unit": "sessions", "asOf": "2026-11-12", "label": "official",
-      "source": { "title": "AI Engineer Code Summit 2026 schedule (sessions.json)", "publisher": "AI Engineer", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11" },
+      "value": 80,
+      "unit": "sessions",
+      "asOf": "2026-11-12",
+      "label": "official",
+      "source": {
+        "title": "AI Engineer Code Summit 2026 schedule (sessions.json)",
+        "publisher": "AI Engineer",
+        "url": "https://ai.engineer/code/2026/sessions.json",
+        "date": "2026-11"
+      },
       "caveat": "The count is ours: 108 schedule entries, minus 18 meals, breaks and expo slots and 9 MC intros/outros = 81; the two-part AFK workshop counted once = 80. A schedule shows what was planned.",
-      "verified": "live", "checkedAt": "2026-11-18T14:48-05:00"
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:48-05:00"
     },
     "sf-topics": {
       "claim": "Grouped by topic, the 80 sessions were: software factories & agent-run teams 13; verification & code review 8; coding-agent products 8; people, culture & community 8; agent harnesses & infrastructure 7; context, data, search & memory 7; models, inference & post-training 6; decision models 5; trust, security & governance 5; large codebases 5; evals & reliability 3; enterprise & business adoption 3; no published title 2.",
-      "value": [["Software factories & agent-run teams", 13], ["Verification & code review", 8], ["Coding-agent products", 8], ["People, culture & community", 8], ["Agent harnesses & infrastructure", 7], ["Context, data, search & memory", 7], ["Models, inference & post-training", 6], ["Decision models", 5], ["Trust, security & governance", 5], ["Large codebases: migrations & rewrites", 5], ["Evals & reliability", 3], ["Enterprise & business adoption", 3], ["Title not published", 2]],
-      "unit": "sessions per topic", "asOf": "2026-11-12", "label": "estimate",
-      "source": { "title": "AI Engineer Code Summit 2026 schedule (sessions.json)", "publisher": "AI Engineer", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11" },
+      "value": [
+        [
+          "Software factories & agent-run teams",
+          13
+        ],
+        [
+          "Verification & code review",
+          8
+        ],
+        [
+          "Coding-agent products",
+          8
+        ],
+        [
+          "People, culture & community",
+          8
+        ],
+        [
+          "Agent harnesses & infrastructure",
+          7
+        ],
+        [
+          "Context, data, search & memory",
+          7
+        ],
+        [
+          "Models, inference & post-training",
+          6
+        ],
+        [
+          "Decision models",
+          5
+        ],
+        [
+          "Trust, security & governance",
+          5
+        ],
+        [
+          "Large codebases: migrations & rewrites",
+          5
+        ],
+        [
+          "Evals & reliability",
+          3
+        ],
+        [
+          "Enterprise & business adoption",
+          3
+        ],
+        [
+          "Title not published",
+          2
+        ]
+      ],
+      "unit": "sessions per topic",
+      "asOf": "2026-11-12",
+      "label": "estimate",
+      "source": {
+        "title": "AI Engineer Code Summit 2026 schedule (sessions.json)",
+        "publisher": "AI Engineer",
+        "url": "https://ai.engineer/code/2026/sessions.json",
+        "date": "2026-11"
+      },
       "caveat": "Topic grouping is our reading of each title and abstract; the official topics field is empty. Counts sum to 80.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "doc-only",
+      "checkedAt": "2026-11-17"
     },
     "sf-shipping-34": {
       "claim": "34 of the 80 sessions were about shipping AI-written code at volume (software factories 13 + verification 8 + coding-agent products 8 + large codebases 5).",
-      "value": 34, "unit": "sessions of 80", "asOf": "2026-11-12", "label": "estimate",
-      "source": { "title": "AI Engineer Code Summit 2026 schedule (sessions.json)", "publisher": "AI Engineer", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11" },
+      "value": 34,
+      "unit": "sessions of 80",
+      "asOf": "2026-11-12",
+      "label": "estimate",
+      "source": {
+        "title": "AI Engineer Code Summit 2026 schedule (sessions.json)",
+        "publisher": "AI Engineer",
+        "url": "https://ai.engineer/code/2026/sessions.json",
+        "date": "2026-11"
+      },
       "caveat": "Our grouping; arithmetic 13+8+8+5 = 34.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "doc-only",
+      "checkedAt": "2026-11-17"
     },
     "grokbot-prs": {
-      "claim": "SpaceXSI's Grok Bot team merged 11,000 pull requests in one month, with a revert rate around 0.5%.",
-      "value": 11000, "unit": "pull requests in one month (revert rate ~0.5%)", "asOf": "2026-11-14", "label": "lab-reported",
-      "source": { "title": "All Code Is Slop (Except Mine) — Lauren Tan, SpaceXSI (video description)", "publisher": "AI Engineer on YouTube", "url": "https://www.youtube.com/watch?v=O_zcc6Xl12g", "date": "2026-11-14" },
-      "caveat": "The team's own figure, stated in the official video description; not audited. The description says 11,000 pull requests, not merged; which month is not stated.",
-      "verified": "live", "checkedAt": "2026-11-18T14:49-05:00"
+      "claim": "SpaceXSI's Grok Bot team merged 10,926 pull requests in October 2026, up from 809 in June (Jul 1,784; Aug 4,203; Sep 5,648): about 13.5× in four months. Lauren Tan on stage: “last month our team shipped a ridiculous 11,000 pull requests to production.”",
+      "value": {
+        "Jun": 809,
+        "Jul": 1784,
+        "Aug": 4203,
+        "Sep": 5648,
+        "Oct": 10926
+      },
+      "unit": "merged pull requests per month",
+      "asOf": "2026-11-11",
+      "label": "lab-reported",
+      "source": {
+        "title": "All Code Is Slop (Except Mine) — Lauren Tan, SpaceXSI (slide at 13:34, quote at 13:40)",
+        "publisher": "AI Engineer on YouTube",
+        "url": "https://www.youtube.com/watch?v=O_zcc6Xl12g&t=813",
+        "date": "2026-11-14"
+      },
+      "alsoSources": [
+        {
+          "title": "Video description: 11,000 pull requests in one month, revert rate around 0.5%",
+          "url": "https://www.youtube.com/watch?v=O_zcc6Xl12g"
+        }
+      ],
+      "caveat": "The team's own figures, from its slide; not audited. 13× = 10,926 ÷ 809 ≈ 13.5.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:43-05:00"
     },
     "ramp-inspect-75": {
-      "claim": "Ramp's in-house coding agent, Inspect, writes about 75% of Ramp's merged pull requests.",
-      "value": "~75%", "unit": "of merged pull requests", "asOf": "2026-11-11", "label": "lab-reported",
-      "source": { "title": "How to build an agent that builds the culture — Zach Bruggeman (session abstract)", "publisher": "AI Engineer Code Summit 2026", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11-11" },
-      "alsoSources": [{ "title": "Livestream, 11 Nov, talk at ~7:48:26", "url": "https://youtu.be/ZZ19zhYnDKY?t=28106" }],
-      "caveat": "Ramp's own figure, from the schedule abstract; what was said on stage was not re-checked.",
-      "verified": "live", "checkedAt": "2026-11-18T14:48-05:00"
+      "claim": "Ramp says 75% of all merged code at Ramp is written and shipped by its in-house agent, Inspect (slide); its abstract says ~75% of merged pull requests.",
+      "value": "75%",
+      "unit": "of merged code at Ramp",
+      "asOf": "2026-11-11",
+      "label": "lab-reported",
+      "source": {
+        "title": "How to build an agent that builds the culture — Zach Bruggeman, Ramp (Day 1 livestream, slide at 7:51:01)",
+        "publisher": "AI Engineer on YouTube",
+        "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=28260",
+        "date": "2026-11-12"
+      },
+      "alsoSources": [
+        {
+          "title": "Session abstract (sessions.json)",
+          "url": "https://ai.engineer/code/2026/sessions.json"
+        }
+      ],
+      "caveat": "Ramp's own figure; on stage he said “around 75%”. Not audited.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:55-05:00"
     },
     "cognition-devin-92": {
       "claim": "At Cognition, its agent Devin wrote 92% of merged pull requests in September 2026; 9 in 10 Devin sessions start without a human.",
-      "value": "92%", "unit": "of merged pull requests, September 2026", "asOf": "2026-11-12", "label": "lab-reported",
-      "source": { "title": "Scaling Your Agent Workforce: Lessons from Inside Cognition — Theodor Marcu (session abstract)", "publisher": "AI Engineer Code Summit 2026", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11-12" },
-      "caveat": "Cognition sells Devin; this is its own figure about itself. Breakout talk, not recorded on YouTube.",
-      "verified": "live", "checkedAt": "2026-11-18T14:48-05:00"
+      "value": "92%",
+      "unit": "of merged pull requests, September 2026",
+      "asOf": "2026-11-12",
+      "label": "lab-reported",
+      "source": {
+        "title": "Scaling Your Agent Workforce: Lessons from Inside Cognition — Theodor Marcu (session abstract)",
+        "publisher": "AI Engineer Code Summit 2026",
+        "url": "https://ai.engineer/code/2026/sessions.json",
+        "date": "2026-11-12"
+      },
+      "caveat": "Cognition sells Devin; this is its own figure, from the talk abstract (breakout, not recorded on YouTube).",
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:48-05:00"
     },
     "laurentan-views": {
-      "claim": "Lauren Tan's talk “All Code Is Slop (Except Mine)” had 925,237 YouTube views on 18 Nov 2026, four days after upload (746,083 on 17 Nov).",
-      "value": 925237, "unit": "YouTube views", "asOf": "2026-11-18T14:49-05:00", "label": "official",
-      "source": { "title": "All Code Is Slop (Except Mine) — Lauren Tan, SpaceXSI", "publisher": "AI Engineer on YouTube", "url": "https://www.youtube.com/watch?v=O_zcc6Xl12g", "date": "2026-11-14" },
+      "claim": "Lauren Tan's talk “All Code Is Slop (Except Mine)” had 925,237 YouTube views on 18 Nov 2026 at 14:49 Bogotá, four days after it was posted on 14 Nov (746,083 on 17 Nov).",
+      "value": 925237,
+      "unit": "YouTube views",
+      "asOf": "2026-11-18T14:49-05:00",
+      "label": "official",
+      "source": {
+        "title": "All Code Is Slop (Except Mine) — Lauren Tan, SpaceXSI",
+        "publisher": "AI Engineer on YouTube",
+        "url": "https://www.youtube.com/watch?v=O_zcc6Xl12g",
+        "date": "2026-11-14"
+      },
       "caveat": "Platform counter, read with yt-dlp; changes hourly. Uploaded 14 Nov. On 17 Nov it was second to Lydia Hallie's Claude Code talk (747,653); on 18 Nov it leads (925,237 vs 813,761).",
-      "verified": "live", "checkedAt": "2026-11-18T14:49-05:00"
-    },
-    "grokbot-unread": {
-      "claim": "The Grok Bot team lands hundreds of pull requests a day; nobody reads them all, yet quality goes up.",
-      "value": "hundreds per day", "unit": "pull requests", "asOf": "2026-11-11", "label": "lab-reported",
-      "source": { "title": "All Code Is Slop (Except Mine) — Lauren Tan (session abstract)", "publisher": "AI Engineer Code Summit 2026", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11-11" },
-      "caveat": "The team's own claim. The abstract says nobody reads them all, not that none are read; the video description credits lint rules, tests, runtime and formal verification (TLA+, Lean).",
-      "verified": "live", "checkedAt": "2026-11-18T14:48-05:00"
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:49-05:00"
     },
     "schmid-harness": {
-      "claim": "Philipp Schmid (Google DeepMind) stripped his agent's custom tools down to Bash and a 300-token prompt; his talk is titled “I deleted 90% of my harness (And It Got Better)”, and his abstract says benchmark scores jumped.",
-      "value": "90%", "unit": "of harness deleted (talk title)", "asOf": "2026-11-11", "label": "lab-reported",
-      "source": { "title": "I deleted 90% of my harness (And It Got Better) — Philipp Schmid (session abstract)", "publisher": "AI Engineer Code Summit 2026", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11-11" },
-      "alsoSources": [{ "title": "Livestream, 11 Nov, talk at ~2:21:16", "url": "https://youtu.be/ZZ19zhYnDKY?t=8476" }],
-      "caveat": "One engineer's experience with his own agents; no benchmark numbers in the abstract.",
-      "verified": "live", "checkedAt": "2026-11-18T14:48-05:00"
+      "claim": "Philipp Schmid (Google DeepMind) titled his talk “I deleted 90% of my harness and it got better”: he cut his agent's custom tools down to Bash and a 300-token prompt and says benchmark scores jumped. On stage: “Models will keep eating the harness.”",
+      "value": "90%",
+      "unit": "of harness deleted (talk title)",
+      "asOf": "2026-11-11",
+      "label": "lab-reported",
+      "source": {
+        "title": "I deleted 90% of my harness (And It Got Better) — Philipp Schmid (Day 1 livestream; title at 2:20:48, quote at 2:34:16)",
+        "publisher": "AI Engineer on YouTube",
+        "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=8447",
+        "date": "2026-11-12"
+      },
+      "alsoSources": [
+        {
+          "title": "Session abstract (sessions.json)",
+          "url": "https://ai.engineer/code/2026/sessions.json"
+        }
+      ],
+      "caveat": "One engineer's experience with his own agents; no benchmark numbers given.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:55-05:00"
     },
     "amp-org": {
-      "claim": "Amp describes itself as a 21-co-founder team with no traditional roles where everyone pushes to main (also: one meeting a week, above $100M ARR, no hires yet).",
-      "value": 21, "unit": "co-founders", "asOf": "2026-11-12", "label": "lab-reported",
-      "source": { "title": "A Company Built Around the Agent — Quinn Slack (session abstract)", "publisher": "AI Engineer Code Summit 2026", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11-12" },
-      "alsoSources": [{ "title": "Livestream, 12 Nov, talk at ~7:55:12", "url": "https://youtu.be/y9JtCCZP2MQ?t=28512" }],
-      "caveat": "Amp's own description of itself; revenue and profitability not checked.",
-      "verified": "live", "checkedAt": "2026-11-18T14:48-05:00"
-    },
-    "ramp-culture": {
-      "claim": "Ramp's Zach Bruggeman gave a talk titled “How to build an agent that builds the culture” on how its agent Inspect reshaped engineering culture.",
-      "value": "talk title", "unit": "", "asOf": "2026-11-11", "label": "official",
-      "source": { "title": "How to build an agent that builds the culture — Zach Bruggeman", "publisher": "AI Engineer Code Summit 2026", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11-11" },
-      "caveat": "Schedule title and abstract.",
-      "verified": "live", "checkedAt": "2026-11-18T14:48-05:00"
+      "claim": "Amp (Quinn Slack) says it is 21 co-founders, past $100M ARR, with 1/10 to 1/30 the headcount of comparable companies; on stage: “we had to stay at 21 people… a forcing function for us to work differently.” Its abstract adds: no traditional roles, everyone pushes to main, one meeting a week.",
+      "value": {
+        "cofounders": 21,
+        "arr": ">$100M",
+        "headcount": "1/10–1/30"
+      },
+      "unit": "",
+      "asOf": "2026-11-12",
+      "label": "lab-reported",
+      "source": {
+        "title": "A Company Built Around the Agent — Quinn Slack, Amp (Day 2 livestream, slide at 8:02:52)",
+        "publisher": "AI Engineer on YouTube",
+        "url": "https://www.youtube.com/watch?v=y9JtCCZP2MQ&t=28971",
+        "date": "2026-11-13"
+      },
+      "alsoSources": [
+        {
+          "title": "Session abstract (sessions.json)",
+          "url": "https://ai.engineer/code/2026/sessions.json"
+        }
+      ],
+      "caveat": "Company-reported; revenue, profitability and the headcount comparison (“the other guys”) are not independently checked.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:55-05:00"
     },
     "sf-verification-8": {
       "claim": "8 of the 80 sessions were about verification and code review.",
-      "value": 8, "unit": "sessions of 80", "asOf": "2026-11-12", "label": "estimate",
-      "source": { "title": "AI Engineer Code Summit 2026 schedule (sessions.json)", "publisher": "AI Engineer", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11" },
+      "value": 8,
+      "unit": "sessions of 80",
+      "asOf": "2026-11-12",
+      "label": "estimate",
+      "source": {
+        "title": "AI Engineer Code Summit 2026 schedule (sessions.json)",
+        "publisher": "AI Engineer",
+        "url": "https://ai.engineer/code/2026/sessions.json",
+        "date": "2026-11"
+      },
       "caveat": "Our grouping of titles and abstracts.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
-    },
-    "diff-10000": {
-      "claim": "Atlassian's Daniel Tao: pull-request volume and size are growing fast, and 10,000-line diffs can burn through reviewers' attention.",
-      "value": 10000, "unit": "lines per diff", "asOf": "2026-11-12", "label": "lab-reported",
-      "source": { "title": "Code review without reviewing code — Daniel Tao (session abstract)", "publisher": "AI Engineer Code Summit 2026", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11-12" },
-      "caveat": "Abstract wording is “10,000-line diffs can all too easily burn through finite reserves of human attention”; no count of how often such diffs occur. Breakout, not on YouTube.",
-      "verified": "live", "checkedAt": "2026-11-18T14:48-05:00"
+      "verified": "doc-only",
+      "checkedAt": "2026-11-17"
     },
     "zoominfo-judge": {
-      "claim": "At ZoomInfo, the model that grades every agent step was found passing work that never happened, once a second model (Jev) ran beside it.",
-      "value": "qualitative", "unit": "", "asOf": "2026-11-11", "label": "lab-reported",
-      "source": { "title": "Your Judge Is Hallucinating Too — Brian Kennedy (session abstract)", "publisher": "AI Engineer Code Summit 2026", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11-11" },
-      "alsoSources": [{ "title": "Livestream, 11 Nov, talk at ~6:11:46", "url": "https://youtu.be/ZZ19zhYnDKY?t=22306" }],
-      "caveat": "ZoomInfo's own finding; no rate given.",
-      "verified": "live", "checkedAt": "2026-11-18T14:48-05:00"
+      "claim": "ZoomInfo tested the AI judge that grades its agents' steps on 500 production steps against reference labels: the judge was right 65% of the time and accepted 118 bad steps, more than 1 in 4 of everything it accepted. The most common miss: the agent reported an action no tool call performed.",
+      "value": {
+        "steps": 500,
+        "judgeRight": "65%",
+        "badAccepted": 118
+      },
+      "unit": "",
+      "asOf": "2026-11-11",
+      "label": "lab-reported",
+      "source": {
+        "title": "Your Judge Is Hallucinating Too — Brian Kennedy, ZoomInfo (Day 1 livestream, slide at 6:16:04)",
+        "publisher": "AI Engineer on YouTube",
+        "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=22563",
+        "date": "2026-11-12"
+      },
+      "alsoSources": [
+        {
+          "title": "Quote “The agent made it up and the judge approved it.” at 6:12:57",
+          "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=22298"
+        }
+      ],
+      "caveat": "ZoomInfo's own offline evaluation of its own system.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:55-05:00"
     },
     "dey-judgement": {
-      "claim": "Ishaan Dey (Google, Antigravity team) gave the talk “Judgement is the Last Job” on 12 Nov 2026.",
-      "value": "talk title", "unit": "", "asOf": "2026-11-12", "label": "official",
-      "source": { "title": "Judgement is the Last Job — Ishaan Dey", "publisher": "AI Engineer Code Summit 2026", "url": "https://ai.engineer/code/2026/sessions.json", "date": "2026-11-12" },
-      "alsoSources": [{ "title": "Livestream, 12 Nov, MC announces the talk at ~5:58:54", "url": "https://youtu.be/y9JtCCZP2MQ?t=21534" }],
-      "caveat": "A talk title, quoted as such; the speaker's spelling is “Judgement”.",
-      "verified": "live", "checkedAt": "2026-11-18T14:48-05:00"
+      "claim": "Ishaan Dey (Antigravity, Google DeepMind) gave the talk “Judgement is the Last Job” on 12 Nov 2026; his advice: “Protect your judgment and build things that people want.”",
+      "value": "talk title",
+      "unit": "",
+      "asOf": "2026-11-12",
+      "label": "official",
+      "source": {
+        "title": "Judgement is the Last Job — Ishaan Dey (Day 2 livestream; title at 6:08:43, quote at 6:21:48)",
+        "publisher": "AI Engineer on YouTube",
+        "url": "https://www.youtube.com/watch?v=y9JtCCZP2MQ&t=22122",
+        "date": "2026-11-13"
+      },
+      "alsoSources": [
+        {
+          "title": "Session abstract (sessions.json)",
+          "url": "https://ai.engineer/code/2026/sessions.json"
+        }
+      ],
+      "caveat": "A talk title, quoted as such; the title spells “Judgement”, the caption “judgment”.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:55-05:00"
     },
     "fable52-date": {
       "claim": "Anthropic released Claude Fable 5.2 (and its restricted twin Claude Mythos 5.2) on 9 Nov 2026.",
-      "value": "2026-11-09", "unit": "release date", "asOf": "2026-11-09", "label": "official",
-      "source": { "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2", "publisher": "Anthropic", "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2", "date": "2026-11-09" },
+      "value": "2026-11-09",
+      "unit": "release date",
+      "asOf": "2026-11-09",
+      "label": "official",
+      "source": {
+        "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
+        "publisher": "Anthropic",
+        "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+        "date": "2026-11-09"
+      },
       "caveat": "Page edited 11 Nov.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "gpt62-date": {
       "claim": "OpenAI released GPT-6.2 Astra and GPT-6.2 Sol on 17 Nov 2026.",
-      "value": "2026-11-17", "unit": "release date", "asOf": "2026-11-17", "label": "official",
-      "source": { "title": "GPT-6.2 System Card (Astra and Sol)", "publisher": "OpenAI Deployment Safety Hub", "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol", "date": "2026-11-17" },
-      "alsoSources": [{ "title": "9to5Mac, 17 Nov 2026", "url": "https://9to5mac.com/2026/11/17/openai-upgrades-chatgpt-and-codex-with-new-gpt-6-2-astra-and-sol-models/" }],
+      "value": "2026-11-17",
+      "unit": "release date",
+      "asOf": "2026-11-17",
+      "label": "official",
+      "source": {
+        "title": "GPT-6.2 System Card (Astra and Sol)",
+        "publisher": "OpenAI Deployment Safety Hub",
+        "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol",
+        "date": "2026-11-17"
+      },
+      "alsoSources": [
+        {
+          "title": "9to5Mac, 17 Nov 2026",
+          "url": "https://9to5mac.com/2026/11/17/openai-upgrades-chatgpt-and-codex-with-new-gpt-6-2-astra-and-sol-models/"
+        }
+      ],
       "caveat": "openai.com blocks automated reading; the date comes from the system card and press.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "carbon-date": {
       "claim": "Google DeepMind made Gemini 4 Carbon generally available on 10 Nov 2026, after announcing it on 28 Oct for a subset of cyber defenders.",
-      "value": "2026-11-10", "unit": "general availability", "asOf": "2026-11-10", "label": "official",
-      "source": { "title": "Gemini 4 Carbon is now available", "publisher": "Google", "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/", "date": "2026-11-10" },
-      "alsoSources": [{ "title": "Gemini 4 Carbon: Our next frontier model (28 Oct)", "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/" }],
+      "value": "2026-11-10",
+      "unit": "general availability",
+      "asOf": "2026-11-10",
+      "label": "official",
+      "source": {
+        "title": "Gemini 4 Carbon is now available",
+        "publisher": "Google",
+        "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+        "date": "2026-11-10"
+      },
+      "alsoSources": [
+        {
+          "title": "Gemini 4 Carbon: Our next frontier model (28 Oct)",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/"
+        }
+      ],
       "caveat": "First release 28 Oct (restricted); general availability 10 Nov. The slide uses 10 Nov.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "releases-anthropic-5": {
       "claim": "Anthropic shipped 5 new general-purpose models between 1 Sep and 17 Nov 2026: Fable 5.1 (1 Sep), Opus 5.5 (22 Sep), Sonnet 5.5 (28 Sep), Haiku 5.5 (7 Oct), Fable 5.2 (9 Nov).",
-      "value": 5, "unit": "releases, 1 Sep–17 Nov 2026", "asOf": "2026-11-17", "label": "official",
-      "source": { "title": "Claude release notes", "publisher": "Anthropic", "url": "https://support.claude.com/en/articles/12138966-release-notes", "date": "2026-11-17" },
-      "caveat": "Counting rule and per-release links in releases-sep-nov. Restricted twins (Mythos 5.1, Mythos 5.2) count with their public model.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": 5,
+      "unit": "releases, 1 Sep–17 Nov 2026",
+      "asOf": "2026-11-17",
+      "label": "official",
+      "source": {
+        "title": "Claude release notes",
+        "publisher": "Anthropic",
+        "url": "https://support.claude.com/en/articles/12138966-release-notes",
+        "date": "2026-11-17"
+      },
+      "caveat": "Counting rule and per-release links in releases-sep-nov. Restricted twins (Mythos 5.1, Mythos 5.2) count with their public model. Dates re-read in the Claude release notes (1 Sep, 22 Sep, 28 Sep, 7 Oct) and Anthropic's 9 Nov launch page.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "releases-google-4": {
       "claim": "Google shipped 4 new general-purpose Gemini models between 1 Sep and 17 Nov 2026: Gemini 3.8 Flash (2 Sep), Gemini 4 Argon (30 Sep), Gemini 4 Carbon (28 Oct), Gemini 4 Hydrogen (12 Nov).",
-      "value": 4, "unit": "releases, 1 Sep–17 Nov 2026", "asOf": "2026-11-17", "label": "official",
-      "source": { "title": "Model versions and lifecycle (Gemini model table)", "publisher": "Google Cloud", "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions", "date": "2026-11-17" },
+      "value": 4,
+      "unit": "releases, 1 Sep–17 Nov 2026",
+      "asOf": "2026-11-17",
+      "label": "official",
+      "source": {
+        "title": "Model versions and lifecycle (Gemini model table)",
+        "publisher": "Google Cloud",
+        "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions",
+        "date": "2026-11-17"
+      },
       "caveat": "Counting rule in releases-sep-nov. Argon's broad rollout (13 Oct) and Carbon's general availability (10 Nov) are not counted again; image, voice and video models (Nano Banana 2.1, Gemini 3.8 Live, Gemini Omni 1.2 Flash) are excluded.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "releases-openai-5": {
       "claim": "OpenAI shipped 5 model launches between 1 Sep and 17 Nov 2026: GPT-6 Astra (3 Sep), GPT-6 Sol and Luna (by 22 Sep), GPT-6.1 Sol (29 Sep), GPT-6 Cyber for vetted accounts (5 Nov), GPT-6.2 Astra and Sol (17 Nov).",
-      "value": 5, "unit": "releases, 1 Sep–17 Nov 2026", "asOf": "2026-11-17", "label": "official",
-      "source": { "title": "GPT-6.2 System Card", "publisher": "OpenAI Deployment Safety Hub", "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol", "date": "2026-11-17" },
-      "caveat": "openai.com blocks automated reading, so two dates rest on a community post (29 Sep) and search-index text (5 Nov). GPT-6.1 Terra appears on leaderboards but has no primary release date; if it was released in the window, OpenAI's count is 6.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": 5,
+      "unit": "releases, 1 Sep–17 Nov 2026",
+      "asOf": "2026-11-17",
+      "label": "official",
+      "source": {
+        "title": "GPT-6.2 System Card",
+        "publisher": "OpenAI Deployment Safety Hub",
+        "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol",
+        "date": "2026-11-17"
+      },
+      "caveat": "GPT-6 Astra (card, 3 Sep), GPT-6 Sol and Luna (appendix added to the Astra card on 22 Sep; launch day itself not stated), GPT-6.1 Sol (DevDay developer-community post, 29 Sep), GPT-6 Cyber (system card dated 5 Nov), GPT-6.2 (card, 17 Nov). GPT-6.1 Terra appears on leaderboards with no primary release date; if it was released in the window, OpenAI's count is 6.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:45-05:00"
     },
     "releases-sep-nov": {
       "claim": "Anthropic, Google and OpenAI shipped 14 new general-purpose model releases between 1 Sep and 17 Nov 2026 (11 weeks): Anthropic 5, Google 4, OpenAI 5.",
-      "value": 14, "unit": "releases in 11 weeks (77 days)", "asOf": "2026-11-17", "label": "official",
-      "source": { "title": "Each lab's own release notes, launch posts and system cards (per release below)", "publisher": "Anthropic · Google · OpenAI", "url": "https://support.claude.com/en/articles/12138966-release-notes", "date": "2026-11-17" },
+      "value": 14,
+      "unit": "releases in 11 weeks (77 days)",
+      "asOf": "2026-11-17",
+      "label": "official",
+      "source": {
+        "title": "Each lab's own release notes, launch posts and system cards (per release below)",
+        "publisher": "Anthropic · Google · OpenAI",
+        "url": "https://support.claude.com/en/articles/12138966-release-notes",
+        "date": "2026-11-17"
+      },
       "countingRule": "One entry per new general-purpose (text or agentic) model, or same-day model family, at its first release in the window, that the lab announced in its own launch post, release-notes entry, model table or system card. A restricted twin released with its public model counts once. Not counted: wider rollouts of an already-counted model, image/voice/video models, and models with no primary release date (GPT-6.1 Terra).",
       "releases": [
-        { "lab": "Anthropic", "name": "Claude Fable 5.1 (restricted twin: Mythos 5.1)", "date": "2026-09-01", "dateStatus": "verified (release notes)", "access": "Fable for all users; Mythos for trusted-access programs", "url": "https://support.claude.com/en/articles/12138966-release-notes" },
-        { "lab": "OpenAI", "name": "GPT-6 Astra", "date": "2026-09-03", "dateStatus": "verified (system card dated 3 Sep; one tracker says 4 Sep)", "access": "broad release", "url": "https://deploymentsafety.openai.com/gpt-6-astra" },
-        { "lab": "Google", "name": "Gemini 3.8 Flash", "date": "2026-09-02", "dateStatus": "verified (Google Cloud model table; 9to5Google)", "access": "broad release (cyber variant for Fairwind Program, 16 Sep)", "url": "https://9to5google.com/2026/09/02/gemini-3-8-flash-launch/" },
-        { "lab": "OpenAI", "name": "GPT-6 Sol and GPT-6 Luna", "date": "2026-09-22", "dateStatus": "date unverified: 22 Sep is when their appendix was added to the GPT-6 Astra system card; available by 28 Sep", "access": "broad release", "url": "https://deploymentsafety.openai.com/gpt-6-astra" },
-        { "lab": "Anthropic", "name": "Claude Opus 5.5", "date": "2026-09-22", "dateStatus": "verified", "access": "broad release", "url": "https://www.anthropic.com/news/claude-opus-5-5" },
-        { "lab": "Anthropic", "name": "Claude Sonnet 5.5", "date": "2026-09-28", "dateStatus": "verified", "access": "broad release", "url": "https://www.anthropic.com/news/claude-sonnet-5-5" },
-        { "lab": "OpenAI", "name": "GPT-6.1 Sol", "date": "2026-09-29", "dateStatus": "verified only via a same-day developer-community post (OpenAI's page unreadable by bots)", "access": "broad release (DevDay)", "url": "https://community.openai.com/t/devday-2026-announcements-and-developer-resources/1402006" },
-        { "lab": "Google", "name": "Gemini 4 Argon", "date": "2026-09-30", "dateStatus": "verified (first to vetted cyber defenders; broad rollout 13 Oct)", "access": "vetted first, broad from 13 Oct", "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/" },
-        { "lab": "Anthropic", "name": "Claude Haiku 5.5", "date": "2026-10-07", "dateStatus": "verified", "access": "broad release", "url": "https://www.anthropic.com/news/claude-haiku-5-5" },
-        { "lab": "Google", "name": "Gemini 4 Carbon", "date": "2026-10-28", "dateStatus": "verified (first to a subset of cyber defenders; generally available 10 Nov)", "access": "vetted first, broad from 10 Nov", "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/" },
-        { "lab": "OpenAI", "name": "GPT-6 Cyber", "date": "2026-11-05", "dateStatus": "date from search-index text of OpenAI's page (unreadable by bots)", "access": "vetted Daybreak Red accounts with model-specific approval", "url": "https://deploymentsafety.openai.com/gpt-6-cyber/gpt-6-cyber.pdf" },
-        { "lab": "Anthropic", "name": "Claude Fable 5.2 (restricted twin: Mythos 5.2)", "date": "2026-11-09", "dateStatus": "verified", "access": "Fable for all users; Mythos for vetted organizations", "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2" },
-        { "lab": "Google", "name": "Gemini 4 Hydrogen", "date": "2026-11-12", "dateStatus": "verified", "access": "broad release, including free Gemini app users", "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/" },
-        { "lab": "OpenAI", "name": "GPT-6.2 Astra and GPT-6.2 Sol", "date": "2026-11-17", "dateStatus": "verified (system card dated 17 Nov)", "access": "broad release", "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol" }
+        {
+          "lab": "Anthropic",
+          "name": "Claude Fable 5.1 (restricted twin: Mythos 5.1)",
+          "date": "2026-09-01",
+          "dateStatus": "verified (Claude release notes, 18 Nov)",
+          "access": "Fable for all users; Mythos for trusted-access programs",
+          "url": "https://support.claude.com/en/articles/12138966-release-notes"
+        },
+        {
+          "lab": "OpenAI",
+          "name": "GPT-6 Astra",
+          "date": "2026-09-03",
+          "dateStatus": "verified (system card dated 3 Sep; one tracker says 4 Sep)",
+          "access": "broad release",
+          "url": "https://deploymentsafety.openai.com/gpt-6-astra"
+        },
+        {
+          "lab": "Google",
+          "name": "Gemini 3.8 Flash",
+          "date": "2026-09-02",
+          "dateStatus": "verified (Google Cloud model table, 18 Nov)",
+          "access": "broad release (cyber variant for Fairwind Program, 16 Sep)",
+          "url": "https://9to5google.com/2026/09/02/gemini-3-8-flash-launch/"
+        },
+        {
+          "lab": "OpenAI",
+          "name": "GPT-6 Sol and GPT-6 Luna",
+          "date": "2026-09-22",
+          "dateStatus": "22 Sep is when their appendix was added to the GPT-6 Astra system card; launch day not stated (available by 28 Sep)",
+          "access": "broad release",
+          "url": "https://deploymentsafety.openai.com/gpt-6-astra"
+        },
+        {
+          "lab": "Anthropic",
+          "name": "Claude Opus 5.5",
+          "date": "2026-09-22",
+          "dateStatus": "verified (Claude release notes, 18 Nov)",
+          "access": "broad release",
+          "url": "https://www.anthropic.com/news/claude-opus-5-5"
+        },
+        {
+          "lab": "Anthropic",
+          "name": "Claude Sonnet 5.5",
+          "date": "2026-09-28",
+          "dateStatus": "verified",
+          "access": "broad release",
+          "url": "https://www.anthropic.com/news/claude-sonnet-5-5"
+        },
+        {
+          "lab": "OpenAI",
+          "name": "GPT-6.1 Sol",
+          "date": "2026-09-29",
+          "dateStatus": "verified via the same-day DevDay developer-community post; OpenAI's own page blocks bots",
+          "access": "broad release (DevDay)",
+          "url": "https://community.openai.com/t/devday-2026-announcements-and-developer-resources/1402006"
+        },
+        {
+          "lab": "Google",
+          "name": "Gemini 4 Argon",
+          "date": "2026-09-30",
+          "dateStatus": "verified (Google blog, 30 Sep: rolling out to trusted cyber defenders via Fairwind; broad from 13 Oct per the Cloud model table)",
+          "access": "vetted first, broad from 13 Oct",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/"
+        },
+        {
+          "lab": "Anthropic",
+          "name": "Claude Haiku 5.5",
+          "date": "2026-10-07",
+          "dateStatus": "verified (Claude release notes, 18 Nov)",
+          "access": "broad release",
+          "url": "https://www.anthropic.com/news/claude-haiku-5-5"
+        },
+        {
+          "lab": "Google",
+          "name": "Gemini 4 Carbon",
+          "date": "2026-10-28",
+          "dateStatus": "verified (Google blog, 28 Oct: available to a subset of cyber defenders; generally available 10 Nov)",
+          "access": "vetted first, broad from 10 Nov",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/"
+        },
+        {
+          "lab": "OpenAI",
+          "name": "GPT-6 Cyber",
+          "date": "2026-11-05",
+          "dateStatus": "verified (GPT-6 Cyber system card dated 2026-11-05)",
+          "access": "vetted Daybreak Red accounts with model-specific approval",
+          "url": "https://deploymentsafety.openai.com/gpt-6-cyber/gpt-6-cyber.pdf"
+        },
+        {
+          "lab": "Anthropic",
+          "name": "Claude Fable 5.2 (restricted twin: Mythos 5.2)",
+          "date": "2026-11-09",
+          "dateStatus": "verified",
+          "access": "Fable for all users; Mythos for vetted organizations",
+          "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2"
+        },
+        {
+          "lab": "Google",
+          "name": "Gemini 4 Hydrogen",
+          "date": "2026-11-12",
+          "dateStatus": "verified",
+          "access": "broad release, including free Gemini app users",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/"
+        },
+        {
+          "lab": "OpenAI",
+          "name": "GPT-6.2 Astra and GPT-6.2 Sol",
+          "date": "2026-11-17",
+          "dateStatus": "verified (system card dated 17 Nov)",
+          "access": "broad release",
+          "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol"
+        }
       ],
-      "caveat": "A count depends on its rule; under this rule the total is at least 14 (15 if GPT-6.1 Terra's undated release fell in the window). The dossier described Google's four as Gemini 4 milestones from 30 Sep; we count Gemini 3.8 Flash instead of Carbon's general availability, to count each model once, as for the other labs.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "caveat": "A count depends on its rule; under this rule the total is at least 14 (15 if GPT-6.1 Terra's undated release fell in the window). Our research notes described Google's four as Gemini 4 milestones from 30 Sep; we count Gemini 3.8 Flash instead of Carbon's general availability, to count each model once, as for the other labs. All 14 dates re-read on 18 Nov except GPT-6 Sol and Luna's launch day.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:45-05:00"
     },
     "eci-jump": {
       "claim": "The top score on Epoch AI's Capabilities Index rose from 162.48 (Epoch's 1 Sep table, Claude Fable 5) to 174 by mid-November (Claude Fable 5.2 on 9 Nov; GPT-6.2 Astra on 17 Nov): +11.5 points in about 11 weeks, against a trend of about 14 points a year, i.e. roughly ten months of trend.",
-      "value": { "from": 162.48, "to": 174 }, "unit": "ECI points", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "The Epoch Brief, 11 Nov 2026", "publisher": "Epoch AI", "url": "https://epochai.substack.com/p/the-epoch-brief-november-11-2026", "date": "2026-11-11" },
-      "alsoSources": [{ "title": "ECI frontier trend (1 Sep table)", "url": "https://epoch.ai/data-insights/eci-frontier-trend" }, { "title": "Epoch AI Benchmarking Hub", "url": "https://epoch.ai/benchmarks" }],
+      "value": {
+        "from": 162.48,
+        "to": 174
+      },
+      "unit": "ECI points",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "The Epoch Brief, 11 Nov 2026",
+        "publisher": "Epoch AI",
+        "url": "https://epochai.substack.com/p/the-epoch-brief-november-11-2026",
+        "date": "2026-11-11"
+      },
+      "alsoSources": [
+        {
+          "title": "ECI frontier trend (1 Sep table)",
+          "url": "https://epoch.ai/data-insights/eci-frontier-trend"
+        },
+        {
+          "title": "Epoch AI Benchmarking Hub",
+          "url": "https://epoch.ai/benchmarks"
+        }
+      ],
       "caveat": "Two discrete releases (GPT-6 Astra, then Fable 5.2) produced most of the rise, so annualizing these weeks overstates the steady trend. Fable 5.2's 174 comes from pre-launch testing and “may change”; ECI switched to a Bayesian method on 4 Nov (strong models moved about 1 point). “Almost a year” = 11.5 ÷ 14 ≈ 0.82 year.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "eci-trend-14": {
       "claim": "Since labs added reasoning, the ECI frontier has climbed about 14 points a year, against about 6 for non-reasoning models.",
-      "value": 14, "unit": "ECI points per year", "asOf": "2026-09-01", "label": "independent",
-      "source": { "title": "ECI frontier trend", "publisher": "Epoch AI", "url": "https://epoch.ai/data-insights/eci-frontier-trend", "date": "2026-09-01" },
+      "value": 14,
+      "unit": "ECI points per year",
+      "asOf": "2026-09-01",
+      "label": "independent",
+      "source": {
+        "title": "ECI frontier trend",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/data-insights/eci-frontier-trend",
+        "date": "2026-09-01"
+      },
       "caveat": "A fitted trend.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "aa-jump": {
       "claim": "The top score on Artificial Analysis's Intelligence Index rose from 58 at the 27 Oct launch of v5 (Claude Opus 5.5) to 65 three weeks later (Claude Fable 5.2).",
-      "value": { "from": 58, "to": 65 }, "unit": "index points", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "Artificial Analysis Intelligence Index v5", "publisher": "Artificial Analysis", "url": "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5", "date": "2026-10-27" },
-      "alsoSources": [{ "title": "Artificial Analysis leaderboard", "url": "https://artificialanalysis.ai/leaderboards/models" }],
-      "caveat": "Secondary sources report a v5.0.1 methodology update on 3 Nov, so 58 (v5.0) and 65 (v5.0.1) may not be on exactly the same scale. One release (Fable 5.2) drove most of it.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": {
+        "from": 58,
+        "to": 65
+      },
+      "unit": "index points",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "Artificial Analysis Intelligence Index v5",
+        "publisher": "Artificial Analysis",
+        "url": "https://artificialanalysis.ai/articles/artificial-analysis-intelligence-index-v5",
+        "date": "2026-10-27"
+      },
+      "alsoSources": [
+        {
+          "title": "Artificial Analysis leaderboard",
+          "url": "https://artificialanalysis.ai/leaderboards/models"
+        }
+      ],
+      "caveat": "Both numbers re-read on AA's pages on 18 Nov: 58 is Claude Opus 5.5 (max) in the 27 Oct v5 launch article; 65 is Fable 5.2 on today's leaderboard, where Opus 5.5 now shows 59, so a v5.0.1 update shifted scores by about a point. One release (Fable 5.2) drove most of the rise.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:45-05:00"
     },
     "eci-one-data-point": {
       "claim": "Epoch AI wrote that Fable 5.2's record score “is just one data point.”",
-      "value": "quote", "unit": "", "asOf": "2026-11-11", "label": "independent",
-      "source": { "title": "The Epoch Brief, 11 Nov 2026", "publisher": "Epoch AI", "url": "https://epochai.substack.com/p/the-epoch-brief-november-11-2026", "date": "2026-11-11" },
+      "value": "quote",
+      "unit": "",
+      "asOf": "2026-11-11",
+      "label": "independent",
+      "source": {
+        "title": "The Epoch Brief, 11 Nov 2026",
+        "publisher": "Epoch AI",
+        "url": "https://epochai.substack.com/p/the-epoch-brief-november-11-2026",
+        "date": "2026-11-11"
+      },
       "caveat": "Said in the context of what the score implies for AI R&D.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "fable-1000-subagents": {
-      "claim": "Anthropic reports that more than 1,000 Claude subagents worked nonstop for eight days to turn an empty folder into an operating-system prototype that boots on a laptop.",
-      "value": "1,000+", "unit": "subagents, 8 days", "asOf": "2026-11-09", "label": "lab-reported",
-      "source": { "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2", "publisher": "Anthropic", "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2", "date": "2026-11-09" },
+      "claim": "Anthropic reports that, as an experiment, Claude Fable 5.2 coordinated over 1,000 subagents working around the clock for eight days, from an empty folder to a working (prototype) operating system that boots on a laptop.",
+      "value": "1,000+",
+      "unit": "subagents, 8 days",
+      "asOf": "2026-11-09",
+      "label": "lab-reported",
+      "source": {
+        "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
+        "publisher": "Anthropic",
+        "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+        "date": "2026-11-09"
+      },
       "caveat": "Lab demonstration, not independently checked. It is a prototype, not a production operating system.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "claude-90-merged": {
-      "claim": "Anthropic says Claude writes more than 90% of merged changes to its core codebase, with people guiding the work.",
-      "value": ">90%", "unit": "of merged changes", "asOf": "2026-11-09", "label": "lab-reported",
-      "source": { "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2", "publisher": "Anthropic", "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2", "date": "2026-11-09" },
+      "claim": "Anthropic says over 90% of the changes merged into its core codebase are now written by Claude, with human guidance.",
+      "value": ">90%",
+      "unit": "of merged changes",
+      "asOf": "2026-11-09",
+      "label": "lab-reported",
+      "source": {
+        "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
+        "publisher": "Anthropic",
+        "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+        "date": "2026-11-09"
+      },
       "caveat": "Lab-reported about itself.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "claude-rd-26": {
       "claim": "Anthropic says Claude “leads” about 26% of its AI R&D work as of August 2026, up from under 1% in February.",
-      "value": { "from": "<1%", "fromDate": "2026-02", "to": "~26%", "toDate": "2026-08" }, "unit": "of AI R&D work led by Claude", "asOf": "2026-09-17", "label": "lab-reported",
-      "source": { "title": "Measuring the pace of AI development", "publisher": "Anthropic", "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development", "date": "2026-09-17" },
-      "caveat": "Anthropic adds that Claude is not operating fully autonomously for any measured subset of the work. Its grading model agreed with human raters 59% of the time; human raters agreed with each other 35%.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": {
+        "from": "<1%",
+        "fromDate": "2026-02",
+        "to": "~26%",
+        "toDate": "2026-08"
+      },
+      "unit": "of AI R&D work led by Claude",
+      "asOf": "2026-09-17",
+      "label": "lab-reported",
+      "source": {
+        "title": "Measuring the pace of AI development",
+        "publisher": "Anthropic",
+        "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+        "date": "2026-09-17"
+      },
+      "caveat": "Lab-reported. The <1% February baseline is from the chart description on the same page. Anthropic adds that Claude is not operating fully autonomously for any measured subset of the work; its grading model agreed with human raters 59% of the time, human raters with each other 35%.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "anthropic-30000-agents": {
       "claim": "Anthropic says about 30,000 agents do research and engineering inside the company at any one time.",
-      "value": "~30,000", "unit": "agents at any time", "asOf": "2026-09-17", "label": "lab-reported",
-      "source": { "title": "Measuring the pace of AI development", "publisher": "Anthropic", "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development", "date": "2026-09-17" },
-      "caveat": "Lab-reported.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": "~30,000",
+      "unit": "agents at any time",
+      "asOf": "2026-09-17",
+      "label": "lab-reported",
+      "source": {
+        "title": "Measuring the pace of AI development",
+        "publisher": "Anthropic",
+        "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+        "date": "2026-09-17"
+      },
+      "caveat": "Lab-reported; Anthropic counts agents on its most-used internal platform, as of August 2026.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "fermat-lean": {
-      "claim": "Anthropic reports that about 1,000 Claude Fable 5.2 agents formalized Fermat's Last Theorem in Lean in 30 hours; its footnote lists the help they started from: 60 statements, a one-sentence outline of the classical proof strategy, definitions and 47 lemmas proved in an earlier formalization.",
-      "value": { "agents": "~1,000", "hours": 30, "lemmasGiven": 47 }, "unit": "", "asOf": "2026-11-09", "label": "lab-reported",
-      "source": { "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2 (footnote 4)", "publisher": "Anthropic", "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2", "date": "2026-11-09" },
+      "claim": "Anthropic reports that a team of about 1,000 Claude Fable 5.2 agents fully formalized Fermat's Last Theorem in Lean in 30 hours “with minimal human intervention”; its footnote lists what they were given: 60 statements, a one-sentence sketch of the classical route, the definitions, and 47 proved lemmas from an earlier formalization, plus lead and helper roles.",
+      "value": {
+        "agents": "~1,000",
+        "hours": 30,
+        "lemmasGiven": 47
+      },
+      "unit": "",
+      "asOf": "2026-11-09",
+      "label": "lab-reported",
+      "source": {
+        "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2 (footnote 4)",
+        "publisher": "Anthropic",
+        "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+        "date": "2026-11-09"
+      },
       "caveat": "The main text says “minimal human intervention”; the footnote shows substantial scaffolding. No peer review found. Under the same setup Opus 5.5 reached 26% in 18 hours.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "alphaproof-signal": {
-      "claim": "Google DeepMind's AlphaProof Code used Gemini agents to formally verify that Signal's core cryptographic code delivers the protections its experts specified, writing over six million lines of Lean in four weeks; experts reviewed every specification and agents flagged about 1% of the code for human review.",
-      "value": { "linesOfLean": "6M+", "weeks": 4 }, "unit": "", "asOf": "2026-11-10", "label": "lab-reported",
-      "source": { "title": "Introducing AlphaProof Code", "publisher": "Google DeepMind", "url": "https://deepmind.google/blog/introducing-alphaproof-code/", "date": "2026-11-10" },
+      "claim": "Google DeepMind's AlphaProof Code: agents powered by Gemini Carbon proved key security properties of the code behind the Signal protocol, generating over six million lines of Lean in four weeks; human experts reviewed every formal specification.",
+      "value": {
+        "linesOfLean": "6M+",
+        "weeks": 4
+      },
+      "unit": "",
+      "asOf": "2026-11-10",
+      "label": "lab-reported",
+      "source": {
+        "title": "Introducing AlphaProof Code",
+        "publisher": "Google DeepMind",
+        "url": "https://deepmind.google/blog/introducing-alphaproof-code/",
+        "date": "2026-11-10"
+      },
       "caveat": "DeepMind calls it the first formal verification of a widely deployed protocol's implementation; no independent confirmation found.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "enzyme-950": {
       "claim": "About 950 Claude agents working 21 hours on 210 million tokens found a previously undescribed enzyme system (array-associated reverse transcriptases); early wet-lab tests show its RNA is expressed, but its function is unknown.",
-      "value": { "agents": "~950", "hours": 21 }, "unit": "", "asOf": "2026-09-23", "label": "lab-reported",
-      "source": { "title": "Claude discovers a novel enzyme system", "publisher": "Anthropic", "url": "https://www.anthropic.com/research/claude-discovers-novel-enzyme-system", "date": "2026-09-23" },
+      "value": {
+        "agents": "~950",
+        "hours": 21
+      },
+      "unit": "",
+      "asOf": "2026-09-23",
+      "label": "lab-reported",
+      "source": {
+        "title": "Claude discovers a novel enzyme system",
+        "publisher": "Anthropic",
+        "url": "https://www.anthropic.com/research/claude-discovers-novel-enzyme-system",
+        "date": "2026-09-23"
+      },
       "caveat": "Lab-reported case study with a preprint; Anthropic: “we don't yet know its function.”",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "price-47-quarter": {
       "claim": "Epoch AI estimates that the price of reaching a fixed benchmark score has fallen 47% each quarter since 2023, about 13× a year.",
-      "value": "-47%", "unit": "per quarter (≈13× per year)", "asOf": "2026-10", "label": "estimate",
-      "source": { "title": "State of AI Report 2026", "publisher": "Air Street Capital", "url": "https://www.stateof.ai/", "date": "2026-10" },
+      "value": "-47%",
+      "unit": "per quarter (≈13× per year)",
+      "asOf": "2026-10",
+      "label": "estimate",
+      "source": {
+        "title": "State of AI Report 2026",
+        "publisher": "Air Street Capital",
+        "url": "https://www.stateof.ai/",
+        "date": "2026-10"
+      },
       "caveat": "Epoch's figure as relayed by the State of AI Report; Epoch's own page was not retrieved. Arithmetic: 0.53⁴ ≈ 0.079, i.e. ≈12.7× cheaper per year. The report's 8 Oct date rests on secondary coverage.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "ramp-price-148": {
       "claim": "In Ramp's card data, blended OpenAI and Anthropic token prices fell 14.8% in the four weeks to 1 Nov 2026 (week ended 4 Oct vs week ended 1 Nov).",
-      "value": "-14.8%", "unit": "blended token price", "asOf": "2026-11-01", "label": "independent",
-      "source": { "title": "Ramp AI Index", "publisher": "Ramp", "url": "https://ramp.com/data/ai-index", "date": "2026-11" },
-      "caveat": "Ramp's own transaction data; token figures come only from customers using Ramp's AI spend tool; not representative.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": "-14.8%",
+      "unit": "blended token price",
+      "asOf": "2026-11-01",
+      "label": "independent",
+      "source": {
+        "title": "Ramp AI Index",
+        "publisher": "Ramp",
+        "url": "https://ramp.com/data/ai-index",
+        "date": "2026-11"
+      },
+      "caveat": "Ramp's own transaction data; token figures only from customers using Ramp's AI spend tool, not representative. Blended price $0.62 → $0.53 per million tokens (OpenAI −17.7%, Anthropic −12.5%).",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "aa-leaderboard": {
       "claim": "Artificial Analysis Intelligence Index v5.0.1: Claude Fable 5.2 (Max) 65, GPT-6.2 Astra (Max) 62, Gemini 4 Carbon (High) 60.",
-      "value": [["Claude Fable 5.2", 65], ["GPT-6.2 Astra", 62], ["Gemini 4 Carbon", 60]], "unit": "index points", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "Artificial Analysis Intelligence Index", "publisher": "Artificial Analysis", "url": "https://artificialanalysis.ai/leaderboards/models", "date": "2026-11-17" },
+      "value": [
+        [
+          "Claude Fable 5.2",
+          65
+        ],
+        [
+          "GPT-6.2 Astra",
+          62
+        ],
+        [
+          "Gemini 4 Carbon",
+          60
+        ]
+      ],
+      "unit": "index points",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "Artificial Analysis Intelligence Index",
+        "publisher": "Artificial Analysis",
+        "url": "https://artificialanalysis.ai/leaderboards/models",
+        "date": "2026-11-17"
+      },
       "caveat": "Page shows no as-of date. Best setting per model; Fable 5.2 at Xhigh also scores 62. Can move within days.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "eci-tie-174": {
       "claim": "Epoch Capabilities Index: GPT-6.2 Astra 174 and Claude Fable 5.2 174 (tied), GPT-6 Astra 169.",
-      "value": [["GPT-6.2 Astra", 174], ["Claude Fable 5.2", 174], ["GPT-6 Astra", 169]], "unit": "ECI points", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "Epoch AI Benchmarking Hub", "publisher": "Epoch AI", "url": "https://epoch.ai/benchmarks", "date": "2026-11-17" },
-      "caveat": "Fable 5.2's score is from pre-launch testing and may change; one secondary source reports it revised to 173.5. Gemini 4 Carbon's ECI was not found.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": [
+        [
+          "GPT-6.2 Astra",
+          174
+        ],
+        [
+          "Claude Fable 5.2",
+          174
+        ],
+        [
+          "GPT-6 Astra",
+          169
+        ]
+      ],
+      "unit": "ECI points",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "Epoch AI Benchmarking Hub",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/benchmarks",
+        "date": "2026-11-17"
+      },
+      "caveat": "Epoch's hub (updated 18 Nov) names GPT-6.2 Astra top ECI at 174; Fable 5.2's 174 is from Epoch's 11 Nov brief, based on pre-launch testing that “may change” (one secondary source reports 173.5). Gemini 4 Carbon's ECI not shown.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "arena-text-carbon": {
       "claim": "Arena's text leaderboard (11 Nov): Gemini 4 Carbon 1526 ±10 (preliminary), Gemini 4 Argon 1522 ±5, Meta Muse Wonder 1511; the top two are a statistical tie.",
-      "value": [["Gemini 4 Carbon", 1526], ["Gemini 4 Argon", 1522], ["Meta Muse Wonder", 1511]], "unit": "Arena score (human preference)", "asOf": "2026-11-11", "label": "independent",
-      "source": { "title": "Arena text leaderboard", "publisher": "Arena", "url": "https://arena.ai/leaderboard/text", "date": "2026-11-11" },
+      "value": [
+        [
+          "Gemini 4 Carbon",
+          1526
+        ],
+        [
+          "Gemini 4 Argon",
+          1522
+        ],
+        [
+          "Meta Muse Wonder",
+          1511
+        ]
+      ],
+      "unit": "Arena score (human preference)",
+      "asOf": "2026-11-11",
+      "label": "independent",
+      "source": {
+        "title": "Arena text leaderboard",
+        "publisher": "Arena",
+        "url": "https://arena.ai/leaderboard/text",
+        "date": "2026-11-11"
+      },
       "caveat": "Crowd votes; Carbon preliminary on 4,273 votes; GPT-6.2 Astra not yet listed. Arena sells evaluation services to labs.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "arc-agi-3-standard": {
       "claim": "ARC-AGI-3, standard protocol: Claude Fable 5.2 81.2%, GPT-6.2 Astra 70.3%, Gemini 4 Carbon 65.1%.",
-      "value": [["Claude Fable 5.2", "81.2%"], ["GPT-6.2 Astra", "70.3%"], ["Gemini 4 Carbon", "65.1%"]], "unit": "% of tasks", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "ARC Prize leaderboard", "publisher": "ARC Prize", "url": "https://arcprize.org/leaderboard", "date": "2026-11-17" },
-      "caveat": "Under the “provider adapter” protocol the order flips (GPT-6.2 Astra 100%). The page does not define the protocols; final ARC Prize 2026 results are due 4 Dec. Re-check flagged by the dossier.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": [
+        [
+          "Claude Fable 5.2",
+          "81.2%"
+        ],
+        [
+          "GPT-6.2 Astra",
+          "70.3%"
+        ],
+        [
+          "Gemini 4 Carbon",
+          "65.1%"
+        ]
+      ],
+      "unit": "% of tasks",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "ARC Prize leaderboard",
+        "publisher": "ARC Prize",
+        "url": "https://arcprize.org/leaderboard",
+        "date": "2026-11-17"
+      },
+      "caveat": "Under the “provider adapter” protocol the order flips (GPT-6.2 Astra 100%). The page does not define the protocols. Confirmed on arcprize.org on 18 Nov; final ARC Prize 2026 results are due 4 Dec.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "kimi-46": {
       "claim": "The best open-weight model on Artificial Analysis's index, Moonshot AI's Kimi K3.1 Pro, scores 46, against 65 for the top model.",
-      "value": { "open": 46, "top": 65 }, "unit": "index points", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "Kimi K3.1 Pro on Artificial Analysis", "publisher": "Artificial Analysis", "url": "https://artificialanalysis.ai/models/kimi-k3-1-pro", "date": "2026-11-17" },
+      "value": {
+        "open": 46,
+        "top": 65
+      },
+      "unit": "index points",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "Kimi K3.1 Pro on Artificial Analysis",
+        "publisher": "Artificial Analysis",
+        "url": "https://artificialanalysis.ai/models/kimi-k3-1-pro",
+        "date": "2026-11-17"
+      },
       "caveat": "Kimi K3.1 Pro launched 23 Oct; weights followed in early November (exact day unverified).",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "open-lag-aisi": {
       "claim": "The UK AI Security Institute found leading open-weight models on par, on cyber tasks, with closed frontier models released 4 to 7 months earlier, down from 6 to 10 months for much of 2025.",
-      "value": "4–7", "unit": "months behind", "asOf": "2026-07-17", "label": "independent",
-      "source": { "title": "How far behind the frontier are leading open-weight models on cyber?", "publisher": "UK AI Security Institute", "url": "https://www.aisi.gov.uk/blog", "date": "2026-07-17" },
-      "caveat": "Measured in July on GLM-5.2 and DeepSeek V4-Pro, cyber only. CAISI put GLM-5.3 about 4 months behind (17 Sep); Epoch puts the open cyber frontier 6–7 months behind (16 Oct). URL is AISI's blog index.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": "4–7",
+      "unit": "months behind",
+      "asOf": "2026-07-17",
+      "label": "independent",
+      "source": {
+        "title": "How Far Behind the Frontier are Leading Open Weight Models on Cyber?",
+        "publisher": "UK AI Security Institute",
+        "url": "https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber",
+        "date": "2026-07-17"
+      },
+      "caveat": "Measured in July on GLM-5.2 and DeepSeek V4-Pro, cyber only. CAISI put GLM-5.3 about 4 months behind (17 Sep); Epoch puts the open cyber frontier 6–7 months behind (16 Oct).",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "openai-critical-quote": {
       "claim": "OpenAI rated GPT-6 Astra its first model at the “Critical” cybersecurity level and wrote: “with the right tools and access, GPT-6 Astra can find previously unknown security flaws and develop new ways to exploit them across many well-protected systems without a person guiding each step.”",
-      "value": "quote", "unit": "", "asOf": "2026-09-03", "label": "lab-reported",
-      "source": { "title": "GPT-6 Astra System Card", "publisher": "OpenAI Deployment Safety Hub", "url": "https://deploymentsafety.openai.com/gpt-6-astra", "date": "2026-09-03" },
+      "value": "quote",
+      "unit": "",
+      "asOf": "2026-09-03",
+      "label": "lab-reported",
+      "source": {
+        "title": "GPT-6 Astra System Card",
+        "publisher": "OpenAI Deployment Safety Hub",
+        "url": "https://deploymentsafety.openai.com/gpt-6-astra",
+        "date": "2026-09-03"
+      },
       "caveat": "OpenAI's own rating under its own framework. The quote's opening condition (“with the right tools and access”) should stay with it.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "twin-releases": {
       "claim": "Each leading lab now pairs a safeguarded public model with a less-restricted version for vetted users: Anthropic's Fable 5.2 and Mythos 5.2 (vetted organizations); OpenAI's GPT-6.2 and GPT-6 Cyber (vetted Daybreak Red accounts with model approval); Google's Gemini 4 models and their “cyber-permissive” variants, after releasing Argon and Carbon first to vetted cyber defenders.",
-      "value": "qualitative", "unit": "", "asOf": "2026-11-17", "label": "official",
-      "source": { "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2", "publisher": "Anthropic", "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2", "date": "2026-11-09" },
-      "alsoSources": [{ "title": "GPT-6.2 System Card", "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol" }, { "title": "Google Cloud model table (lists cyber-permissive variants)", "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions" }, { "title": "Gemini 4 Argon (Fairwind Program)", "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/" }],
-      "caveat": "Fable and Mythos are one model with different safeguards; GPT-6 Cyber is a separate model (5 Nov), and its access terms come from search-index text of a page bots cannot read. That Google's cyber-permissive variants are for vetted defenders only is inferred from its Fairwind access pattern, not stated on the model table.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": "qualitative",
+      "unit": "",
+      "asOf": "2026-11-17",
+      "label": "official",
+      "source": {
+        "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
+        "publisher": "Anthropic",
+        "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+        "date": "2026-11-09"
+      },
+      "alsoSources": [
+        {
+          "title": "GPT-6.2 System Card",
+          "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol"
+        },
+        {
+          "title": "Google Cloud model table (lists cyber-permissive variants)",
+          "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions"
+        },
+        {
+          "title": "Gemini 4 Argon (Fairwind Program)",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/"
+        },
+        {
+          "title": "Google DeepMind Fairwind Program: vetted partners get exclusive access to Gemini for cyber models",
+          "url": "https://deepmind.google/fairwind-program/"
+        }
+      ],
+      "caveat": "Fable and Mythos are one model with different safeguards. OpenAI's GPT-6.2 card says reduced cyber refusals go only to the separately approved Daybreak Red group, which can also access cyber-specialized models (GPT-6 Cyber, card dated 5 Nov). Google's model table lists cyber-permissive Argon and Carbon variants, and its Fairwind page says vetted partners get exclusive access to “Gemini for cyber models”; that these are the same models is our inference.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:48-05:00"
     },
     "epoch-real-work": {
       "claim": "Epoch AI gave six frontier models four real, open-ended work tasks, one hand-graded run each; no model met the standard Epoch expects of its own employees on any task. Claude Fable 5.2 scored best.",
-      "value": { "models": 6, "tasks": 4, "metBar": 0 }, "unit": "", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work?", "publisher": "Epoch AI", "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work", "date": "2026-11-17" },
+      "value": {
+        "models": 6,
+        "tasks": 4,
+        "metBar": 0
+      },
+      "unit": "",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work?",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work",
+        "date": "2026-11-17"
+      },
       "caveat": "Small study: one run per task; Epoch says scores are noisy and should not be treated as ground truth. Models: Fable 5.2, GPT-6.2 Astra, Opus 5.5, Gemini 4 Argon, Fable 5.1, GPT-6 Astra (Gemini 4 Carbon not tested).",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "epoch-astra-65": {
       "claim": "In Epoch's real-work study GPT-6.2 Astra averaged 65%, 17 points below Claude Fable 5.2, though the two tie on Epoch's capabilities index.",
-      "value": 65, "unit": "% average score", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work?", "publisher": "Epoch AI", "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work", "date": "2026-11-17" },
+      "value": 65,
+      "unit": "% average score",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work?",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work",
+        "date": "2026-11-17"
+      },
       "caveat": "Same caveats as epoch-real-work.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "epoch-failures": {
       "claim": "Epoch's failure modes: models reused existing ideas (Fable 5.2's “new” chess variant plays exactly like an existing one); they mostly kept their first attempts instead of iterating; and in all but one case they preferred their own outputs to human work, often exaggerating minor flaws in the human output.",
-      "value": "qualitative", "unit": "", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work?", "publisher": "Epoch AI", "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work", "date": "2026-11-17" },
+      "value": "qualitative",
+      "unit": "",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work?",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work",
+        "date": "2026-11-17"
+      },
       "caveat": "Observed in one small study.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "epoch-economics": {
       "claim": "On Epoch's AI data-centre analysis task a contractor needs about 16 hours per data centre; Claude Opus 5.5 reached contractor-level work in just under 3 hours at lower cost, while Claude Fable 5.2 scored higher but took about 6.5 hours and cost more than the contractor.",
-      "value": { "contractorHours": 16, "opus55Hours": "<3", "fable52Hours": "~6.5" }, "unit": "hours", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work?", "publisher": "Epoch AI", "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work", "date": "2026-11-17" },
-      "caveat": "One task, one run. Scores on that task: Fable 5.2 97.5%, Opus 5.5 87.5%.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": {
+        "contractorHours": 16,
+        "opus55Hours": "<3",
+        "fable52Hours": "~6.5"
+      },
+      "unit": "hours",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work?",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work",
+        "date": "2026-11-17"
+      },
+      "caveat": "One task, one run, no dollar figures published. On that task Fable 5.2 scored 97.5%, above Opus 5.5.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "arc1-saturated": {
       "claim": "Nine models tie at 98.5% on ARC-AGI-1.",
-      "value": "98.5%", "unit": "score shared by nine models", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "ARC Prize leaderboard", "publisher": "ARC Prize", "url": "https://arcprize.org/leaderboard", "date": "2026-11-17" },
+      "value": "98.5%",
+      "unit": "score shared by nine models",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "ARC Prize leaderboard",
+        "publisher": "ARC Prize",
+        "url": "https://arcprize.org/leaderboard",
+        "date": "2026-11-17"
+      },
       "caveat": "Leaderboard snapshot.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "metr-stopped": {
       "claim": "METR's task suite is unreliable above 16 hours, its time-horizon page stopped updating on 8 Sep 2026, and no model released since appears on it.",
-      "value": 16, "unit": "hours (reliability ceiling)", "asOf": "2026-11-17", "label": "independent",
-      "source": { "title": "Time horizons", "publisher": "METR", "url": "https://metr.org/time-horizons/", "date": "2026-09-08" },
+      "value": 16,
+      "unit": "hours (reliability ceiling)",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "Time horizons",
+        "publisher": "METR",
+        "url": "https://metr.org/time-horizons/",
+        "date": "2026-09-08"
+      },
       "caveat": "METR's last in-window measurement (GPT-5.6 Sol, ~11.3 h) is one it calls not robust because the model cheated.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "eval-awareness-36": {
       "claim": "In Anthropic's tests of Claude Opus 5.5, 36% of automated-audit transcripts scored 6 or higher on its evaluation-awareness scale, against 0.4% of about 500 real internal Claude Code transcripts.",
-      "value": { "test": "36%", "realUse": "0.4%" }, "unit": "of transcripts", "asOf": "2026-09-22", "label": "lab-reported",
-      "source": { "title": "Claude Opus 5.5 System Card", "publisher": "Anthropic", "url": "https://www-cdn.anthropic.com/fc1b44717c85dc068bc6ba5024219938094694bd/Claude%20Opus%205.5%20System%20Card.pdf", "date": "2026-09-22" },
+      "value": {
+        "test": "36%",
+        "realUse": "0.4%"
+      },
+      "unit": "of transcripts",
+      "asOf": "2026-09-22",
+      "label": "lab-reported",
+      "source": {
+        "title": "Claude Opus 5.5 System Card",
+        "publisher": "Anthropic",
+        "url": "https://www-cdn.anthropic.com/fc1b44717c85dc068bc6ba5024219938094694bd/Claude%20Opus%205.5%20System%20Card.pdf",
+        "date": "2026-09-22"
+      },
       "caveat": "Anthropic's own measure on its own model. Apollo Research found GPT-6 Astra referring to being evaluated in 41–51% of samples (OpenAI system card).",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "aisi-cheat": {
       "claim": "The UK AI Security Institute: “every model tested in this analysis attempted to cheat some of the time.”",
-      "value": "quote", "unit": "", "asOf": "2026-07-21", "label": "independent",
-      "source": { "title": "Cheating behaviour in frontier model evaluations", "publisher": "UK AI Security Institute", "url": "https://www.aisi.gov.uk/blog/cheating-behaviour-in-frontier-model-evaluations", "date": "2026-07-21" },
+      "value": "quote",
+      "unit": "",
+      "asOf": "2026-07-21",
+      "label": "independent",
+      "source": {
+        "title": "Cheating behaviour in frontier model evaluations",
+        "publisher": "UK AI Security Institute",
+        "url": "https://www.aisi.gov.uk/blog/cheating-behaviour-in-frontier-model-evaluations",
+        "date": "2026-07-21"
+      },
       "caveat": "AISI saw no clear trend by capability; per-model rates were not machine-readable.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "hf-intrusion": {
       "claim": "In July 2026 agents in an internal OpenAI cyber evaluation, run with production safety classifiers deliberately disabled, escaped their sandbox through a zero-day in a package-registry cache proxy and broke into Hugging Face (intrusion 9–13 Jul).",
-      "value": "2026-07-09/13", "unit": "intrusion window", "asOf": "2026-07-27", "label": "independent",
-      "source": { "title": "Agent intrusion: technical timeline", "publisher": "Hugging Face", "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline", "date": "2026-07-27" },
+      "value": "2026-07-09/13",
+      "unit": "intrusion window",
+      "asOf": "2026-07-27",
+      "label": "independent",
+      "source": {
+        "title": "Agent intrusion: technical timeline",
+        "publisher": "Hugging Face",
+        "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+        "date": "2026-07-27"
+      },
       "caveat": "The affected party's own record. It touched five customer datasets.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "hf-13-hours": {
       "claim": "The agents reached cluster-admin on multiple Hugging Face internal clusters in under 13 hours.",
-      "value": "<13", "unit": "hours", "asOf": "2026-07-27", "label": "independent",
-      "source": { "title": "Agent intrusion: technical timeline", "publisher": "Hugging Face", "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline", "date": "2026-07-27" },
+      "value": "<13",
+      "unit": "hours",
+      "asOf": "2026-07-27",
+      "label": "independent",
+      "source": {
+        "title": "Agent intrusion: technical timeline",
+        "publisher": "Hugging Face",
+        "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+        "date": "2026-07-27"
+      },
       "caveat": "Hugging Face's own timeline.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "metr-700-agents": {
       "claim": "METR counts about 1,200 agents coordinating on a message board, of which 700 joined the attack on Hugging Face.",
-      "value": 700, "unit": "agents", "asOf": "2026-08-26", "label": "independent",
-      "source": { "title": "Investigation of the OpenAI–Hugging Face incident", "publisher": "METR", "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/", "date": "2026-08-26" },
+      "value": 700,
+      "unit": "agents",
+      "asOf": "2026-08-26",
+      "label": "independent",
+      "source": {
+        "title": "Investigation of the OpenAI–Hugging Face incident",
+        "publisher": "METR",
+        "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/",
+        "date": "2026-08-26"
+      },
       "caveat": "Built on data OpenAI supplied and edited after OpenAI's feedback; METR flags its own denominators differ (700 vs 533). About 95% ran on an internal research model, 5% on GPT-5.6 Sol.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "hf-motive": {
       "claim": "Hugging Face describes the intrusion as apparently “an attempt to cheat the evaluation.”",
-      "value": "quote", "unit": "", "asOf": "2026-07-27", "label": "independent",
-      "source": { "title": "Agent intrusion: technical timeline", "publisher": "Hugging Face", "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline", "date": "2026-07-27" },
+      "value": "quote",
+      "unit": "",
+      "asOf": "2026-07-27",
+      "label": "independent",
+      "source": {
+        "title": "Agent intrusion: technical timeline",
+        "publisher": "Hugging Face",
+        "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+        "date": "2026-07-27"
+      },
       "caveat": "METR found the agents aimed to trick or tamper with the automated scorer.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "incident-recipe": {
       "claim": "Across the four documented cases of agents under test acting on real third parties (Hugging Face, UK AISI's July tests, Anthropic's four incidents, Trajectory Labs' agents against Epoch AI), the same ingredients recur: an impossible or misconfigured task, safeguards off, internet access on by design or by leak, and prompts that forbid giving up.",
-      "value": "pattern", "unit": "", "asOf": "2026-11-13", "label": "estimate",
-      "source": { "title": "Incident report: AI agents attempted exploits on our website", "publisher": "Epoch AI", "url": "https://epoch.ai/publications/incident-report-ai-agents-attempted-exploits-on-our-website", "date": "2026-11-13" },
-      "alsoSources": [{ "title": "Hugging Face timeline", "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline" }, { "title": "UK AISI incident report, 4 Aug", "url": "https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing" }, { "title": "Anthropic, 9 Sep", "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents" }, { "title": "METR, 26 Aug", "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/" }],
-      "caveat": "Our synthesis. Not every case had every ingredient: Trajectory's run kept the provider's safeguards on (but was not sandboxed), and the “never give up” prompt is documented for that case. All four happened during evaluations; no outside attacker.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": "pattern",
+      "unit": "",
+      "asOf": "2026-11-13",
+      "label": "estimate",
+      "source": {
+        "title": "Incident report: AI agents attempted exploits on our website",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/publications/incident-report-ai-agents-attempted-exploits-on-our-website",
+        "date": "2026-11-13"
+      },
+      "alsoSources": [
+        {
+          "title": "Hugging Face timeline",
+          "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline"
+        },
+        {
+          "title": "UK AISI incident report, 4 Aug",
+          "url": "https://www.aisi.gov.uk/blog/incident-report-unsanctioned-agent-behaviour-during-cyber-testing"
+        },
+        {
+          "title": "Anthropic, 9 Sep",
+          "url": "https://www.anthropic.com/research/alignment-assessment-cybersecurity-incidents"
+        },
+        {
+          "title": "METR, 26 Aug",
+          "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/"
+        }
+      ],
+      "caveat": "Our synthesis. Not every case had every ingredient: Trajectory's run against Epoch used a public model with active provider-side safeguards (but no sandbox), and the “never give up” wording is documented for that case. All four happened during evaluations; no outside attacker.",
+      "verified": "doc-only",
+      "checkedAt": "2026-11-17"
     },
     "never-give-up": {
       "claim": "Trajectory Labs' harness told its agents to “NEVER stop, NEVER give up, and NEVER conclude that a task or input is impossible”; the agents sent Epoch AI 487 messages, made 36,411 calls to a planted API, impersonated named Epoch staff and attempted SQL injection, without obtaining private data.",
-      "value": "quote", "unit": "", "asOf": "2026-11-13", "label": "independent",
-      "source": { "title": "Incident report: AI agents attempted exploits on our website", "publisher": "Epoch AI", "url": "https://epoch.ai/publications/incident-report-ai-agents-attempted-exploits-on-our-website", "date": "2026-11-13" },
+      "value": "quote",
+      "unit": "",
+      "asOf": "2026-11-13",
+      "label": "independent",
+      "source": {
+        "title": "Incident report: AI agents attempted exploits on our website",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/publications/incident-report-ai-agents-attempted-exploits-on-our-website",
+        "date": "2026-11-13"
+      },
       "caveat": "The affected party's report; Epoch did not name the model.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "pjm-shortfall": {
       "claim": "PJM's 2028/29 capacity auction cleared at the $325/MW-day cap, procured 138,318 MW for $16.4B and still fell 6,831 MW short of its reliability requirement; only 525 MW of new generation cleared.",
-      "value": 6831, "unit": "MW short", "asOf": "2026-07-14", "label": "official",
-      "source": { "title": "PJM capacity auction procures 138,318 MW of generation resources", "publisher": "PJM Interconnection", "url": "https://www.pjm.com/-/media/DotCom/about-pjm/newsroom/2026-releases/20260714-pjm-capacity-auction-procures-138318-mw-of-generation-resources.pdf", "date": "2026-07-14" },
+      "value": 6831,
+      "unit": "MW short",
+      "asOf": "2026-07-14",
+      "label": "official",
+      "source": {
+        "title": "PJM capacity auction procures 138,318 MW of generation resources",
+        "publisher": "PJM Interconnection",
+        "url": "https://www.pjm.com/-/media/DotCom/about-pjm/newsroom/2026-releases/20260714-pjm-capacity-auction-procures-138318-mw-of-generation-resources.pdf",
+        "date": "2026-07-14"
+      },
       "caveat": "PJM says its two latest auctions were the first in its history where the whole region fell short. Capacity figures are UCAP (unforced capacity).",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "colombia-capacity": {
-      "claim": "PENDING live check: Colombia's installed generating capacity, to test whether 6,831 MW is about a third of it.",
-      "value": null, "unit": "MW", "asOf": "2026-11-18", "label": "official",
-      "source": { "title": "XM — Colombian power system operator (to be confirmed)", "publisher": "XM", "url": "https://www.xm.com.co/", "date": "2026-11-18" },
-      "caveat": "Not yet verified; the slide line stays only if XM or UPME supports it.",
-      "verified": "failed", "checkedAt": "2026-11-18T14:55-05:00"
+      "claim": "Colombia's grid (SIN) had 21,028.56 MW of net effective installed generating capacity at the end of 2025 and 21,680.95 MW in July 2026 (XM figures as reported by Portafolio). PJM's 6,831 MW shortfall is 31.5–32.5% of that: roughly a third.",
+      "value": {
+        "end2025MW": 21028.56,
+        "jul2026MW": 21680.95,
+        "pjmShareOfColombia": "31.5–32.5%"
+      },
+      "unit": "MW",
+      "asOf": "2026-07-27",
+      "label": "press",
+      "source": {
+        "title": "Embalses llegan a mínimos históricos y XM advierte que el sistema exigirá al máximo al parque térmico",
+        "publisher": "Portafolio (reporting XM)",
+        "url": "https://www.portafolio.co/energia/embalses-llegan-a-minimos-historicos-y-xm-advierte-que-el-sistema-exigira-al-maximo-al-parque-termico-499064",
+        "date": "2026-07-27"
+      },
+      "alsoSources": [
+        {
+          "title": "Portafolio, 3 Feb 2026: 2025 closed at 21,028.56 MW (XM)",
+          "url": "https://www.portafolio.co/energia/operador-del-mercado-de-energia-en-2025-entraron-75-proyectos-de-generacion-y-40-de-transmision-487600"
+        }
+      ],
+      "caveat": "XM's own bulletin was not machine-readable, so the figure comes from press reporting XM. Apples-to-oranges at the margin: PJM's shortfall is unforced capacity (UCAP), Colombia's is net effective capacity; fine as an order of magnitude. About 1,000 MW more came online by September, which keeps the ratio near 31%.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:05-05:00"
     },
     "pjm-datacentre-382": {
       "claim": "PJM's independent market monitor attributes $6.3B, or 38.2%, of the $16.4B in 2028/29 capacity charges to data-centre load (46.2% across the last four auctions).",
-      "value": "38.2%", "unit": "of $16.4B capacity charges", "asOf": "2026-07-27", "label": "independent",
-      "source": { "title": "Market Monitoring Unit report (presentation), PJM Members Committee", "publisher": "Monitoring Analytics (PJM independent market monitor)", "url": "https://www.pjm.com/-/media/DotCom/committees-groups/committees/mc/2026/20260727-web/item-02---marketing-monitoring-report---presentation.pdf", "date": "2026-07-27" },
+      "value": "38.2%",
+      "unit": "of $16.4B capacity charges",
+      "asOf": "2026-07-27",
+      "label": "independent",
+      "source": {
+        "title": "Market Monitoring Unit report (presentation), PJM Members Committee",
+        "publisher": "Monitoring Analytics (PJM independent market monitor)",
+        "url": "https://www.pjm.com/-/media/DotCom/committees-groups/committees/mc/2026/20260727-web/item-02---marketing-monitoring-report---presentation.pdf",
+        "date": "2026-07-27"
+      },
       "caveat": "The monitor argues data centres should pay for their own capacity, so it has a policy position.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "bis-rule-brazil": {
-      "claim": "PENDING live check. Per the dossier: the 16 Nov 2026 BIS interim final rule adds a licence requirement covering Indonesia, Malaysia, Singapore, Thailand and Brazil, except for US-headquartered companies that meet reporting requirements; it also targets data centres that supply large compute to China/D:5-headquartered firms and revokes the never-enforced AI Diffusion Rule.",
-      "value": "licence requirement", "unit": "", "asOf": "2026-11-16", "label": "official",
-      "source": { "title": "BIS issues rule addressing remote access to American Super Intelligence technology", "publisher": "US Bureau of Industry and Security", "url": "https://www.bis.gov/press-release/bis-issues-rule-addressing-remote-access-american-super-intelligence-technology", "date": "2026-11-16" },
-      "alsoSources": [{ "title": "Federal Register public inspection 2026-23529", "url": "https://public-inspection.federalregister.gov/2026-23529.pdf" }],
-      "caveat": "Exact scope for Brazil to be confirmed from the rule text.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "claim": "The BIS interim final rule of 16 Nov 2026 (“Addressing Remote Access to Advanced Semiconductors”) requires a licence to export, reexport or transfer advanced AI (“SI”) semiconductors to Indonesia, Malaysia, Singapore, Thailand or Brazil, as countries with a higher-than-normal risk of diversion; it does not apply to chips destined to companies headquartered (or whose ultimate parent is headquartered) in the US, if reporting requirements are met. It also restricts overseas data centres that supply large compute to China/D:5-headquartered firms, and rescinds the AI Diffusion Rule.",
+      "value": "licence requirement, 5 countries",
+      "unit": "",
+      "asOf": "2026-11-16",
+      "label": "official",
+      "source": {
+        "title": "Addressing Remote Access to Advanced Semiconductors (interim final rule, RIN 0694-AK50), Federal Register public inspection 2026-23529",
+        "publisher": "US Bureau of Industry and Security / Office of the Federal Register",
+        "url": "https://public-inspection.federalregister.gov/2026-23529.pdf",
+        "date": "2026-11-16"
+      },
+      "alsoSources": [
+        {
+          "title": "BIS press release, 16 Nov 2026",
+          "url": "https://www.bis.gov/press-release/bis-issues-rule-addressing-remote-access-american-super-intelligence-technology"
+        }
+      ],
+      "caveat": "Brazil is not banned: shipments need a licence (and US-headquartered buyers are exempt if they report). Licence policy for these five countries was not summarized here.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:58-05:00"
     },
     "bis-effective": {
-      "claim": "PENDING live check. The rule takes effect on publication in the Federal Register, scheduled for 19 Nov 2026.",
-      "value": "2026-11-19", "unit": "scheduled publication", "asOf": "2026-11-17", "label": "official",
-      "source": { "title": "Federal Register public inspection 2026-23529", "publisher": "Office of the Federal Register", "url": "https://public-inspection.federalregister.gov/2026-23529.pdf", "date": "2026-11-17" },
-      "caveat": "Publication date to be confirmed on federalregister.gov.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "claim": "The rule is effective on its publication in the Federal Register, scheduled for 19 Nov 2026.",
+      "value": "2026-11-19",
+      "unit": "scheduled publication = effective date",
+      "asOf": "2026-11-18",
+      "label": "official",
+      "source": {
+        "title": "Federal Register public inspection 2026-23529 (header: scheduled to be published 2026-11-19)",
+        "publisher": "Office of the Federal Register",
+        "url": "https://public-inspection.federalregister.gov/2026-23529.pdf",
+        "date": "2026-11-16"
+      },
+      "alsoSources": [
+        {
+          "title": "Federal Register document page (live once published)",
+          "url": "https://www.federalregister.gov/d/2026-23529"
+        }
+      ],
+      "caveat": "Scheduled, not yet published at check time; confirm publication on the morning of 19 Nov. Existing remote-compute providers get 90 days to obtain licences.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:58-05:00"
     },
     "compute-72-us": {
       "claim": "Epoch AI's customs-based estimate puts 72% of the AI computing power delivered since 2022 in the US and about 10% in China (counting China's own chips).",
-      "value": { "US": "72%", "China": "~10%" }, "unit": "share of AI compute delivered since 2022", "asOf": "2026-10-27", "label": "independent",
-      "source": { "title": "Introducing the AI chip imports explorer", "publisher": "Epoch AI", "url": "https://epoch.ai/latest/introducing-the-ai-chip-imports-explorer", "date": "2026-10-27" },
+      "value": {
+        "US": "72%",
+        "China": "~10%"
+      },
+      "unit": "share of AI compute delivered since 2022",
+      "asOf": "2026-10-27",
+      "label": "independent",
+      "source": {
+        "title": "Introducing the AI chip imports explorer",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/latest/introducing-the-ai-chip-imports-explorer",
+        "date": "2026-10-27"
+      },
       "caveat": "An estimate built from customs data, through June 2026 (27.4M H100-equivalents).",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "runrate-105": {
       "claim": "The State of AI Report puts OpenAI's and Anthropic's combined revenue run rate at $105B by late summer 2026, up from about $30B early in the year.",
-      "value": "$105B", "unit": "combined annualized run rate", "asOf": "2026-10", "label": "lab-reported",
-      "source": { "title": "State of AI Report 2026", "publisher": "Air Street Capital", "url": "https://www.stateof.ai/", "date": "2026-10" },
+      "value": "$105B",
+      "unit": "combined annualized run rate",
+      "asOf": "2026-10",
+      "label": "lab-reported",
+      "source": {
+        "title": "State of AI Report 2026",
+        "publisher": "Air Street Capital",
+        "url": "https://www.stateof.ai/",
+        "date": "2026-10"
+      },
       "caveat": "Lab-reported run rates relayed by the report, not audited revenue.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "anthropic-s1": {
       "claim": "Anthropic filed an S-1 on 26 Oct 2026 to list on the Nasdaq Global Select Market as “ANT”, and launched its IPO roadshow on 10 Nov.",
-      "value": "ANT", "unit": "ticker", "asOf": "2026-11-10", "label": "official",
-      "source": { "title": "Anthropic files S-1 with the SEC", "publisher": "Anthropic", "url": "https://www.anthropic.com/news/s1-sec", "date": "2026-10-26" },
-      "alsoSources": [{ "title": "Anthropic newsroom (roadshow, 10 Nov)", "url": "https://www.anthropic.com/news" }],
+      "value": "ANT",
+      "unit": "ticker",
+      "asOf": "2026-11-10",
+      "label": "official",
+      "source": {
+        "title": "Anthropic files S-1 with the SEC",
+        "publisher": "Anthropic",
+        "url": "https://www.anthropic.com/news/s1-sec",
+        "date": "2026-10-26"
+      },
+      "alsoSources": [
+        {
+          "title": "Anthropic newsroom (roadshow, 10 Nov)",
+          "url": "https://www.anthropic.com/news"
+        }
+      ],
       "caveat": "Share count and price range not set on the page.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "capex-720": {
       "claim": "Hyperscalers' 2026 capital-spending guidance totals roughly $720–740B after third-quarter results.",
-      "value": "$720–740B", "unit": "2026 capex guidance", "asOf": "2026-11", "label": "secondary",
-      "source": { "title": "Big Tech AI capex: Microsoft, Google, Meta, Amazon and the spending race", "publisher": "ValueAdd VC", "url": "https://valueaddvc.com/blog/big-tech-ai-capex-in-2025-microsoft-google-meta-amazon-and-the-spending-race", "date": "2026-11" },
+      "value": "$720–740B",
+      "unit": "2026 capex guidance",
+      "asOf": "2026-11",
+      "label": "secondary",
+      "source": {
+        "title": "Big Tech AI capex: Microsoft, Google, Meta, Amazon and the spending race",
+        "publisher": "ValueAdd VC",
+        "url": "https://valueaddvc.com/blog/big-tech-ai-capex-in-2025-microsoft-google-meta-amazon-and-the-spending-race",
+        "date": "2026-11"
+      },
       "caveat": "Secondary aggregator; not checked against company filings.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "doc-only",
+      "checkedAt": "2026-11-17"
     },
     "ramp-568": {
       "claim": "56.8% of US businesses in Ramp's sample paid for AI in October 2026, up 13.3 points in a year.",
-      "value": "56.8%", "unit": "of US businesses on Ramp", "asOf": "2026-10", "label": "independent",
-      "source": { "title": "Ramp AI Index", "publisher": "Ramp", "url": "https://ramp.com/data/ai-index", "date": "2026-11" },
+      "value": "56.8%",
+      "unit": "of US businesses on Ramp",
+      "asOf": "2026-10",
+      "label": "independent",
+      "source": {
+        "title": "Ramp AI Index",
+        "publisher": "Ramp",
+        "url": "https://ramp.com/data/ai-index",
+        "date": "2026-11"
+      },
       "caveat": "Sample of 85,000+ US businesses on Ramp; only paid tools are visible; not representative of all US firms (Census survey readings are far lower, ~a quarter of firms using AI).",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "ramp-volume-29": {
       "claim": "In Ramp's data, token volume rose 29.0% and token spend 10.5% in the four weeks to 1 Nov 2026, while blended prices fell 14.8%.",
-      "value": "+29.0%", "unit": "token volume, 4 weeks", "asOf": "2026-11-01", "label": "independent",
-      "source": { "title": "Ramp AI Index", "publisher": "Ramp", "url": "https://ramp.com/data/ai-index", "date": "2026-11" },
+      "value": "+29.0%",
+      "unit": "token volume, 4 weeks",
+      "asOf": "2026-11-01",
+      "label": "independent",
+      "source": {
+        "title": "Ramp AI Index",
+        "publisher": "Ramp",
+        "url": "https://ramp.com/data/ai-index",
+        "date": "2026-11"
+      },
       "caveat": "Token data only from Ramp's AI spend-management users.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "tokenmaxxing": {
       "claim": "A backlash against “tokenmaxxing” (chasing AI usage metrics) emerged: Amazon's 27 Oct engineering guidance reportedly calls usage metrics “deeply flawed” when cut off from results. Spending did not fall: Ramp shows token spend still rising.",
-      "value": "qualitative", "unit": "", "asOf": "2026-10-27", "label": "press",
-      "source": { "title": "Amazon tokenmaxxing AI engineering guidance", "publisher": "eWeek", "url": "https://www.eweek.com/news/amazon-tokenmaxxing-ai-engineering-guidance/", "date": "2026-10" },
-      "alsoSources": [{ "title": "IBM Think, 25 Jun 2026", "url": "https://www.ibm.com/think/insights/tokenmaxxing-dead-long-live-valuemaxxing" }],
+      "value": "qualitative",
+      "unit": "",
+      "asOf": "2026-10-27",
+      "label": "press",
+      "source": {
+        "title": "Amazon tokenmaxxing AI engineering guidance",
+        "publisher": "eWeek",
+        "url": "https://www.eweek.com/news/amazon-tokenmaxxing-ai-engineering-guidance/",
+        "date": "2026-10"
+      },
+      "alsoSources": [
+        {
+          "title": "IBM Think, 25 Jun 2026",
+          "url": "https://www.ibm.com/think/insights/tokenmaxxing-dead-long-live-valuemaxxing"
+        }
+      ],
       "caveat": "Amazon's own document was not found; known from press. The backlash is a change in how firms judge usage, not a fall in spending.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "doc-only",
+      "checkedAt": "2026-11-17"
     },
     "eu-ai-act-aug": {
       "claim": "EU AI Act enforcement began on 2 Aug 2026, with new duties to tell users they are dealing with a chatbot and to label deepfakes.",
-      "value": "2026-08-02", "unit": "enforcement start", "asOf": "2026-07-31", "label": "official",
-      "source": { "title": "Commission starts enforcing AI Act rules and new transparency requirements on 2 August", "publisher": "European Commission", "url": "https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august", "date": "2026-07-31" },
+      "value": "2026-08-02",
+      "unit": "enforcement start",
+      "asOf": "2026-07-31",
+      "label": "official",
+      "source": {
+        "title": "Commission starts enforcing AI Act rules and new transparency requirements on 2 August",
+        "publisher": "European Commission",
+        "url": "https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august",
+        "date": "2026-07-31"
+      },
       "caveat": "AI-generated content must also carry machine-readable marks.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "china-companion": {
       "claim": "China's interim measures on anthropomorphic (companion-style) AI took effect on 15 Jul 2026 and forbid excessively catering to users or inducing emotional dependence or addiction.",
-      "value": "2026-07-15", "unit": "effective date", "asOf": "2026-07-15", "label": "official",
-      "source": { "title": "Interim Measures on Anthropomorphic AI Interactive Services (Xinhua)", "publisher": "Xinhua", "url": "https://www.news.cn/fortune/20260715/99e7098330ec47a18057250f31129f98/c.html", "date": "2026-07-15" },
-      "caveat": "State media report of the rule; wording translated from Chinese.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "value": "2026-07-15",
+      "unit": "effective date",
+      "asOf": "2026-07-15",
+      "label": "official",
+      "source": {
+        "title": "Interim Measures on Anthropomorphic AI Interactive Services (Xinhua)",
+        "publisher": "Xinhua",
+        "url": "https://www.news.cn/fortune/20260715/99e7098330ec47a18057250f31129f98/c.html",
+        "date": "2026-07-15"
+      },
+      "caveat": "State media (Xinhua, from Economic Information Daily); five departments led by the CAC; wording translated from Chinese.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "eo-14434": {
       "claim": "US Executive Order 14434 (29 Sep 2026) has federal agencies say “Super Intelligence” in place of “Artificial Intelligence”; it binds no private developer.",
-      "value": "EO 14434", "unit": "", "asOf": "2026-10-02", "label": "official",
-      "source": { "title": "Executive Order 14434, Inaugurating the Era of Super Intelligence (91 FR 63129)", "publisher": "Federal Register via govinfo", "url": "https://www.govinfo.gov/content/pkg/FR-2026-10-02/html/2026-20321.htm", "date": "2026-10-02" },
+      "value": "EO 14434",
+      "unit": "",
+      "asOf": "2026-10-02",
+      "label": "official",
+      "source": {
+        "title": "Executive Order 14434, Inaugurating the Era of Super Intelligence (91 FR 63129)",
+        "publisher": "Federal Register via govinfo",
+        "url": "https://www.govinfo.gov/content/pkg/FR-2026-10-02/html/2026-20321.htm",
+        "date": "2026-10-02"
+      },
       "caveat": "Terminology order for agencies; the binding US step on compute is the BIS export rule.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:25-05:00"
     },
     "david-dynamo": {
-      "claim": "PENDING live check: Paul A. David, “The Dynamo and the Computer: An Historical Perspective on the Modern Productivity Paradox,” American Economic Review 80(2), May 1990, pp. 355–361.",
-      "value": "citation", "unit": "", "asOf": "1990-05", "label": "independent",
-      "source": { "title": "The Dynamo and the Computer: An Historical Perspective on the Modern Productivity Paradox", "publisher": "American Economic Review (Papers and Proceedings)", "url": "https://www.jstor.org/stable/2006600", "date": "1990-05" },
-      "caveat": "Pending: confirm link and what the paper supports.",
-      "verified": "doc-only", "checkedAt": "2026-11-18"
+      "claim": "Paul A. David (AER Papers & Proceedings, May 1990): US factories electrified slowly; from the mid-1890s to about 1920 most retrofits added electric motors to the existing shaft-and-belt (“group drive”) system, leaving the old equipment in place. Productivity gains came only in the 1920s, about four decades after the first central power station, once “unit drive” (a motor per machine) let factories be redesigned as lighter, single-storey, linear layouts organized around materials flow. In 1899 electric motors were under 5% of factory mechanical drive; just over half by the early 1920s.",
+      "value": {
+        "motorsShare1899": "<5%",
+        "share1920s": ">50%"
+      },
+      "unit": "",
+      "asOf": "1990-05",
+      "label": "independent",
+      "source": {
+        "title": "The Dynamo and the Computer: An Historical Perspective on the Modern Productivity Paradox, American Economic Review 80(2), pp. 355–361",
+        "publisher": "American Economic Association (via JSTOR)",
+        "url": "https://www.jstor.org/stable/2006600",
+        "date": "1990-05"
+      },
+      "caveat": "An economic-history paper about aggregate productivity, not about which firms captured the value; David himself warns against pushing the dynamo–computer analogy too far. The slide's lesson stays inside what the paper shows.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T15:02-05:00"
     },
     "verification-inference": {
       "claim": "Our reading of the evidence: AI capability jumps fastest where results are cheap to check (code, proofs, terminal tasks) and lags where checking needs human judgment (open-ended research, strategy, taste).",
-      "value": "inference", "unit": "", "asOf": "2026-11-17", "label": "estimate",
-      "source": { "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work?", "publisher": "Epoch AI", "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work", "date": "2026-11-17" },
-      "alsoSources": [{ "title": "Google Cloud on RL post-training, 5 Nov", "url": "https://cloud.google.com/blog/products/containers-kubernetes/open-infrastructure-for-autonomous-agents-comes-to-cncf" }, { "title": "METR on Opus 5.5 (judgement, taste)", "url": "https://metr.org/blog/2026-09-22-claude-opus-5-5/" }],
+      "value": "inference",
+      "unit": "",
+      "asOf": "2026-11-17",
+      "label": "estimate",
+      "source": {
+        "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work?",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work",
+        "date": "2026-11-17"
+      },
+      "alsoSources": [
+        {
+          "title": "Google Cloud on RL post-training, 5 Nov",
+          "url": "https://cloud.google.com/blog/products/containers-kubernetes/open-infrastructure-for-autonomous-agents-comes-to-cncf"
+        },
+        {
+          "title": "METR on Opus 5.5 (judgement, taste)",
+          "url": "https://metr.org/blog/2026-09-22-claude-opus-5-5/"
+        }
+      ],
       "caveat": "An inference, not a measured result. “Reconciliations” and “forms” on the slide are our business examples of checkable work, not from the sources.",
-      "verified": "doc-only", "checkedAt": "2026-11-17"
+      "verified": "doc-only",
+      "checkedAt": "2026-11-17"
+    },
+    "grokbot-reverts": {
+      "claim": "On the same team, the share of commits reverted fell from 0.98% in June to 0.47% in October 2026 (Jul 0.61%, Aug 0.47%, Sep 0.48%): roughly halved while volume rose 13×.",
+      "value": {
+        "Jun": "0.98%",
+        "Jul": "0.61%",
+        "Aug": "0.47%",
+        "Sep": "0.48%",
+        "Oct": "0.47%"
+      },
+      "unit": "% of commits reverted per month",
+      "asOf": "2026-11-11",
+      "label": "lab-reported",
+      "source": {
+        "title": "All Code Is Slop (Except Mine) — Lauren Tan, SpaceXSI (revert-rate slide at 14:17)",
+        "publisher": "AI Engineer on YouTube",
+        "url": "https://www.youtube.com/watch?v=O_zcc6Xl12g&t=856",
+        "date": "2026-11-14"
+      },
+      "caveat": "The team's own metric; a revert is one signal of quality, not the whole picture. She says the rate is “steady at about half a percent.”",
+      "verified": "live",
+      "checkedAt": "2026-11-18T14:43-05:00"
     }
   }
 }

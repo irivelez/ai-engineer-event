@@ -3,7 +3,7 @@
 // at Zoom's 15–30 fps, and never a spinning blur.
 // BigNumber.create({ value: 2840, unit: 'tokens / s', label: 'Fastest public endpoint', kind: 'independent',
 //                    source: 'Artificial Analysis · 17 Nov 2026', ground: 'void' })
-import { gsap, motion, root, esc, play, kill } from './_core.js';
+import { gsap, motion, root, esc, play, kill, withVisible } from './_core.js';
 import { chipHTML } from './ProvenanceChip.js';
 
 const TRAVEL = 4; // cells each column rolls on entry
@@ -119,7 +119,7 @@ export function create(o = {}) {
     destroy() { settle(); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 export default { create };

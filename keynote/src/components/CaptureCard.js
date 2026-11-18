@@ -2,7 +2,7 @@
 // layered shadow; on void it gets a 2 px light frame. The meta line says where and when it was captured.
 // CaptureCard.create({ src: ctx.assets.capture('x-karpathy'), alt: '…', variant: 'paper',
 //   meta: { outlet: 'X', author: '@karpathy', date: '12 Nov 2026', counts: '1.2M views', captured: '17 Nov 2026' } })
-import { gsap, motion, root, esc, play, kill } from './_core.js';
+import { gsap, motion, root, esc, play, kill, withVisible } from './_core.js';
 
 /**
  * @param {object} o
@@ -55,7 +55,7 @@ export function create(o = {}) {
     destroy() { kill(el, frame, img, meta); el.remove(); },
   };
   gsap.set(el, { autoAlpha: 0 });
-  return api;
+  return withVisible(api, settle);
 }
 
 export default { create };

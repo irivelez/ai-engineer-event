@@ -42,7 +42,13 @@ export async function acquireLock(dir = lockPath()) {
       if (e.code !== 'EEXIST') throw e;
       let age = 0;
       try { age = Date.now() - fs.statSync(dir).mtimeMs; } catch { continue; }
-      if (age > 15 * 60 * 1000) {
+      // Never steal from a live process: our owner file starts with the PID. Other formats follow the 15-min rule.
+      let alive = false;
+      try {
+        const pid = parseInt(fs.readFileSync(path.join(dir, 'owner'), 'utf8'), 10);
+        if (pid > 0) { process.kill(pid, 0); alive = true; }
+      } catch { alive = false; }
+      if (age > 15 * 60 * 1000 && !alive) {
         console.warn(`browser lock ${dir} is ${(age / 60000).toFixed(0)} min old: taking it`);
         fs.rmSync(dir, { recursive: true, force: true });
         continue;
@@ -57,7 +63,8 @@ export const GPU_ARGS = ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-bloc
 
 // timeoutMs: hard watchdog; on expiry the browser is killed, the lock released and the process exits 2.
 export async function withBrowser(fn, { headless = true, gpu = false, args = [], timeoutMs = 10 * 60 * 1000 } = {}) {
-  const release = await acquireLock();
+  // Under scripts/with-lock.mjs the parent already holds the lock (ITAF_LOCK_HELD=1).
+  const release = process.env.ITAF_LOCK_HELD === '1' ? () => {} : await acquireLock();
   const onSig = () => { release(); process.exit(130); };
   let browserRef = null;
   const watchdog = setTimeout(() => {

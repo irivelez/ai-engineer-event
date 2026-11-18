@@ -48,6 +48,7 @@ export const grounds = {
     name: 'paper', bg: colors.paper, fg: colors.ink, muted: colors.inkSoft,
     accent: colors.accentPaper, verified: colors.verifiedPaper, limit: colors.limitPaper,
     alert: colors.alertPaper, caution: colors.cautionPaper,
+    onAccent: '#FFFFFF', onQuiet: colors.ink, // text inside marks: 5.88:1 / 5.72:1
     quiet: colors.quietPaper, rule: colors.rulePaper, card: colors.cardPaper, lab: colors.labPaper,
     scrim: 'rgba(255,255,255,0.86)',
   },
@@ -55,6 +56,7 @@ export const grounds = {
     name: 'void', bg: colors.void, fg: colors.light, muted: colors.lightSoft,
     accent: colors.accent, verified: colors.verified, limit: colors.limit,
     alert: colors.alert, caution: colors.caution,
+    onAccent: colors.void, onQuiet: colors.light, // text inside marks: 9.06:1 / 5.17:1
     quiet: colors.quiet, rule: colors.ruleVoid, card: colors.cardVoid, lab: colors.lab,
     scrim: 'rgba(5,7,10,0.78)',
   },
@@ -190,7 +192,7 @@ export function tokensCSS() {
     return [
       `  --g-bg: ${G.bg};`, `  --g-fg: ${G.fg};`, `  --g-muted: ${G.muted};`, `  --g-accent: ${G.accent};`,
       `  --g-verified: ${G.verified};`, `  --g-limit: ${G.limit};`, `  --g-alert: ${G.alert};`,
-      `  --g-caution: ${G.caution};`, `  --g-quiet: ${G.quiet};`, `  --g-rule: ${G.rule};`, `  --g-card: ${G.card};`, `  --g-scrim: ${G.scrim};`,
+      `  --g-caution: ${G.caution};`, `  --g-quiet: ${G.quiet};`, `  --g-on-accent: ${G.onAccent};`, `  --g-on-quiet: ${G.onQuiet};`, `  --g-rule: ${G.rule};`, `  --g-card: ${G.card};`, `  --g-scrim: ${G.scrim};`,
       `  --g-lab-anthropic: ${G.lab.anthropic};`, `  --g-lab-openai: ${G.lab.openai};`, `  --g-lab-google: ${G.lab.google};`,
     ].join('\n');
   };

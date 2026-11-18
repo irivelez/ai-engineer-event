@@ -6,3 +6,74 @@
 .notes-body { margin: 0; padding: 0 0 0 28px; font-size: 30px; line-height: 1.38; }
 .notes-body li { margin: 0 0 14px; }
 .notes-transition { margin-top: 18px; font-size: 26px; color: #93AAFF; }
+
+/* ---------- Presenter window (#presenter) ---------- */
+html.pz-html, body.pz { height: 100%; overflow: hidden; background: #0B0F14 !important; }
+body.pz { margin: 0; width: 100vw; color: #E9EEF5; font-family: 'Geist', 'Helvetica Neue', Arial, sans-serif; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; grid-template-columns: minmax(0, 1fr); -webkit-font-smoothing: antialiased; }
+.pz-top, .pz-main, .pz-foot { min-width: 0; }
+.pz button { font: inherit; }
+.pz-top { display: flex; align-items: center; gap: 24px; padding: 14px 28px; border-bottom: 1px solid #1C232D; }
+.pz-acts { flex: 1; display: flex; gap: 4px; min-width: 0; }
+.pz-actseg { position: relative; height: 34px; border-radius: 6px; background: #151B23; overflow: hidden; cursor: pointer; min-width: 0; flex-basis: 0; }
+.pz-actseg.is-current { box-shadow: inset 0 0 0 2px #93AAFF; }
+.pz-actfill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: rgba(147, 170, 255, 0.28); }
+.pz-actlab { position: relative; padding: 8px 10px; font-size: 14px; line-height: 18px; color: #AEB8C6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pz-actseg.is-current .pz-actlab { color: #FFFFFF; }
+.pz-link { font: 500 13px/1 'Geist Mono', ui-monospace, monospace; padding: 8px 10px; border-radius: 6px; white-space: nowrap; }
+.pz-link[data-live="1"] { color: #72D1A1; background: rgba(114, 209, 161, 0.1); }
+.pz-link[data-live="0"] { color: #F2A57A; background: rgba(242, 165, 122, 0.12); }
+.pz-clock { font: 500 22px/1 'Geist Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; color: #E9EEF5; white-space: nowrap; }
+.pz-main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 420px); gap: 28px; padding: 24px 28px; min-height: 0; }
+.pz-now { min-height: 0; overflow: auto; display: flex; flex-direction: column; gap: 14px; }
+.pz-nowhead { display: flex; gap: 16px; align-items: baseline; font: 500 16px/1.2 'Geist Mono', ui-monospace, monospace; color: #8D98A8; letter-spacing: 0.04em; text-transform: uppercase; }
+.pz-num { color: #93AAFF; }
+.pz-title { margin: 0; font-size: 40px; line-height: 1.1; font-weight: 600; letter-spacing: -0.02em; color: #FFFFFF; }
+.pz-cue { display: flex; align-items: center; gap: 16px; padding: 12px 16px; border-radius: 12px; background: #121821; align-self: flex-start; }
+.pz-cue.is-empty { opacity: 0.4; padding: 6px 12px; }
+.pz-cue.is-empty .pz-cuetext { font-size: 18px; font-weight: 500; }
+.pz-cueicon { width: 72px; height: 72px; color: #93AAFF; }
+.pz-cueicon svg { width: 72px !important; height: 72px !important; }
+.pz-cuetext { font-size: 30px; font-weight: 600; letter-spacing: -0.01em; color: #DDE5FF; }
+.pz-steprow { display: flex; align-items: center; gap: 14px; }
+.pz-dots { display: flex; gap: 8px; }
+.pz-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #3A4554; box-sizing: border-box; }
+.pz-dot.is-done { background: #3A4554; }
+.pz-dot.is-on { background: #93AAFF; border-color: #93AAFF; }
+.pz-steptext { font-size: 20px; color: #C3CCD8; }
+.pz-notes { margin: 6px 0 0; padding: 0 0 0 26px; font-size: 25px; line-height: 1.42; color: #F2F5FA; }
+.pz-notes li { margin: 0 0 12px; }
+.pz-transition { font-size: 20px; color: #93AAFF; }
+.pz-sources { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; font-size: 16px; }
+.pz-srclabel { font: 500 13px/1 'Geist Mono', ui-monospace, monospace; letter-spacing: 0.06em; text-transform: uppercase; color: #8D98A8; }
+.pz-src { color: #A9BBFF; text-decoration: none; border-bottom: 1px solid rgba(169, 187, 255, 0.4); }
+.pz-src:hover { color: #FFFFFF; }
+.pz-side { display: flex; flex-direction: column; gap: 18px; min-height: 0; }
+.pz-timer { background: #121821; border-radius: 14px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+.pz-tlabel, .pz-nextlabel { font: 500 13px/1 'Geist Mono', ui-monospace, monospace; letter-spacing: 0.08em; text-transform: uppercase; color: #8D98A8; }
+.pz-elapsed { font: 600 76px/1 'Geist Mono', ui-monospace, monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; color: #FFFFFF; }
+.pz-elapsed.is-off { color: #5B6676; }
+.pz-plan, .pz-inmoment { font-size: 17px; color: #C3CCD8; font-variant-numeric: tabular-nums; }
+.pz-delta { font-size: 22px; font-weight: 600; padding: 6px 10px; border-radius: 8px; align-self: flex-start; }
+.pz-delta[data-tone="good"] { color: #72D1A1; background: rgba(114, 209, 161, 0.1); }
+.pz-delta[data-tone="warn"] { color: #F5C26B; background: rgba(245, 194, 107, 0.12); }
+.pz-delta[data-tone="bad"] { color: #FF6B5A; background: rgba(255, 107, 90, 0.12); }
+.pz-delta[data-tone="idle"] { color: #8D98A8; font-size: 15px; font-weight: 400; padding: 0; }
+.pz-inbar { height: 8px; border-radius: 4px; background: #1E2632; overflow: hidden; }
+.pz-infill { height: 100%; width: 0; background: #72D1A1; }
+.pz-inbar[data-tone="warn"] .pz-infill { background: #F5C26B; }
+.pz-inbar[data-tone="bad"] .pz-infill { background: #FF6B5A; }
+.pz-next { background: #121821; border-radius: 14px; padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+.pz-thumb { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #05070A; }
+.pz-thumbimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pz-thumbcard { position: absolute; inset: 0; padding: 16px 18px; font-size: 20px; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; display: flex; align-items: flex-end; }
+.pz-thumbcard[data-ground="paper"] { background: #FFFFFF; color: #0B0F14; }
+.pz-thumbcard[data-ground="void"] { background: #05070A; color: #F2F5FA; box-shadow: inset 0 0 0 1px #1C232D; }
+.pz-nexttitle { font-size: 22px; font-weight: 600; line-height: 1.25; color: #FFFFFF; }
+.pz-nextmeta { font: 400 14px/1.3 'Geist Mono', ui-monospace, monospace; color: #8D98A8; }
+.pz-foot { display: flex; align-items: center; gap: 12px; padding: 12px 28px; border-top: 1px solid #1C232D; }
+.pz-btn { background: #1A222D; color: #E9EEF5; border: 1px solid #2A3442; border-radius: 10px; padding: 10px 18px; font-size: 16px; cursor: pointer; }
+.pz-btn:hover { background: #222C39; }
+.pz-primary { background: #2B3B7A; border-color: #3D55E0; color: #FFFFFF; }
+.pz-timerbtn { align-self: flex-start; margin-top: 4px; font-size: 14px; padding: 8px 14px; }
+.pz-jump { font: 600 18px/1 'Geist Mono', ui-monospace, monospace; color: #F2A57A; min-width: 120px; }
+.pz-keys { margin-left: auto; font-size: 13px; color: #6F7B8C; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
