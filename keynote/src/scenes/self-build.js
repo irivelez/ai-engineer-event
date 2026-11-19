@@ -55,7 +55,7 @@ export default calmScene('self-build', (ctx, K) => {
     `</div>`;
   const h1 = hero(S1.value, S1.label, `<div class="t-body" style="margin-top:16px;color:${G.muted}">${esc(S1.note || '')}</div>`);
   const h2 = hero(S2.to, S2.label, climbHTML);
-  const h3 = hero(S3.value, S3.label);
+  const h3 = hero(S3.value, S3.label, S3.note ? `<div class="t-body" style="margin-top:16px;color:${G.muted}">${esc(S3.note)}</div>` : "");
   const fill = h2.el.querySelector('.ca-fill');
   const toLab = h2.el.querySelector('.ca-tolab');
 

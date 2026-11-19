@@ -564,12 +564,22 @@
       "icon": "speed",
       "brief": "Epoch’s independent index moved almost a year of trend in 11 weeks, with an honest caveat.",
       "steps": [
-        "Epoch index: 162.5 → 174",
-        "Against the trend: about 14 points a year",
-        "The caveat"
+        "Every step is a new model",
+        "Since reasoning models, about twice as steep",
+        "Almost a year of progress in 11 weeks, and the caveat"
       ],
       "copy": {
         "title": "Almost a year of progress in 11 weeks",
+        "headlines": [
+          "Every step is a new model",
+          "Since reasoning models, the climb is about twice as steep",
+          "Almost a year of progress in 11 weeks"
+        ],
+        "axis": "Epoch Capabilities Index",
+        "explain": "One score that sums up dozens of AI tests. Higher means more capable.",
+        "reasoning": "Reasoning models arrive",
+        "slopeLabel": "points a year, before and since reasoning models",
+        "window": "Last 11 weeks",
         "eci": {
           "from": "162.5",
           "to": "174",
@@ -579,10 +589,11 @@
         },
         "caveat": "Two releases drove most of it. Epoch calls the record “just one data point.”"
       },
-      "visual": "Paper. A dashed trend line (about 14 points a year) and the actual jump from 162.5 to 174, steep. Numbers roll. Caveat in small serif italic.",
+      "visual": "Paper. The Epoch Capabilities Index frontier as a staircase over the whole period the data covers: each riser a model, years on the x axis, a few models named. Step 1 overlays Epoch's two slopes (before / since reasoning models) and marks when reasoning began. Step 2 lights the last 11 weeks in the accent, from → to with the models, then the caveat in small serif italic.",
       "facts": [
-        "eci-jump",
+        "eci-tie-174",
         "eci-trend-14",
+        "eci-jump",
         "eci-one-data-point"
       ]
     },
@@ -647,9 +658,10 @@
         },
         "s3": {
           "value": "~30,000",
-          "label": "agents at work inside Anthropic at any time"
+          "label": "agents at work inside Anthropic at any time",
+        "note": "People still guide their work."
         },
-        "caveat": "Lab-reported. Claude is “not operating fully autonomously” on any measured part of the work."
+        "caveat": "Lab-reported. Many agents is not autonomy: Claude is “not operating fully autonomously” on any measured part of the work."
       },
       "visual": "Paper. Big numbers; the <1% → ~26% climb as a single rising bar or line with the two dates.",
       "facts": [
