@@ -905,7 +905,7 @@
     },
     {
       "id": "employee-bar",
-      "name": "No model met the employee bar",
+      "name": "On real work, no model met the bar",
       "act": "limits",
       "owner": "E7",
       "plannedSec": 120,
@@ -916,12 +916,12 @@
       "brief": "The clearest independent test of real work: no model met the bar Epoch sets for its own employees.",
       "steps": [
         "The finding",
-        "The scores under the employee bar",
-        "How they failed: judgment, not knowledge"
+        "The scores, all under the staff standard",
+        "Why: judgment, not knowledge"
       ],
       "copy": {
-        "title": "No model met the bar Epoch sets for its own employees",
-        "sub": "Four real, open-ended tasks. Six frontier models. One hand-graded run each.",
+        "title": "On real work, no AI model met the standard of a good employee",
+        "sub": "Epoch AI gave six top models four real research tasks and graded each result the way it grades its own staff. None passed, on any task.",
         "best": "Claude Fable 5.2: best",
         "second": "GPT-6.2 Astra: 65% average, 17 points lower",
         "failures": [
@@ -931,13 +931,15 @@
         ],
         "barLabel": "The standard Epoch expects of its own staff",
         "barNote": "Line position illustrative: Epoch judged each task against its staff standard, not one score.",
-        "tag": "Independent · Epoch AI, 17 Nov 2026"
+        "tag": "Independent · Epoch AI, 17 Nov 2026",
+        "example": "One task: invent a new chess variant. Claude Fable 5.2’s “new” variant played exactly like one that already exists.",
+        "failuresTitle": "They failed on judgment, not knowledge"
       },
       "visual": "Paper. A horizontal 'employee bar' line high on the chart; model bars rise and stop below it (the line has no value on the axis: copy.barNote says so in small type). Failures as three plain lines.",
       "facts": [
-        "epoch-real-work",
         "epoch-astra-65",
-        "epoch-failures"
+        "epoch-failures",
+        "epoch-real-work"
       ]
     },
     {
