@@ -1803,6 +1803,38 @@
       "caveat": "METR flags the 7-month figure as reflecting the data at publication; the Odd Lots title is from search results, not a listened episode. Mostly coding tasks; a horizon is not how long a model works unattended. See metr-stopped.",
       "verified": "live",
       "checkedAt": "2026-11-18T21:20-05:00"
+    },
+    "rli-fable-41": {
+      "claim": "Remote Labor Index (share of real remote-work projects where the AI's deliverable is judged at least as good as the human standard): Claude Fable 5.2 41.25%, Claude Opus 5.5 21.25%, GPT-6 Astra 20.83%, Claude Fable 5.1 17.92%, Gemini 4 Argon 17.08%.",
+      "value": { "Fable 5.2": 41.25, "Opus 5.5": 21.25, "GPT-6 Astra": 20.83 },
+      "unit": "% automation rate",
+      "asOf": "2026-11-18",
+      "label": "independent",
+      "source": {
+        "title": "Remote Labor Index leaderboard",
+        "publisher": "Scale AI and the Center for AI Safety",
+        "url": "https://labs.scale.com/leaderboard/rli",
+        "date": "2026-11"
+      },
+      "caveat": "The board shows no date and says “There is no confidence interval for Automation Rate.” Remote digital work only.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:38-05:00"
+    },
+    "tbench-41": {
+      "claim": "Terminal-Bench 4.1: GitHub Copilot Fusion (max) 71.2% ±2.9; Claude Code with Opus 5.5 (max) 65.8% ±3.1 and with Fable 5.2 (max) 65.8% ±2.8; Antigravity CLI with Gemini 4 Carbon (high) 64.5% ±3.2.",
+      "value": { "Copilot Fusion": 71.2, "Fable 5.2 (Claude Code)": 65.8, "Gemini 4 Carbon (Antigravity CLI)": 64.5 },
+      "unit": "% tasks solved (±95% CI)",
+      "asOf": "2026-11-18",
+      "label": "independent",
+      "source": {
+        "title": "Terminal-Bench leaderboard",
+        "publisher": "Terminal-Bench",
+        "url": "https://www.tbench.ai/leaderboard",
+        "date": "2026-11"
+      },
+      "caveat": "Ranks agent systems, not bare models; the board shows no as-of date; Copilot Fusion's underlying models are not disclosed.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:37-05:00"
     }
   }
 }

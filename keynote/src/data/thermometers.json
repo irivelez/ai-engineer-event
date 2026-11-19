@@ -1,0 +1,159 @@
+{
+  "asOf": "2026-11-18",
+  "note": "Readings re-read on the public page on 18 Nov 2026, or taken from facts.json entries verified live that day (factId). Labels follow facts.json's legend.",
+  "families": [
+    {
+      "id": "capability",
+      "question": "Can it do it?",
+      "instruments": [
+        {
+          "name": "Epoch Capabilities Index (ECI)",
+          "measures": "One score stitched from many benchmarks, comparable across models and years",
+          "runBy": "Epoch AI",
+          "label": "independent",
+          "latest": { "reading": "GPT-6.2 Astra 174.2 · Claude Fable 5.2 173.5 (preliminary)", "date": "2026-11-18", "url": "https://epoch.ai/eci" },
+          "whyTrusted": "Independent nonprofit; many tests combined, so no single test dominates",
+          "limit": "A fitted scale: points are relative, not a percentage",
+          "factId": "eci-tie-174"
+        },
+        {
+          "name": "Artificial Analysis Intelligence Index",
+          "measures": "One score from a battery of tests, run identically for every model",
+          "runBy": "Artificial Analysis",
+          "label": "independent",
+          "latest": { "reading": "Claude Fable 5.2 65 · GPT-6.2 Astra 62 · Gemini 4 Neon 61", "date": "2026-11-18", "url": "https://artificialanalysis.ai/leaderboards/models" },
+          "whyTrusted": "Runs every model itself under the same settings; also tracks cost",
+          "limit": "Rebuilt in October (v5): old and new scores don't compare",
+          "factId": "aa-leaderboard"
+        },
+        {
+          "name": "Arena (human votes)",
+          "measures": "Which answer people prefer, in blind head-to-head votes",
+          "runBy": "Arena",
+          "label": "independent",
+          "latest": { "reading": "Gemini 4 Carbon 1526 ±10 (preliminary), tied with Gemini 4 Argon 1522", "date": "2026-11-11", "url": "https://arena.ai/leaderboard/text" },
+          "whyTrusted": "Real people judge real prompts without knowing which model answered",
+          "limit": "Measures preference, not correctness; top models often statistically tied",
+          "factId": "arena-text-carbon"
+        }
+      ]
+    },
+    {
+      "id": "real-work",
+      "question": "Does it do real work?",
+      "instruments": [
+        {
+          "name": "Remote Labor Index",
+          "measures": "Share of real remote-work projects AI delivers at human standard",
+          "runBy": "Scale AI and the Center for AI Safety",
+          "label": "independent",
+          "latest": { "reading": "Claude Fable 5.2 41.25% · Claude Opus 5.5 21.25% · GPT-6 Astra 20.83%", "date": "2026-11-18", "url": "https://labs.scale.com/leaderboard/rli" },
+          "whyTrusted": "Real projects, with the human deliverable as the bar",
+          "limit": "No confidence interval; remote digital work only",
+          "factId": "rli-fable-41"
+        },
+        {
+          "name": "Epoch real-work tasks",
+          "measures": "Open-ended tasks from Epoch's own work, graded by hand",
+          "runBy": "Epoch AI",
+          "label": "independent",
+          "latest": { "reading": "No model met Epoch's employee standard on any of 4 tasks; Fable 5.2 best", "date": "2026-11-17", "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work" },
+          "whyTrusted": "Judged by hand against Epoch's own employee standard",
+          "limit": "Four tasks, one run each; Epoch says not ground truth",
+          "factId": "epoch-real-work"
+        },
+        {
+          "name": "Terminal-Bench 4.1",
+          "measures": "Hard multi-step tasks in a computer terminal, done by agents",
+          "runBy": "Terminal-Bench (open benchmark)",
+          "label": "independent",
+          "latest": { "reading": "GitHub Copilot Fusion 71.2% ±2.9 · Claude Fable 5.2 in Claude Code 65.8% ±2.8", "date": "2026-11-18", "url": "https://www.tbench.ai/leaderboard" },
+          "whyTrusted": "Public leaderboard with error bars; tests whole agents, not just models",
+          "limit": "Ranks agent products; Copilot Fusion's underlying models undisclosed",
+          "factId": "tbench-41"
+        }
+      ]
+    },
+    {
+      "id": "cost-and-inputs",
+      "question": "What does it cost, and what does it take?",
+      "instruments": [
+        {
+          "name": "Price of a fixed capability",
+          "measures": "How fast the price of reaching a given score falls",
+          "runBy": "Epoch AI (relayed by the State of AI Report)",
+          "label": "estimate",
+          "latest": { "reading": "−47% per quarter since 2023 (about 13× cheaper a year)", "date": "2026-10", "url": "https://www.stateof.ai/" },
+          "whyTrusted": "Epoch's estimate across many models and price points",
+          "limit": "Relayed second-hand; Epoch's own page not retrieved",
+          "factId": "price-47-quarter"
+        },
+        {
+          "name": "AI computing capacity",
+          "measures": "How fast the world adds AI computing power",
+          "runBy": "Epoch AI",
+          "label": "independent",
+          "latest": { "reading": "Doubling every 9 months; additions grow 2.5×/yr since 2024 (6× in 2023)", "date": "2026-11-11", "url": "https://epochai.substack.com/p/the-epoch-brief-november-11-2026" },
+          "whyTrusted": "Independent researchers tracking AI chips worldwide",
+          "limit": "Recent slowing not statistically significant; maybe a chip-generation lull",
+          "factId": "epoch-compute-slowing"
+        },
+        {
+          "name": "Grid capacity auction",
+          "measures": "Whether the grid can supply what new data centres need",
+          "runBy": "PJM Interconnection, the largest US grid operator",
+          "label": "official",
+          "latest": { "reading": "2028/29 auction: 6,831 MW short of the reliability requirement", "date": "2026-07-14", "url": "https://www.pjm.com/-/media/DotCom/about-pjm/newsroom/2026-releases/20260714-pjm-capacity-auction-procures-138318-mw-of-generation-resources.pdf" },
+          "whyTrusted": "Binding auction results published by the grid operator itself",
+          "limit": "One US region; data centres are one driver among several",
+          "factId": "pjm-shortfall"
+        }
+      ]
+    },
+    {
+      "id": "spread-and-speed",
+      "question": "Is it spreading, and is it speeding itself up?",
+      "instruments": [
+        {
+          "name": "Ramp AI Index",
+          "measures": "Share of US businesses paying for AI, from card data",
+          "runBy": "Ramp",
+          "label": "independent",
+          "latest": { "reading": "56.8% paid for AI in October 2026, up 13.3 points in a year", "date": "2026-11", "url": "https://ramp.com/data/ai-index" },
+          "whyTrusted": "Real transactions, not surveys",
+          "limit": "Ramp's US customers only; sees paid tools, not free use",
+          "factId": "ramp-568"
+        },
+        {
+          "name": "AI R&D acceleration assessment",
+          "measures": "How much faster a lab improves its models, and AI's share",
+          "runBy": "METR",
+          "label": "independent",
+          "latest": { "reading": "Anthropic ≈2× its 2024–25 pace (plausibly 1.3–3×); ~80% due to AI", "date": "2026-11-05", "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment" },
+          "whyTrusted": "Outside evaluator given inside access to a frontier lab",
+          "limit": "One lab; Anthropic redacted most of the key evidence",
+          "factId": "metr-anthropic-2x",
+          "alsoLabReported": {
+            "reading": "Claude “leads” about 26% of Anthropic's AI R&D work (Aug 2026), up from under 1% in February",
+            "runBy": "Anthropic",
+            "label": "lab-reported",
+            "date": "2026-09-17",
+            "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+            "factId": "claude-rd-26"
+          }
+        },
+        {
+          "name": "Government evaluators",
+          "measures": "Dangerous capabilities, and how far open models trail the frontier",
+          "runBy": "UK AI Security Institute (also US CAISI)",
+          "label": "independent",
+          "latest": { "reading": "Open-weight models trail the closed frontier by 4–7 months on cyber (was 6–10)", "date": "2026-07-17", "url": "https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber" },
+          "whyTrusted": "Government testers with no model to sell",
+          "limit": "Few public reports; mostly cyber and open-weight models",
+          "factId": "open-lag-aisi"
+        }
+      ]
+    }
+  ],
+  "takeaway": "No single thermometer reads AI's temperature. Capability tests say who leads; real-work tests say what it can do for you; cost, chips and power say how far it can spread; adoption and R&D speed say whether it compounds. Trust independent readings, one ruler at a time."
+}
