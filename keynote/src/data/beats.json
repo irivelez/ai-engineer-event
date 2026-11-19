@@ -3,7 +3,7 @@
   "presenter": "Irina Vélez",
   "event": "Inside the AI Frontier · free online session",
   "date": "2026-11-19T19:00:00-05:00",
-  "plannedTotalSec": 3450,
+  "plannedTotalSec": 3360,
   "icons": {
     "speed": "Speed",
     "tradeoffs": "Trade-offs",
@@ -701,7 +701,7 @@
         "s3": {
           "value": "~2×",
           "label": "As of October 2026, Anthropic's models improve about twice as fast as in 2024–25, mostly because of AI",
-          "note": "People still guide the work: the speed-up comes mainly from AI assistance."
+          "note": "For now, people still guide the work: the speed-up comes mainly from AI assistance."
         },
         "caveat": "First two: Anthropic's own figures. METR's range is 1.3× to 3×, and Anthropic redacted most of its key evidence."
       },
@@ -1306,29 +1306,6 @@
         "ramp-volume-29",
         "tokenmaxxing"
       ]
-    },
-    {
-      "id": "enterprise-voices",
-      "name": "What enterprises told San Francisco",
-      "act": "world",
-      "owner": "two-speeds",
-      "plannedSec": 90,
-      "energy": 5,
-      "ground": "paper",
-      "mode": "quote",
-      "icon": "constraints",
-      "brief": "Enterprise builders at the AI Engineer summits on what actually slows adoption: checking the work, cost, data and context, breaking work into testable steps.",
-      "steps": [
-        "Voice 1",
-        "Voice 2",
-        "Voice 3",
-        "What it adds up to"
-      ],
-      "copy": {
-        "title": "What enterprises told San Francisco"
-      },
-      "visual": "Paper. Real stills or short muted clips from the enterprise talks (each with speaker, company, YouTube timestamp and a SourceQR), one challenge per step, verbatim caption quotes; last step: the three challenges in one line.",
-      "facts": []
     },
     {
       "id": "rules",
