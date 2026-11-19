@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-18T23:48:36.925Z",
+ "generatedAt": "2026-11-19T03:56:05.059Z",
  "size": [
   1920,
   1080
@@ -263,99 +263,123 @@
   },
   {
    "n": 13,
-   "id": "release-pace",
+   "id": "thermometers",
    "step": 0,
-   "steps": 3,
-   "file": "static/frames/13-release-pace-0.webp",
-   "ground": "void"
+   "steps": 6,
+   "file": "static/frames/13-thermometers-0.webp",
+   "ground": "paper"
   },
   {
    "n": 13,
-   "id": "release-pace",
+   "id": "thermometers",
    "step": 1,
-   "steps": 3,
-   "file": "static/frames/13-release-pace-1.webp",
-   "ground": "void"
+   "steps": 6,
+   "file": "static/frames/13-thermometers-1.webp",
+   "ground": "paper"
   },
   {
    "n": 13,
+   "id": "thermometers",
+   "step": 2,
+   "steps": 6,
+   "file": "static/frames/13-thermometers-2.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 13,
+   "id": "thermometers",
+   "step": 3,
+   "steps": 6,
+   "file": "static/frames/13-thermometers-3.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 13,
+   "id": "thermometers",
+   "step": 4,
+   "steps": 6,
+   "file": "static/frames/13-thermometers-4.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 13,
+   "id": "thermometers",
+   "step": 5,
+   "steps": 6,
+   "file": "static/frames/13-thermometers-5.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 14,
+   "id": "release-pace",
+   "step": 0,
+   "steps": 3,
+   "file": "static/frames/14-release-pace-0.webp",
+   "ground": "void"
+  },
+  {
+   "n": 14,
+   "id": "release-pace",
+   "step": 1,
+   "steps": 3,
+   "file": "static/frames/14-release-pace-1.webp",
+   "ground": "void"
+  },
+  {
+   "n": 14,
    "id": "release-pace",
    "step": 2,
    "steps": 3,
-   "file": "static/frames/13-release-pace-2.webp",
-   "ground": "void"
-  },
-  {
-   "n": 14,
-   "id": "year-in-weeks",
-   "step": 0,
-   "steps": 3,
-   "file": "static/frames/14-year-in-weeks-0.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 14,
-   "id": "year-in-weeks",
-   "step": 1,
-   "steps": 3,
-   "file": "static/frames/14-year-in-weeks-1.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 14,
-   "id": "year-in-weeks",
-   "step": 2,
-   "steps": 3,
-   "file": "static/frames/14-year-in-weeks-2.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 15,
-   "id": "swarm",
-   "step": 0,
-   "steps": 3,
-   "file": "static/frames/15-swarm-0.webp",
+   "file": "static/frames/14-release-pace-2.webp",
    "ground": "void"
   },
   {
    "n": 15,
-   "id": "swarm",
-   "step": 1,
+   "id": "year-in-weeks",
+   "step": 0,
    "steps": 3,
-   "file": "static/frames/15-swarm-1.webp",
-   "ground": "void"
+   "file": "static/frames/15-year-in-weeks-0.webp",
+   "ground": "paper"
   },
   {
    "n": 15,
-   "id": "swarm",
+   "id": "year-in-weeks",
+   "step": 1,
+   "steps": 3,
+   "file": "static/frames/15-year-in-weeks-1.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 15,
+   "id": "year-in-weeks",
    "step": 2,
    "steps": 3,
-   "file": "static/frames/15-swarm-2.webp",
+   "file": "static/frames/15-year-in-weeks-2.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 16,
+   "id": "swarm",
+   "step": 0,
+   "steps": 3,
+   "file": "static/frames/16-swarm-0.webp",
    "ground": "void"
   },
   {
    "n": 16,
-   "id": "self-build",
-   "step": 0,
-   "steps": 3,
-   "file": "static/frames/16-self-build-0.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 16,
-   "id": "self-build",
+   "id": "swarm",
    "step": 1,
    "steps": 3,
-   "file": "static/frames/16-self-build-1.webp",
-   "ground": "paper"
+   "file": "static/frames/16-swarm-1.webp",
+   "ground": "void"
   },
   {
    "n": 16,
-   "id": "self-build",
+   "id": "swarm",
    "step": 2,
    "steps": 3,
-   "file": "static/frames/16-self-build-2.webp",
-   "ground": "paper"
+   "file": "static/frames/16-swarm-2.webp",
+   "ground": "void"
   },
   {
    "n": 17,
@@ -367,6 +391,14 @@
   },
   {
    "n": 17,
+   "id": "self-build",
+   "step": 0,
+   "steps": 3,
+   "file": "static/frames/17-self-build-0.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 17,
    "id": "science",
    "step": 1,
    "steps": 4,
@@ -375,11 +407,27 @@
   },
   {
    "n": 17,
+   "id": "self-build",
+   "step": 1,
+   "steps": 3,
+   "file": "static/frames/17-self-build-1.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 17,
    "id": "science",
    "step": 2,
    "steps": 4,
    "file": "static/frames/17-science-2.webp",
    "ground": "void"
+  },
+  {
+   "n": 17,
+   "id": "self-build",
+   "step": 2,
+   "steps": 3,
+   "file": "static/frames/17-self-build-2.webp",
+   "ground": "paper"
   },
   {
    "n": 17,
@@ -399,6 +447,14 @@
   },
   {
    "n": 18,
+   "id": "ruler",
+   "step": 0,
+   "steps": 4,
+   "file": "static/frames/18-ruler-0.webp",
+   "ground": "void"
+  },
+  {
+   "n": 18,
    "id": "price",
    "step": 1,
    "steps": 2,
@@ -406,411 +462,427 @@
    "ground": "paper"
   },
   {
-   "n": 19,
-   "id": "ruler",
-   "step": 0,
-   "steps": 5,
-   "file": "static/frames/19-ruler-0.webp",
-   "ground": "void"
-  },
-  {
-   "n": 19,
+   "n": 18,
    "id": "ruler",
    "step": 1,
-   "steps": 5,
-   "file": "static/frames/19-ruler-1.webp",
+   "steps": 4,
+   "file": "static/frames/18-ruler-1.webp",
    "ground": "void"
   },
   {
-   "n": 19,
+   "n": 18,
    "id": "ruler",
    "step": 2,
-   "steps": 5,
-   "file": "static/frames/19-ruler-2.webp",
+   "steps": 4,
+   "file": "static/frames/18-ruler-2.webp",
    "ground": "void"
   },
   {
-   "n": 19,
+   "n": 18,
    "id": "ruler",
    "step": 3,
-   "steps": 5,
-   "file": "static/frames/19-ruler-3.webp",
+   "steps": 4,
+   "file": "static/frames/18-ruler-3.webp",
    "ground": "void"
   },
   {
    "n": 19,
-   "id": "ruler",
-   "step": 4,
-   "steps": 5,
-   "file": "static/frames/19-ruler-4.webp",
-   "ground": "void"
-  },
-  {
-   "n": 20,
    "id": "open-weights",
    "step": 0,
    "steps": 3,
-   "file": "static/frames/20-open-weights-0.webp",
+   "file": "static/frames/19-open-weights-0.webp",
    "ground": "paper"
   },
   {
-   "n": 20,
+   "n": 19,
    "id": "open-weights",
    "step": 1,
    "steps": 3,
-   "file": "static/frames/20-open-weights-1.webp",
+   "file": "static/frames/19-open-weights-1.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 19,
+   "id": "open-weights",
+   "step": 2,
+   "steps": 3,
+   "file": "static/frames/19-open-weights-2.webp",
    "ground": "paper"
   },
   {
    "n": 20,
-   "id": "open-weights",
-   "step": 2,
-   "steps": 3,
-   "file": "static/frames/20-open-weights-2.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 21,
    "id": "twins",
    "step": 0,
    "steps": 2,
-   "file": "static/frames/21-twins-0.webp",
+   "file": "static/frames/20-twins-0.webp",
+   "ground": "void"
+  },
+  {
+   "n": 20,
+   "id": "twins",
+   "step": 1,
+   "steps": 2,
+   "file": "static/frames/20-twins-1.webp",
    "ground": "void"
   },
   {
    "n": 21,
-   "id": "twins",
-   "step": 1,
-   "steps": 2,
-   "file": "static/frames/21-twins-1.webp",
-   "ground": "void"
-  },
-  {
-   "n": 22,
    "id": "and-yet",
    "step": 0,
    "steps": 3,
-   "file": "static/frames/22-and-yet-0.webp",
+   "file": "static/frames/21-and-yet-0.webp",
    "ground": "paper"
   },
   {
-   "n": 22,
+   "n": 21,
    "id": "and-yet",
    "step": 1,
    "steps": 3,
-   "file": "static/frames/22-and-yet-1.webp",
+   "file": "static/frames/21-and-yet-1.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 21,
+   "id": "and-yet",
+   "step": 2,
+   "steps": 3,
+   "file": "static/frames/21-and-yet-2.webp",
    "ground": "paper"
   },
   {
    "n": 22,
-   "id": "and-yet",
-   "step": 2,
-   "steps": 3,
-   "file": "static/frames/22-and-yet-2.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 23,
    "id": "employee-bar",
    "step": 0,
    "steps": 3,
-   "file": "static/frames/23-employee-bar-0.webp",
+   "file": "static/frames/22-employee-bar-0.webp",
    "ground": "paper"
   },
   {
-   "n": 23,
+   "n": 22,
    "id": "employee-bar",
    "step": 1,
    "steps": 3,
-   "file": "static/frames/23-employee-bar-1.webp",
+   "file": "static/frames/22-employee-bar-1.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 22,
+   "id": "employee-bar",
+   "step": 2,
+   "steps": 3,
+   "file": "static/frames/22-employee-bar-2.webp",
    "ground": "paper"
   },
   {
    "n": 23,
-   "id": "employee-bar",
+   "id": "economics",
+   "step": 0,
+   "steps": 3,
+   "file": "static/frames/23-economics-0.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 23,
+   "id": "economics",
+   "step": 1,
+   "steps": 3,
+   "file": "static/frames/23-economics-1.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 23,
+   "id": "economics",
    "step": 2,
    "steps": 3,
-   "file": "static/frames/23-employee-bar-2.webp",
+   "file": "static/frames/23-economics-2.webp",
    "ground": "paper"
   },
   {
    "n": 24,
-   "id": "economics",
+   "id": "rulers-break",
    "step": 0,
-   "steps": 2,
-   "file": "static/frames/24-economics-0.webp",
+   "steps": 4,
+   "file": "static/frames/24-rulers-break-0.webp",
    "ground": "paper"
   },
   {
    "n": 24,
-   "id": "economics",
-   "step": 1,
-   "steps": 2,
-   "file": "static/frames/24-economics-1.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 25,
-   "id": "rulers-break",
-   "step": 0,
-   "steps": 4,
-   "file": "static/frames/25-rulers-break-0.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 25,
    "id": "rulers-break",
    "step": 1,
    "steps": 4,
-   "file": "static/frames/25-rulers-break-1.webp",
+   "file": "static/frames/24-rulers-break-1.webp",
    "ground": "paper"
   },
   {
-   "n": 25,
+   "n": 24,
    "id": "rulers-break",
    "step": 2,
    "steps": 4,
-   "file": "static/frames/25-rulers-break-2.webp",
+   "file": "static/frames/24-rulers-break-2.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 24,
+   "id": "rulers-break",
+   "step": 3,
+   "steps": 4,
+   "file": "static/frames/24-rulers-break-3.webp",
    "ground": "paper"
   },
   {
    "n": 25,
-   "id": "rulers-break",
-   "step": 3,
-   "steps": 4,
-   "file": "static/frames/25-rulers-break-3.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 26,
    "id": "breach",
    "step": 0,
    "steps": 5,
-   "file": "static/frames/26-breach-0.webp",
+   "file": "static/frames/25-breach-0.webp",
    "ground": "void"
   },
   {
-   "n": 26,
+   "n": 25,
    "id": "breach",
    "step": 1,
    "steps": 5,
-   "file": "static/frames/26-breach-1.webp",
+   "file": "static/frames/25-breach-1.webp",
    "ground": "void"
   },
   {
-   "n": 26,
+   "n": 25,
    "id": "breach",
    "step": 2,
    "steps": 5,
-   "file": "static/frames/26-breach-2.webp",
+   "file": "static/frames/25-breach-2.webp",
    "ground": "void"
   },
   {
-   "n": 26,
+   "n": 25,
    "id": "breach",
    "step": 3,
    "steps": 5,
-   "file": "static/frames/26-breach-3.webp",
+   "file": "static/frames/25-breach-3.webp",
    "ground": "void"
   },
   {
-   "n": 26,
+   "n": 25,
    "id": "breach",
    "step": 4,
    "steps": 5,
-   "file": "static/frames/26-breach-4.webp",
+   "file": "static/frames/25-breach-4.webp",
    "ground": "void"
   },
   {
-   "n": 27,
+   "n": 26,
    "id": "recipe",
    "step": 0,
    "steps": 2,
-   "file": "static/frames/27-recipe-0.webp",
+   "file": "static/frames/26-recipe-0.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 26,
+   "id": "recipe",
+   "step": 1,
+   "steps": 2,
+   "file": "static/frames/26-recipe-1.webp",
    "ground": "paper"
   },
   {
    "n": 27,
-   "id": "recipe",
+   "id": "power",
+   "step": 0,
+   "steps": 4,
+   "file": "static/frames/27-power-0.webp",
+   "ground": "void"
+  },
+  {
+   "n": 27,
+   "id": "power",
+   "step": 1,
+   "steps": 4,
+   "file": "static/frames/27-power-1.webp",
+   "ground": "void"
+  },
+  {
+   "n": 27,
+   "id": "power",
+   "step": 2,
+   "steps": 4,
+   "file": "static/frames/27-power-2.webp",
+   "ground": "void"
+  },
+  {
+   "n": 27,
+   "id": "power",
+   "step": 3,
+   "steps": 4,
+   "file": "static/frames/27-power-3.webp",
+   "ground": "void"
+  },
+  {
+   "n": 28,
+   "id": "brazil",
+   "step": 0,
+   "steps": 4,
+   "file": "static/frames/28-brazil-0.webp",
+   "ground": "void"
+  },
+  {
+   "n": 28,
+   "id": "brazil",
+   "step": 1,
+   "steps": 4,
+   "file": "static/frames/28-brazil-1.webp",
+   "ground": "void"
+  },
+  {
+   "n": 28,
+   "id": "brazil",
+   "step": 2,
+   "steps": 4,
+   "file": "static/frames/28-brazil-2.webp",
+   "ground": "void"
+  },
+  {
+   "n": 28,
+   "id": "brazil",
+   "step": 3,
+   "steps": 4,
+   "file": "static/frames/28-brazil-3.webp",
+   "ground": "void"
+  },
+  {
+   "n": 29,
+   "id": "news-tunnel",
+   "step": 0,
+   "steps": 2,
+   "file": "static/frames/29-news-tunnel-0.webp",
+   "ground": "void"
+  },
+  {
+   "n": 29,
+   "id": "news-tunnel",
    "step": 1,
    "steps": 2,
-   "file": "static/frames/27-recipe-1.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 28,
-   "id": "power",
-   "step": 0,
-   "steps": 4,
-   "file": "static/frames/28-power-0.webp",
-   "ground": "void"
-  },
-  {
-   "n": 28,
-   "id": "power",
-   "step": 1,
-   "steps": 4,
-   "file": "static/frames/28-power-1.webp",
-   "ground": "void"
-  },
-  {
-   "n": 28,
-   "id": "power",
-   "step": 2,
-   "steps": 4,
-   "file": "static/frames/28-power-2.webp",
-   "ground": "void"
-  },
-  {
-   "n": 28,
-   "id": "power",
-   "step": 3,
-   "steps": 4,
-   "file": "static/frames/28-power-3.webp",
-   "ground": "void"
-  },
-  {
-   "n": 29,
-   "id": "brazil",
-   "step": 0,
-   "steps": 4,
-   "file": "static/frames/29-brazil-0.webp",
-   "ground": "void"
-  },
-  {
-   "n": 29,
-   "id": "brazil",
-   "step": 1,
-   "steps": 4,
-   "file": "static/frames/29-brazil-1.webp",
-   "ground": "void"
-  },
-  {
-   "n": 29,
-   "id": "brazil",
-   "step": 2,
-   "steps": 4,
-   "file": "static/frames/29-brazil-2.webp",
-   "ground": "void"
-  },
-  {
-   "n": 29,
-   "id": "brazil",
-   "step": 3,
-   "steps": 4,
-   "file": "static/frames/29-brazil-3.webp",
+   "file": "static/frames/29-news-tunnel-1.webp",
    "ground": "void"
   },
   {
    "n": 30,
-   "id": "news-tunnel",
+   "id": "money",
    "step": 0,
-   "steps": 2,
-   "file": "static/frames/30-news-tunnel-0.webp",
-   "ground": "void"
+   "steps": 4,
+   "file": "static/frames/30-money-0.webp",
+   "ground": "paper"
   },
   {
    "n": 30,
-   "id": "news-tunnel",
-   "step": 1,
-   "steps": 2,
-   "file": "static/frames/30-news-tunnel-1.webp",
-   "ground": "void"
-  },
-  {
-   "n": 31,
-   "id": "money",
-   "step": 0,
-   "steps": 4,
-   "file": "static/frames/31-money-0.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 31,
    "id": "money",
    "step": 1,
    "steps": 4,
-   "file": "static/frames/31-money-1.webp",
+   "file": "static/frames/30-money-1.webp",
    "ground": "paper"
   },
   {
-   "n": 31,
+   "n": 30,
    "id": "money",
    "step": 2,
    "steps": 4,
-   "file": "static/frames/31-money-2.webp",
+   "file": "static/frames/30-money-2.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 30,
+   "id": "money",
+   "step": 3,
+   "steps": 4,
+   "file": "static/frames/30-money-3.webp",
    "ground": "paper"
   },
   {
    "n": 31,
-   "id": "money",
-   "step": 3,
-   "steps": 4,
-   "file": "static/frames/31-money-3.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 32,
    "id": "x-voices",
    "step": 0,
    "steps": 5,
-   "file": "static/frames/32-x-voices-0.webp",
+   "file": "static/frames/31-x-voices-0.webp",
    "ground": "paper"
   },
   {
-   "n": 32,
+   "n": 31,
    "id": "x-voices",
    "step": 1,
    "steps": 5,
-   "file": "static/frames/32-x-voices-1.webp",
+   "file": "static/frames/31-x-voices-1.webp",
    "ground": "paper"
   },
   {
-   "n": 32,
+   "n": 31,
    "id": "x-voices",
    "step": 2,
    "steps": 5,
-   "file": "static/frames/32-x-voices-2.webp",
+   "file": "static/frames/31-x-voices-2.webp",
    "ground": "paper"
   },
   {
-   "n": 32,
+   "n": 31,
    "id": "x-voices",
    "step": 3,
    "steps": 5,
-   "file": "static/frames/32-x-voices-3.webp",
+   "file": "static/frames/31-x-voices-3.webp",
    "ground": "paper"
   },
   {
-   "n": 32,
+   "n": 31,
    "id": "x-voices",
    "step": 4,
    "steps": 5,
-   "file": "static/frames/32-x-voices-4.webp",
+   "file": "static/frames/31-x-voices-4.webp",
    "ground": "paper"
   },
   {
-   "n": 33,
+   "n": 32,
    "id": "tabloids",
    "step": 0,
    "steps": 3,
-   "file": "static/frames/33-tabloids-0.webp",
+   "file": "static/frames/32-tabloids-0.webp",
    "ground": "paper"
   },
   {
-   "n": 33,
+   "n": 32,
    "id": "tabloids",
    "step": 1,
    "steps": 3,
-   "file": "static/frames/33-tabloids-1.webp",
+   "file": "static/frames/32-tabloids-1.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 32,
+   "id": "tabloids",
+   "step": 2,
+   "steps": 3,
+   "file": "static/frames/32-tabloids-2.webp",
    "ground": "paper"
   },
   {
    "n": 33,
-   "id": "tabloids",
+   "id": "two-speeds",
+   "step": 0,
+   "steps": 3,
+   "file": "static/frames/33-two-speeds-0.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 33,
+   "id": "two-speeds",
+   "step": 1,
+   "steps": 3,
+   "file": "static/frames/33-two-speeds-1.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 33,
+   "id": "two-speeds",
    "step": 2,
    "steps": 3,
-   "file": "static/frames/33-tabloids-2.webp",
+   "file": "static/frames/33-two-speeds-2.webp",
    "ground": "paper"
   },
   {
@@ -819,6 +891,14 @@
    "step": 0,
    "steps": 3,
    "file": "static/frames/34-adoption-0.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 34,
+   "id": "rules",
+   "step": 0,
+   "steps": 1,
+   "file": "static/frames/34-rules-0.webp",
    "ground": "paper"
   },
   {
@@ -839,250 +919,242 @@
   },
   {
    "n": 35,
-   "id": "rules",
+   "id": "so-what",
    "step": 0,
-   "steps": 1,
-   "file": "static/frames/35-rules-0.webp",
+   "steps": 2,
+   "file": "static/frames/35-so-what-0.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 35,
+   "id": "so-what",
+   "step": 1,
+   "steps": 2,
+   "file": "static/frames/35-so-what-1.webp",
    "ground": "paper"
   },
   {
    "n": 36,
-   "id": "so-what",
+   "id": "motor",
    "step": 0,
-   "steps": 2,
-   "file": "static/frames/36-so-what-0.webp",
-   "ground": "paper"
+   "steps": 4,
+   "file": "static/frames/36-motor-0.webp",
+   "ground": "void"
   },
   {
    "n": 36,
-   "id": "so-what",
+   "id": "motor",
    "step": 1,
+   "steps": 4,
+   "file": "static/frames/36-motor-1.webp",
+   "ground": "void"
+  },
+  {
+   "n": 36,
+   "id": "motor",
+   "step": 2,
+   "steps": 4,
+   "file": "static/frames/36-motor-2.webp",
+   "ground": "void"
+  },
+  {
+   "n": 36,
+   "id": "motor",
+   "step": 3,
+   "steps": 4,
+   "file": "static/frames/36-motor-3.webp",
+   "ground": "void"
+  },
+  {
+   "n": 37,
+   "id": "approach",
+   "step": 0,
    "steps": 2,
-   "file": "static/frames/36-so-what-1.webp",
+   "file": "static/frames/37-approach-0.webp",
    "ground": "paper"
   },
   {
    "n": 37,
-   "id": "motor",
-   "step": 0,
-   "steps": 4,
-   "file": "static/frames/37-motor-0.webp",
-   "ground": "void"
-  },
-  {
-   "n": 37,
-   "id": "motor",
-   "step": 1,
-   "steps": 4,
-   "file": "static/frames/37-motor-1.webp",
-   "ground": "void"
-  },
-  {
-   "n": 37,
-   "id": "motor",
-   "step": 2,
-   "steps": 4,
-   "file": "static/frames/37-motor-2.webp",
-   "ground": "void"
-  },
-  {
-   "n": 37,
-   "id": "motor",
-   "step": 3,
-   "steps": 4,
-   "file": "static/frames/37-motor-3.webp",
-   "ground": "void"
-  },
-  {
-   "n": 38,
    "id": "approach",
-   "step": 0,
+   "step": 1,
    "steps": 2,
-   "file": "static/frames/38-approach-0.webp",
+   "file": "static/frames/37-approach-1.webp",
    "ground": "paper"
   },
   {
    "n": 38,
-   "id": "approach",
+   "id": "checkable",
+   "step": 0,
+   "steps": 2,
+   "file": "static/frames/38-checkable-0.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 38,
+   "id": "checkable",
    "step": 1,
    "steps": 2,
-   "file": "static/frames/38-approach-1.webp",
+   "file": "static/frames/38-checkable-1.webp",
    "ground": "paper"
   },
   {
    "n": 39,
-   "id": "checkable",
+   "id": "roles",
    "step": 0,
-   "steps": 2,
-   "file": "static/frames/39-checkable-0.webp",
+   "steps": 4,
+   "file": "static/frames/39-roles-0.webp",
    "ground": "paper"
   },
   {
    "n": 39,
-   "id": "checkable",
-   "step": 1,
-   "steps": 2,
-   "file": "static/frames/39-checkable-1.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 40,
-   "id": "roles",
-   "step": 0,
-   "steps": 4,
-   "file": "static/frames/40-roles-0.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 40,
    "id": "roles",
    "step": 1,
    "steps": 4,
-   "file": "static/frames/40-roles-1.webp",
+   "file": "static/frames/39-roles-1.webp",
    "ground": "paper"
   },
   {
-   "n": 40,
+   "n": 39,
    "id": "roles",
    "step": 2,
    "steps": 4,
-   "file": "static/frames/40-roles-2.webp",
+   "file": "static/frames/39-roles-2.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 39,
+   "id": "roles",
+   "step": 3,
+   "steps": 4,
+   "file": "static/frames/39-roles-3.webp",
    "ground": "paper"
   },
   {
    "n": 40,
-   "id": "roles",
-   "step": 3,
-   "steps": 4,
-   "file": "static/frames/40-roles-3.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 41,
    "id": "think-twice",
    "step": 0,
    "steps": 6,
-   "file": "static/frames/41-think-twice-0.webp",
+   "file": "static/frames/40-think-twice-0.webp",
    "ground": "paper"
   },
   {
-   "n": 41,
+   "n": 40,
    "id": "think-twice",
    "step": 1,
    "steps": 6,
-   "file": "static/frames/41-think-twice-1.webp",
+   "file": "static/frames/40-think-twice-1.webp",
    "ground": "paper"
   },
   {
-   "n": 41,
+   "n": 40,
    "id": "think-twice",
    "step": 2,
    "steps": 6,
-   "file": "static/frames/41-think-twice-2.webp",
+   "file": "static/frames/40-think-twice-2.webp",
    "ground": "paper"
   },
   {
-   "n": 41,
+   "n": 40,
    "id": "think-twice",
    "step": 3,
    "steps": 6,
-   "file": "static/frames/41-think-twice-3.webp",
+   "file": "static/frames/40-think-twice-3.webp",
    "ground": "paper"
   },
   {
-   "n": 41,
+   "n": 40,
    "id": "think-twice",
    "step": 4,
    "steps": 6,
-   "file": "static/frames/41-think-twice-4.webp",
+   "file": "static/frames/40-think-twice-4.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 40,
+   "id": "think-twice",
+   "step": 5,
+   "steps": 6,
+   "file": "static/frames/40-think-twice-5.webp",
    "ground": "paper"
   },
   {
    "n": 41,
-   "id": "think-twice",
-   "step": 5,
-   "steps": 6,
-   "file": "static/frames/41-think-twice-5.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 42,
    "id": "first-move",
    "step": 0,
    "steps": 3,
-   "file": "static/frames/42-first-move-0.webp",
+   "file": "static/frames/41-first-move-0.webp",
    "ground": "paper"
   },
   {
-   "n": 42,
+   "n": 41,
    "id": "first-move",
    "step": 1,
    "steps": 3,
-   "file": "static/frames/42-first-move-1.webp",
+   "file": "static/frames/41-first-move-1.webp",
+   "ground": "paper"
+  },
+  {
+   "n": 41,
+   "id": "first-move",
+   "step": 2,
+   "steps": 3,
+   "file": "static/frames/41-first-move-2.webp",
    "ground": "paper"
   },
   {
    "n": 42,
-   "id": "first-move",
-   "step": 2,
+   "id": "callback",
+   "step": 0,
+   "steps": 2,
+   "file": "static/frames/42-callback-0.webp",
+   "ground": "void"
+  },
+  {
+   "n": 42,
+   "id": "callback",
+   "step": 1,
+   "steps": 2,
+   "file": "static/frames/42-callback-1.webp",
+   "ground": "void"
+  },
+  {
+   "n": 43,
+   "id": "close-line",
+   "step": 0,
    "steps": 3,
-   "file": "static/frames/42-first-move-2.webp",
+   "file": "static/frames/43-close-line-0.webp",
    "ground": "paper"
   },
   {
    "n": 43,
-   "id": "callback",
-   "step": 0,
-   "steps": 2,
-   "file": "static/frames/43-callback-0.webp",
-   "ground": "void"
+   "id": "close-line",
+   "step": 1,
+   "steps": 3,
+   "file": "static/frames/43-close-line-1.webp",
+   "ground": "paper"
   },
   {
    "n": 43,
-   "id": "callback",
-   "step": 1,
-   "steps": 2,
-   "file": "static/frames/43-callback-1.webp",
-   "ground": "void"
-  },
-  {
-   "n": 44,
-   "id": "close-line",
-   "step": 0,
-   "steps": 3,
-   "file": "static/frames/44-close-line-0.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 44,
-   "id": "close-line",
-   "step": 1,
-   "steps": 3,
-   "file": "static/frames/44-close-line-1.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 44,
    "id": "close-line",
    "step": 2,
    "steps": 3,
-   "file": "static/frames/44-close-line-2.webp",
+   "file": "static/frames/43-close-line-2.webp",
    "ground": "paper"
   },
   {
-   "n": 45,
+   "n": 44,
    "id": "end",
    "step": 0,
    "steps": 2,
-   "file": "static/frames/45-end-0.webp",
+   "file": "static/frames/44-end-0.webp",
    "ground": "void"
   },
   {
-   "n": 45,
+   "n": 44,
    "id": "end",
    "step": 1,
    "steps": 2,
-   "file": "static/frames/45-end-1.webp",
+   "file": "static/frames/44-end-1.webp",
    "ground": "void"
   }
  ]

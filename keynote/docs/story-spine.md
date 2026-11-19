@@ -1,33 +1,35 @@
 # Story spine: Inside the AI Frontier
 
-The 60-minute beat sheet and its energy curve. Source of truth: [`src/data/beats.json`](../src/data/beats.json), the copy deck with exact on-screen text, steps, visual direction and an owner per moment. Regenerate this page when beats.json changes (`python3 -I spine.py <worktree>`).
+The beat sheet and its energy curve. Source of truth: [`src/data/beats.json`](../src/data/beats.json), the copy deck with exact on-screen text, steps, visual direction and an owner per moment. Regenerated from it with `node scripts/spine.mjs`.
 
 **The promise.** Latin American leaders leave having seen how fast the AI frontier is moving and what it means for their 2027 decisions, and they think twice.
 
 **The shape.** Film (speed) → one question → I. what San Francisco is building → II. what the frontier labs show (the peak) → III. where they hit their limits (hard cut to silence) → IV. what the world is saying (loud) → V. what you do next (calm, decisive) → close.
 
-**Act starts:** Open 00:00 · I 03:45 · II 13:30 · III 27:00 · IV 38:30 · V 46:00 · Close 56:30
+**Planned length:** 56:00 for 44 moments, in a 60-minute slot.
+
+**Act starts:** Open 00:00 · I 03:45 · II 13:30 · III 24:45 · IV 36:00 · V 42:30 · Close 52:30
 
 ## Energy curve
 
 1 = silence, 10 = peak; one column per minute.
 
 ```
-10 │                 ██                                         
- 9 │█     ██         ██             ██    █    █                
- 8 │█   █ ██      ██ █████          ██ ████    █  ██            
- 7 │█   █ ██     █████████ █  █     ██ ████  ███  ██    ███ █   
- 6 │██  █ ███ ████████████ █  █    ███ █████████  ██    ██████  
- 5 │██  █ █████████████████████   ████ ██████████ ██  ████████  
- 4 │██  ███████████████████████ █████████████████ ████████████  
- 3 │███████████████████████████ ████████████████████████████████
- 2 │████████████████████████████████████████████████████████████
- 1 │████████████████████████████████████████████████████████████
+10 │                   █                                        
+ 9 │██    ██           █          ██    █   █                   
+ 8 │██  █ ██        █  ███        ██ ████   █  ██               
+ 7 │██  █ ██      █ ███████ █     ██ ████ ███  ██    ██  █      
+ 6 │███ █ ███ ███ █ ███████ █    ███ ████████  ██    ██████     
+ 5 │███ █ ███████ █ █████████   ████ █████████ ██ █████████     
+ 4 │███ █████████ ███████████ ████████████████ ████████████     
+ 3 │█████████████████████████ ██████████████████████████████    
+ 2 │████████████████████████████████████████████████████████    
+ 1 │████████████████████████████████████████████████████████    
    └────────────────────────────────────────────────────────────
     0    5    10   15   20   25   30   35   40   45   50   55   60 min
 ```
 
-Rhythm rules: never two bursts in a row without a calm beat, except at the Act II peak; every act opens with a change of ground (paper ↔ void); three silences (`question`, `and-yet`, `so-what`); the loudest moment is `swarm` (about minute 19); the quietest is the hard cut to `and-yet`, right after the labs' show of power.
+Rhythm rules: never two bursts in a row without a calm beat, except at the Act II peak; every act opens with a change of ground (paper ↔ void); the loudest moment is `swarm` (about minute 18); the silences are `and-yet`, `so-what`.
 
 ## Beats
 
@@ -45,36 +47,35 @@ Rhythm rules: never two bursts in a row without a calm beat, except at the Act I
 | 10 | 11:15 | I | `verification` | paper | 6 | Constraints | When agents write the work, the bottleneck becomes checking it, and the AI judges hallucinate too. |
 | 11 | 12:45 | I | `last-job` | paper | 3 | Value | The line that closes San Francisco: judgment is the last job. |
 | 12 | 13:30 | II | `three-labs` | void | 7 | — | Three labs share the frontier; each shipped its flagship in the last six weeks. |
-| 13 | 14:30 | II | `release-pace` | void | 8 | Speed | Frontier releases now come in weeks: 14 in 11 weeks across three labs. |
-| 14 | 15:45 | II | `year-in-weeks` | paper | 7 | Speed | Epoch’s independent index moved almost a year of trend in 11 weeks, with an honest caveat. |
-| 15 | 17:00 | II | `swarm` | void | 10 | Speed | The peak of the night: more than a thousand agents, eight days, an operating system from an empty folder. |
-| 16 | 18:45 | II | `self-build` | paper | 8 | Speed | AI is now building AI: inside one lab, Claude writes most of the code and leads a quarter of R&D. |
-| 17 | 20:00 | II | `science` | void | 8 | Value | The strongest results are now artifacts anyone can check: proofs, verified code, a new enzyme system. |
-| 18 | 21:45 | II | `price` | paper | 5 | Trade-offs | The same capability gets much cheaper every quarter: buy now or wait is a real trade-off. |
-| 19 | 22:45 | II | `ruler` | void | 7 | Uncertainty | Who leads depends on the ruler. Never pick a vendor from a leaderboard. |
-| 20 | 24:30 | II | `open-weights` | paper | 5 | Trade-offs | The best open-weight models are Chinese and a few months behind: an option for cost and control. |
-| 21 | 25:45 | II | `twins` | void | 7 | Constraints | The labs now say their own models are too capable to ship as-is, so each ships twins. |
-| 22 | 27:00 | III | `and-yet` | paper | 2 | — | Hard cut to silence. And yet. Four limits. |
-| 23 | 27:45 | III | `employee-bar` | paper | 4 | Constraints | The clearest independent test of real work: no model met the bar Epoch sets for its own employees. |
-| 24 | 29:45 | III | `economics` | paper | 5 | Trade-offs | Smarter isn't always cheaper: on one task, the bigger model cost more than the human contractor. |
-| 25 | 30:45 | III | `rulers-break` | paper | 6 | Uncertainty | The instruments that measure AI are saturating, being gamed and losing sight of reasoning. |
-| 26 | 32:15 | III | `breach` | void | 9 | Constraints | Agents under test escaped and reached the real world. The motive: finishing the task. |
-| 27 | 34:15 | III | `recipe` | paper | 4 | Constraints | Every documented incident shares one recipe. The lesson is operational. |
-| 28 | 35:15 | III | `power` | void | 8 | Constraints | Power is now a measured limit: the largest US grid cannot promise the electricity new data centres need. |
-| 29 | 36:45 | III | `brazil` | void | 8 | Constraints | Compute now needs a licence, and the rule reaches Latin America: Brazil is on the list, effective around today. |
-| 30 | 38:30 | IV | `news-tunnel` | void | 9 | Uncertainty | We fly through what the world is saying: real posts and headlines from the last 30 days. |
-| 31 | 39:15 | IV | `money` | paper | 6 | Value | The money: run-rates, an IPO, and capex at a scale no industry has seen. |
-| 32 | 41:00 | IV | `x-voices` | paper | 7 | Speed | On X this month: the posts that moved the conversation, with their real reach. |
-| 33 | 43:00 | IV | `tabloids` | paper | 9 | Uncertainty | Meanwhile, the headlines: rogue agents, superintelligence, the backlash. Fast, loud, real. |
-| 34 | 44:15 | IV | `adoption` | paper | 5 | Value | Inside companies: most US businesses now pay for AI, usage is exploding, and usage is not results. |
-| 35 | 45:30 | IV | `rules` | paper | 3 | Constraints | The binding rules now land on deployment, not training. |
-| 36 | 46:00 | V | `so-what` | paper | 2 | — | Turn to the audience. |
-| 37 | 46:30 | V | `motor` | void | 8 | Value | We have seen this before: the electric motor paid off only when factories were redesigned around it. |
-| 38 | 48:15 | V | `approach` | paper | 4 | Value | Approach: redesign the work, don't bolt AI onto it. |
-| 39 | 49:45 | V | `checkable` | paper | 5 | Trade-offs | The frontier's own lesson: AI leaps where results are cheap to check. Start there, and build the check first. |
-| 40 | 51:00 | V | `roles` | paper | 5 | Value | Roles for 2027: an owner, a verifier, an operator. Judgment stays human. |
-| 41 | 52:30 | V | `think-twice` | paper | 7 | — | The heart of the close: five decisions to think twice about in 2027, each backed by tonight's evidence. |
-| 42 | 54:45 | V | `first-move` | paper | 6 | Value | The first move for Monday: one workflow, redesigned, one number. |
-| 43 | 56:30 | Close | `callback` | void | 7 | Speed | Echo of the opening speed, then stillness: the plan has to move with the frontier. |
-| 44 | 57:15 | Close | `close-line` | paper | 6 | Uncertainty | Irina's belief, to close: uncertainty is material, not a reason to wait. The best options are built. |
-| 45 | 58:30 | Close | `end` | void | 3 | — | Mirror of the title. Name, LinkedIn, questions. |
+| 13 | 14:30 | II | `thermometers` | paper | 4 | Uncertainty | Before any ranking: the trusted referees that measure the labs, American and Chinese models alike. Four questions, three instruments each, today's readings. |
+| 14 | 16:00 | II | `release-pace` | void | 8 | Speed | Frontier releases now come in weeks: 14 in 11 weeks across three labs. |
+| 15 | 17:00 | II | `year-in-weeks` | paper | 7 | Speed | The whole story on Epoch's index: every step a new model, a steeper climb since reasoning models, and the last 11 weeks at about 2.7 times the usual pace, with Epoch's own caveat. |
+| 16 | 18:15 | II | `swarm` | void | 10 | Speed | The peak of the night: more than a thousand agents, eight days, an operating system from an empty folder. |
+| 17 | 20:00 | II | `self-build` | paper | 8 | Speed | AI is now building AI: inside one lab, Claude writes most of the code and leads a quarter of R&D, and an outside check finds the lab's progress now runs about twice as fast, mostly because of AI. |
+| 18 | 21:15 | II | `ruler` | void | 7 | Uncertainty | Who leads depends on the ruler. Never pick a vendor from a leaderboard. |
+| 19 | 22:45 | II | `open-weights` | paper | 5 | Trade-offs | The best open-weight models are Chinese and a few months behind: an option for cost and control. |
+| 20 | 23:45 | II | `twins` | void | 7 | Constraints | The labs now say their own models are too capable to ship as-is, so each ships twins. |
+| 21 | 24:45 | III | `and-yet` | paper | 2 | — | Hard cut to silence. And yet. Four limits. |
+| 22 | 25:30 | III | `employee-bar` | paper | 4 | Constraints | The clearest independent test of real work: no model met the bar Epoch sets for its own employees. |
+| 23 | 27:30 | III | `economics` | paper | 5 | Trade-offs | Smarter isn't always cheaper: on one task, the bigger model cost more than the human contractor. |
+| 24 | 28:30 | III | `rulers-break` | paper | 6 | Uncertainty | The instruments that measure AI are saturating, being gamed and losing sight of reasoning. |
+| 25 | 29:45 | III | `breach` | void | 9 | Constraints | Agents under test escaped and reached the real world. The motive: finishing the task. |
+| 26 | 31:45 | III | `recipe` | paper | 4 | Constraints | Every documented incident shares one recipe. The lesson is operational. |
+| 27 | 32:45 | III | `power` | void | 8 | Constraints | Power is now a measured limit: the largest US grid cannot promise the electricity new data centres need. |
+| 28 | 34:15 | III | `brazil` | void | 8 | Constraints | Compute now needs a licence, and the rule reaches Latin America: Brazil is on the list, effective around today. |
+| 29 | 36:00 | IV | `news-tunnel` | void | 9 | Uncertainty | We fly through what the world is saying: real posts and headlines from the last 30 days. |
+| 30 | 36:30 | IV | `money` | paper | 6 | Value | The money: run-rates, an IPO, and capex at a scale no industry has seen. |
+| 31 | 38:00 | IV | `x-voices` | paper | 7 | Speed | On X this month: the posts that moved the conversation, with their real reach. |
+| 32 | 39:30 | IV | `tabloids` | paper | 9 | Uncertainty | Meanwhile, the headlines: rogue agents, superintelligence, the backlash. Fast, loud, real. |
+| 33 | 40:30 | IV | `two-speeds` | paper | 5 | Speed | The labs move at lab speed; the real economy moves at adoption speed. They cannot be compared directly, and the gap is where 2027 is decided. |
+| 34 | 42:00 | IV | `rules` | paper | 3 | Constraints | The binding rules now land on deployment, not training. |
+| 35 | 42:30 | V | `so-what` | paper | 2 | — | Turn to the audience. |
+| 36 | 43:00 | V | `motor` | void | 8 | Value | We have seen this before: the electric motor paid off only when factories were redesigned around it. |
+| 37 | 44:45 | V | `approach` | paper | 4 | Value | Approach: redesign the work, don't bolt AI onto it. |
+| 38 | 46:00 | V | `checkable` | paper | 5 | Trade-offs | The frontier's own lesson: AI leaps where results are cheap to check. Start there, and build the check first. |
+| 39 | 47:15 | V | `roles` | paper | 5 | Value | Roles for 2027: an owner, a verifier, an operator. Judgment stays human. |
+| 40 | 48:30 | V | `think-twice` | paper | 7 | — | The heart of the close: five decisions to think twice about in 2027, each backed by tonight's evidence. |
+| 41 | 50:45 | V | `first-move` | paper | 6 | Value | The first move for Monday: one workflow, redesigned, one number. |
+| 42 | 52:30 | Close | `callback` | void | 7 | Speed | Echo of the opening speed, then stillness: the plan has to move with the frontier. |
+| 43 | 53:15 | Close | `close-line` | paper | 6 | Uncertainty | Irina's belief, to close: uncertainty is material, not a reason to wait. The best options are built. |
+| 44 | 54:30 | Close | `end` | void | 3 | — | Mirror of the title. Name, LinkedIn, questions. |

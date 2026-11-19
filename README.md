@@ -4,7 +4,7 @@
 
 ## Inside the AI Frontier: the keynote
 
-**Who uses it:** Irina Vélez presents it live on Thursday 19 November 2026, 19:00 Bogotá (GMT-5), at «Inside the AI Frontier», a free online session for Latin American business leaders. About 60 minutes, 45 moments: an opening film, then what San Francisco is building, what the frontier labs show, where they hit their limits, what the world is saying, and what leaders do next.
+**Who uses it:** Irina Vélez presents it live on Thursday 19 November 2026, 19:00 Bogotá (GMT-5), at «Inside the AI Frontier», a free online session for Latin American business leaders. About 60 minutes (56 planned), 44 moments: an opening film, then what San Francisco is building, what the frontier labs show, where they hit their limits, what the world is saying, and what leaders do next.
 
 ### Open it
 
@@ -48,8 +48,9 @@ Presentation clickers that send PageUp/PageDown work too. The presenter window a
 From [`keynote/docs/fact-check.md`](keynote/docs/fact-check.md):
 
 1. **Lauren Tan's YouTube views** (moment 7, "All Code Is Slop"): read the current count on [YouTube](https://youtu.be/O_zcc6Xl12g), update `views` in `keynote/src/data/beats.json`, rebuild.
-2. **The US chip rule** (moment 29, Brazil): check whether Federal Register document 2026-23529 was published. If not, change "now need" to "will need" in the brazil moment.
-3. **Leaderboards** (moment 19, "Who leads?"): re-check Artificial Analysis, Epoch, Arena and ARC Prize; GPT-6.2 may have entered Arena.
+2. **The US chip rule** (moment 28, Brazil): check whether Federal Register document 2026-23529 was published (scheduled for 19 Nov). If not, change "now need" to "will need" in the brazil moment.
+3. **Leaderboards** (moment 18, "Who leads?"): re-check [Artificial Analysis](https://artificialanalysis.ai/leaderboards/models) (Gemini 4 Neon appeared at 61 on 18 Nov with no Google announcement found yet), [Arena](https://arena.ai/leaderboard/text) (GPT-6.2 may have entered) and Epoch's [ECI scores](https://epoch.ai/eci), which also feed moment 15's chart. ARC Prize's 98.5% is on moment 24.
+4. **US Census AI adoption** (moment 33, "Two speeds"): the Census Bureau publishes a new survey round on 19 Nov. If it changes the 24.6% (`census-btos-ai-246` in `keynote/src/data/facts.json`), update the fact and its date. The 5 Nov round read 24.2%, but its question changed wording, so the slide uses October.
 
 Rebuild after any change: `cd keynote && node scripts/build.mjs`.
 
