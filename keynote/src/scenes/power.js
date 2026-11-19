@@ -2,7 +2,11 @@
 // blocks pulse while the grid feeds them; a contiguous region holding the shortfall's share of the lights
 // (6,831 of 145,149 MW required = 4.7 %) goes dark; for the bill, the 38.2 % of power routes that end at
 // data centres turn gold. The world continues into `brazil` (same world module, same camera pose).
+// Evidence: on the data-centre step, once the routes have turned gold, the market monitor's own slide
+// (src/data/evidence.json) arrives under the figure as the calm beat: the 38.2 % bullet boxed, its policy position
+// visible, chip + caveat + QR beside it.
 import { gsap } from 'gsap';
+import { evItem, evPage } from './_ev-page.js';
 import { buildGridEarth, FACE, POWER_SHOTS } from './_worlds/grid-earth.js';
 import { factsSource, provKind, place, splitFigure } from './_worlds/gl2-kit.js';
 
@@ -38,6 +42,15 @@ export default {
     const share = C.BigNumber.create({ display: f2.figure, unit: f2.unit || undefined, label: copy.shareLabel, kind: provKind(fDC && fDC.label), size: 'display', ground: 'void', width: spanW(7) });
     place(share.el, space.margin, 150);
 
+    const evDC = evItem(ctx, 'power-pjm-imm-datacentre-382');
+    const DOC_W = 760;
+    const pageDC = evDC ? evPage(ctx, evDC, {
+      width: DOC_W, ground: 'void', side: 600, qrSize: 160, link: false, // a 140-character PDF path: the QR carries it
+      win: { y0: 0, y1: 0.86 },
+      boxes: { share: { x: 0.065, y: 0.127, w: 0.88, h: 0.155 } }, // "of the $16.4B … $6.3B … 38.2 percent"
+    }) : null;
+    if (pageDC) place(pageDC.el, space.margin, 548);
+
     const foot = document.createElement('div');
     Object.assign(foot.style, { position: 'absolute', left: `${space.margin}px`, top: `${space.footer.y}px`, display: 'flex', gap: '48px', alignItems: 'center' });
     const srcShort = C.SourceLine.create({ kind: provKind(fShort && fShort.label), text: factsSource(fShort), ground: 'void' });
@@ -46,8 +59,8 @@ export default {
     if (srcCol) foot.append(srcCol.el);
     const srcDC = C.SourceLine.create({ kind: provKind(fDC && fDC.label), text: factsSource(fDC), ground: 'void' });
     place(srcDC.el, space.margin, space.footer.y);
-    const parts = [title, num, compare, compareChip, share, srcShort, srcCol, srcDC].filter(Boolean);
-    [title, num, compare, compareChip, share].filter(Boolean).forEach((p) => root.append(p.el));
+    const parts = [title, num, compare, compareChip, share, srcShort, srcCol, srcDC, pageDC && pageDC.c].filter(Boolean);
+    [title, num, compare, compareChip, share, pageDC && pageDC.c].filter(Boolean).forEach((p) => root.append(p.el));
     root.append(foot, srcDC.el);
     for (const p of [srcShort, srcCol, srcDC]) if (p) p.el.style.position = p === srcDC ? 'absolute' : 'relative';
 
@@ -80,7 +93,12 @@ export default {
       tl.add(share.set({ visible: step === 3 }, { animate }), D(step === 3 ? 1.8 : 0));
       tl.add(srcShort.set({ visible: step === 1 || step === 2 }, { animate }), D(step === 1 ? 2.6 : 0));
       if (srcCol) tl.add(srcCol.set({ visible: step === 2 }, { animate }), D(step === 2 ? 0.9 : 0));
-      tl.add(srcDC.set({ visible: step === 3 }, { animate }), D(step === 3 ? 2.2 : 0));
+      // with the slide on screen its own meta carries the source: one source line per frame
+      tl.add(srcDC.set({ visible: step === 3 && !pageDC }, { animate }), D(step === 3 ? 2.2 : 0));
+      if (pageDC) {
+        tl.add(pageDC.c.set({ visible: step === 3 }, { animate }), D(step === 3 ? 3.0 : 0));
+        pageDC.focus({ on: step === 3 ? ['share'] : [] }, animate, tl, 3.8);
+      }
       cur = step;
       return tl;
     }

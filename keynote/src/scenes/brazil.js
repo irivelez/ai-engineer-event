@@ -2,7 +2,11 @@
 // US; at the rule, Latin America turns to face the camera and the arcs to Brazil stop at a gate on Brazil's
 // border (the arcs to Indonesia, Malaysia, Singapore and Thailand are gated the same way, out of view);
 // then two light pillars, heights to scale, show where the compute sits (US 72 : China ~10).
+// Evidence: on the compute-share step, once the pillars stand, Epoch's own sentence (src/data/evidence.json:
+// "19.8 million, or 72%, went to the United States… China… 2.6 million (10%)") arrives under the line as the calm
+// beat, boxed, with its chip, caveat and QR beside it; it replaces the standalone chip.
 import { gsap } from 'gsap';
+import { evItem, evPage } from './_ev-page.js';
 import { buildGridEarth, FACE, POWER_SHOTS, BRAZIL_SHOTS, BRAZIL_FACES } from './_worlds/grid-earth.js';
 import { factsSource, provKind, place, croppedCard, captureInfo } from './_worlds/gl2-kit.js';
 
@@ -38,6 +42,14 @@ export default {
     place(share.el, space.margin, 330);
     const shareChip = C.ProvenanceChip.create({ kind: provKind(fShare && fShare.label), ground: 'void' });
     place(shareChip.el, space.margin, 640);
+    const ev72 = evItem(ctx, 'brazil-epoch-chips-72');
+    const DOC_W = 900;
+    const page72 = ev72 ? evPage(ctx, ev72, {
+      width: DOC_W, ground: 'void', side: 620, qrSize: 160,
+      win: { y0: 0.1, y1: 0.77 },
+      boxes: { share: { x: 0.01, y: 0.245, w: 0.975, h: 0.375 } }, // "…19.8 million, or 72%, went to the United States. China… 2.6 million (10%)"
+    }) : null;
+    if (page72) place(page72.el, space.margin, 600);
     const srcRule = C.SourceLine.create({ kind: provKind(fRule && fRule.label), text: factsSource(fRule), ground: 'void' });
     place(srcRule.el, space.margin, space.footer.y);
     const srcShare = C.SourceLine.create({ kind: provKind(fShare && fShare.label), text: factsSource(fShare), ground: 'void' });
@@ -54,7 +66,7 @@ export default {
     if (srcCard) place(srcCard.el, space.margin, space.footer.y);
     const scrimC = C.Scrim.create({ ground: 'void', side: 'center', extent: 1.1, strength: 0.9 });
     root.append(scrimC.el);
-    const parts = [title, kicker, line, others, effective, share, shareChip, srcRule, srcShare, card, srcCard].filter(Boolean);
+    const parts = [title, kicker, line, others, effective, share, shareChip, srcRule, srcShare, card, srcCard, page72 && page72.c].filter(Boolean);
     parts.forEach((p) => root.append(p.el));
 
     // ---------- camera + globe pose ----------
@@ -111,8 +123,13 @@ export default {
       tl.add(effective.set({ visible: step === 1 }, { animate }), D(step === 1 ? 2.9 : 0));
       tl.add(srcRule.set({ visible: step === 1 }, { animate }), D(step === 1 ? 3.2 : 0));
       tl.add(share.set({ visible: step === 2 }, { animate }), D(step === 2 ? 1.2 : 0));
-      tl.add(shareChip.set({ visible: step === 2 }, { animate }), D(step === 2 ? 1.8 : 0));
-      tl.add(srcShare.set({ visible: step === 2 }, { animate }), D(step === 2 ? 2.0 : 0));
+      // with Epoch's sentence on screen its own meta carries chip + source: one chip per frame
+      tl.add(shareChip.set({ visible: step === 2 && !page72 }, { animate }), D(step === 2 ? 1.8 : 0));
+      tl.add(srcShare.set({ visible: step === 2 && !page72 }, { animate }), D(step === 2 ? 2.0 : 0));
+      if (page72) {
+        tl.add(page72.c.set({ visible: step === 2 }, { animate }), D(step === 2 ? 3.4 : 0));
+        page72.focus({ on: step === 2 ? ['share'] : [] }, animate, tl, 4.2);
+      }
       cur = step;
       return tl;
     }

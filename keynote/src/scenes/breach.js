@@ -2,7 +2,10 @@
 // cracks from one impact point and opens; 700 agents (METR: joined the attack) leak along network traces
 // on the floor to three distant clusters, which turn red rack by rack while a date clock runs 9 → 13 Jul
 // (the intrusion window in facts.json). Numbers land on a left scrim; the motive closes on calm.
+// Evidence: on the motive step, Hugging Face's own paragraph (src/data/evidence.json) arrives under the line as the
+// calm beat, its "attempt to cheat the evaluation" sentence boxed, with its chip, hedge and QR beside it.
 import { gsap } from 'gsap';
+import { evItem, evPage } from './_ev-page.js';
 import * as THREE from 'three';
 import { fatLines, polylineSegments, curveTexture, CURVE_GLSL, POINT_FRAG, pointScale, factsSource, provKind, place, splitFigure, croppedCard, captureInfo } from './_worlds/gl2-kit.js';
 
@@ -416,7 +419,15 @@ export default {
     const num700 = C.BigNumber.create({ display: fig700.figure, unit: fig700.unit || undefined, label: copy.s3.label, kind: provKind(f700 && f700.label), size: 'h1', ground: 'void', width: spanW(6) });
     place(num700.el, space.margin, 560);
     const motive = C.Headline.create({ text: copy.motive, role: 'h2', ground: 'void', width: spanW(7), highlight: 'an attempt to cheat the evaluation.' });
-    place(motive.el, space.margin, 404);
+    const evM = evItem(ctx, 'breach-hf-motive');
+    const DOC_W = 1100;
+    const pageM = evM ? evPage(ctx, evM, {
+      width: DOC_W, ground: 'void', side: 1920 - 2 * space.margin - DOC_W - 40, qrSize: 160,
+      win: { y0: 0.45, y1: 0.97 },
+      boxes: { cheat: { x: 0.005, y: 0.645, w: 0.985, h: 0.285 } }, // "We believe the entire intrusion was… an attempt to cheat the evaluation…"
+    }) : null;
+    place(motive.el, space.margin, pageM ? 236 : 404);
+    if (pageM) place(pageM.el, space.margin, 584);
     const source = C.SourceLine.create({ kind: provKind(fIntr && fIntr.label), text: copy.tag, ground: 'void' });
     place(source.el, space.margin, space.footer.y);
     const motiveSrc = C.SourceLine.create({ kind: provKind(fMot && fMot.label), text: factsSource(fMot), ground: 'void' });
@@ -451,7 +462,7 @@ export default {
     if (srcCard) place(srcCard.el, space.margin, space.footer.y);
     const scrimC = C.Scrim.create({ ground: 'void', side: 'center', extent: 1.1, strength: 0.9 });
     root.append(scrimC.el);
-    const parts = [title, s1, num13, num700, motive, source, motiveSrc, card, srcCard].filter(Boolean);
+    const parts = [title, s1, num13, num700, motive, source, motiveSrc, card, srcCard, pageM && pageM.c].filter(Boolean);
     parts.forEach((p) => root.append(p.el));
     gsap.set([scrimL.el, scrimB.el], { autoAlpha: 0 });
 
@@ -495,7 +506,12 @@ export default {
       tl.add(num700.set({ visible: step === 2 }, { animate }), D(step === 2 ? 1.25 : 0));
       tl.add(motive.set({ visible: step === 3 }, { animate }), D(step === 3 ? 1.0 : 0));
       tl.add(source.set({ visible: step >= 1 && step <= 2 }, { animate }), D(step >= 1 ? 1.4 : 0));
-      tl.add(motiveSrc.set({ visible: step === 3 }, { animate }), D(step === 3 ? 1.5 : 0));
+      // with the page on screen its own meta carries the chip and the source: one chip per frame
+      tl.add(motiveSrc.set({ visible: step === 3 && !pageM }, { animate }), D(step === 3 ? 1.5 : 0));
+      if (pageM) {
+        tl.add(pageM.c.set({ visible: step === 3 }, { animate }), D(step === 3 ? 1.8 : 0));
+        pageM.focus({ on: step === 3 ? ['cheat'] : [] }, animate, tl, 2.6);
+      }
       tl.to(clock, { autoAlpha: step >= 1 && step <= 2 ? 1 : 0, duration: D(step >= 1 ? 0.6 : 0.3) }, forward ? 3.3 : 0);
       if (!animate) tl.call(setDay, null, 0.001);
       cur = step;

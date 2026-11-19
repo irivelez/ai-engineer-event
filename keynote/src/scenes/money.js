@@ -3,8 +3,11 @@
 //            source (lab-reported / official / secondary, the secondary caveat kept) sits beside the figure when
 //            there is room (so the frame is used edge to edge), under it when the figure is wide.
 // Step 3: the headlines: the real X post of the S-1 filing and AP's story on it slide in as cards.
+// Evidence: step 0's run-rate has the State of AI report's own sentence under it (src/data/evidence.json), boxed,
+// with its chip, caveat and QR beside it; that strip then carries the figure's provenance (one chip per frame).
 import { gsap } from 'gsap';
 import { calmScene, el, esc } from './_calm/kit.js';
+import { evItem, evPage } from './_ev-page.js';
 import { actLine, ensureCSS, sourceOf, tagSource, capCard, capMeta } from './_calm-b/kit.js';
 
 // Captures for the headlines step (director's curation), with crops in image px.
@@ -39,6 +42,15 @@ export default calmScene('money', (ctx, K) => {
   // ----- the big figure, one per step; its label + provenance beside it when there is room, else under it -----
   const FIG_Y = 456;
   const FIG_H = T.type.display.size * T.type.display.line; // 216
+  // step 0's evidence: the report's sentence ($105B by late summer, up from about $30B), lines 1–2 boxed
+  const ev = evItem(ctx, 'money-stateofai-105');
+  const DOC_W = 1100;
+  const page = ev ? evPage(ctx, ev, {
+    width: DOC_W, ground: g, side: 1920 - 2 * M - DOC_W - 40, qrSize: 184, // a short URL: bigger modules
+    win: { y0: 0.08, y1: 0.92 },
+    boxes: { runRate: { x: 0.01, y: 0.12, w: 0.975, h: 0.385 } },
+  }) : null;
+  if (page) K.add(page.c, M, FIG_Y + FIG_H + 32);
   const figs = items.map((it, i) => {
     const fig = K.add(C.BigNumber.create({ display: String(it.value || '').replace(/ /g, ' '), size: 'display', ground: g }), M, FIG_Y);
     const side = el('div', '');
@@ -48,6 +60,7 @@ export default calmScene('money', (ctx, K) => {
     const meta = el('div', 'cb-src', side, `${C.chipHTML(srcs[i].kind)}<span class="t-source">${esc(srcs[i].text)}</span>`);
     meta.classList.add(`ground-${g}`);
     meta.style.marginTop = '24px';
+    if (i === 0 && page) meta.style.display = 'none'; // the evidence strip under the figure carries chip + source
     place(side, M, FIG_Y + FIG_H + 24, T.spanW(12));
     const sideB = K.block(side, { rise: 20 });
     return { fig, side, sideB, lab };
@@ -102,6 +115,7 @@ export default calmScene('money', (ctx, K) => {
     { c: title, on: () => true, at: 0.08 },
     ...figs.flatMap((f, i) => [{ c: f.fig, on: (s) => s === i, at: 0.3 }, { c: f.sideB, on: (s) => s === i, at: 0.75 }]),
     ...cards.map(({ c }, i) => ({ c, on: (s) => s >= 3, at: 0.35 + i * 0.3 })),
+    ...(page ? [{ c: page.c, on: (s) => s === 0, at: 1.2 }] : []),
   ];
   const apply = K.stepper(parts);
 
@@ -109,6 +123,7 @@ export default calmScene('money', (ctx, K) => {
     const anim = animate && !R;
     const tl = gsap.timeline();
     apply(step, anim, tl, info);
+    if (page) page.focus({ on: step === 0 ? ['runRate'] : [] }, anim, tl, 2.0);
     // steps 0–2 carry their chip and source under the figure; at step 3 the cards' captions do
     foot.show(null, anim, tl, 0);
     return tl;
