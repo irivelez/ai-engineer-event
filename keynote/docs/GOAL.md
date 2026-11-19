@@ -24,3 +24,15 @@ Each moment loops until it passes (max 3 rounds; then the director decides):
 - **G3 Legible:** zoomsim passes; sizes and contrast within tokens.
 - **G4 True:** every number and quote matches facts.json or the captions.
 - **G5 World-class:** a critic scores it 1–10 against the reference key frames on composition, type, motion, light and colour, and clarity of the one idea. Pass = every score ≥ 8 and nothing from the "looks cheap" list: default fonts, misaligned baselines, crowded text, unmotivated motion, clip-art icons, generic gradients, tiny labels, jank, text over busy 3D without a scrim.
+
+## Overnight goal, 18 → 19 Nov: the motion redesign
+
+Irina, 18 Nov 22:45: the animated moments look "basic… like AI slop"; she wants them world-class, every visual grounded, ready to review on the morning of the talk.
+
+**By 19 Nov, 09:00 Bogotá:**
+
+1. All 11 animated moments are redesigned to one bar. Hero 3D rebuilds: `motor`, `swarm`, `sf-arrival`, `breach` (real materials, image-based light, depth of field, one motivated camera move per step). Editorial motion built from real data: `factory`, `release-pace`, `three-labs`, `callback`. Real geography: `brazil` and `power` (Natural Earth shapes, honest footprints). `news-tunnel`: real headlines in one focus-pulling dolly.
+2. Grounded: every count, date and duration a visual implies matches `src/data/facts.json`; no invented numbers, screens, labels or logos; real places and history drawn faithfully.
+3. Each passes G1–G4 above, at 60 fps both at 1920×1080 and on a MacBook Air Retina viewport (1470×956 @2x), with a full smoke at zero console errors and the static fallback re-rendered.
+4. G5 is judged side by side: a redesign ships only if it clearly beats the committed version; otherwise the committed version stays.
+5. Irina gets side-by-side before/after videos and a one-page summary. Nothing is pushed or deployed without her yes.
