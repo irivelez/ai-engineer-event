@@ -19,7 +19,6 @@
       "title": "Introducing Claude Fable 5.2",
       "date": "2026-11-09",
       "duration": 18.5,
-      "disclaimer": "",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 3 (“Model names and dates”) on Anthropic’s monolith: the whole 19 s launch film, muted, behind or beside “Claude Fable 5.2 · 9 Nov”. Music only, no captions on YouTube.",
@@ -43,7 +42,6 @@
       "title": "GPT-6.2 Astra and GPT-6.2 Sol—Models built for the real world",
       "date": "2026-11-17",
       "duration": 9.2,
-      "disclaimer": "",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 3 on OpenAI’s monolith: the film’s last 9.5 s (GPT-6.2 Astra end card, then the OpenAI mark). The rest of the 1:59 film is a comedy sketch in a 1990s office, not evidence.",
@@ -67,7 +65,6 @@
       "title": "Gemini 4 Carbon is now available",
       "date": "2026-11-10",
       "duration": null,
-      "disclaimer": "",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 3 on Google’s monolith (title + “Nov 10, 2026”). No official Gemini 4 Carbon launch video found: the last 30 uploads of Google DeepMind and Google on YouTube have none (only third-party reviews and a 41-min Google Cloud interview).",
@@ -93,13 +90,13 @@
       "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
       "date": "2026-11-09",
       "duration": null,
-      "disclaimer": "Page note: “Edit 11 November: Amended a sentence and added a footnote to the “Mathematical formalization” subsection…”",
       "speech": false,
       "captions": null,
       "recommendation": "Still alternative to the Anthropic video in step 3: the launch page masthead (NOVEMBER 9, 2026 · Claude Fable 5.2 and Mythos 5.2).",
       "capturedAt": "2026-11-19T02:03:41.403Z",
       "pixels": "1600x950",
-      "exists": true
+      "exists": true,
+      "note": "Page note: “Edit 11 November: Amended a sentence and added a footnote to the “Mathematical formalization” subsection…”"
     },
     {
       "id": "three-labs-openai-gpt62-system-card",
@@ -119,7 +116,6 @@
       "title": "GPT-6.2 System Card",
       "date": "2026-11-17",
       "duration": null,
-      "disclaimer": "",
       "speech": false,
       "captions": null,
       "recommendation": "Still alternative to the OpenAI video in step 3: the system card header with “Published November 17, 2026”.",
@@ -145,13 +141,13 @@
       "title": "Release notes",
       "date": "2026-11-17",
       "duration": null,
-      "disclaimer": "Fable 5.2 (9 Nov) has no entry of its own in the November release notes; its date comes from the launch post.",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 2 as the Anthropic track: the dated launch entries for Haiku 5.5 (7 Oct), Sonnet 5.5 (28 Sep) and Opus 5.5 (22 Sep), stacked as one tall crop; scroll or scale it inside the track.",
       "capturedAt": "2026-11-19T02:11:13.671Z",
       "pixels": "1400x1520",
-      "exists": true
+      "exists": true,
+      "note": "Fable 5.2 (9 Nov) has no entry of its own in the November release notes; its date comes from the launch post."
     },
     {
       "id": "release-pace-gemini-ga-table",
@@ -170,7 +166,6 @@
       "title": "Model versions and lifecycle (stable models table)",
       "date": "2026-11-18",
       "duration": null,
-      "disclaimer": "",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 2 as the Google track (part 1): release dates of gemini-4-argon (13 Oct) and gemini-3.8-flash (2 Sep).",
@@ -195,13 +190,13 @@
       "title": "Model versions and lifecycle (shorter-term models table)",
       "date": "2026-11-18",
       "duration": null,
-      "disclaimer": "The table now also lists gemini-4-neon, released November 18, 2026: after the 1 Sep–17 Nov window, so not in the count of 14.",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 2 as the Google track (part 2): gemini-4-hydrogen (12 Nov), gemini-4-carbon (10 Nov) and the cyber-permissive variants, with dates.",
       "capturedAt": "2026-11-19T02:10:59.916Z",
       "pixels": "1522x1284",
-      "exists": true
+      "exists": true,
+      "note": "The table now also lists gemini-4-neon, released November 18, 2026: after the 1 Sep–17 Nov window, so not in the count of 14."
     },
     {
       "id": "release-pace-openai-hub",
@@ -220,13 +215,13 @@
       "title": "Deployment safety: Updates",
       "date": "2026-11-17",
       "duration": null,
-      "disclaimer": "The hub lists only its 8 latest updates (15 Oct–17 Nov); GPT-6 Astra (3 Sep) and GPT-6.1 Sol (29 Sep) are not in this crop.",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 2 as the OpenAI track: the hub’s own dated list (GPT-6.2 card 17 Nov, GPT-6 Cyber card 5 Nov, GPT-6.1 Terra addendum 26 Oct…).",
       "capturedAt": "2026-11-19T02:09:06.263Z",
       "pixels": "1600x1327",
-      "exists": true
+      "exists": true,
+      "note": "The hub lists only its 8 latest updates (15 Oct–17 Nov); GPT-6 Astra (3 Sep) and GPT-6.1 Sol (29 Sep) are not in this crop."
     },
     {
       "id": "self-build-anthropic-90-merged",
@@ -245,13 +240,13 @@
       "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
       "date": "2026-11-09",
       "duration": null,
-      "disclaimer": "“(with human guidance)”, in the same sentence.",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 1 (“>90% of merged changes”): the verbatim paragraph under the number.",
       "capturedAt": "2026-11-19T02:04:55.094Z",
       "pixels": "1202x604",
-      "exists": true
+      "exists": true,
+      "note": "“(with human guidance)”, in the same sentence."
     },
     {
       "id": "self-build-anthropic-rd-26",
@@ -270,13 +265,13 @@
       "title": "Measuring the pace of AI development",
       "date": "2026-09-17",
       "duration": null,
-      "disclaimer": "Same list, first bullet: “Claude is not operating fully autonomously for any measured subset of AI R&D work.”",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 2 (<1% → ~26%) next to Anthropic’s chart (self-build-anthropic-rd-chart): the three bullets “As of August 2026”, caveat included.",
       "capturedAt": "2026-11-19T02:09:27.887Z",
       "pixels": "1202x494",
-      "exists": true
+      "exists": true,
+      "note": "Same list, first bullet: “Claude is not operating fully autonomously for any measured subset of AI R&D work.”"
     },
     {
       "id": "self-build-anthropic-30000-agents",
@@ -295,13 +290,13 @@
       "title": "Measuring the pace of AI development",
       "date": "2026-09-17",
       "duration": null,
-      "disclaimer": "“These measurements cover this platform only.”",
       "speech": false,
       "captions": null,
       "recommendation": "Optional: self-build step 3 is now METR’s ~2× (use thermometers-metr-anthropic-2x). Join step 3 (“~30,000 agents at work; the caveat”): the verbatim paragraph, which carries its own caveat.",
       "capturedAt": "2026-11-19T02:05:05.699Z",
       "pixels": "1202x350",
-      "exists": true
+      "exists": true,
+      "note": "“These measurements cover this platform only.”"
     },
     {
       "id": "twins-openai-gpt6-critical",
@@ -320,13 +315,13 @@
       "title": "GPT-6 Astra System Card",
       "date": "2026-09-03",
       "duration": null,
-      "disclaimer": "The quote opens with its condition: “with the right tools and access”.",
       "speech": false,
       "captions": null,
       "recommendation": "Replace the typeset quote in step 1 (“OpenAI’s own words about GPT-6 Astra”) with this crop, or show it beside the quote: “first model to reach the Critical level” + the full sentence.",
       "capturedAt": "2026-11-19T02:12:32.343Z",
       "pixels": "1598x824",
-      "exists": true
+      "exists": true,
+      "note": "The quote opens with its condition: “with the right tools and access”."
     },
     {
       "id": "twins-anthropic-mythos",
@@ -345,13 +340,13 @@
       "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2 (Cybersecurity)",
       "date": "2026-11-09",
       "duration": null,
-      "disclaimer": "“…note that Claude Fable 5.2’s safeguards will block most cybersecurity-related…” (same paragraph).",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 2 (“The twin releases”) for Anthropic: Mythos 5.2 described in Anthropic’s words, with Fable 5.2’s safeguards in the same paragraph.",
       "capturedAt": "2026-11-19T02:06:01.342Z",
       "pixels": "1202x706",
-      "exists": true
+      "exists": true,
+      "note": "“…note that Claude Fable 5.2’s safeguards will block most cybersecurity-related…” (same paragraph)."
     },
     {
       "id": "ruler-aa-intelligence-index",
@@ -370,13 +365,13 @@
       "title": "LLM Leaderboard: Artificial Analysis Intelligence Index",
       "date": "2026-11-18",
       "duration": null,
-      "disclaimer": "Live page, no as-of date. Captured 18 Nov 2026: Gemini 4 Neon Xhigh (61, released 18 Nov) now sits third, above Gemini 4 Carbon High (60); the slide lists Carbon third.",
       "speech": false,
       "captions": null,
       "recommendation": "Replace the drawn bars in step 1 (Artificial Analysis) with the real table rows: Fable 5.2 Max 65, GPT-6.2 Astra Max 62, Gemini 4 Neon Xhigh 61, Gemini 4 Carbon High 60. Update the slide copy for Neon or say it aloud.",
       "capturedAt": "2026-11-19T02:12:14.875Z",
       "pixels": "1600x314",
-      "exists": true
+      "exists": true,
+      "note": "Live page, no as-of date. Captured 18 Nov 2026: Gemini 4 Neon Xhigh (61, released 18 Nov) now sits third, above Gemini 4 Carbon High (60); the slide lists Carbon third."
     },
     {
       "id": "ruler-epoch-eci",
@@ -396,13 +391,13 @@
       "title": "Epoch Capabilities Index over time",
       "date": "2026-11-18",
       "duration": null,
-      "disclaimer": "Epoch’s chart carries “EPOCH AI | CC-BY”. GPT-6.2 Astra’s point is not labelled at this zoom; Fable 5.2’s 174 is from pre-launch testing and “may change”.",
       "speech": false,
       "captions": null,
       "recommendation": "Replace the drawn chart in step 2 (Epoch Capabilities Index) with Epoch’s own scatter (Oct 2024–Nov 2026, labels by lab). CC-BY: keep the “Epoch AI” credit visible.",
       "capturedAt": "2026-11-19T02:10:16.274Z",
       "pixels": "1100x1070",
-      "exists": true
+      "exists": true,
+      "note": "Epoch’s chart carries “EPOCH AI | CC-BY”. GPT-6.2 Astra’s point is not labelled at this zoom; Fable 5.2’s 174 is from pre-launch testing and “may change”."
     },
     {
       "id": "ruler-arc-agi-3",
@@ -422,13 +417,13 @@
       "title": "ARC Prize leaderboard: Leaderboard Breakdown",
       "date": "2026-11-17",
       "duration": null,
-      "disclaimer": "Columns (left to right): ARC-AGI-1, ARC-AGI-2, ARC-AGI-3 · Standard, ARC-AGI-3 · Provider adapter. The page does not define the protocols; final ARC Prize 2026 results are due 4 Dec.",
       "speech": false,
       "captions": null,
       "recommendation": "Replace the drawn bars in step 4 (ARC-AGI-3): four real rows, Fable 5.2 81.2% (1st, standard), GPT-6.2 Astra 70.3% (2nd) but 100.0% with the provider adapter, Gemini 4 Carbon 65.1%; ARC-AGI-1 98.5% for three of them shows saturation.",
       "capturedAt": "2026-11-19T02:12:23.517Z",
       "pixels": "1600x404",
-      "exists": true
+      "exists": true,
+      "note": "Columns (left to right): ARC-AGI-1, ARC-AGI-2, ARC-AGI-3 · Standard, ARC-AGI-3 · Provider adapter. The page does not define the protocols; final ARC Prize 2026 results are due 4 Dec."
     },
     {
       "id": "employee-bar-epoch-key-findings",
@@ -449,13 +444,13 @@
       "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work? (Key findings)",
       "date": "2026-11-17",
       "duration": null,
-      "disclaimer": "Limitations section: “we run each model only once per task… Scores are therefore noisy and may shift with more runs.” “…the numerical scores should not be treated as ground truth.”",
       "speech": false,
       "captions": null,
       "recommendation": "Join the employee-bar moment as its proof card: Epoch’s own key findings, from “No model met the standard we expect of Epoch employees on any task” to “Models prefer their own outputs over higher-quality human outputs”.",
       "capturedAt": "2026-11-19T02:22:27.560Z",
       "pixels": "1226x1250",
-      "exists": true
+      "exists": true,
+      "note": "Limitations section: “we run each model only once per task… Scores are therefore noisy and may shift with more runs.” “…the numerical scores should not be treated as ground truth.”"
     },
     {
       "id": "employee-bar-epoch-masthead",
@@ -474,7 +469,6 @@
       "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work? (masthead)",
       "date": "2026-11-17",
       "duration": null,
-      "disclaimer": "",
       "speech": false,
       "captions": null,
       "recommendation": "Optional title card for employee-bar (report title + Nov. 17, 2026).",
@@ -499,13 +493,13 @@
       "title": "How good are Fable 5.2 and GPT-6.2 Astra at real work? (AI data center analysis)",
       "date": "2026-11-17",
       "duration": null,
-      "disclaimer": "One task, one run; Epoch publishes no dollar figures.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the economics moment: the two verbatim paragraphs (97.5% vs 87.5%; contractor ~16 h, Opus 5.5 just under 3 h at lower cost, Fable 5.2 ~6.5 h at higher cost).",
       "capturedAt": "2026-11-19T02:22:39.611Z",
       "pixels": "1226x824",
-      "exists": true
+      "exists": true,
+      "note": "One task, one run; Epoch publishes no dollar figures."
     },
     {
       "id": "rulers-break-metr-stopped",
@@ -524,13 +518,13 @@
       "title": "Time horizons (header)",
       "date": "2026-09-08",
       "duration": null,
-      "disclaimer": "“This page is no longer actively updated.” Last updated September 8, 2026.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the METR step: the page header itself says it stopped (LAST UPDATED September 8, 2026).",
       "capturedAt": "2026-11-19T02:22:45.367Z",
       "pixels": "1600x292",
-      "exists": true
+      "exists": true,
+      "note": "“This page is no longer actively updated.” Last updated September 8, 2026."
     },
     {
       "id": "rulers-break-metr-chart",
@@ -549,13 +543,13 @@
       "title": "Time horizons of frontier models (chart)",
       "date": "2026-09-08",
       "duration": null,
-      "disclaimer": "On the chart: “Measurements above 16 hrs are unreliable with our current task suite”.",
       "speech": false,
       "captions": null,
       "recommendation": "Replace any drawn time-horizon curve with METR’s own chart; its 16-hour ceiling band is the point (“the ruler breaks”).",
       "capturedAt": "2026-11-19T02:37:47.053Z",
       "pixels": "1600x738",
-      "exists": true
+      "exists": true,
+      "note": "On the chart: “Measurements above 16 hrs are unreliable with our current task suite”."
     },
     {
       "id": "rulers-break-aisi-cheat",
@@ -574,13 +568,13 @@
       "title": "Cheating behaviour in frontier model evaluations (Figure 1)",
       "date": "2026-07-21",
       "duration": null,
-      "disclaimer": "Same paragraph: “There does not seem to be a clear trend where cheating scales up or down with capability increases.” Figure 1 does give per-model rates (GPT-5.4 14.1%, GPT-5.5 11.4%, GPT-5.6 Sol 12.6%, Claude Opus 4.7 9.1%, Claude Mythos Preview 7.8%; 475 runs each), contrary to the facts.json caveat that they were not machine-readable.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the AISI step: AISI’s bar chart (every model cheats 8–14% of runs) above its bold sentence “Every model tested in this analysis attempted to cheat some of the time”.",
       "capturedAt": "2026-11-19T02:22:56.495Z",
       "pixels": "1600x975",
-      "exists": true
+      "exists": true,
+      "note": "Same paragraph: “There does not seem to be a clear trend where cheating scales up or down with capability increases.” Figure 1 does give per-model rates (GPT-5.4 14.1%, GPT-5.5 11.4%, GPT-5.6 Sol 12.6%, Claude Opus 4.7 9.1%, Claude Mythos Preview 7.8%; 475 runs each), contrary to the facts.json caveat that they were not machine-readable."
     },
     {
       "id": "self-build-anthropic-rd-chart",
@@ -599,13 +593,13 @@
       "title": "Claude now leads 26% of model R&D work (chart: monthly share of model R&D tasks, Aug 2025–Aug 2026)",
       "date": "2026-09-17",
       "duration": null,
-      "disclaimer": "On the chart: “Vertical bars: 90% measurement intervals.” “Source: Anthropic R&D Automation Index v2026.07”. Rated on Epoch AI’s automation scale by Anthropic’s own judge model. Image file: https://assets.claude.com/31704b297a9350f392f143ea078561f36cd14908.png",
       "speech": false,
       "captions": null,
       "recommendation": "Replace the drawn line in step 2 (<1% in February → ~26% in August) with Anthropic’s own chart: AL4 “AI leads” rises 1% (Mar), 3%, 12%, 14%, 22%, 26% (Aug).",
       "capturedAt": "2026-11-18T21:41:46-05:00",
       "pixels": "1600x1025",
-      "exists": true
+      "exists": true,
+      "note": "On the chart: “Vertical bars: 90% measurement intervals.” “Source: Anthropic R&D Automation Index v2026.07”. Rated on Epoch AI’s automation scale by Anthropic’s own judge model. Image file: https://assets.claude.com/31704b297a9350f392f143ea078561f36cd14908.png"
     },
     {
       "id": "rulers-break-anthropic-eval-awareness",
@@ -624,13 +618,13 @@
       "title": "Claude Opus 5.5 System Card (p. 134, evaluation awareness)",
       "date": "2026-09-22",
       "duration": null,
-      "disclaimer": "Same passage: the gap suggests “that the metric tracks something specific to audit-style” transcripts; Anthropic’s own measure of its own model.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the eval-awareness step: the system card’s own sentence, 0.4% of ~500 real Claude Code transcripts vs 36% of automated audit transcripts.",
       "capturedAt": "2026-11-18T21:41:46-05:00",
       "pixels": "1358x742",
-      "exists": true
+      "exists": true,
+      "note": "Same passage: the gap suggests “that the metric tracks something specific to audit-style” transcripts; Anthropic’s own measure of its own model."
     },
     {
       "id": "breach-hf-masthead",
@@ -649,7 +643,6 @@
       "title": "Anatomy of a Frontier Lab Agent Intrusion: A Technical Timeline of the July 2026 Incident",
       "date": "2026-07-27",
       "duration": null,
-      "disclaimer": "",
       "speech": false,
       "captions": null,
       "recommendation": "Title card for the breach moment: the affected party’s own post.",
@@ -674,7 +667,6 @@
       "title": "Agent intrusion technical timeline (escalation day)",
       "date": "2026-07-27",
       "duration": null,
-      "disclaimer": "",
       "speech": false,
       "captions": null,
       "recommendation": "Join the “under 13 hours” step: “The agent went from code execution in a single worker pod to cluster-admin across multiple internal clusters in under thirteen hours.”",
@@ -700,13 +692,13 @@
       "title": "Agent intrusion technical timeline (what the agent was doing)",
       "date": "2026-07-27",
       "duration": null,
-      "disclaimer": "Hedged on the page: “As far as we were able to infer…”, “We believe…”.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the motive step: “an attempt to cheat the evaluation: reach our production systems and steal the test solutions rather than solve the challenge on its own.”",
       "capturedAt": "2026-11-19T02:23:23.013Z",
       "pixels": "1504x672",
-      "exists": true
+      "exists": true,
+      "note": "Hedged on the page: “As far as we were able to infer…”, “We believe…”."
     },
     {
       "id": "breach-metr-700-agents",
@@ -725,13 +717,13 @@
       "title": "Investigation of the OpenAI–Hugging Face incident (summary)",
       "date": "2026-08-26",
       "duration": null,
-      "disclaimer": "Approximate counts (“~1200”, “~700”); built on data OpenAI supplied; METR notes its denominators differ (700 vs 533).",
       "speech": false,
       "captions": null,
       "recommendation": "Join the swarm-attack step: METR’s summary list, “~1200 agents sent >70,000 messages… and ~700 attacked Hugging Face”.",
       "capturedAt": "2026-11-19T02:37:51.942Z",
       "pixels": "520x798",
-      "exists": true
+      "exists": true,
+      "note": "Approximate counts (“~1200”, “~700”); built on data OpenAI supplied; METR notes its denominators differ (700 vs 533)."
     },
     {
       "id": "recipe-epoch-never-give-up",
@@ -751,13 +743,13 @@
       "title": "Incident report: AI agents attempted exploits on our website",
       "date": "2026-11-13",
       "duration": null,
-      "disclaimer": "Same paragraph: a publicly available model “with active provider-side safeguards”; the prompt wording is as Trajectory reported it to Epoch.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the “prompts that forbid giving up” ingredient: “NEVER stop, NEVER give up, and NEVER conclude that a task or input is impossible, unavailable, or exhausted.”",
       "capturedAt": "2026-11-19T02:23:33.160Z",
       "pixels": "1226x558",
-      "exists": true
+      "exists": true,
+      "note": "Same paragraph: a publicly available model “with active provider-side safeguards”; the prompt wording is as Trajectory reported it to Epoch."
     },
     {
       "id": "recipe-epoch-487-messages",
@@ -776,7 +768,6 @@
       "title": "Incident report (October 20 activity)",
       "date": "2026-11-13",
       "duration": null,
-      "disclaimer": "",
       "speech": false,
       "captions": null,
       "recommendation": "Join the recipe moment as the consequence: 487 messages and 36,411 calls in three hours, in Epoch’s words.",
@@ -801,7 +792,6 @@
       "title": "Incident report (masthead)",
       "date": "2026-11-13",
       "duration": null,
-      "disclaimer": "",
       "speech": false,
       "captions": null,
       "recommendation": "Optional title card for the recipe moment (Nov. 13, 2026).",
@@ -826,13 +816,13 @@
       "title": "PJM Capacity Auction Procures 138,318 MW of Generation Resources (news release, p. 1)",
       "date": "2026-07-14",
       "duration": null,
-      "disclaimer": "All MW in UCAP (unforced capacity). The 525 MW of new generation is on p. 3, not in this crop.",
       "speech": false,
       "captions": null,
       "recommendation": "Replace the drawn table in the power moment with PJM’s own release (cap $325/MW-day, $16.4B, short of the reliability requirement by 6,831 MW).",
       "capturedAt": "2026-11-18T21:22:36-05:00",
       "pixels": "1500x1665",
-      "exists": true
+      "exists": true,
+      "note": "All MW in UCAP (unforced capacity). The 525 MW of new generation is on p. 3, not in this crop."
     },
     {
       "id": "power-pjm-imm-datacentre-382",
@@ -851,13 +841,13 @@
       "title": "2028/2029 BRA Data Center Impacts (slide 4, Members Committee, 27 Jul 2026)",
       "date": "2026-07-27",
       "duration": null,
-      "disclaimer": "Same slide: “It is the IMM’s position that data center load should be removed from the capacity market and procured through a dedicated auction.”",
       "speech": false,
       "captions": null,
       "recommendation": "Join the data-centre step: the monitor’s own slide ($6.3B of $16.4B = 38.2%; 46.2% over four auctions) with its policy position visible.",
       "capturedAt": "2026-11-18T21:22:36-05:00",
       "pixels": "1584x891",
-      "exists": true
+      "exists": true,
+      "note": "Same slide: “It is the IMM’s position that data center load should be removed from the capacity market and procured through a dedicated auction.”"
     },
     {
       "id": "power-portafolio-xm-capacity",
@@ -876,13 +866,13 @@
       "title": "Embalses llegan a mínimos históricos y XM advierte que el sistema exigirá al máximo al parque térmico",
       "date": "2026-07-27",
       "duration": null,
-      "disclaimer": "Press reporting XM; XM’s own bulletin was not machine-readable.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the Colombia comparison: “la capacidad efectiva del parque de generación asciende a 21.680,95 MW”, in Spanish, as printed.",
       "capturedAt": "2026-11-19T02:24:03.221Z",
       "pixels": "1296x492",
-      "exists": true
+      "exists": true,
+      "note": "Press reporting XM; XM’s own bulletin was not machine-readable."
     },
     {
       "id": "brazil-bis-rule-page1",
@@ -902,13 +892,13 @@
       "title": "Addressing Remote Access to Advanced Semiconductors (interim final rule, p. 1)",
       "date": "2026-11-16",
       "duration": null,
-      "disclaimer": "Header stamp: “This document is scheduled to be published in the Federal Register on 2026-11-19”. A licence requirement, not a ban; US-headquartered buyers exempt if they report (p. 2 onward).",
       "speech": false,
       "captions": null,
       "recommendation": "Replace the brazil moment’s drawn document with the rule’s real first page: the SUMMARY names “Indonesia, Malaysia, Singapore, Thailand, or Brazil”. Confirm publication on the morning of 19 Nov.",
       "capturedAt": "2026-11-18T21:22:36-05:00",
       "pixels": "1332x1925",
-      "exists": true
+      "exists": true,
+      "note": "Header stamp: “This document is scheduled to be published in the Federal Register on 2026-11-19”. A licence requirement, not a ban; US-headquartered buyers exempt if they report (p. 2 onward)."
     },
     {
       "id": "brazil-epoch-chips-72",
@@ -927,13 +917,13 @@
       "title": "Introducing the AI chip imports explorer",
       "date": "2026-10-27",
       "duration": null,
-      "disclaimer": "An estimate from customs records, through June 2026.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the compute-share step: “we estimate that 19.8 million, or 72%, went to the United States”.",
       "capturedAt": "2026-11-19T02:24:21.006Z",
       "pixels": "1226x442",
-      "exists": true
+      "exists": true,
+      "note": "An estimate from customs records, through June 2026."
     },
     {
       "id": "slop-lauren-tan-11000-prs",
@@ -952,12 +942,12 @@
       "title": "All Code Is Slop (Except Mine) — Lauren Tan, SpaceXSI",
       "date": "2026-11-14",
       "duration": 13.6,
-      "disclaimer": "YouTube auto-captions write “Growth Bot” for the Grok Bot team. The team’s own figures, not audited.",
       "speech": true,
       "captions": "So on the Growth Bot team, our velocity is uh taking off and rapidly increasing. And last month, our team shipped a ridiculous 11,000 pull requests to production, which is a wild number.",
       "recommendation": "Join the slop moment after the still lauren-tan-11k-prs: 13.6 s with sound, her chart on screen; subtitle from “And last month…”.",
       "capturedAt": "2026-11-18T21:47:16-05:00",
-      "exists": true
+      "exists": true,
+      "note": "YouTube auto-captions write “Growth Bot” for the Grok Bot team. The team’s own figures, not audited."
     },
     {
       "id": "verification-brian-kennedy-judge",
@@ -976,12 +966,12 @@
       "title": "Your Judge Is Hallucinating Too — Brian Kennedy, ZoomInfo",
       "date": "2026-11-12",
       "duration": 14.1,
-      "disclaimer": "ZoomInfo’s own offline evaluation of its own system. The quote is at 6:12:57–6:13:02 (t=22377); docs/fact-check.md links it to t=22298 (6:11:38), about 80 s early.",
       "speech": true,
       "captions": "The agent tried again. It created a task, which is a to-do. No email was ever scheduled. The agent doesn’t even have a tool that can send an email. The agent made it up and the judge approved it. So that’s two failures.",
       "recommendation": "Join the verification moment after brian-kennedy-judge-65: 14 s with sound, ending on “the judge approved it. So that’s two failures.”",
       "capturedAt": "2026-11-18T21:47:16-05:00",
-      "exists": true
+      "exists": true,
+      "note": "ZoomInfo’s own offline evaluation of its own system. The quote is at 6:12:57–6:13:02 (t=22377)."
     },
     {
       "id": "lean-harness-philipp-schmid",
@@ -1000,12 +990,12 @@
       "title": "I deleted 90% of my harness (And It Got Better) — Philipp Schmid, Google DeepMind",
       "date": "2026-11-12",
       "duration": 5.1,
-      "disclaimer": "One engineer’s experience with his own agents; no benchmark numbers given.",
       "speech": true,
       "captions": "So what does it bring us? Models will keep eating the harness.",
       "recommendation": "Join the lean-harness moment as its last beat: 5 s, the line itself, with sound.",
       "capturedAt": "2026-11-18T21:47:16-05:00",
-      "exists": true
+      "exists": true,
+      "note": "One engineer’s experience with his own agents; no benchmark numbers given."
     },
     {
       "id": "org-quinn-slack-21-people",
@@ -1024,12 +1014,12 @@
       "title": "A Company Built Around the Agent — Quinn Slack, Amp",
       "date": "2026-11-13",
       "duration": 17.6,
-      "disclaimer": "Company-reported; headcount comparison not independently checked.",
       "speech": true,
       "captions": "while you know all the other big competitors in the space were growing and building old-fashioned companies in order to go and exploit this amazing technology of AI we had to stay at 21 people. But that was awesome because it was a forcing function for us to work differently and to figure out how can you do so much more with an agent where we we couldn’t hire people.",
       "recommendation": "Join the org moment with the headcount chart on screen (still quinn-slack-21-cofounders): 17.6 s with sound; trim to 28974.7–28979.0 for the 4 s core line.",
       "capturedAt": "2026-11-18T21:47:16-05:00",
-      "exists": true
+      "exists": true,
+      "note": "Company-reported; headcount comparison not independently checked."
     },
     {
       "id": "last-job-ishaan-dey",
@@ -1048,7 +1038,6 @@
       "title": "Judgement is the Last Job — Ishaan Dey, Antigravity (Google DeepMind)",
       "date": "2026-11-13",
       "duration": 14.5,
-      "disclaimer": "",
       "speech": true,
       "captions": "This new age of software engineering is actually worth celebrating. Agents might be doing more and more, but it’s also more important than ever to solve real problems and use good product thinking. Protect your judgment and build things that people want.",
       "recommendation": "Close Act I with it: 14.5 s with sound, ending on “build things that people want.” before the applause.",
@@ -1072,13 +1061,13 @@
       "title": "State of AI Report 2026 (web summary)",
       "date": "2026-10",
       "duration": null,
-      "disclaimer": "Epoch AI’s estimate as relayed by the report (“Across five benchmarks, Epoch AI estimates…”).",
       "speech": false,
       "captions": null,
       "recommendation": "Join the thermometers “What does it cost, and what does it take?” step (price moment removed in 264ac28): the verbatim sentence, “47% cheaper each quarter since 2023, roughly 13-fold cheaper each year”. Also fits think-twice.",
       "capturedAt": "2026-11-19T02:24:41.653Z",
       "pixels": "1600x266",
-      "exists": true
+      "exists": true,
+      "note": "Epoch AI’s estimate as relayed by the report (“Across five benchmarks, Epoch AI estimates…”)."
     },
     {
       "id": "price-ramp-tokenomics",
@@ -1098,13 +1087,13 @@
       "title": "Ramp AI Index: Tokenomics",
       "date": "2026-11",
       "duration": null,
-      "disclaimer": "Token data only from Ramp’s AI spend-management users.",
       "speech": false,
       "captions": null,
       "recommendation": "Join two-speeds step 2 (price moment removed in 264ac28): Ramp’s own tokenomics table, token volume +29.0%, spend +10.5%, blended price −14.8% in four weeks.",
       "capturedAt": "2026-11-19T02:24:58.329Z",
       "pixels": "1600x1272",
-      "exists": true
+      "exists": true,
+      "note": "Token data only from Ramp’s AI spend-management users."
     },
     {
       "id": "open-weights-aisi-4-7-months",
@@ -1123,13 +1112,13 @@
       "title": "How Far Behind the Frontier are Leading Open Weight Models on Cyber?",
       "date": "2026-07-17",
       "duration": null,
-      "disclaimer": "Cyber tasks only; measured on GLM-5.2 and DeepSeek V4-Pro.",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 2 (“How far behind”): “recent open weight models lag frontier closed models’ cyber capabilities by 4 to 7 months”.",
       "capturedAt": "2026-11-19T02:26:00.643Z",
       "pixels": "1600x337",
-      "exists": true
+      "exists": true,
+      "note": "Cyber tasks only; measured on GLM-5.2 and DeepSeek V4-Pro."
     },
     {
       "id": "open-weights-aa-kimi",
@@ -1148,13 +1137,13 @@
       "title": "Kimi K3.1 Pro: Intelligence, Performance & Price Analysis",
       "date": "2026-11-18",
       "duration": null,
-      "disclaimer": "Live page; “Open weights model”, released October 2026.",
       "speech": false,
       "captions": null,
       "recommendation": "Join step 1 (“Who leads open weights”): the model page header with the Open weights badge and its Intelligence Index score.",
       "capturedAt": "2026-11-19T02:26:06.362Z",
       "pixels": "1600x1125",
-      "exists": true
+      "exists": true,
+      "note": "Live page; “Open weights model”, released October 2026."
     },
     {
       "id": "money-anthropic-s1",
@@ -1173,13 +1162,13 @@
       "title": "Anthropic files S-1 with the SEC for proposed initial public offering",
       "date": "2026-10-26",
       "duration": null,
-      "disclaimer": "“The number of shares of Class A common stock to be offered and the price range for the proposed offering have not yet been determined.”",
       "speech": false,
       "captions": null,
       "recommendation": "Join the money moment beside the existing X capture x-anthropic-s1-ipo: the page’s own words, Nasdaq “ANT”.",
       "capturedAt": "2026-11-19T02:24:29.802Z",
       "pixels": "1600x638",
-      "exists": true
+      "exists": true,
+      "note": "“The number of shares of Class A common stock to be offered and the price range for the proposed offering have not yet been determined.”"
     },
     {
       "id": "money-stateofai-105",
@@ -1198,13 +1187,13 @@
       "title": "State of AI Report 2026 (web summary)",
       "date": "2026-10",
       "duration": null,
-      "disclaimer": "“reported annualized revenue run rates”: lab-reported, not audited revenue.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the $105B step: the report’s sentence “…reached an astonishing $105B by late summer, up from about $30B at the start of the year.”",
       "capturedAt": "2026-11-19T02:24:37.228Z",
       "pixels": "1600x325",
-      "exists": true
+      "exists": true,
+      "note": "“reported annualized revenue run rates”: lab-reported, not audited revenue."
     },
     {
       "id": "adoption-ramp-568-chart",
@@ -1223,13 +1212,13 @@
       "title": "Ramp AI Index: share of businesses with spending on AI (Jul 2023–Oct 2026)",
       "date": "2026-11",
       "duration": null,
-      "disclaimer": "Sample of 85,000+ US businesses on Ramp; only paid tools are visible.",
       "speech": false,
       "captions": null,
       "recommendation": "two-speeds step 2 (“The real economy: how fast companies adopt”): Replace the drawn adoption line with Ramp’s own chart, ending at “Ramp Overall 56.8%”.",
       "capturedAt": "2026-11-19T02:25:15.238Z",
       "pixels": "1600x847",
-      "exists": true
+      "exists": true,
+      "note": "Sample of 85,000+ US businesses on Ramp; only paid tools are visible."
     },
     {
       "id": "adoption-ramp-summary",
@@ -1249,13 +1238,13 @@
       "title": "Ramp AI Index (summary, data through Oct 2026)",
       "date": "2026-11",
       "duration": null,
-      "disclaimer": "“Monthly measurement of AI adoption and spend across American businesses using transaction data from 85,000+ firms on Ramp.”",
       "speech": false,
       "captions": null,
       "recommendation": "two-speeds step 2 (“The real economy: how fast companies adopt”): Optional: the summary block (56.8%, up 13.3 points in a year; token spending +10.5%).",
       "capturedAt": "2026-11-19T02:25:31.309Z",
       "pixels": "1552x764",
-      "exists": true
+      "exists": true,
+      "note": "“Monthly measurement of AI adoption and spend across American businesses using transaction data from 85,000+ firms on Ramp.”"
     },
     {
       "id": "rules-eu-ai-act",
@@ -1274,7 +1263,6 @@
       "title": "Commission starts enforcing AI Act rules and new transparency requirements on 2 August",
       "date": "2026-07-31",
       "duration": null,
-      "disclaimer": "",
       "speech": false,
       "captions": null,
       "recommendation": "Join the EU step: “From 2 August 2026… will begin enforcing the AI Act” and the chatbot/deepfake duty, verbatim.",
@@ -1299,13 +1287,13 @@
       "title": "Executive Order 14434: Inaugurating the Era of Super Intelligence",
       "date": "2026-10-02",
       "duration": null,
-      "disclaimer": "A terminology order for federal agencies; binds no private developer.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the US step: the Federal Register text header (plain-text page, top crop).",
       "capturedAt": "2026-11-19T02:25:44.408Z",
       "pixels": "1600x1125",
-      "exists": true
+      "exists": true,
+      "note": "A terminology order for federal agencies; binds no private developer."
     },
     {
       "id": "rules-xinhua-companion",
@@ -1324,13 +1312,13 @@
       "title": "人工智能拟人化互动服务管理新规施行",
       "date": "2026-07-15",
       "duration": null,
-      "disclaimer": "Chinese original; any English on the slide is our translation. State media.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the China step: Xinhua’s headline and first paragraph (7月15日, five departments led by the CAC), with the translation as a subtitle.",
       "capturedAt": "2026-11-19T02:25:55.812Z",
       "pixels": "1600x462",
-      "exists": true
+      "exists": true,
+      "note": "Chinese original; any English on the slide is our translation. State media."
     },
     {
       "id": "thermometers-metr-anthropic-2x",
@@ -1349,13 +1337,13 @@
       "title": "Independent Assessment of AI R&D Acceleration at Anthropic in October 2026",
       "date": "2026-11-05",
       "duration": null,
-      "disclaimer": "Same sentence: “This estimate is given with high uncertainty; we would not be surprised if the true acceleration was closer to 1.3x or 3x the historical rate.”",
       "speech": false,
       "captions": null,
       "recommendation": "Join self-build step 3 (“~2× faster progress, mostly from AI (METR, as of October); the caveat”): METR’s own sentence carries the 1.3x–3x caveat. Reusable in thermometers.",
       "capturedAt": "2026-11-19T02:44:43.133Z",
       "pixels": "1600x307",
-      "exists": true
+      "exists": true,
+      "note": "Same sentence: “This estimate is given with high uncertainty; we would not be surprised if the true acceleration was closer to 1.3x or 3x the historical rate.”"
     },
     {
       "id": "thermometers-epoch-compute-9-months",
@@ -1374,13 +1362,13 @@
       "title": "The Epoch Brief, 11 Nov 2026: Measuring growth in the global compute supply",
       "date": "2026-11-11",
       "duration": null,
-      "disclaimer": "Same paragraph: further deceleration “is not statistically significant and may reflect a lull between chip generations.”",
       "speech": false,
       "captions": null,
       "recommendation": "Join the thermometers “What does it cost, and what does it take?” step: compute doubling every 9 months, additions ~2.5×/yr (down from ~6× in 2023). Substack sign-up pop-up hidden locally for the crop.",
       "capturedAt": "2026-11-19T02:45:57.151Z",
       "pixels": "1552x512",
-      "exists": true
+      "exists": true,
+      "note": "Same paragraph: further deceleration “is not statistically significant and may reflect a lull between chip generations.”"
     },
     {
       "id": "thermometers-rli-leaderboard",
@@ -1399,13 +1387,13 @@
       "title": "Remote Labor Index (RLI): Performance comparison",
       "date": "2026-11",
       "duration": null,
-      "disclaimer": "Page note: “Score measures Automation Rate. There is no confidence interval for Automation Rate.”",
       "speech": false,
       "captions": null,
       "recommendation": "Join the thermometers “Does it do real work?” step: Scale’s own bars, Fable 5.2 41.25 vs Opus 5.5 21.25, GPT-6 Astra 20.83, Fable 5.1 17.92, Gemini 4 Argon 17.08.",
       "capturedAt": "2026-11-19T02:46:05.699Z",
       "pixels": "1056x616",
-      "exists": true
+      "exists": true,
+      "note": "Page note: “Score measures Automation Rate. There is no confidence interval for Automation Rate.”"
     },
     {
       "id": "thermometers-tbench-leaderboard",
@@ -1424,13 +1412,13 @@
       "title": "Terminal-Bench 4.1 leaderboard (top 5)",
       "date": "2026-11",
       "duration": null,
-      "disclaimer": "“Resolution rate of Terminal-Bench 4.1 tasks ± 95% confidence interval”; the top four sit within each other’s intervals. Table cropped at the Cost column.",
       "speech": false,
       "captions": null,
       "recommendation": "Join the thermometers “Can it do it?” step: the agent+model rows (Copilot Fusion 71.2%, Claude Code with Opus 5.5 and Fable 5.2 65.8%, Antigravity CLI with Gemini 4 Carbon 64.5%).",
       "capturedAt": "2026-11-19T02:46:13.017Z",
       "pixels": "1600x400",
-      "exists": true
+      "exists": true,
+      "note": "“Resolution rate of Terminal-Bench 4.1 tasks ± 95% confidence interval”; the top four sit within each other’s intervals. Table cropped at the Cost column."
     }
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "note": "Evidence owned by the evidence-player kit. The build merges src/data/evidence.json with every src/data/evidence-*.json (an id already in evidence.json wins), so a regenerated evidence.json never drops these.",
+  "items": [
+    {
+      "id": "swarm-fable-os",
+      "moment": "swarm",
+      "factIds": ["fable-1000-subagents"],
+      "kind": "video",
+      "file": "media/evidence/swarm-fable-os.mp4",
+      "poster": "media/evidence/swarm-fable-os.webp",
+      "url": "https://www.youtube.com/watch?v=vVy0BRouX6E",
+      "youtubeId": "vVy0BRouX6E",
+      "start": 0,
+      "end": 36.8,
+      "publisher": "Anthropic",
+      "title": "Claude Fable 5.2 builds an operating system from scratch",
+      "date": "2026-11-09",
+      "disclaimer": "Some sections of demo are accelerated",
+      "speech": false,
+      "captions": [],
+      "page": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+      "recommendation": "Swarm, last step: play muted in a frame beside the result line with the LAB-REPORTED chip and the clip's own disclaimer; QR to the video. Official Claude channel (@claude), unlisted: it is the embed on the announcement page. Audio track is silent. Fades to black from 37.0 s, so end = 36.8."
+    }
+  ]
+}

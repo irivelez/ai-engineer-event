@@ -124,10 +124,17 @@ function loadAssets(name, kind) {
 // Videos stay external: their src is rewritten relative to the output file (index.html → media/evidence/x.mp4,
 // .dev/x.html → ../media/evidence/x.mp4) and is never inlined. Posters and doc images are inlined as data URIs
 // (safe for DOM and WebGL on file://). A missing file is a warning, never an error: the player falls back.
+// evidence.json plus every src/data/evidence-*.json (owned by other teammates); an id seen first wins.
+function evidenceEntries() {
+  const dir = path.join(SRC, 'data');
+  const files = [manifestPath('evidence.json'), ...(exists(dir) ? fs.readdirSync(dir).filter((f) => /^evidence-.+\.json$/.test(f)).sort().map((f) => path.join(dir, f)) : [])].filter(Boolean);
+  const seen = new Map();
+  for (const f of files) for (const e of manifestEntries(readJSON(f, null))) if (!seen.has(e.id)) seen.set(e.id, e);
+  return { mp: files[0] || null, entries: [...seen.values()] };
+}
 function loadEvidence() {
-  const mp = manifestPath('evidence.json');
+  const { mp, entries } = evidenceEntries();
   if (!mp) return { uris: {}, meta: {} };
-  const entries = manifestEntries(readJSON(mp, null));
   const uris = {}, meta = {};
   let bytes = 0, videos = 0, missing = 0;
   const outDir = path.dirname(outFile);
