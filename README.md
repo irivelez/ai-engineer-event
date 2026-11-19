@@ -26,10 +26,16 @@
 | G | Overview of all moments |
 | A number, then Enter | Jump to that moment |
 | H | Hide or show the cue icon |
+| M | Sound on or off for the evidence video that is playing (they start muted) |
 | Home / End | First / last moment |
 | ? | Help |
 
 Presentation clickers that send PageUp/PageDown work too. The presenter window and the stage stay in sync both ways; either one can drive.
+
+### Sources and evidence
+
+- `keynote/sources.html` lists every claim on screen, moment by moment, with its provenance label, publisher, date and link. `node scripts/build.mjs` regenerates it. The end moment's «All sources» QR opens the deployed copy (https://inside-the-ai-frontier.vercel.app/sources.html), so redeploy after a build that changes facts or evidence.
+- Evidence clips (`keynote/media/evidence/*.mp4`, listed in `keynote/src/data/evidence.json`) are not in git. Without the file, a clip shows its poster and link when opened from `file://`, and the YouTube embed on the website. Clips start muted; **M** turns sound on.
 
 ### On Zoom
 

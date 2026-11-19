@@ -271,7 +271,7 @@ export function mountPresenterUI(env) {
     else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(k)) { cmd('prev'); e.preventDefault(); }
     else if (k === 'Home' || k === 'End') { key(k); e.preventDefault(); }
     else if (k === 't' || k === 'T') { cmd('timer', { action: 'toggle' }); e.preventDefault(); }
-    else if (['b', 'B', '.', 'w', 'W', ',', 'h', 'H', 'g', 'G', 'n', 'N'].includes(k)) { key(k); e.preventDefault(); }
+    else if (['b', 'B', '.', 'w', 'W', ',', 'h', 'H', 'g', 'G', 'n', 'N', 'm', 'M'].includes(k)) { key(k); e.preventDefault(); }
   });
 
   renderMoment();

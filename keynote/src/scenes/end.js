@@ -1,9 +1,10 @@
 // end (calm-b, VOID): the mirror of the title frame, then how to reach Irina while the questions run.
 // Step 0: "Inside the AI Frontier" exactly where the title moment set it (the film's title box, fitFilmTitle),
 //         white on the void, with her name and role rising under it: the keynote closes on its first frame.
-// Step 1: the title steps away; "Questions" takes the left at h1 with name and role under it; on the right a
-//         crisp QR code to her LinkedIn (generated locally with qrcode-generator: SVG, one path, crisp edges)
-//         on a white card, the link text beneath it in Geist Mono.
+// Step 1: the title steps away; "Questions" takes the left at h1 with name and role under it; on the right
+//         crisp QR codes (generated locally with qrcode-generator: SVG, one path, crisp edges) on white cards,
+//         each with its text beneath in Geist Mono: her LinkedIn and, when copy.sourcesUrl is set, "All sources"
+//         (the generated sources page on the deployed site).
 import { gsap } from 'gsap';
 import qrcode from 'qrcode-generator';
 import { fitFilmTitle, FILM_TITLE_BOX } from '../engine/title-fit.js';
@@ -89,27 +90,41 @@ export default calmScene('end', (ctx, K) => {
   const rB = el('div', 't-label', who, esc(copy.role || ''));
   Object.assign(rB.style, { color: G.muted, marginTop: '12px' });
 
-  const QPX = 408;
-  const qr = qrSVG(copy.url || copy.link || '', QPX);
-  const QCX = (T.colX(8) + 1920 - M) / 2; // card and link share a centre inside columns 8–11, so the link stays inside the margin
-  const QX = Math.round(QCX - qr.size / 2);
-  const QY = 292;
-  const card = el('div', '', qWrap, qr.html);
-  Object.assign(card.style, { position: 'absolute', left: `${QX}px`, top: `${QY}px`, width: `${qr.size}px`, height: `${qr.size}px`, borderRadius: '24px', overflow: 'hidden', background: '#FFFFFF', boxShadow: '0 0 0 2px rgba(238,242,246,0.22), 0 32px 96px -24px rgba(147,170,255,0.20)' });
-  const link = el('div', 'cb-nowrap', qWrap, esc(copy.link || ''));
-  Object.assign(link.style, { position: 'absolute', left: `${QCX}px`, top: `${QY + qr.size + 32}px`, transform: 'translateX(-50%)', fontFamily: mono, fontSize: '32px', lineHeight: '40px', fontWeight: '500', letterSpacing: '0.01em', color: G.fg });
+  // One card (LinkedIn) centred in columns 8–11, or two side by side across columns 6–11 (LinkedIn, All sources).
+  // Each card and its text share a centre, so the text stays inside the margin.
+  const codes = [{ url: copy.url || copy.link || '', label: copy.link || '' }];
+  if (copy.sourcesUrl) codes.push({ url: copy.sourcesUrl, label: copy.sourcesLabel || '' });
+  const twoUp = codes.length > 1;
+  const QPX = twoUp ? 320 : 408;
+  const QY = twoUp ? 316 : 292;
+  const span = 1920 - M - T.colX(6);
+  const centres = twoUp ? [T.colX(6) + span / 4, T.colX(6) + (3 * span) / 4] : [(T.colX(8) + 1920 - M) / 2];
+  const cards = [];
+  const links = [];
+  const qrs = codes.map((c) => qrSVG(c.url, QPX));
+  const slot = Math.max(...qrs.map((q) => q.size)); // codes differ by a few modules: share one slot so the texts align
+  codes.forEach((c, i) => {
+    const qr = qrs[i];
+    const card = el('div', '', qWrap, qr.html);
+    Object.assign(card.style, { position: 'absolute', left: `${Math.round(centres[i] - qr.size / 2)}px`, top: `${QY + Math.round((slot - qr.size) / 2)}px`, width: `${qr.size}px`, height: `${qr.size}px`, borderRadius: '24px', overflow: 'hidden', background: '#FFFFFF', boxShadow: '0 0 0 2px rgba(238,242,246,0.22), 0 32px 96px -24px rgba(147,170,255,0.20)' });
+    card.dataset.url = c.url;
+    const link = el('div', 'cb-nowrap', qWrap, esc(c.label));
+    Object.assign(link.style, { position: 'absolute', left: `${centres[i]}px`, top: `${QY + slot + 32}px`, transform: 'translateX(-50%)', fontFamily: mono, fontSize: twoUp ? '28px' : '32px', lineHeight: '40px', fontWeight: '500', letterSpacing: '0.01em', color: G.fg });
+    cards.push(card);
+    links.push(link);
+  });
 
   const qB = K.block(qWrap, {
     enter(tl) {
       tl.add(kick.set({ visible: true }, { animate: true }), 0);
       tl.fromTo(qT, { yPercent: 125 }, { yPercent: 0, duration: 1.2, ease: T.motion.calmIn.ease }, 0.1);
       tl.fromTo(who, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 1.0, ease: T.motion.calmIn.ease }, 0.45);
-      tl.fromTo(card, { autoAlpha: 0, scale: 0.96 }, { autoAlpha: 1, scale: 1, duration: 1.0, ease: T.motion.calmIn.ease }, 0.35);
-      tl.fromTo(link, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: T.motion.calmIn.ease }, 0.8);
+      tl.fromTo(cards, { autoAlpha: 0, scale: 0.96 }, { autoAlpha: 1, scale: 1, duration: 1.0, ease: T.motion.calmIn.ease, stagger: 0.12 }, 0.35);
+      tl.fromTo(links, { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: T.motion.calmIn.ease, stagger: 0.12 }, 0.8);
     },
     settle() {
       kick.set({ visible: true }, { animate: false });
-      gsap.set(qT, { yPercent: 0 }); gsap.set([who, card, link], { autoAlpha: 1, y: 0, scale: 1 });
+      gsap.set(qT, { yPercent: 0 }); gsap.set([who, ...cards, ...links], { autoAlpha: 1, y: 0, scale: 1 });
     },
   });
 

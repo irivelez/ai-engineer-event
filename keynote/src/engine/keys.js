@@ -88,6 +88,10 @@ export function bindKeys({ director, overlays, hud, audience, stage, openPresent
       case 'h': case 'H':
         hud.toggle();
         return e.preventDefault();
+      case 'm': case 'M':
+        // sound on/off for the evidence clip that is playing (components/EvidenceVideo.js listens)
+        window.dispatchEvent(new CustomEvent('itaf:evidence-sound'));
+        return e.preventDefault();
       default:
     }
   }

@@ -13,10 +13,17 @@ import BarChart from './BarChart.js';
 import BeforeAfter from './BeforeAfter.js';
 import StepList from './StepList.js';
 import Scrim, { scrim, scrimBackground } from './Scrim.js';
+import EvidenceVideo from './EvidenceVideo.js';
+import EvidenceDoc from './EvidenceDoc.js';
+import SourceQR from './SourceQR.js';
 
 export { setRenderMode, isRender } from './_core.js';
 export { chipHTML } from './ProvenanceChip.js';
+export { qrSVG, shortUrl } from './SourceQR.js';
+export { evidenceSound } from './EvidenceVideo.js';
+export { fmtDate } from './_evidence.js';
 export {
   Headline, ActTitle, Kicker, BigNumber, ProvenanceChip, SourceLine, Quote, CaptureCard,
   BarChart, BeforeAfter, StepList, Scrim, scrim, scrimBackground,
+  EvidenceVideo, EvidenceDoc, SourceQR,
 };

@@ -12,6 +12,10 @@ function indexFacts(facts) {
   return map;
 }
 
+// facts.json label → provenance chip kind
+const KIND = { independent: 'independent', 'lab-reported': 'labReported', labreported: 'labReported', secondary: 'secondary', official: 'official', estimate: 'estimate', press: 'press' };
+export const kindOf = (label) => KIND[String(label || '').trim().toLowerCase()] || 'secondary';
+
 // Deterministic PRNG (mulberry32) seeded from a string.
 export function seededRandom(seedStr = 'itaf') {
   let h = 1779033703 ^ seedStr.length;
@@ -42,7 +46,19 @@ export function makeContextFactory({ data, tokens, components, icons, assets, fo
     sfIds: () => Object.keys(assets.sf || {}),
     captureIds: () => Object.keys(assets.capture || {}),
     fonts: fonts || {},
+    // Evidence kit (src/data/evidence.json): the item with posterSrc / imageSrc as data URIs, `file` relative to
+    // the built page, and `chip` (provenance chip kind) from its first fact's label.
+    evidence: (id) => evidenceItem(id),
+    evidenceFor: (momentId) => Object.keys(assets.evidenceMeta || {}).filter((id) => assets.evidenceMeta[id].moment === momentId).map(evidenceItem),
+    evidenceIds: () => Object.keys(assets.evidenceMeta || {}),
   };
+  function evidenceItem(id) {
+    const m = assets.evidenceMeta && assets.evidenceMeta[id];
+    if (!m) return null;
+    const u = (assets.evidence && assets.evidence[id]) || {};
+    const f = (m.factIds || []).map((x) => facts.get(x)).find(Boolean);
+    return { ...m, id, posterSrc: u.poster || null, imageSrc: u.image || null, chip: kindOf(f && f.label) };
+  }
   return function makeCtx(m, i, root, gl, extra = {}) {
     const ground = (tokens.grounds && tokens.grounds[m.ground]) || null;
     return {

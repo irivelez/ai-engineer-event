@@ -15,6 +15,7 @@ import * as esbuild from 'esbuild';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { writeSourcesPage } from './lib/sources-page.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
@@ -119,6 +120,45 @@ function loadAssets(name, kind) {
   return { uris, meta };
 }
 
+// ---------- evidence (src/data/evidence.json; the evidence kit in src/components) ----------
+// Videos stay external: their src is rewritten relative to the output file (index.html → media/evidence/x.mp4,
+// .dev/x.html → ../media/evidence/x.mp4) and is never inlined. Posters and doc images are inlined as data URIs
+// (safe for DOM and WebGL on file://). A missing file is a warning, never an error: the player falls back.
+function loadEvidence() {
+  const mp = manifestPath('evidence.json');
+  if (!mp) return { uris: {}, meta: {} };
+  const entries = manifestEntries(readJSON(mp, null));
+  const uris = {}, meta = {};
+  let bytes = 0, videos = 0, missing = 0;
+  const outDir = path.dirname(outFile);
+  const inline = (file, id, what) => {
+    const abs = resolveMedia(file, path.dirname(mp), 'evidence');
+    if (!abs) { warn(`evidence "${id}": ${what} not found (${file})`); missing++; return null; }
+    const mime = MIME[path.extname(abs).toLowerCase()];
+    if (!mime) { warn(`evidence "${id}": ${what} is not an image (${file})`); return null; }
+    const buf = fs.readFileSync(abs);
+    bytes += buf.length;
+    return `data:${mime};base64,${buf.toString('base64')}`;
+  };
+  for (const e of entries) {
+    const m = { ...e };
+    const u = {};
+    if (e.kind === 'video') {
+      videos++;
+      if (e.file && !/^(https?:|data:)/.test(e.file)) {
+        const abs = resolveMedia(e.file, path.dirname(mp), 'evidence');
+        if (!abs) { warn(`evidence "${e.id}": video ${e.file} not found (live: YouTube on https, poster + link on file://)`); missing++; }
+        m.file = path.relative(outDir, abs || path.join(ROOT, e.file)).split(path.sep).join('/');
+      }
+      if (e.poster) u.poster = inline(e.poster, e.id, 'poster');
+    } else if (e.file) u.image = inline(e.file, e.id, 'image');
+    meta[e.id] = m;
+    uris[e.id] = u;
+  }
+  log(`  evidence: ${entries.length} items (${videos} videos, external), ${(bytes / 1024 / 1024).toFixed(1)} MB inlined${missing ? `, ${missing} files missing` : ''}`);
+  return { uris, meta };
+}
+
 // ---------- virtual modules ----------
 const J = JSON.stringify;
 const exists = (p) => fs.existsSync(p);
@@ -163,7 +203,8 @@ function dataModule() {
 function assetsModule() {
   const sf = loadAssets('sf-stills.json', 'sf');
   const cap = loadAssets('captures.json', 'captures');
-  return `export const sf = ${J(sf.uris)};\nexport const capture = ${J(cap.uris)};\nexport const sfMeta = ${J(sf.meta)};\nexport const captureMeta = ${J(cap.meta)};`;
+  const ev = loadEvidence();
+  return `export const sf = ${J(sf.uris)};\nexport const capture = ${J(cap.uris)};\nexport const sfMeta = ${J(sf.meta)};\nexport const captureMeta = ${J(cap.meta)};\nexport const evidence = ${J(ev.uris)};\nexport const evidenceMeta = ${J(ev.meta)};`;
 }
 function fontsModule() {
   // .woff/.ttf/.otf files for troika (GL text cannot read woff2). Keyed by file name.
@@ -241,5 +282,7 @@ const html = `<!doctype html>
 `;
 fs.mkdirSync(path.dirname(outFile), { recursive: true });
 fs.writeFileSync(outFile, html);
+const sources = await writeSourcesPage({ ROOT, SRC, beats, outFile });
+log(`  sources: ${path.relative(process.cwd(), sources.file) || sources.file} · ${sources.count} sources · ${(sources.bytes / 1024).toFixed(0)} KB`);
 const mb = (Buffer.byteLength(html) / 1024 / 1024).toFixed(2);
 log(`build: ${path.relative(process.cwd(), outFile) || outFile} · ${mb} MB · ${momentIds.length} moments · scenes: ${sceneEntries.map(([id]) => id).join(', ') || 'none'} · ${minify ? 'minified' : 'readable'} · ${Date.now() - t0} ms`);

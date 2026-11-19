@@ -26,6 +26,7 @@ open /tmp/factory.html                                                 # Chrome;
   - `?render=1`: deterministic final state, which is what the static fallback and screenshots use.
   - `?nogl=1`: simulate WebGL failure.
   - `?novideo=1`: opener fallback.
+  - `?evidence=poster` / `?evidence=youtube`: force an evidence clip's fallback (the embed only works on http(s)).
 - Keys: → / ← steps, G grid, `?` help, N notes, H cue icon.
 
 ## 2. The module
@@ -89,7 +90,7 @@ The engine guarantees the following:
 | `ctx.notes` | this moment's speaker notes (do not show them on stage) |
 | `ctx.tokens` | DD's tokens (`colors`, `grounds`, `type`, `space`, `motion`, `provenance`) |
 | `ctx.components` | DD's kit: `X.create(opts) → { el, in(tl, at), out(tl, at), set(state, { animate }), destroy() }`. Kit: Headline, Kicker, BigNumber, ProvenanceChip, SourceLine, Quote, CaptureCard, BarChart, BeforeAfter, StepList, ActTitle, Scrim. See `docs/design-system.md`. |
-| `ctx.assets` | `sf(id)`, `capture(id)` → data URI · `sfMeta(id)`, `captureMeta(id)` → manifest fields (speaker, url, timecode…) · `sfIds()`, `captureIds()` · `image(uri)` |
+| `ctx.assets` | `sf(id)`, `capture(id)` → data URI · `sfMeta(id)`, `captureMeta(id)` → manifest fields (speaker, url, timecode…) · `sfIds()`, `captureIds()` · `image(uri)` · `evidence(id)`, `evidenceFor(momentId)` → evidence.json item + `posterSrc`/`imageSrc` (data URIs), `file` relative to the built page, `chip` (provenance kind from its first fact) · `evidenceIds()` |
 | `ctx.gl` | gl scenes only: `{ THREE, renderer, makeWorld, helpers, composer, effects }` |
 | `ctx.renderMode` | true under `?render=1`: no animation, settle instantly |
 | `ctx.random()` | seeded PRNG (seed = moment id), so it is deterministic everywhere |

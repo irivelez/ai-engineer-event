@@ -154,6 +154,9 @@ create(ctx) {
 | `BeforeAfter` | `rows[{label, before, after}], headers, stage, ground, width` | `{ stage: 'before' \| 'after' }` | after column wipes in row by row; old values step back to muted |
 | `StepList` | `items[], active, numbered, role, ground, width` | `{ active }` | only for real sequences; accent bar travels to the active step |
 | `Scrim` | `ground, side ('left'·'right'·'top'·'bottom'·'center'), extent, strength` | `{ side?, extent?, strength? }` | eased gradient (no edge, no banding step); `scrim(opts)` returns a ready element |
+| `EvidenceVideo` | `item` (`ctx.assets.evidence(id)`), `variant ('void'·'paper'·'bleed')`, `width` (16:9), `loop`, `kind` (chip, e.g. `item.chip`), `qr`, `qrSize`, `meta` | none (`visible` only) | real clip: local `media/evidence/*.mp4` plays when shown (muted, once, holds `item.end`; M = sound); missing file → YouTube embed on https, poster + link on file://; render/back/jump → poster. Meta: chip, publisher · date, title, the source's own disclaimer verbatim, link, QR |
+| `EvidenceDoc` | `item`, `width`, `height` (cover, top), `highlight {x,y,w,h}` (0–1, default `item.highlight`), `dim`, `kind`, `qr` | `{ highlight }` | real page screenshot or chart (`item.imageSrc`), accent 4 px box over the passage, same meta block |
+| `SourceQR` | `url, label, size, ec, ground` | none | local QR (one SVG path, crisp) on a white card; module = whole stage px ≥ 4 (aim ≥ 6); `qrSVG()`, `shortUrl()` exported |
 
 Not built: a hover layer for charts (it is a stage; every value is labelled instead) and a line chart (scenes needing one compose it with d3-shape plus these tokens: 2 px line, 8 px markers, direct end labels).
 

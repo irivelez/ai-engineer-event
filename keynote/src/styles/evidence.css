@@ -1,0 +1,59 @@
+/* ---------- Evidence kit: EvidenceVideo, EvidenceDoc, SourceQR (src/components) ---------- */
+.itaf-ev { margin: 0; color: var(--g-fg); }
+.itaf-ev .ev-frame { position: relative; overflow: hidden; border-radius: 16px; background: var(--g-card); }
+.itaf-ev.v-void .ev-frame { box-shadow: 0 0 0 2px rgba(238, 242, 246, 0.22), 0 32px 96px -24px rgba(147, 170, 255, 0.20); }
+.itaf-ev.v-paper .ev-frame {
+  box-shadow: 0 0 0 2px rgba(11, 15, 20, 0.07), 0 2px 4px rgba(11, 15, 20, 0.04),
+              0 12px 24px -4px rgba(11, 15, 20, 0.08), 0 40px 80px -24px rgba(11, 15, 20, 0.20);
+}
+.itaf-ev.v-bleed { position: relative; }
+.itaf-ev.v-bleed .ev-frame { border-radius: 0; box-shadow: none; background: #05070A; }
+.itaf-ev .ev-poster, .itaf-ev .ev-video, .itaf-ev .ev-yt {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: block; object-fit: cover; border: 0;
+}
+.itaf-ev .ev-yt { pointer-events: none; background: #000; }
+.itaf-ev .ev-sound {
+  position: absolute; left: 20px; top: 20px; width: 56px; height: 56px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; color: #EEF2F6; background: rgba(5, 7, 10, 0.78);
+}
+.itaf-ev .ev-captions {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 72px 48px 32px; text-align: center; color: #FFFFFF;
+  font-size: 40px; line-height: 52px; font-weight: 520; text-wrap: balance;
+  background: linear-gradient(to top, rgba(5, 7, 10, 0.88) 0%, rgba(5, 7, 10, 0.72) 45%, rgba(5, 7, 10, 0) 100%);
+}
+
+/* meta block: [QR] chip + publisher · date / title / disclaimer / link */
+.itaf-ev .ev-meta { display: flex; align-items: flex-start; gap: 32px; margin-top: 28px; }
+.itaf-ev .ev-meta-text { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+/* on void the meta often sits over the 3D layer: a soft, edgeless dark pad keeps it a calm area (rule 7) */
+.itaf-ev.v-void .ev-meta-text { position: relative; isolation: isolate; }
+.itaf-ev.v-void .ev-meta-text::before {
+  content: ''; position: absolute; inset: -20px -28px -20px -24px; z-index: -1; border-radius: 32px;
+  background: rgba(5, 7, 10, 0.86); filter: blur(18px);
+}
+.itaf-ev .ev-src { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+.itaf-ev .ev-pub { color: var(--g-fg); }
+.itaf-ev .ev-title { color: var(--g-fg); }
+.itaf-ev .ev-disclaimer, .itaf-ev .ev-link { color: var(--g-muted); }
+.itaf-ev.v-bleed .ev-meta {
+  position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 160px 128px 48px;
+  background: linear-gradient(to top, rgba(5, 7, 10, 0.92) 0%, rgba(5, 7, 10, 0.78) 40%, rgba(5, 7, 10, 0) 100%);
+  --g-fg: #EEF2F6; --g-muted: #98A2B0;
+}
+
+/* highlight box over the passage (EvidenceDoc) */
+.itaf-ev .ev-img { display: block; width: 100%; height: auto; }
+.itaf-ev .ev-img.is-cover { height: 100%; object-fit: cover; object-position: 50% 0; }
+.itaf-ev .ev-hl {
+  position: absolute; border: 4px solid var(--g-accent); border-radius: 10px; transform-origin: 50% 50%;
+  box-shadow: 0 0 0 4000px rgba(5, 7, 10, 0.34);
+}
+.itaf-ev.v-paper .ev-hl { box-shadow: 0 0 0 4000px rgba(255, 255, 255, 0.45); }
+.itaf-ev.no-dim .ev-hl { box-shadow: none; }
+
+/* SourceQR: white card (the quiet zone is part of the code), label under it */
+.itaf-qr { color: var(--g-fg); }
+.itaf-qr .qr-card { background: #FFFFFF; border-radius: 12px; overflow: hidden; flex: none; }
+.itaf-ev.v-void .qr-card, .itaf-qr.ground-void .qr-card { box-shadow: 0 0 0 2px rgba(238, 242, 246, 0.22); }
+.itaf-qr .qr-card svg { display: block; }
+.itaf-qr .qr-label { margin-top: 16px; color: var(--g-muted); overflow-wrap: anywhere; }

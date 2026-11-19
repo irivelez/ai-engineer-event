@@ -1235,7 +1235,7 @@
       "name": "What the world is saying",
       "act": "world",
       "owner": "E9",
-      "plannedSec": 45,
+      "plannedSec": 30,
       "energy": 9,
       "ground": "void",
       "mode": "burst",
@@ -1257,7 +1257,7 @@
       "name": "Follow the money",
       "act": "world",
       "owner": "E9",
-      "plannedSec": 105,
+      "plannedSec": 90,
       "energy": 6,
       "ground": "paper",
       "mode": "data",
@@ -1301,7 +1301,7 @@
       "name": "On X this month",
       "act": "world",
       "owner": "E9",
-      "plannedSec": 120,
+      "plannedSec": 90,
       "energy": 7,
       "ground": "paper",
       "mode": "collage",
@@ -1326,7 +1326,7 @@
       "name": "Meanwhile, in the headlines",
       "act": "world",
       "owner": "E9",
-      "plannedSec": 75,
+      "plannedSec": 60,
       "energy": 9,
       "ground": "paper",
       "mode": "collage",
@@ -1344,41 +1344,56 @@
       "facts": []
     },
     {
-      "id": "adoption",
-      "name": "Inside companies",
+      "id": "two-speeds",
+      "name": "Two speeds",
       "act": "world",
-      "owner": "E9",
-      "plannedSec": 75,
+      "owner": "two-speeds",
+      "plannedSec": 90,
       "energy": 5,
       "ground": "paper",
       "mode": "data",
-      "icon": "value",
-      "brief": "Inside companies: most US businesses now pay for AI, usage is exploding, and usage is not results.",
+      "icon": "speed",
+      "brief": "The labs move at lab speed; the real economy moves at adoption speed. They cannot be compared directly, and the gap is where 2027 is decided.",
       "steps": [
-        "56.8% of US businesses pay for AI",
-        "Token volume +29% in four weeks",
-        "The backlash: usage is not results"
+        "The labs: how fast the frontier moves",
+        "The real economy: how fast companies adopt",
+        "The gap"
       ],
       "copy": {
-        "title": "Inside companies",
-        "s1": {
-          "value": "56.8%",
-          "label": "of US businesses paid for AI in October",
-          "delta": "+13.3 points in a year"
-        },
-        "s2": {
-          "value": "+29%",
-          "label": "token volume in four weeks, while prices fell"
-        },
-        "s3": "The backlash against “tokenmaxxing”: usage is not results.",
-        "tag": "Ramp AI Index · 85,000+ US businesses · paid tools only"
+        "title": "Two speeds",
+        "labsLabel": "The labs",
+        "economyLabel": "The real economy",
+        "line": "The frontier moves at lab speed. Your company moves at adoption speed."
       },
-      "visual": "Paper. Two big numbers; then the word 'tokenmaxxing' struck through.",
+      "visual": "Paper. Two columns or two clocks: left the labs (releases every few weeks, most of their own code written by AI), right the real economy (share of businesses paying for AI, companies that cannot yet measure impact, Latin American press). Real captures and sourced numbers only; every number with its chip.",
       "facts": [
         "ramp-568",
         "ramp-volume-29",
         "tokenmaxxing"
       ]
+    },
+    {
+      "id": "enterprise-voices",
+      "name": "What enterprises told San Francisco",
+      "act": "world",
+      "owner": "two-speeds",
+      "plannedSec": 90,
+      "energy": 5,
+      "ground": "paper",
+      "mode": "quote",
+      "icon": "constraints",
+      "brief": "Enterprise builders at the AI Engineer summits on what actually slows adoption: checking the work, cost, data and context, breaking work into testable steps.",
+      "steps": [
+        "Voice 1",
+        "Voice 2",
+        "Voice 3",
+        "What it adds up to"
+      ],
+      "copy": {
+        "title": "What enterprises told San Francisco"
+      },
+      "visual": "Paper. Real stills or short muted clips from the enterprise talks (each with speaker, company, YouTube timestamp and a SourceQR), one challenge per step, verbatim caption quotes; last step: the three challenges in one line.",
+      "facts": []
     },
     {
       "id": "rules",
@@ -1466,7 +1481,7 @@
       "name": "Approach: redesign, don't bolt on",
       "act": "next",
       "owner": "E10",
-      "plannedSec": 90,
+      "plannedSec": 75,
       "energy": 4,
       "ground": "paper",
       "mode": "calm",
@@ -1544,7 +1559,7 @@
       "name": "Roles for 2027",
       "act": "next",
       "owner": "E10",
-      "plannedSec": 90,
+      "plannedSec": 75,
       "energy": 5,
       "ground": "paper",
       "mode": "calm",

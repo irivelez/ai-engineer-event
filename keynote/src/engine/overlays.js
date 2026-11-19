@@ -22,6 +22,7 @@ export const HELP = [
   ['N', 'notes overlay'],
   ['T', 'start / reset timer'],
   ['H', 'show / hide cue icon'],
+  ['M', 'evidence video sound on / off'],
   ['?', 'this help'],
 ];
 

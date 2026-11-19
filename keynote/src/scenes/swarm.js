@@ -1,6 +1,8 @@
 // swarm (gl-1): the peak of the night. 2,048 agents as soft GPU light with short trails swirl out of one point,
-// then self-organize into eight layers (one per day, the counter races 1 → 8), then the layers fold into a
-// minimal laptop whose screen lights with a boot line. Everything is analytic in the vertex shader (no CPU
+// then self-organize into eight layers (one per day, the counter races 1 → 8). Last step: Anthropic's own clip of
+// the operating system (evidence item for this moment, src/data/evidence.json) plays in a frame beside the result
+// line, with its chip, its own disclaimer and a QR to the video, while the layers dim behind it. Without that item
+// the layers fold into a minimal laptop whose screen lights with a boot line (the illustrative version). Everything is analytic in the vertex shader (no CPU
 // simulation): position = f(time, per-agent orbit, organize progress, laptop progress), so render mode and
 // goto(i, { animate:false }) are exact.
 import { gsap } from 'gsap';
@@ -24,6 +26,8 @@ const CAM = [
   { az: -33, pol: 64, r: 31, tx: 0, ty: 0.2, tz: 0, shiftX: 380, orbitAmp: 9 },
   { az: -18, pol: 76, r: 30.5, tx: 0, ty: 1.9, tz: -0.4, shiftX: 470, orbitAmp: 0 },
 ];
+// Last step with the real clip: the layers step back and dim behind the frame.
+const CAM_CLIP = { az: -26, pol: 66, r: 38, tx: 0, ty: 0.2, tz: 0, shiftX: 300, orbitAmp: 5 };
 
 const VERT = /* glsl */ `
   uniform float uTime, uScale, uSize, uSpawn, uOrganize, uOrgRate, uLaptop, uLapRate, uTrailDt, uIntensity, uTwinkle;
@@ -268,6 +272,7 @@ export default {
 
     // depth: a faint far field
     const dust = world.add(H.particles({ count: 1400, spread: [80, 44, 50], center: [0, 0, -18], size: 0.07, colors: ['light', 'accent'], intensity: 0.5, drift: 0.5, seed: 'swarm-dust' }));
+    const dustBase = dust.uniforms.uOpacity.value;
 
     // the vortex's core: a soft light that the agents leave as they spawn, quiet once they organize
     const glowCanvas = document.createElement('canvas');
@@ -311,13 +316,18 @@ export default {
     const n1 = C.BigNumber.create({ display: copy.n, label: copy.nLabel, size: 'display', ground: g });
     const dParts = splitFigure(copy.d);
     const n2 = C.BigNumber.create({ display: dParts.figure, unit: dParts.unit || undefined, label: copy.dLabel, size: 'display', ground: g });
-    const result = C.Headline.create({ text: copy.result, role: 'h2', ground: g, width: 870 });
+    // the evidence clip (real Anthropic video) replaces the illustrative laptop on the last step
+    const ev = ((ctx.assets.evidenceFor && ctx.assets.evidenceFor(beat.id)) || []).find((e) => e.kind === 'video') || null;
+    const clip = ev && C.EvidenceVideo ? C.EvidenceVideo.create({ item: ev, kind: ev.chip || src.kind, width: tokens.spanW(6), qr: true, qrSize: 246, ground: g }) : null;
+    const result = C.Headline.create({ text: copy.result, role: 'h2', ground: g, width: clip ? tokens.spanW(6) : 870 });
     const source = C.SourceLine.create({ kind: src.kind, text: src.text, ground: g });
     root.append(scrim.el, floor.el, n1.el, n2.el, result.el, source.el);
+    if (clip) root.append(clip.el);
     place(n1.el, 128, 168);
     place(n2.el, 128, 560);
-    place(result.el, 128, 336);
+    place(result.el, 128, clip ? 168 : 336);
     place(source.el, 128, 988);
+    if (clip) place(clip.el, tokens.colX(6), 168);
     const strip = n2.el.querySelector('.bn-strip'); // the day digit's odometer strip (races 1 → 8)
     const finalDay = parseInt(dParts.figure, 10) || 8;
     const cellY = (cell) => -cell * 5;
@@ -328,7 +338,7 @@ export default {
     const rig = makeRig(THREE, world.camera, { ...CAM[0], orbitAmp: renderMode ? 0 : CAM[0].orbitAmp, breathe: renderMode ? 0 : 0.5 });
 
     // ---------- state ----------
-    const vis = { n1: false, n2: false, result: false, src: false, scrim: false, floor: false };
+    const vis = { n1: false, n2: false, result: false, src: false, scrim: false, floor: false, clip: false };
     function show(c, key, want, tl, at, animate) {
       if (want === vis[key]) return;
       vis[key] = want;
@@ -344,16 +354,28 @@ export default {
     function stateTo(step, animate, entering = false) {
       const A = animate && !renderMode;
       const tl = gsap.timeline();
-      const cam = { ...CAM[step], orbitAmp: renderMode ? 0 : CAM[step].orbitAmp };
+      const withClip = !!clip && step === 2;
+      const camDef = withClip ? CAM_CLIP : CAM[step];
+      const cam = { ...camDef, orbitAmp: renderMode ? 0 : camDef.orbitAmp };
       tl.add(rig.to(cam, { duration: A ? (step === 2 ? 5 : 4.4) : 0, ease: 'power3.inOut' }), 0);
+      // with the real footage on screen the swarm steps back to ~15% (agents and far field), and returns on ← back
+      const inten = withClip ? 0.45 : 3.0;
+      const dustOp = withClip ? dustBase * 0.15 : dustBase;
+      if (A) {
+        tl.to(U.uIntensity, { value: inten, duration: 0.8, ease: 'sine.inOut' }, 0);
+        tl.to(dust.uniforms.uOpacity, { value: dustOp, duration: 0.8, ease: 'sine.inOut' }, 0);
+      } else {
+        tl.set(U.uIntensity, { value: inten }, 0);
+        tl.set(dust.uniforms.uOpacity, { value: dustOp }, 0);
+      }
       const org = step >= 1 ? LAYERS : 0;
-      const lapT = step >= 2 ? 1 : 0;
+      const lapT = step >= 2 && !clip ? 1 : 0;
       if (A && step === 1 && U.uOrganize.value < org) tl.to(U.uOrganize, { value: org, duration: LAYERS * DAY, ease: 'none' }, 0.4);
       else tl.set(U.uOrganize, { value: org }, 0);
-      if (A && step === 2 && U.uLaptop.value < 1) tl.to(U.uLaptop, { value: 1, duration: 3.8, ease: 'none' }, 0.15);
+      if (A && lapT === 1 && U.uLaptop.value < 1) tl.to(U.uLaptop, { value: 1, duration: 3.8, ease: 'none' }, 0.15);
       else tl.set(U.uLaptop, { value: lapT }, 0);
-      const scr = step >= 2 ? 1 : 0;
-      if (A && step === 2) {
+      const scr = lapT;
+      if (A && lapT === 1) {
         tl.to(screenU.uScreen, { value: 1, duration: 1.4, ease: 'power2.out' }, 3.3);
         tl.fromTo(screenU.uBoot, { value: 0 }, { value: 1, duration: 2.0, ease: 'power2.inOut' }, 3.9);
       } else {
@@ -377,8 +399,10 @@ export default {
         n2.in(tl, 0.4);
         if (strip) tl.fromTo(strip, { yPercent: cellY(11) }, { yPercent: cellY(finalDay + 10), duration: 7 * DAY + 0.3, ease: raceEase }, 0.4);
       } else show(n2, 'n2', wantN2, tl, 0, A);
-      show(result, 'result', step === 2, tl, A ? 2.4 : 0, A);
-      show(source, 'src', true, tl, A ? (entering ? 1.7 : 0) : 0, A);
+      show(result, 'result', step === 2, tl, A ? (clip ? 0.5 : 2.4) : 0, A);
+      if (clip) show(clip, 'clip', withClip, tl, A ? 0.8 : 0, A); // in() starts the clip; → never waits for it
+      // with the clip, its own meta line carries the chip and the source: one chip per frame
+      show(source, 'src', !withClip, tl, A ? (entering ? 1.7 : 0) : 0, A);
       show(scrim, 'scrim', true, tl, 0, A);
       show(floor, 'floor', true, tl, 0, A);
       return tl;
@@ -394,6 +418,7 @@ export default {
       exit() {
         const tl = gsap.timeline();
         tl.to(rig.state, { r: rig.state.r - 2.5, duration: 0.8, ease: 'power2.in', onUpdate: rig.apply }, 0);
+        if (clip) tl.call(() => clip.pause(), null, 0.8); // keeps moving through the transition, then freezes (no empty card)
         return tl;
       },
       update(time, dt) {
@@ -415,8 +440,8 @@ export default {
         rig.update(renderMode ? 0 : time);
       },
       dispose() {
-        gsap.killTweensOf([rig.state, U.uOrganize, U.uLaptop, U.uSpawn, screenU.uScreen, screenU.uBoot, n1.el, strip].filter(Boolean));
-        [scrim, floor, n1, n2, result, source].forEach((c) => c.destroy());
+        gsap.killTweensOf([rig.state, U.uOrganize, U.uLaptop, U.uSpawn, U.uIntensity, dust.uniforms.uOpacity, screenU.uScreen, screenU.uBoot, n1.el, strip].filter(Boolean));
+        [scrim, floor, n1, n2, result, source, clip].filter(Boolean).forEach((c) => c.destroy());
         world.dispose();
         root.replaceChildren();
       },
