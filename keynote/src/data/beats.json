@@ -136,8 +136,8 @@
       "icon": "speed",
       "brief": "We land in San Francisco, three days of the AI Engineer Code Summit, where builders ship AI-written code at volume.",
       "steps": [
-        "Night city of light, camera glides in",
-        "Act title and event",
+        "The Golden Gate at dusk: we fly in",
+        "Act title over the Financial District",
         "80 sessions · 3 days"
       ],
       "copy": {
@@ -149,7 +149,7 @@
         "stat1": "80 sessions",
         "stat2": "3 days"
       },
-      "visual": "Full-screen 3D: an abstract night city made of light (instanced blocks, streets as flowing light lines, data traffic pulsing). Camera glides low between blocks, then rises to reveal the grid. Type lands calm on top. Optional: one real wide stage still (media/sf) appears as a framed card at the end.",
+      "visual": "Real aerial footage, licensed (Pexels): the Golden Gate at blue hour, then a dusk pull-back from Salesforce Tower with the Transamerica Pyramid; type on a left scrim. Graded posters as fallback; sources in docs/footage-manifest.md.",
       "facts": [
         "sf-sessions"
       ]
@@ -248,10 +248,10 @@
       "icon": "speed",
       "brief": "The software factory: agents write, test and ship; people set direction and check. Real numbers from the stage.",
       "steps": [
-        "The line: thousands of changes flow into one trunk",
-        "Grok Bot team: from 809 to 10,926 pull requests a month",
-        "Ramp: 75% of all merged code written and shipped by its own agent",
-        "Cognition: 92% of merged pull requests in September by its agent"
+        "Title over the Code Summit stage photo; pull request defined",
+        "Grok Bot team: bars land month by month, counter climbs to 10,926",
+        "Ramp: a 100-cell grid fills to 75%",
+        "Cognition: the same grid fills on to 92%"
       ],
       "copy": {
         "title": "The software factory",
@@ -476,9 +476,9 @@
       "icon": null,
       "brief": "Three labs share the frontier; each shipped its flagship in the last six weeks.",
       "steps": [
-        "Act title",
-        "Three monoliths rise, one per lab",
-        "Model names and dates"
+        "Act II title",
+        "Three labs share the frontier: three equal columns, one per lab",
+        "Each column's model and release date land together"
       ],
       "copy": {
         "act": "II",
@@ -565,9 +565,9 @@
       "icon": "speed",
       "brief": "Frontier releases now come in weeks: 14 in 11 weeks across three labs.",
       "steps": [
-        "Three tracks, 1 Sep → 17 Nov",
-        "Release pulses fire in date order",
-        "14 releases in 11 weeks"
+        "Empty timeline: three lab lanes, 1 Sep → 17 Nov",
+        "A playhead sweeps the weeks; the 14 releases land on their dates",
+        "Counts per lab, 5 · 5 · 4: 14 releases in 11 weeks"
       ],
       "copy": {
         "title": "Frontier releases now come in weeks",
@@ -587,7 +587,10 @@
           }
         ],
         "total": "14",
-        "totalLabel": "frontier-relevant releases in 11 weeks"
+        "totalLabel": "frontier-relevant releases in 11 weeks",
+        "releaseLabels": {
+          "Gemini 4 Carbon": "Gemini 4 Carbon (restricted)"
+        }
       },
       "visual": "3D: three parallel light tracks receding in depth along a time axis; each release fires a bright bead at its real date (dates from facts.json; if a date is not verified, show the lab's count without placing beads). Camera dolly along the axis.",
       "facts": [
@@ -655,9 +658,9 @@
       "icon": "speed",
       "brief": "The peak of the night: more than a thousand agents, eight days, an operating system from an empty folder.",
       "steps": [
-        "1,000+ agents swarm",
-        "8 days, nonstop (day counter races)",
-        "An empty folder becomes a prototype OS that boots on a laptop"
+        "One agent, then 1,000+: the pull-back",
+        "8 days: the tower rises floor by floor",
+        "The real clip: an OS that boots on a laptop"
       ],
       "copy": {
         "kicker": "Lab-reported · Anthropic, 9 Nov 2026",
@@ -667,7 +670,7 @@
         "dLabel": "nonstop",
         "result": "From an empty folder to a prototype operating system that boots on a laptop."
       },
-      "visual": "Full-screen 3D peak: 1,000+ glowing agents (instanced points with trails) swirl, then self-organize into layered structure; a day counter races 1→8; the structure collapses into a minimal laptop silhouette whose screen lights with a boot line. Bloom, slow orbit, then stillness.",
+      "visual": "Full-screen 3D: macro on one glass agent, then a pull-back to a murmuration of 1,024 agents; each of the 8 days locks a dark-glass floor; the tower dims behind Anthropic's real clip.",
       "facts": [
         "fable-1000-subagents"
       ]
@@ -1057,7 +1060,7 @@
         "motive": "Apparently “an attempt to cheat the evaluation.”",
         "tag": "Hugging Face, 27 Jul · METR, 26 Aug 2026"
       },
-      "visual": "Full-screen 3D: a glass cube (sandbox) holding red-orange agents; cracks propagate; particles leak along network lines to a distant cluster that turns red node by node; a date clock 9 Jul → 13 Jul.",
+      "visual": "Full-screen 3D: a glass enclosure at the head of a real-scale data-hall aisle holding 1,200 agents (METR); the wall cracks and 700 stream out along floor traces; racks turn red while the clock runs 9 → 13 Jul.",
       "facts": [
         "hf-intrusion",
         "hf-13-hours",
@@ -1108,9 +1111,9 @@
       "icon": "constraints",
       "brief": "Power is now a measured limit: the largest US grid cannot promise the electricity new data centres need.",
       "steps": [
-        "The grid",
+        "PJM on the US map",
         "6,831 MW short",
-        "A third of Colombia (if verified)",
+        "A third of Colombia",
         "Data centres: 38.2% of the bill"
       ],
       "copy": {
@@ -1121,7 +1124,7 @@
         "share": "38.2%",
         "shareLabel": "of $16.4B in capacity charges came from data-centre load"
       },
-      "visual": "Full-screen 3D: a vast lattice of warm grid lights; data-centre blocks pulse hungrily; a region the size of the shortfall goes dark. Drop the Colombia line if facts.json cannot verify it.",
+      "visual": "A Natural Earth US map with PJM's real footprint (HIFLD Open); Colombia's grid as a bar; the Monitoring Analytics slide. DOM/SVG.",
       "facts": [
         "pjm-shortfall",
         "colombia-capacity",
@@ -1140,7 +1143,7 @@
       "icon": "constraints",
       "brief": "Compute now needs a licence, and the rule reaches Latin America: Brazil is on the list, effective around today.",
       "steps": [
-        "The globe and the chip flows",
+        "The globe",
         "The 16 Nov rule: Brazil on the list",
         "Where the compute is: 72% US, ~10% China",
         "Latin American press: Exame, 17 Nov"
@@ -1153,7 +1156,7 @@
         "effective": "In force on publication in the Federal Register, scheduled for 19 Nov.",
         "share": "72% of the AI compute delivered since 2022 sits in the US. About 10% in China."
       },
-      "visual": "Full-screen 3D: a dark point-cloud globe; chip-flow arcs leave the US; arcs to Brazil hit a gate and hold. Latin America faces the camera at the key step.",
+      "visual": "A real globe (Natural Earth): Brazil's border draws in light; the rule's other four countries in an inset globe; exact bars for 72% / ~10%.",
       "facts": [
         "bis-rule-brazil",
         "bis-effective",
@@ -1172,14 +1175,14 @@
       "icon": "uncertainty",
       "brief": "We fly through what the world is saying: real posts and headlines from the last 30 days.",
       "steps": [
-        "Fly through the wall of real captures",
+        "Six real headlines; focus moves along them",
         "Act title"
       ],
       "copy": {
         "act": "IV",
         "actTitle": "What the world is saying"
       },
-      "visual": "Full-screen 3D: a tunnel or deep wall of the real captures (X posts and headlines, as textures from captures.json) rushing past; the camera slows and the act title lands.",
+      "visual": "Six real captures with outlet and date; one dolly, focus racks from headline to headline, ending on Bloomberg Línea; then the act title.",
       "facts": []
     },
     {
@@ -1403,7 +1406,7 @@
         "s3": "The gains came from redesigning the work around the motor, not from adding the motor.",
         "source": "Paul A. David, “The Dynamo and the Computer,” American Economic Review, 1990"
       },
-      "visual": "Full-screen 3D: an old factory with one long rotating line shaft, belts dropping to every machine, all coupled. A motor attaches to the shaft (bolt-on). Then the shaft dissolves, each machine gets its own small motor, and the floor re-flows into a clean line. Warm industrial light → clean modern light.",
+      "visual": "Full-screen 3D: a c.1900 brick machine shop; one line shaft with 16 belts and a flywheel engine; a green motor lowered onto the shaft changes nothing; then the belts snap and the machines glide into one flow line, sepia morning to daylight.",
       "facts": [
         "david-dynamo"
       ]
@@ -1628,14 +1631,14 @@
       "icon": "speed",
       "brief": "Echo of the opening speed, then stillness: the plan has to move with the frontier.",
       "steps": [
-        "Speed streaks return",
-        "The line"
+        "The frontier line redraws, fast",
+        "The line lands: the plan has to move"
       ],
       "copy": {
         "line1": "In 11 weeks, the frontier moved about seven months.",
         "line2": "Your 2027 plan has to move with it."
       },
-      "visual": "Void. Light streaks accelerate like the opener, then decelerate to stillness; the line lands.",
+      "visual": "Epoch's real frontier line (eci-history.json) redraws fast and lands on 17 Nov at 174.2; then the closing line, the last 11 weeks bracketed. DOM/SVG.",
       "facts": [
         "eci-jump"
       ]

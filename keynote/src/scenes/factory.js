@@ -1,221 +1,283 @@
-// factory (gl-1): the software factory. The camera dives from sf-arrival's aerial into the city's factory floor:
-// pull requests (instanced cubes) stream on nine conveyor lanes into one bright trunk, "main". Step 1: five
-// towers rise, one cube per 50 merged PRs (Grok Bot team, Jun → Oct). Steps 2–3: a recolour wave sweeps the
-// stream to the agent's share (75 %, then 92 %): accent = written by the agent. World: _worlds/city.js.
+// factory (motion-a): the software factory as editorial motion, DOM only (the GL city world is gone: GPU time back to the heroes).
+// References: DevDay 2026 26:20 (axes first, then data) and 30:57 (statement left, evidence right); Ramp's own 10 × 10 slide (7:51:01).
+// Palette: void ground; quiet grey for context marks, periwinkle for the point (October; the agents' share). Nothing glows.
+// Light: one real photograph, the Code Summit main stage (11 Nov), darkened under a scrim, pushing in slowly on the open.
+// Camera: none. The motion is the data: bars land month by month as the counter steps 809 → 10,926; a 100-cell grid fills to the share.
+// The frame that sells it: s1, "10,926" landing with the October bar, 13.5 × June's.
 import { gsap } from 'gsap';
-import { factSource, place, makeLookRig, projector } from './_worlds/gl1-kit.js';
-import { buildCity, FZ } from './_worlds/city.js';
-import { SHOTS as ARRIVAL } from './sf-arrival.js';
+import { calmScene, el, esc, fact, factSource } from './_calm/kit.js';
+import { scrimBackground } from '../components/Scrim.js';
 
-const SHOTS = [
-  { px: -14, py: 11, pz: -6, tx: 2, ty: 0, tz: -50, shiftX: 360 },
-  { px: 15, py: 10, pz: -24, tx: 14.6, ty: 3.6, tz: -61, shiftX: 520 },
-  { px: -22, py: 24, pz: -14, tx: 2, ty: 0, tz: -50, shiftX: 380 },
-  { px: -25, py: 20, pz: -19, tx: 1, ty: 0, tz: -52, shiftX: 390 },
-];
-const TOWER_X = (k) => 6.2 + k * 4;
-const TOWER_Z = -61;
-const PER_CUBE = 100; // merged PRs per cube
-const PITCH = 0.58;
+const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
+const expoOut = (t) => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * t));
+const cubicOut = (t) => 1 - Math.pow(1 - t, 3);
+const rgbOf = (hex) => { const n = parseInt(String(hex).slice(1), 16); return [n >> 16, (n >> 8) & 255, n & 255]; };
 
-export default {
-  id: 'factory',
-  gl: true,
-  create(ctx) {
-    const { root, copy, beat, gl, components: C, renderMode, tokens } = ctx;
-    const { THREE, helpers: H } = gl;
-    const city = buildCity(ctx);
-    const { world, prU } = city;
-    const rig = makeLookRig(THREE, world.camera, { ...SHOTS[0], breathe: renderMode ? 0 : 0.2 });
-    const project = projector(THREE, world.camera);
+// Bars: one "unit" per month on the bar clock; each bar grows over GROW units (expo.out), the counter steps at SWAP.
+const UNIT = 0.5; //   s per month
+const GROW = 1.5; //   units a bar takes to grow
+const SWAP = 0.45; //  units into a bar's growth when the counter steps to its value (bar ≈ 88 % grown)
+const ROLL = 0.55; //  units the counter's roll takes
+const STILL_ID = 'main-stage-wide';
 
-    // ---------- towers: the monthly series as stacks of PR cubes ----------
-    const series = (copy.s1 && copy.s1.series) || [];
-    const counts = series.map(([, v]) => Math.max(1, Math.round(v / PER_CUBE)));
-    const total = counts.reduce((a, b) => a + b, 0);
-    const tGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
-    const aTarget = new Float32Array(total * 3);
-    const aAppear = new Float32Array(total);
-    const aTone = new Float32Array(total);
-    let idx = 0;
-    counts.forEach((cnt, k) => {
-      for (let j = 0; j < cnt; j++) {
-        const layer = Math.floor(j / 9);
-        const cell = j % 9;
-        aTarget[idx * 3] = TOWER_X(k) + ((cell % 3) - 1) * PITCH;
-        aTarget[idx * 3 + 1] = 0.27 + layer * PITCH;
-        aTarget[idx * 3 + 2] = TOWER_Z + (Math.floor(cell / 3) - 1) * PITCH;
-        aAppear[idx] = k + (j / cnt) * 0.92;
-        aTone[idx] = k === counts.length - 1 ? 1 : 0;
-        idx++;
-      }
-    });
-    tGeo.setAttribute('aTarget', new THREE.InstancedBufferAttribute(aTarget, 3));
-    tGeo.setAttribute('aAppear', new THREE.InstancedBufferAttribute(aAppear, 1));
-    tGeo.setAttribute('aTone', new THREE.InstancedBufferAttribute(aTone, 1));
-    const tU = { uRise: { value: 0 }, uOpacity: { value: 1 }, uOld: { value: H.color('lightSoft', 0.55) }, uNew: { value: H.color('accent', 1.5) } };
-    const towers = new THREE.InstancedMesh(tGeo, new THREE.ShaderMaterial({
-      uniforms: tU, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-      vertexShader: /* glsl */ `
-        uniform float uRise; uniform vec3 uOld, uNew;
-        attribute vec3 aTarget; attribute float aAppear; attribute float aTone;
-        varying vec3 vColor; varying float vA;
-        void main(){
-          float e = smoothstep(aAppear, aAppear + 0.16, uRise);
-          vec3 p = position * (0.4 + 0.6 * e) + aTarget + vec3(0.0, 2.6 * (1.0 - e) * (1.0 - e), 0.0);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
-          vColor = mix(uOld, uNew, aTone);
-          vA = e;
-        }`,
-      fragmentShader: 'uniform float uOpacity; varying vec3 vColor; varying float vA; void main(){ gl_FragColor = vec4(vColor * vA * uOpacity, 1.0); }',
-    }), total);
-    towers.frustumCulled = false;
-    world.add(towers);
+export default calmScene('factory', (ctx, K) => {
+  const { T, C, G, g, place, R } = K;
+  const { copy, beat } = ctx;
+  const M = T.space.margin;
+  const LW = T.spanW(6); // left text column (columns 0–5)
+  const S = [copy.s1 || {}, copy.s2 || {}, copy.s3 || {}];
+  const FACTS = beat.facts || [];
+  const fmt = new Intl.NumberFormat('en-US');
 
-    // ---------- DOM ----------
-    const g = 'void';
-    const scrim = C.Scrim.create({ ground: g, side: 'left', extent: 0.76, strength: 0.96 });
-    const floorScrim = C.Scrim.create({ ground: g, side: 'bottom', extent: 0.22, strength: 0.9 });
-    const title = C.Headline.create({ text: copy.title, role: 'h2', ground: g, width: 1000 });
-    const sub = C.Headline.create({ text: copy.sub, role: 'lead', ground: g, width: 760, tone: 'muted' });
-    const gloss = C.Headline.create({ text: copy.gloss, role: 'body', ground: g, width: 1100, tone: 'muted' });
-    root.append(scrim.el, floorScrim.el, title.el, sub.el, gloss.el);
-    place(title.el, 128, 136);
-    place(sub.el, 128, 264);
-    place(gloss.el, 128, 872);
-    const blocks = ['s1', 's2', 's3'].map((key, i) => {
-      const s = copy[key] || {};
-      const who = C.Kicker.create({ text: s.who || '', ground: g, tone: 'muted' });
-      const num = C.BigNumber.create({ display: s.value, label: s.label, size: 'display', ground: g, tone: i === 0 ? 'fg' : 'accent' });
-      const detail = C.Headline.create({ text: s.detail || '', role: 'lead', ground: g, width: 900, tone: 'muted' });
-      const col = document.createElement('div');
-      Object.assign(col.style, { position: 'absolute', left: '128px', top: '300px', width: '1000px', display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'flex-start' });
-      col.append(who.el, num.el, detail.el);
-      root.append(col);
-      return { who, num, detail, src: factSource(ctx, (beat.facts || [])[i]) };
-    });
-    const source = C.SourceLine.create({ kind: blocks[0].src.kind, text: blocks[0].src.text, ground: g });
-    root.append(source.el);
-    place(source.el, 128, 988);
+  // ---------- data (facts.json; the copy only as a fallback) ----------
+  const gb = fact(ctx, FACTS[0]);
+  const series = (gb && gb.value && typeof gb.value === 'object' ? Object.entries(gb.value) : S[0].series || [])
+    .map(([m, v]) => [String(m), +v]).filter(([, v]) => Number.isFinite(v));
+  const vmax = Math.max(1, ...series.map(([, v]) => v));
+  const pct = (id, alt) => {
+    const f = fact(ctx, id);
+    const n = parseFloat(String((f && f.value) ?? alt ?? ''));
+    return Number.isFinite(n) ? Math.max(0, Math.min(100, Math.round(n))) : 0;
+  };
+  const SHARE = [0, 0, pct(FACTS[1], S[1].value), pct(FACTS[2], S[2].value)];
+  const UEND = Math.max(0, series.length - 1) + GROW; // bar clock when the last bar lands
 
-    // month labels under the towers, values at the ends (Jun, Oct)
-    const labelLayer = document.createElement('div');
-    labelLayer.className = 'ground-void';
-    Object.assign(labelLayer.style, { position: 'absolute', left: '0px', top: '0px', width: '1920px', height: '1080px', pointerEvents: 'none' });
-    root.append(labelLayer);
-    const fmt = new Intl.NumberFormat('en-US');
-    const labels = series.map(([m, v], k) => {
-      const month = document.createElement('div');
-      month.className = 't-label';
-      month.textContent = m;
-      Object.assign(month.style, { position: 'absolute', left: '0px', top: '0px', color: tokens.colors.lightSoft, whiteSpace: 'nowrap', transform: 'translate(-50%, 0)' });
-      labelLayer.append(month);
-      let val = null;
-      if (k === 0 || k === series.length - 1) {
-        val = document.createElement('div');
-        val.className = 't-label tnum';
-        val.textContent = fmt.format(v);
-        Object.assign(val.style, { position: 'absolute', left: '0px', top: '0px', color: k === series.length - 1 ? tokens.colors.accent : tokens.colors.light, whiteSpace: 'nowrap', transform: 'translate(-50%, -100%)' });
-        labelLayer.append(val);
-      }
-      const layers = Math.ceil(counts[k] / 9);
-      return { month, val, x: TOWER_X(k), top: 0.27 + layers * PITCH + 0.35 };
-    });
-    gsap.set(labelLayer, { autoAlpha: 0 });
-    const pt = { x: 0, y: 0, z: 0 };
-    function pinLabels() {
-      for (const l of labels) {
-        project(l.x, -0.1, TOWER_Z + 1.0, pt);
-        l.month.style.transform = `translate(${pt.x.toFixed(1)}px, ${(pt.y + 14).toFixed(1)}px) translate(-50%, 0)`;
-        if (l.val) {
-          project(l.x, l.top, TOWER_Z, pt);
-          l.val.style.transform = `translate(${pt.x.toFixed(1)}px, ${(pt.y - 10).toFixed(1)}px) translate(-50%, -100%)`;
-        }
-      }
+  // ---------- s0: the open (real stage still, darkened, slow push) ----------
+  const stillSrc = ctx.assets.sf ? ctx.assets.sf(STILL_ID) : null;
+  const stillMeta = (ctx.assets.sfMeta && ctx.assets.sfMeta(STILL_ID)) || {};
+  const stillWrap = el('div', '');
+  place(stillWrap, 0, 0, 1920, 1080);
+  stillWrap.style.overflow = 'hidden';
+  let img = null;
+  if (stillSrc) {
+    img = el('img', '', stillWrap);
+    img.src = stillSrc;
+    img.alt = stillMeta.description || '';
+    Object.assign(img.style, { position: 'absolute', left: '0px', top: '0px', width: '1920px', height: '1080px', objectFit: 'cover', transformOrigin: '66% 60%', willChange: 'transform' });
+  }
+  const dim = el('div', '', stillWrap);
+  Object.assign(dim.style, { position: 'absolute', left: '0px', top: '0px', width: '1920px', height: '1080px', background: G.bg, opacity: '0.58' });
+  const sc = el('div', '', stillWrap);
+  Object.assign(sc.style, { position: 'absolute', left: '0px', top: '0px', width: '1920px', height: '1080px', background: scrimBackground({ ground: g, side: 'left', extent: 0.86, strength: 0.94 }) });
+  const scB = el('div', '', stillWrap);
+  Object.assign(scB.style, { position: 'absolute', left: '0px', top: '0px', width: '1920px', height: '1080px', background: scrimBackground({ ground: g, side: 'bottom', extent: 0.4, strength: 0.9 }) });
+  const still = K.block(stillWrap, {
+    enter(tl) { tl.fromTo(stillWrap, { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.4, ease: 'sine.inOut' }, 0); },
+    exit(tl) { tl.to(stillWrap, { autoAlpha: 0, duration: 0.7, ease: 'sine.inOut' }, 0); },
+  });
+  let pushT = 0;
+  const setPush = () => { if (img) img.style.transform = `scale(${(1 + 0.05 * Math.sin(Math.min(1, pushT / 26) * Math.PI / 2)).toFixed(4)})`; };
+  setPush();
+
+  const title = K.add(C.Headline.create({ text: copy.title || '', role: 'h1', ground: g, width: T.spanW(12) }), M, 344);
+  const sub = K.add(C.Headline.create({ text: copy.sub || '', role: 'lead', ground: g, width: T.spanW(7), tone: 'muted' }), M, 504);
+  const [term, ...defn] = String(copy.gloss || '').split(':');
+  const glossEl = el('div', 't-body');
+  place(glossEl, M, 848, T.spanW(10));
+  const gloss = K.maskLines(glossEl, [{
+    html: defn.length ? `<span style="color:${G.fg};font-weight:600">${esc(term.trim())}:</span><span style="color:${G.muted}"> ${esc(defn.join(':').trim())}</span>` : esc(copy.gloss || ''),
+  }]);
+  // the photo's own caption (sf-stills.json), its own line in the footer band: it leaves with the photo
+  const caption = stillSrc ? C.SourceLine.create({ text: [stillMeta.org, stillMeta.talk].filter(Boolean).join(' · '), ground: g }) : null;
+  if (caption) { place(caption.el, M, T.space.footer.y); K.owned.push(caption); }
+
+  // ---------- s1–s3: the left column (who, number, label, detail) ----------
+  const COL_Y = 216;
+  const blocks = S.map((s, i) => {
+    const col = el('div', '');
+    place(col, M, COL_Y, 1180);
+    Object.assign(col.style, { display: 'flex', flexDirection: 'column', alignItems: 'flex-start' });
+    const who = C.Kicker.create({ text: s.who || '', ground: g, tone: 'muted' });
+    let num;
+    if (i === 0) {
+      // the counter: a clip mask, the current value rolls up into it, the previous one rolls out of it
+      // padded like a line mask (24 px above, 40 px below for the comma), pulled back so the layout box stays 216 px
+      const mask = el('div', 't-display tnum');
+      Object.assign(mask.style, { position: 'relative', overflow: 'clip', height: '280px', margin: '-24px 0 -40px', width: `${LW}px`, color: G.fg, whiteSpace: 'nowrap' });
+      const now = el('div', '', mask);
+      const was = el('div', '', mask);
+      [now, was].forEach((e) => Object.assign(e.style, { position: 'absolute', left: '0px', top: '24px', willChange: 'transform' }));
+      num = { el: mask, now, was, block: K.block(mask, { enter() {}, exit(tl) { tl.to(mask, { autoAlpha: 0, y: -12, duration: T.motion.calmOut.dur, ease: T.motion.calmOut.ease }, 0); } }) };
+    } else {
+      num = C.BigNumber.create({ display: s.value, size: 'display', ground: g, tone: 'accent' });
     }
+    const label = C.Headline.create({ text: s.label || '', role: 'lead', ground: g, width: LW });
+    const detail = C.Headline.create({ text: s.detail || '', role: 'body', ground: g, width: LW, tone: 'muted' });
+    col.append(who.el, num.el, label.el, detail.el);
+    who.el.style.marginBottom = '32px';
+    label.el.style.marginTop = '24px';
+    detail.el.style.marginTop = '24px';
+    K.owned.push(who, label, detail);
+    if (i > 0) K.owned.push(num);
+    return { who, num, label, detail, src: factSource(ctx, FACTS[i]) };
+  });
+  const counter = blocks[0].num;
 
-    // ---------- state ----------
-    const vis = {};
-    function show(c, key, want, tl, at, animate) {
-      if (!!vis[key] === want) return;
-      vis[key] = want;
-      if (animate) { if (want) c.in(tl, at); else c.out(tl, at); } else tl.add(c.set({ visible: want }, { animate: false }), 0);
+  // ---------- s1: the monthly bars (right, columns 7–11), baseline at y 760 ----------
+  const BASE_Y = 760;
+  const BAR_MAX = 400;
+  const CX0 = T.colX(7);
+  const CW = 1792 - CX0;
+  const band = CW / Math.max(1, series.length);
+  const BW = Math.round(band * 0.64);
+  const chart = el('div', '');
+  place(chart, 0, 0, 1920, 1080);
+  const base = el('div', '', chart);
+  Object.assign(base.style, { position: 'absolute', left: `${CX0}px`, top: `${BASE_Y}px`, width: `${CW}px`, height: '2px', background: G.muted, transformOrigin: '0 50%' });
+  const last = series.length - 1;
+  const bars = series.map(([m, v], k) => {
+    const h = Math.max(4, Math.round((v / vmax) * BAR_MAX));
+    const cx = CX0 + band * (k + 0.5);
+    const bar = el('div', '', chart);
+    Object.assign(bar.style, { position: 'absolute', left: `${Math.round(cx - BW / 2)}px`, top: `${BASE_Y - h}px`, width: `${BW}px`, height: `${h}px`, background: k === last ? G.accent : G.quiet, borderRadius: '4px 4px 0 0', transformOrigin: '50% 100%', willChange: 'transform' });
+    const val = el('div', 't-label tnum', chart, esc(fmt.format(v)));
+    Object.assign(val.style, { position: 'absolute', left: `${Math.round(cx - band / 2)}px`, width: `${Math.round(band)}px`, top: `${BASE_Y - h - 52}px`, textAlign: 'center', whiteSpace: 'nowrap', color: k === last ? G.fg : G.muted, fontWeight: k === last ? '600' : '' });
+    const mon = el('div', 't-label', chart, esc(m));
+    Object.assign(mon.style, { position: 'absolute', left: `${Math.round(cx - band / 2)}px`, width: `${Math.round(band)}px`, top: `${BASE_Y + 20}px`, textAlign: 'center', color: k === last ? G.fg : G.muted });
+    return { bar, val, mon };
+  });
+  const frame = K.block(chart, {
+    enter(tl) {
+      tl.fromTo(base, { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'expo.out' }, 0);
+      tl.fromTo(bars.map((b) => b.mon), { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.06 }, 0.15);
+    },
+    settle() { gsap.set(base, { scaleX: 1 }); gsap.set(bars.map((b) => b.mon), { autoAlpha: 1, y: 0 }); },
+    exit(tl) { tl.to(chart, { autoAlpha: 0, y: -12, duration: T.motion.calmOut.dur, ease: T.motion.calmOut.ease }, 0); },
+  });
+
+  // ---------- s2–s3: the 100-cell grid (right-aligned, same baseline): one cell = 1 % ----------
+  const PITCH = 60;
+  const CELL = 50;
+  const GSIZE = PITCH * 9 + CELL; // 590: sized to balance the display number
+  const GX = 1792 - GSIZE;
+  const GY = (T.zoomSafe && T.zoomSafe.avoidTopRight && T.zoomSafe.avoidTopRight.h) || 240; // top row clear of the Zoom speaker tile
+  const grid = el('div', '');
+  place(grid, 0, 0, 1920, 1080);
+  const QUIET = rgbOf(G.quiet);
+  const ACC = rgbOf(G.accent);
+  const cells = Array.from({ length: 100 }, (_, i) => {
+    const r = Math.floor(i / 10); // row from the bottom: the grid fills upward, like the bars grow
+    const c = i % 10;
+    const e = el('div', '', grid);
+    Object.assign(e.style, { position: 'absolute', left: `${GX + c * PITCH}px`, top: `${GY + (9 - r) * PITCH}px`, width: `${CELL}px`, height: `${CELL}px`, boxSizing: 'border-box', borderRadius: '4px', border: `3px solid ${G.quiet}` });
+    return e;
+  });
+  const cellRows = Array.from({ length: 10 }, (_, r) => cells.slice(r * 10, r * 10 + 10));
+  const gridB = K.block(grid, {
+    enter(tl) { tl.fromTo(cellRows, { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.035 }, 0); },
+    settle() { gsap.set(cellRows.flat(), { autoAlpha: 1, y: 0 }); },
+    exit(tl) { tl.to(grid, { autoAlpha: 0, y: -12, duration: T.motion.calmOut.dur, ease: T.motion.calmOut.ease }, 0); },
+  });
+
+  // ---------- state as pure functions (render mode and the animated end state agree by construction) ----------
+  // fill: the wave front (a cell lights over FADE cells of front travel); share: cells that end lit (exactly `share`);
+  // base: cells already lit before this wave (stay full).
+  const FADE = 2.5;
+  const st = { bars: 0, fill: 0, share: 0, base: 0 };
+  let shownTxt = [null, null];
+  function renderBars() {
+    const p = st.bars;
+    bars.forEach((b, k) => {
+      const gk = expoOut(clamp01((p - k) / GROW));
+      b.bar.style.transform = `scaleY(${gk.toFixed(4)})`;
+      const a = clamp01((p - k - 0.65) / 0.45);
+      b.val.style.opacity = a.toFixed(3);
+      b.val.style.transform = `translateY(${((1 - a) * 10).toFixed(1)}px)`;
+    });
+    let j = -1;
+    for (let k = 0; k < series.length; k++) if (p >= k + SWAP) j = k;
+    const nowT = j >= 0 ? fmt.format(series[j][1]) : '';
+    const wasT = j >= 1 ? fmt.format(series[j - 1][1]) : '';
+    if (shownTxt[0] !== nowT) { counter.now.textContent = nowT; shownTxt[0] = nowT; }
+    if (shownTxt[1] !== wasT) { counter.was.textContent = wasT; shownTxt[1] = wasT; }
+    const r = j >= 0 ? cubicOut(clamp01((p - (j + SWAP)) / ROLL)) : 0;
+    counter.now.style.transform = `translateY(${((1 - r) * 130).toFixed(2)}%)`;
+    counter.was.style.transform = `translateY(${(-r * 130).toFixed(2)}%)`;
+  }
+  function renderGrid() {
+    const f = st.fill;
+    for (let i = 0; i < 100; i++) {
+      const a = i < st.base ? 1 : i < st.share ? clamp01((f - i) / FADE) : 0;
+      const e = cells[i];
+      if (e._a === a) continue;
+      e._a = a;
+      const mix = QUIET.map((q, n) => Math.round(q + (ACC[n] - q) * a));
+      e.style.borderColor = `rgb(${mix.join(',')})`;
+      e.style.backgroundColor = `rgba(${ACC.join(',')},${a.toFixed(3)})`;
     }
-    const SHARE = [-1, -1, 0.75, 0.92];
-    let srcStep = -1;
+  }
+  renderBars();
+  renderGrid();
 
-    function stateTo(step, animate, entering) {
-      const A = animate && !renderMode;
-      const tl = gsap.timeline();
-      if (A && entering) { rig.set({ ...ARRIVAL.hold }); tl.add(rig.to(SHOTS[0], { duration: 5.2, ease: 'power3.inOut' }), 0); } else tl.add(rig.to(SHOTS[step], { duration: A ? (step === 1 ? 4.2 : 4.6) : 0, ease: 'power3.inOut' }), 0);
+  const foot = K.footer();
+  let cur = -1;
+  // ins at their cue, outs at once (exits are faster than entrances)
+  const show = (c, want, tl, at, anim) => tl.add(c.set({ visible: want }, { animate: anim }), anim && want ? at : 0);
 
-      // towers rise in step 1, stay (dim) after
-      if (A && step === 1 && tU.uRise.value < counts.length) tl.fromTo(tU.uRise, { value: 0 }, { value: counts.length, duration: 4.6, ease: 'none' }, 0.9);
-      else tl.set(tU.uRise, { value: step >= 1 ? counts.length : 0 }, 0);
-      const tOp = step === 1 ? 1 : step > 1 ? 0.35 : 1;
-      if (A) tl.to(tU.uOpacity, { value: tOp, duration: 1.2 }, 0); else tl.set(tU.uOpacity, { value: tOp }, 0);
-      const labelsOn = step === 1;
-      if (A) tl.to(labelLayer, { autoAlpha: labelsOn ? 1 : 0, duration: labelsOn ? 0.8 : 0.4 }, labelsOn ? 4.6 : 0); else tl.set(labelLayer, { autoAlpha: labelsOn ? 1 : 0 }, 0);
+  function go(step, animate, info = {}) {
+    const tl = gsap.timeline();
+    const anim = animate && !R && !((info.direction || 1) < 0); // back = cut to the settled state
+    gsap.killTweensOf(st);
+    const from = cur;
+    cur = step;
 
-      // the stream: neutral, then the agent's share sweeps down the lanes
-      const want = SHARE[step];
-      if (A && want >= 0 && prU.uNew.value !== want) {
-        tl.set(prU.uOld, { value: prU.uNew.value }, 0.6);
-        tl.set(prU.uNew, { value: want }, 0.6);
-        tl.fromTo(prU.uFront, { value: FZ.start + 2 }, { value: FZ.end - 3, duration: 3.6, ease: 'power1.inOut' }, 0.6);
-      } else {
-        tl.set(prU.uOld, { value: want }, 0);
-        tl.set(prU.uNew, { value: want }, 0);
-        tl.set(prU.uFront, { value: FZ.end - 3 }, 0);
-      }
+    // s0: the open
+    if (step === 0 && (anim || from !== 0)) { pushT = 0; setPush(); }
+    show(still, step === 0, tl, 0, anim);
+    show(title, step === 0, tl, 0.3, anim);
+    show(sub, step === 0, tl, 0.55, anim);
+    show(gloss, step === 0, tl, 0.9, anim);
 
-      // DOM
-      show(scrim, 'scrim', true, tl, 0, A);
-      show(floorScrim, 'floorScrim', true, tl, 0, A);
-      show(title, 'title', true, tl, A ? (entering ? 2.2 : 0) : 0, A);
-      show(sub, 'sub', step === 0, tl, A ? (entering ? 2.6 : 0) : 0, A);
-      show(gloss, 'gloss', step === 0, tl, A ? (entering ? 3.2 : 0) : 0, A);
-      blocks.forEach((b, i) => {
-        const on = step === i + 1;
-        show(b.who, `who${i}`, on, tl, A ? 0.5 : 0, A);
-        show(b.num, `num${i}`, on, tl, A ? 0.6 : 0, A);
-        show(b.detail, `det${i}`, on, tl, A ? 1.1 : 0, A);
-      });
-      if (step >= 1) {
-        const b = blocks[step - 1];
-        if (srcStep !== step) {
-          if (vis.source) tl.add(source.set({ kind: b.src.kind, text: b.src.text }, { animate: A }), A ? 0.6 : 0);
-          else source.set({ kind: b.src.kind, text: b.src.text }, { animate: false });
-          srcStep = step;
-        }
-      }
-      show(source, 'source', step >= 1, tl, A ? 1.0 : 0, A);
-      return tl;
-    }
+    // left column, one block per company
+    const at = (x) => (from >= 0 && from !== step ? 0.3 : 0) + x;
+    blocks.forEach((b, i) => {
+      const on = step === i + 1;
+      show(b.who, on, tl, at(0.05), anim);
+      if (i === 0) show(b.num.block, on, tl, 0, anim);
+      else show(b.num, on, tl, at(i === 1 ? 0.75 : 0.3), anim);
+    });
 
-    return {
-      steps: beat.steps.length,
-      world,
-      enter() { return stateTo(0, true, true); },
-      goto(step, { animate }) { return stateTo(step, animate, false); },
-      exit() {
-        const tl = gsap.timeline();
-        tl.to(rig.state, { pz: '-=4', duration: 0.8, ease: 'power2.in', onUpdate: rig.apply }, 0);
-        return tl;
-      },
-      update(time) {
-        const t = renderMode ? 0 : time;
-        city.update(t);
-        rig.update(t);
-        if (labelLayer.style.visibility !== 'hidden') pinLabels();
-      },
-      dispose() {
-        gsap.killTweensOf([rig.state, tU.uRise, tU.uOpacity, prU.uFront, prU.uOld, prU.uNew, labelLayer]);
-        [scrim, floorScrim, title, sub, gloss, source].forEach((c) => c.destroy());
-        blocks.forEach((b) => { b.who.destroy(); b.num.destroy(); b.detail.destroy(); });
-        world.dispose();
-        root.replaceChildren();
-      },
-    };
-  },
-};
+    // s1: axes first, then the bars land month by month with the counter
+    show(frame, step === 1, tl, at(0.1), anim);
+    const barsAt = at(0.55);
+    if (step === 1 && anim && from !== 1) {
+      st.bars = 0;
+      renderBars();
+      tl.to(st, { bars: UEND, duration: UEND * UNIT, ease: 'none', onUpdate: renderBars }, barsAt);
+    } else { st.bars = UEND; renderBars(); }
+    const s1Done = barsAt + (series.length - 1 + SWAP + ROLL) * UNIT;
+
+    // s2–s3: the grid fills to the share, in step with the odometer roll of the number
+    show(gridB, step >= 2, tl, at(0), anim);
+    const want = SHARE[step] || 0;
+    if (anim && step >= 2 && want > st.share) {
+      const first = from < 2;
+      st.base = first ? 0 : st.share;
+      st.fill = st.base;
+      st.share = want;
+      renderGrid();
+      tl.to(st, { fill: want + FADE, duration: first ? 1.3 : 0.9, ease: 'expo.out', onUpdate: renderGrid }, at(first ? 0.75 : 0.3)); // lands with the odometer
+    } else { st.share = want; st.base = want; st.fill = want + FADE; renderGrid(); }
+
+    // label and detail land after the number; provenance last (+0.35 s)
+    const textAt = step === 1 ? s1Done : at(step === 2 ? 1.9 : 1.5);
+    blocks.forEach((b, i) => {
+      const on = step === i + 1;
+      show(b.label, on, tl, textAt, anim);
+      show(b.detail, on, tl, textAt + 0.15, anim);
+    });
+    if (caption) show(caption, step === 0, tl, 1.2, anim);
+    foot.show(step >= 1 ? (blocks[step - 1] && blocks[step - 1].src) || null : null, anim, tl, textAt);
+    return tl;
+  }
+
+  return {
+    go,
+    update(t, dt) {
+      if (R || !still.shown || !img) return;
+      pushT += dt || 0;
+      setPush();
+    },
+    dispose() { gsap.killTweensOf(st); },
+  };
+});
