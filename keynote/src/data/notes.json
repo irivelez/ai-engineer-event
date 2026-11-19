@@ -308,33 +308,6 @@
       "OpenAI reportedly used 3.1 agent-workdays per human workday by mid-August (via METR's Senate testimony; OpenAI's page unreadable)."
     ]
   },
-  "science": {
-    "notes": [
-      "The strongest results are now artifacts anyone can check, mostly in Lean: software that verifies every step of a proof.",
-      "Fermat's Last Theorem in Lean: ~1,000 Claude agents, 30 hours (Anthropic, lab-reported). Fine print: they got 60 statements, a one-line proof sketch and 47 lemmas.",
-      "Signal's cryptography: Google DeepMind's AlphaProof Code, 6M+ lines of Lean in 4 weeks; experts reviewed every specification (lab-reported, not yet confirmed).",
-      "A previously undescribed enzyme system: about 950 Claude agents, 21 hours. Early lab tests confirm it is expressed; «we don't yet know its function».",
-      "Cue: Value. Where output can be checked, the gains are real."
-    ],
-    "sources": [
-      {
-        "label": "Anthropic · Fable 5.2 launch (footnote 4)",
-        "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2"
-      },
-      {
-        "label": "Google DeepMind · Introducing AlphaProof Code, 10 Nov",
-        "url": "https://deepmind.google/blog/introducing-alphaproof-code/"
-      },
-      {
-        "label": "Anthropic · Claude discovers a novel enzyme system, 23 Sep",
-        "url": "https://www.anthropic.com/research/claude-discovers-novel-enzyme-system"
-      }
-    ],
-    "transition": "And the same capability keeps getting cheaper.",
-    "ifAsked": [
-      "Anthropic's main text says “minimal human intervention”; the footnote was added on 11 Nov to describe what the agents were given."
-    ]
-  },
   "price": {
     "notes": [
       "Epoch AI estimate (via State of AI 2026): the price of a fixed benchmark score has fallen 47% a quarter since 2023, about 13× a year.",
@@ -777,7 +750,12 @@
         "url": "https://metr.org/blog/2026-09-22-claude-opus-5-5/"
       }
     ],
-    "transition": "Which changes who you need on the team."
+    "transition": "Which changes who you need on the team.",
+    "ifAsked": [
+      "Proof in practice (lab-reported, Anthropic, 9 Nov): about 1,000 Claude agents produced a machine-checked proof of Fermat's Last Theorem in Lean in 30 hours, starting from a one-line proof sketch and 47 lemmas from earlier work.",
+      "Google DeepMind (lab-reported, 10 Nov): AlphaProof Code agents formally verified Signal's core cryptographic code, over six million lines of Lean in four weeks, with experts reviewing every specification.",
+      "Where checking needs judgment, AI lags: no model met Epoch's employee bar on open-ended work (moment: the employee bar)."
+    ]
   },
   "roles": {
     "notes": [

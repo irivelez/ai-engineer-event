@@ -3,7 +3,7 @@
   "presenter": "Irina Vélez",
   "event": "Inside the AI Frontier · free online session",
   "date": "2026-11-19T19:00:00-05:00",
-  "plannedTotalSec": 3600,
+  "plannedTotalSec": 3495,
   "icons": {
     "speed": "Speed",
     "tradeoffs": "Trade-offs",
@@ -695,57 +695,6 @@
         "claude-90-merged",
         "claude-rd-26",
         "anthropic-30000-agents"
-      ]
-    },
-    {
-      "id": "science",
-      "name": "Science you can check",
-      "act": "labs",
-      "owner": "E6",
-      "plannedSec": 105,
-      "energy": 8,
-      "ground": "void",
-      "mode": "burst",
-      "icon": "value",
-      "brief": "The strongest results are now artifacts anyone can check: proofs, verified code, a new enzyme system.",
-      "steps": [
-        "Proof glyphs cascade",
-        "Fermat's Last Theorem in Lean: ~1,000 agents, 30 hours",
-        "Signal's cryptography verified: 6M+ lines of Lean in 4 weeks",
-        "A new enzyme system: ~950 agents, 21 hours"
-      ],
-      "copy": {
-        "title": "Science you can check",
-        "gloss": "Lean: software that checks every step of a proof.",
-        "items": [
-          {
-            "what": "Fermat's Last Theorem, formalized in Lean",
-            "who": "~1,000 Claude agents",
-            "time": "30 hours",
-            "note": "with a one-line proof sketch and 47 lemmas from earlier work",
-            "tag": "Lab-reported · Anthropic"
-          },
-          {
-            "what": "Signal's core cryptography, formally verified",
-            "who": "Gemini agents · AlphaProof Code",
-            "time": "6M+ lines of Lean in 4 weeks",
-            "note": "experts reviewed every specification",
-            "tag": "Lab-reported · Google DeepMind"
-          },
-          {
-            "what": "A previously undescribed enzyme system",
-            "who": "~950 Claude agents",
-            "time": "21 hours",
-            "note": "“we don't yet know its function”",
-            "tag": "Lab-reported · Anthropic"
-          }
-        ]
-      },
-      "visual": "Full-screen 3D: a deep rain of proof glyphs (∀ ∃ → ⊢ λ, Lean keywords) in depth, resolving into check marks; each item lands as a calm card over the field.",
-      "facts": [
-        "fermat-lean",
-        "alphaproof-signal",
-        "enzyme-950"
       ]
     },
     {
