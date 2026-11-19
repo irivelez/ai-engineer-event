@@ -1985,6 +1985,54 @@
       "caveat": "Cyber tasks only.",
       "verified": "doc-only",
       "checkedAt": "2026-11-17"
+    },
+    "rli-2025-baseline": {
+      "claim": "When the Remote Labor Index launched, the best AI agents completed 2.5% of its 240 real freelance projects at a level that would be accepted as commissioned work.",
+      "value": "2.5%",
+      "unit": "automation rate",
+      "asOf": "2025-10-30",
+      "label": "independent",
+      "source": {
+        "title": "Remote Labor Index (Mazeika et al.)",
+        "publisher": "Mazeika et al., arXiv 2510.26787",
+        "url": "https://arxiv.org/abs/2510.26787",
+        "date": "2025-10-30"
+      },
+      "caveat": "Different agents from today's; same 240-project set.",
+      "verified": "arXiv abstract",
+      "checkedAt": "2026-11-18T22:20-05:00"
+    },
+    "hua-better-models-not-more-work": {
+      "claim": "A natural experiment with 297 developers and 8,908 controls found access to a stronger coding model raised the 7-day merge rate of pull requests by only 1.4 points (not statistically significant); across five 2026 model upgrades all five estimates were negative, none significant.",
+      "value": "+1.4 pp",
+      "unit": "7-day merge rate",
+      "asOf": "2026-11-17",
+      "label": "independent",
+      "source": {
+        "title": "Higher-Scoring Coding Models Did Not Get More Work Done",
+        "publisher": "Yining Hua, arXiv 2611.23216",
+        "url": "https://arxiv.org/abs/2611.23216",
+        "date": "2026-11-17"
+      },
+      "caveat": "One author, a preprint (not peer-reviewed), one output measure (pull requests merged within 7 days).",
+      "verified": "arXiv abstract",
+      "checkedAt": "2026-11-18T22:20-05:00"
+    },
+    "rlvr-checkable-gains": {
+      "claim": "Reinforcement learning with verifiable rewards has led to significant gains in math and code generation; extending these gains to open-ended domains remains challenging because ground-truth verification is unavailable.",
+      "value": "qualitative",
+      "unit": "",
+      "asOf": "2026-11-04",
+      "label": "independent",
+      "source": {
+        "title": "Rubric Curriculum RL (Motwani et al.)",
+        "publisher": "Motwani et al., arXiv 2611.06244",
+        "url": "https://arxiv.org/abs/2611.06244",
+        "date": "2026-11-04"
+      },
+      "caveat": "Research consensus on where RL gains are fastest; mapping to business tasks is ours.",
+      "verified": "arXiv abstract",
+      "checkedAt": "2026-11-18T22:20-05:00"
     }
   }
 }

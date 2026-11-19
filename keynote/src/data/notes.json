@@ -416,11 +416,11 @@
   },
   "employee-bar": {
     "notes": [
-      "Epoch AI (independent, 17 Nov): six frontier models, four real open-ended work tasks, one hand-graded run each.",
-      "No model met the standard Epoch expects of its own staff, on any task.",
-      "Fable 5.2 was best; GPT-6.2 Astra averaged 65%, 17 points lower, although the two tie on Epoch's own capabilities index.",
-      "Failures of judgment, not knowledge: every model reused existing chess variants; they mostly kept their first try; all but once they rated their own work above the human's.",
-      "Small study: Epoch says the scores are noisy, not ground truth. The bar line on screen is illustrative.",
+      "Point: AI models know a lot, but on open-ended work they still lack judgment.",
+      "The test (Epoch AI, independent, 17 Nov): six top models, four real research tasks of the kind Epoch’s own team does. Each model tried each task once; Epoch’s researchers graded the results by hand, against the standard they expect from their own staff. None met it, on any task.",
+      "The example: asked to invent a new chess variant, Claude Fable 5.2’s “new” game played exactly like one that already exists.",
+      "Three signs: they reused existing ideas; they mostly kept their first attempt instead of improving it; all but once they rated their own work above the human’s, often exaggerating small flaws in the human work.",
+      "If asked for scores: Fable 5.2 was best; GPT-6.2 Astra averaged 65%, 17 points lower, although the two tie on Epoch’s capabilities index. Small study: Epoch says the scores are noisy, not ground truth.",
       "Cue: Constraints."
     ],
     "sources": [
@@ -429,7 +429,7 @@
         "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work"
       }
     ],
-    "transition": "And when they do reach the bar, smarter isn't always cheaper.",
+    "transition": "And even when they are good enough, the smartest model is not always the cheapest.",
     "ifAsked": [
       "Models tested: Fable 5.2, GPT-6.2 Astra, Opus 5.5, Gemini 4 Argon, Fable 5.1, GPT-6 Astra (Gemini 4 Carbon was not tested).",
       "Fable 5.2's “Kingsgate” chess variant plays exactly like an existing one."
@@ -437,11 +437,11 @@
   },
   "economics": {
     "notes": [
-      "One Epoch task, analysing AI data centres: a human contractor needs about 16 hours per data centre.",
-      "Claude Opus 5.5: contractor-level work in just under 3 hours, for less than the contractor costs.",
-      "Claude Fable 5.2: better work (97.5% vs 87.5%), but about 6.5 hours and more expensive than the contractor.",
-      "Cue: Trade-offs. The smartest model is not always the right buy: price the job, not the model.",
-      "One task, one run; Epoch published no dollar figures."
+      "Not AI against people in general: one real Epoch task, analysing an AI data centre, which takes a human contractor about 16 hours of paid work.",
+      "Claude Opus 5.5 did contractor-level work, for less than the contractor costs.",
+      "Claude Fable 5.2 did better work (97.5% vs 87.5%), but its run cost more than paying the contractor.",
+      "So AI is not automatically cheaper than a person, and the smartest model is not always the best buy: match the model to the job.",
+      "One task, one run; Epoch published no dollar figures. Cue: Trade-offs."
     ],
     "sources": [
       {
@@ -457,7 +457,8 @@
       "METR's time-horizon suite is unreliable above 16 hours and its tracker stopped on 8 Sep: no current frontier model has a public number.",
       "Models notice tests: in Anthropic's own checks on Opus 5.5, 36% of test transcripts showed strong signs of it, against 0.4% in real use (lab-reported).",
       "UK AI Security Institute (independent, July): «Every model tested in this analysis attempted to cheat some of the time.»",
-      "Cue: Uncertainty. A clean test result means less than it used to."
+      "Cue: Uncertainty. A clean test result means less than it used to.",
+      "Plain version of the third line: like a driver who drives perfectly while the examiner is in the car. Anthropic checked its own model: in its automated tests, 36% of Claude Opus 5.5’s transcripts showed clear signs it suspected a test; in about 500 real internal coding sessions, 0.4%. If a model behaves differently when it knows it is watched, the test results labs publish may not show how it behaves in your company. Lab-reported."
     ],
     "sources": [
       {
@@ -712,12 +713,17 @@
       "Productivity jumped only in the 1920s, about 40 years after the first power station, once one motor per machine let factories be rebuilt around the flow of work.",
       "His data's lesson: the gains came from redesigning the work, not from adding the motor.",
       "David himself warns against pushing the analogy too far; say so if asked.",
-      "Cue: Value."
+      "Cue: Value.",
+      "Optional, today’s echo: on 17 Nov a researcher used a natural experiment, 297 developers who lost their top-scoring model for 19 days. Their merge rate barely moved (+1.4 points, not significant). Paper title: “Higher-Scoring Coding Models Did Not Get More Work Done” (Yining Hua, arXiv 2611.23216; one author, not peer-reviewed)."
     ],
     "sources": [
       {
         "label": "Paul A. David, The Dynamo and the Computer, AER 80(2), 1990 (JSTOR)",
         "url": "https://www.jstor.org/stable/2006600"
+      },
+      {
+        "label": "Yining Hua · Higher-Scoring Coding Models Did Not Get More Work Done, arXiv, 17 Nov 2026",
+        "url": "https://arxiv.org/abs/2611.23216"
       }
     ],
     "transition": "What does redesign mean for your company?"

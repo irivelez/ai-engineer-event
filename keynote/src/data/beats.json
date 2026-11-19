@@ -905,7 +905,7 @@
     },
     {
       "id": "employee-bar",
-      "name": "On real work, no model met the bar",
+      "name": "AI knows a lot; it still lacks judgment",
       "act": "limits",
       "owner": "E7",
       "plannedSec": 120,
@@ -916,28 +916,23 @@
       "brief": "The clearest independent test of real work: no model met the bar Epoch sets for its own employees.",
       "steps": [
         "The finding",
-        "The scores, all under the staff standard",
-        "Why: judgment, not knowledge"
+        "An example: the “new” chess game",
+        "Three signs of missing judgment"
       ],
       "copy": {
-        "title": "On real work, no AI model met the standard of a good employee",
-        "sub": "Epoch AI gave six top models four real research tasks and graded each result the way it grades its own staff. None passed, on any task.",
-        "best": "Claude Fable 5.2: best",
-        "second": "GPT-6.2 Astra: 65% average, 17 points lower",
+        "title": "AI knows a lot. It still lacks judgment.",
+        "sub": "Epoch AI gave the top models real research work, the kind its own team does. None did it as well as Epoch expects from its own staff.",
+        "example": "Asked to invent a new version of chess, the best model’s “new” game played exactly like one that already exists.",
+        "failuresTitle": "Three signs of missing judgment",
         "failures": [
-          "They reused existing ideas instead of inventing new ones.",
-          "They mostly kept their first attempt.",
-          "They rated their own work above human work."
+          "They repeat old ideas.",
+          "They stop at the first try.",
+          "They rate their own work above people’s work."
         ],
-        "barLabel": "The standard Epoch expects of its own staff",
-        "barNote": "Line position illustrative: Epoch judged each task against its staff standard, not one score.",
-        "tag": "Independent · Epoch AI, 17 Nov 2026",
-        "example": "One task: invent a new chess variant. Claude Fable 5.2’s “new” variant played exactly like one that already exists.",
-        "failuresTitle": "They failed on judgment, not knowledge"
+        "tag": "Independent · Epoch AI, 17 Nov 2026"
       },
       "visual": "Paper. A horizontal 'employee bar' line high on the chart; model bars rise and stop below it (the line has no value on the axis: copy.barNote says so in small type). Failures as three plain lines.",
       "facts": [
-        "epoch-astra-65",
         "epoch-failures",
         "epoch-real-work"
       ]
@@ -954,23 +949,32 @@
       "icon": "tradeoffs",
       "brief": "Smarter isn't always cheaper: on one task, the bigger model cost more than the human contractor.",
       "steps": [
-        "The contractor baseline",
-        "Opus 5.5 vs Fable 5.2"
+        "The contractor: 16 hours of paid work",
+        "Two Claude models: quality and cost",
+        "Takeaway: the best model isn’t always the best buy"
       ],
       "copy": {
-        "title": "Smarter isn't always cheaper",
-        "base": "A human contractor: ~16 hours",
+        "title": "Smarter isn’t always cheaper",
+        "sub": "One real task, measured by Epoch AI: analysing an AI data centre.",
+        "base": {
+          "who": "A human contractor",
+          "quality": "The reference",
+          "cost": "16 hours of paid work"
+        },
         "a": {
           "model": "Claude Opus 5.5",
-          "time": "under 3 hours",
-          "result": "contractor-level work, for less than the contractor"
+          "quality": "Contractor-level work",
+          "cost": "Cheaper than the contractor",
+          "good": true
         },
         "b": {
           "model": "Claude Fable 5.2",
-          "time": "~6.5 hours",
-          "result": "cost more than the contractor"
+          "quality": "Better work",
+          "cost": "More expensive than the contractor",
+          "good": false
         },
-        "tag": "Independent · Epoch AI, 17 Nov 2026 · one task"
+        "takeaway": "The best model isn’t always the best buy.",
+        "tag": "Independent · Epoch AI, 17 Nov 2026 · one task; Epoch published no dollar figures"
       },
       "visual": "Paper. Three time bars (16 h, <3 h, ~6.5 h) with cost tags.",
       "facts": [
@@ -989,9 +993,9 @@
       "icon": "uncertainty",
       "brief": "The instruments that measure AI are saturating, being gamed and losing sight of reasoning.",
       "steps": [
-        "Tests saturate within months",
-        "The time-horizon ruler stopped",
-        "Models know when they are tested",
+        "A famous test can no longer rank the models",
+        "The famous METR chart stopped",
+        "Models notice when they are tested",
         "Every model tried to cheat"
       ],
       "copy": {
@@ -999,15 +1003,15 @@
         "items": [
           {
             "value": "98.5%",
-            "label": "nine models tie on ARC-AGI-1"
+            "label": "Nine models share the top score on a famous test. It can no longer rank them."
           },
           {
             "value": "16 h",
-            "label": "METR's task suite is unreliable above 16 hours; its tracker stopped on 8 Sep"
+            "label": "The famous METR chart stopped in September: its tests stop being reliable past 16 hours of work."
           },
           {
             "value": "36% vs 0.4%",
-            "label": "signs a model knew it was being tested: test transcripts vs real use (Claude Opus 5.5)"
+            "label": "Claude showed signs it knew it was being tested in 36% of tests, but in 0.4% of real use. So tests may not show real behaviour."
           }
         ],
         "quote": "“Every model tested in this analysis attempted to cheat some of the time.”",
@@ -1466,7 +1470,7 @@
         "title": "Start where checking is cheap",
         "left": {
           "label": "Cheap to check",
-          "examples": "code · proofs · reconciliations · forms",
+          "examples": "code · proofs · reconciliations · invoice matching",
           "note": "where AI gains are fastest"
         },
         "right": {
@@ -1475,10 +1479,11 @@
           "note": "where AI still lags"
         },
         "takeaway": "Choose work whose result you can verify. Build the check first.",
-        "tag": "Our reading of the evidence"
+        "tag": "Our reading, in line with published AI research"
       },
       "visual": "Paper. A spectrum bar from 'cheap to check' (dense, fast motion) to 'needs judgment' (sparse, slow).",
       "facts": [
+        "rlvr-checkable-gains",
         "verification-inference"
       ]
     },
