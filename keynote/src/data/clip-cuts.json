@@ -1,0 +1,43 @@
+{
+  "about": "Talk clips cut to the quote (evidence-int-a, 18 Nov 2026). from/to: seconds in the SOURCE video, taken from YouTube's own word timings (auto-caption json3 in .dev/dl). captions: clip seconds from 'from'; each text is a verbatim span of the evidence item's own captions. url: the source link at the quote's second. Read by src/scenes/_clip-cut.js; the local .mp4 is the item's trimmed segment, so the cut seeks inside it.",
+  "cuts": {
+    "slop-lauren-tan-11000-prs": {
+      "from": 817.5, "to": 825.4,
+      "url": "https://www.youtube.com/watch?v=O_zcc6Xl12g&t=817",
+      "captions": [
+        { "start": 0.2, "end": 3.35, "text": "And last month, our team shipped a ridiculous" },
+        { "start": 3.35, "end": 7.9, "text": "11,000 pull requests to production, which is a wild number." }
+      ]
+    },
+    "lean-harness-philipp-schmid": {
+      "from": 9253.9, "to": 9258.75,
+      "captions": [
+        { "start": 0.29, "end": 2.55, "text": "So what does it bring us?" },
+        { "start": 2.55, "end": 4.85, "text": "Models will keep eating the harness." }
+      ]
+    },
+    "org-quinn-slack-21-people": {
+      "from": 28974.65, "to": 28978.95,
+      "url": "https://www.youtube.com/watch?v=y9JtCCZP2MQ&t=28974",
+      "captions": [
+        { "start": 0.15, "end": 1.55, "text": "we had to stay at 21 people." },
+        { "start": 1.55, "end": 4.3, "text": "But that was awesome because it was a forcing function for us to work differently" }
+      ]
+    },
+    "verification-brian-kennedy-judge": {
+      "from": 22377.35, "to": 22383.2,
+      "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=22377",
+      "captions": [
+        { "start": 0.19, "end": 2.95, "text": "The agent doesn’t even have a tool that can send an email." },
+        { "start": 2.95, "end": 5.85, "text": "The agent made it up and the judge approved it." }
+      ]
+    },
+    "last-job-ishaan-dey": {
+      "from": 22908.7, "to": 22912.0,
+      "url": "https://www.youtube.com/watch?v=y9JtCCZP2MQ&t=22908",
+      "captions": [
+        { "start": 0.18, "end": 3.3, "text": "Protect your judgment and build things that people want." }
+      ]
+    }
+  }
+}

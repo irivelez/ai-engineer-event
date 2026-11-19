@@ -1,10 +1,20 @@
 // ruler (calm-a, VOID data): who leads depends on the ruler. Never pick a vendor from a leaderboard.
-// Steps 0–3: one ruler each. The ruler's name flips in like a split-flap; the top three rows re-sort FLIP-style
-// (a model that stays slides to its new rank, its bar re-scales and its value flips; models that leave fade,
-// newcomers rise in). Bars are lab-tinted marks, every row direct-labelled; equal scores share a rank.
-// Step 4: the rows step away and the takeaway lands.
+// One step per ruler (copy.rulers): the ruler's name flips in like a split-flap, with what it measures under it;
+// the top three rows re-sort FLIP-style (a model that stays slides to its new rank, its bar re-scales and its value
+// flips; models that leave fade, newcomers rise in). Bars are lab-tinted marks, every row direct-labelled; equal
+// scores share a rank. Last step: the rows step away and the takeaway lands, with its sub-line.
+// Evidence: the Artificial Analysis step shows the real leaderboard instead of drawn rows, zoomed to the rows and
+// the index column (highlighted), with the source card (chip, publisher · date, QR) in the free top-right corner.
+// Epoch's chart stays drawn: at a legible size its leader point is unlabelled and its values unreadable (the
+// capture's own note); Arena has no capture.
 import { gsap } from 'gsap';
 import { calmScene, el, esc, factSource } from './_calm/kit.js';
+import { zoomDoc, metaCorner } from './_eva-zoom.js';
+
+// step → evidence crop: region in image px, highlight in frame fractions (layout only; data from evidence.json)
+const CROPS = {
+  0: { id: 'ruler-aa-intelligence-index', region: { x: 16, y: 10, w: 732, h: 230 }, highlight: { x: 0.612, y: 0.252, w: 0.384, h: 0.737 } },
+};
 
 const LAB = (name) => (/claude|mythos/i.test(name) ? 'anthropic' : /gpt/i.test(name) ? 'openai' : /gemini/i.test(name) ? 'google' : null);
 
@@ -13,6 +23,7 @@ export default calmScene('ruler', (ctx, K) => {
   const { copy } = ctx;
   const M = T.space.margin;
   const rulers = (copy.rulers || []).slice(0, 4);
+  const TAKE = rulers.length; // the takeaway step
 
   const kicker = K.add(C.Kicker.create({ text: K.actKicker(), ground: g }), M, 120);
   // break after the question ("Who leads? / It depends on the ruler."), not inside the answer
@@ -39,11 +50,24 @@ export default calmScene('ruler', (ctx, K) => {
     }, at + 0.16 + old.length * 0.008);
   };
   const flapB = K.block(flap, { rise: 12 });
+  // what the ruler measures, under its name (copy.rulers[k].what)
+  const what = el('div', 't-body');
+  place(what, M, 480, 1920 - 2 * M);
+  what.style.color = G.muted;
+  const whatB = K.block(what, { rise: 12 });
+  const whatSet = (k, anim, tl) => {
+    const text = String((rulers[k] || {}).what || '');
+    if (what.textContent === text) return;
+    if (!anim || !what.textContent) { what.textContent = text; return; }
+    tl.to(what, { autoAlpha: 0, duration: 0.2, ease: 'power2.in' }, 0);
+    tl.add(() => { what.textContent = text; }, 0.2);
+    tl.to(what, { autoAlpha: 1, duration: 0.4, ease: 'power2.out' }, 0.25);
+  };
 
   // ----- rows (one per model, keyed by name) -----
   const models = [];
   rulers.forEach((r) => (r.rows || []).forEach(([name]) => { if (!models.includes(name)) models.push(name); }));
-  const ROW0 = 520;
+  const ROW0 = 572;
   const PITCH = 124;
   const NAME_X = M + 88;
   const BAR_X = T.colX(5);
@@ -76,6 +100,19 @@ export default calmScene('ruler', (ctx, K) => {
     enter(tl) { tl.fromTo(axis, { scaleY: 0 }, { scaleY: 1, duration: 0.8, ease: 'expo.out' }, 0); },
     settle() { gsap.set(axis, { scaleY: 1 }); },
   });
+
+  // ----- evidence crops (steps 0 and 3) -----
+  const Y0 = 568;
+  const crops = {};
+  Object.entries(CROPS).forEach(([k, c]) => {
+    const item = ctx.assets.evidence && ctx.assets.evidence(c.id);
+    if (!item || !item.imageSrc || !C.EvidenceDoc) return;
+    const { doc } = zoomDoc(ctx, item, { region: c.region, width: 1920 - 2 * M, maxHeight: 392, ground: g, qrSize: 200, highlight: c.highlight });
+    K.add(doc, M, Y0);
+    metaCorner(doc, { fx: M, fy: Y0, x: T.colX(7) - 16, y: 112, w: 1920 - M - T.colX(7) + 16 });
+    crops[k] = doc;
+  });
+  const hasCrop = (k) => !!crops[k];
 
   const num = (s) => parseFloat(String(s).replace(/[^\d.]/g, '')) || 0;
   function layout(k) {
@@ -138,7 +175,12 @@ export default calmScene('ruler', (ctx, K) => {
   }
 
   // ----- step 4: the takeaway -----
-  const take = K.add(C.Headline.create({ text: copy.takeaway || '', role: 'h1', ground: g, width: T.spanW(10) }), M, 500);
+  const take = K.add(C.Headline.create({ text: copy.takeaway || '', role: 'h2', ground: g, width: T.spanW(10) }), M, 448);
+  const takeSub = el('div', 't-body pretty');
+  place(takeSub, M, 776, T.spanW(10));
+  takeSub.style.color = G.muted;
+  takeSub.textContent = copy.takeawaySub || '';
+  const takeSubB = K.block(takeSub, { rise: 16 });
 
   const foot = K.footer();
   const srcIds = ['aa-leaderboard', 'eci-tie-174', 'arena-text-carbon', 'arc-agi-3-standard'];
@@ -148,19 +190,23 @@ export default calmScene('ruler', (ctx, K) => {
   const apply = K.stepper([
     { c: kicker, on: () => true },
     { c: title, on: () => true, at: 0.08 },
-    { c: flapB, on: (s) => s < 4, at: 0.2 },
-    { c: areaB, on: (s) => s < 4, at: 0.2 },
-    { c: take, on: (s) => s >= 4, at: 0.2 },
+    { c: flapB, on: (s) => s < TAKE, at: 0.2 },
+    { c: whatB, on: (s) => s < TAKE && !!(rulers[s] || {}).what, at: 0.3 },
+    { c: areaB, on: (s) => s < TAKE && !hasCrop(s), at: 0.2 },
+    { c: take, on: (s) => s >= TAKE, at: 0.2 },
+    { c: takeSubB, on: (s) => s >= TAKE && !!copy.takeawaySub, at: 0.7 },
+    ...Object.entries(crops).map(([k, doc]) => ({ c: doc, on: (s) => s === Number(k), at: 0.3 })),
   ]);
 
   function go(step, animate, info = {}) {
     const anim = animate && !R;
     const tl = gsap.timeline();
     apply(step, anim, tl, info);
-    if (step < 4) flapSet(String((rulers[step] || {}).name || ''), anim, tl, 0);
-    placeRows(step < 4 ? step : -1, anim, tl);
-    const s = step < 4 ? srcs[step] : tagSrc;
-    foot.show(s || tagSrc, anim, tl, 0.6);
+    if (step < TAKE) { flapSet(String((rulers[step] || {}).name || ''), anim, tl, 0); whatSet(step, anim, tl); }
+    placeRows(step < TAKE && !hasCrop(step) ? step : -1, anim, tl);
+    const s = step < TAKE ? srcs[step] : tagSrc;
+    // with a crop on screen its own card carries the chip and the source: one chip per frame
+    foot.show(hasCrop(step) ? null : s || tagSrc, anim, tl, 0.6);
     return tl;
   }
   return { go };

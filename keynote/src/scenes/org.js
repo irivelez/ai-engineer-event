@@ -3,8 +3,11 @@
 // Step 1: three facts land one by one (figures in ink, words in muted, same size: a DevDay list).
 // Step 2: the title and facts step away; his line in serif beside the evidence: his own slide (Amp flat at 21
 //         people while "the other guys" grow), shown large and uncropped.
+// Evidence: in step 2 the still gives way to the talk itself (src/data/evidence.json, cut to the quote by
+//         src/data/clip-cuts.json): the same slide on screen while he says the line, captioned verbatim.
 import { gsap } from 'gsap';
 import { calmScene, el, esc, unquote, factSource } from './_calm/kit.js';
+import { talkClip } from './_clip-cut.js';
 
 // "More than $100M ARR" → ['More than ', '$100M', ' ARR'] (the figure is the run that holds a digit, "a to b" kept whole).
 function splitFigure(s) {
@@ -47,7 +50,9 @@ export default calmScene('org', (ctx, K) => {
   const [org, speaker] = String(copy.ampWho || '').split(' · ');
   const Q_Y = 268;
   const quote = K.add(C.Quote.create({ text: unquote(copy.quote), speaker: speaker || '', org: org || '', ground: g, width: T.spanW(5), size: 64 }), M + 4, Q_Y);
-  const stillSrc = ctx.assets.sf('quinn-slack-21-cofounders');
+  const clip = talkClip(ctx, { width: T.spanW(7), ground: g });
+  if (clip) K.add(clip, T.colX(5), 168);
+  const stillSrc = clip ? null : ctx.assets.sf('quinn-slack-21-cofounders');
   let still = null;
   if (stillSrc) {
     const meta = ctx.assets.sfMeta('quinn-slack-21-cofounders') || {};
@@ -65,14 +70,19 @@ export default calmScene('org', (ctx, K) => {
     { c: quote, on: (s) => s >= 2, at: 0.1 },
   ];
   if (still) parts.push({ c: still, on: (s) => s >= 2, at: 0.35 });
+  if (clip) parts.push({ c: clip, on: (s) => s >= 2, at: 0.35 });
   const apply = K.stepper(parts);
 
   function go(step, animate, info = {}) {
     const anim = animate && !R;
     const tl = gsap.timeline();
     apply(step, anim, tl, info);
-    foot.show(step >= 1 ? src : null, anim, tl, 1.1);
+    // with the clip on screen, its own meta carries the chip and the source: one chip per frame
+    foot.show(step >= 1 && !(clip && step >= 2) ? src : null, anim, tl, 1.1);
     return tl;
   }
-  return { go };
+  return {
+    go,
+    exit() { if (clip) clip.pause(); return K.exit(); }, // freeze the frame, sound off, under the transition
+  };
 });

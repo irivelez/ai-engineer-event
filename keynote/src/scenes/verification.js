@@ -4,8 +4,11 @@
 // Step 1: 500 steps fill a 25 × 20 grid; the 65 % the judge got right settle in the accent (13 full rows).
 // Step 2: the right ones step back to quiet; the 118 bad steps it accepted flip to the limit colour.
 // Step 3: the number makes room for the line, in serif. The grid stays as the evidence.
+// Evidence: in step 3 the grid gives way to the talk itself (src/data/evidence.json, cut to the quote by
+//         src/data/clip-cuts.json): he says the line, captioned verbatim, with its chip, link and QR.
 import { gsap } from 'gsap';
 import { calmScene, el, esc, unquote, factSource } from './_calm/kit.js';
+import { talkClip } from './_clip-cut.js';
 
 export default calmScene('verification', (ctx, K) => {
   const { T, C, G, g, place, R } = K;
@@ -114,6 +117,11 @@ export default calmScene('verification', (ctx, K) => {
     } else st(badCells, G.limit, 0);
   }
 
+  // ----- the talk clip (step 3), right column -----
+  const clip = talkClip(ctx, { width: T.spanW(6), ground: g });
+  if (clip) K.add(clip, T.colX(6), 200);
+  const gridOn = (s) => s >= 1 && !(clip && s >= 3);
+
   const foot = K.footer();
   const s0 = factSource(ctx, 'sf-verification-8');
   const s1 = factSource(ctx, 'zoominfo-judge');
@@ -127,8 +135,9 @@ export default calmScene('verification', (ctx, K) => {
     { c: n2, on: (s) => s === 2, at: 0.4 },
     { c: quote, on: (s) => s >= 3, at: 0.1 },
     { c: g80B, on: (s) => s === 0, at: 0.4 },
-    { c: baseB, on: (s) => s >= 1, at: 0 },
-    { c: gridB, on: (s) => s >= 1, at: 0.1 },
+    { c: baseB, on: gridOn, at: 0 },
+    { c: gridB, on: gridOn, at: 0.1 },
+    ...(clip ? [{ c: clip, on: (s) => s >= 3, at: 0.3 }] : []),
   ]);
 
   function go(step, animate, info = {}) {
@@ -136,8 +145,12 @@ export default calmScene('verification', (ctx, K) => {
     const tl = gsap.timeline();
     apply(step, anim, tl, info);
     paint(step, anim, tl);
-    foot.show(step === 0 ? s0 : src1, anim, tl, 0.6);
+    // with the clip on screen, its own meta carries the chip and the source: one chip per frame
+    foot.show(step === 0 ? s0 : clip && step >= 3 ? null : src1, anim, tl, 0.6);
     return tl;
   }
-  return { go };
+  return {
+    go,
+    exit() { if (clip) clip.pause(); return K.exit(); }, // freeze the frame, sound off, under the transition
+  };
 });

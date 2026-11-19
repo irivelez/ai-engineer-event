@@ -1,10 +1,13 @@
 // twins (calm-a, VOID calm and tense): the labs say their own models are too capable to ship as-is, so each
 // ships twins.
-// Step 0: OpenAI's own words about GPT-6 Astra, in serif.
+// Step 0: OpenAI's own words about GPT-6 Astra: its system card itself (evidence.json), the band with the passage,
+//         under who said it; its meta block carries chip, source and a QR to the page. Without the item, the
+//         words in serif.
 // Step 1: three pairs split like a mirror from a centre line: the public twin bright on the left, the
 //         restricted twin on the right behind glass (a framed dark pane, muted type).
 import { gsap } from 'gsap';
 import { calmScene, el, esc, unquote, factSource } from './_calm/kit.js';
+import { evItem, evDoc } from './_evb-kit.js';
 
 export default calmScene('twins', (ctx, K) => {
   const { T, C, G, g, place, R } = K;
@@ -16,10 +19,26 @@ export default calmScene('twins', (ctx, K) => {
 
   const qw = String(copy.quoteWho || '');
   const cut = qw.indexOf(', ');
-  const quote = K.add(C.Quote.create({
-    text: unquote(copy.quote), speaker: cut > 0 ? qw.slice(0, cut) : qw, org: cut > 0 ? qw.slice(cut + 2) : '',
-    ground: g, width: T.spanW(10), size: 60,
-  }), M + 4, 360);
+  const ev0 = evItem(ctx, 'twins-openai-gpt6-critical');
+  let quote = null;
+  let whoB = null;
+  let d0 = null;
+  if (ev0) {
+    // the page band: item 1 of the card ("…meets our Critical threshold. This means that, with the right tools
+    // and access, … without a person guiding each step."), full width so its own type reads at ~31 px
+    const who = el('div', 't-label');
+    place(who, M, 328, 1920 - 2 * M);
+    who.style.color = G.muted;
+    who.innerHTML = esc(qw);
+    whoB = K.block(who, { rise: 12 });
+    d0 = evDoc(ctx, K, ev0, { width: 1920 - 2 * M, crop: [0, 0.425, 1, 0.692] });
+    place(d0.el, M, 392);
+  } else {
+    quote = K.add(C.Quote.create({
+      text: unquote(copy.quote), speaker: cut > 0 ? qw.slice(0, cut) : qw, org: cut > 0 ? qw.slice(cut + 2) : '',
+      ground: g, width: T.spanW(10), size: 60,
+    }), M + 4, 360);
+  }
 
   // ----- the mirror -----
   const MID = 960;
@@ -69,18 +88,21 @@ export default calmScene('twins', (ctx, K) => {
   const s0 = factSource(ctx, 'openai-critical-quote');
   const s1 = factSource(ctx, 'twin-releases');
 
-  const apply = K.stepper([
+  const parts = [
     { c: kicker, on: () => true },
     { c: title, on: () => true, at: 0.08 },
-    { c: quote, on: (s) => s === 0, at: 0.3 },
     { c: mirrorB, on: (s) => s >= 1, at: 0.1 },
-  ]);
+  ];
+  if (quote) parts.push({ c: quote, on: (s) => s === 0, at: 0.3 });
+  if (whoB) parts.push({ c: whoB, on: (s) => s === 0, at: 0.3 });
+  if (d0) parts.push({ c: d0, on: (s) => s === 0, at: 0.45 });
+  const apply = K.stepper(parts);
 
   function go(step, animate, info = {}) {
     const anim = animate && !R;
     const tl = gsap.timeline();
     apply(step, anim, tl, info);
-    foot.show(step === 0 ? s0 : s1, anim, tl, 0.6);
+    foot.show(step === 0 ? (d0 ? null : s0) : s1, anim, tl, 0.6); // with the page on screen its meta carries the chip
     return tl;
   }
   return { go };

@@ -3,8 +3,13 @@
 // Step 1: how far behind: the frontier as a line, open weights as the same line shifted 4–7 months right
 //         (a band, because the lag is a range), the gap bracketed.
 // Step 2: why it matters: one sentence.
+// Evidence (src/data/evidence.json): in step 1 the UK AISI's own page replaces the drawn lag chart: the two lines
+// of its conclusion at full width (its type reads at ~28 px), "by 4 to 7 months" boxed, and its meta block (chip,
+// source, title, disclaimer, QR) beside the number; the footer source line steps aside while it is on screen.
+// Step 0 keeps the drawn bars: the AA model page only shows Kimi's own 46, and at a legible size it does not fit.
 import { gsap } from 'gsap';
 import { calmScene, el, svgEl, esc, factSource } from './_calm/kit.js';
+import { evItem, evDoc, evMeta } from './_evb-kit.js';
 
 export default calmScene('open-weights', (ctx, K) => {
   const { T, C, G, g, place, R } = K;
@@ -123,11 +128,22 @@ export default calmScene('open-weights', (ctx, K) => {
     },
   });
 
+  // ----- step 1: the AISI page itself -----
+  const ev1 = evItem(ctx, 'open-weights-aisi-4-7-months');
+  let d1 = null;
+  let m1 = null;
+  if (ev1) {
+    d1 = evDoc(ctx, K, ev1, { width: 1920 - 2 * M, crop: [0.015, 0.09, 0.985, 0.44], hl: [0.018, 0.265, 0.152, 0.15], dim: false, meta: false });
+    place(d1.el, M, 792);
+    m1 = evMeta(ctx, K, ev1, { width: RW, qrSize: 230, link: false });
+    place(m1.el, RX, NY);
+  }
+
   const foot = K.footer();
   const s0 = factSource(ctx, 'kimi-46');
   const s1 = factSource(ctx, 'open-lag-aisi');
 
-  const apply = K.stepper([
+  const parts = [
     { c: kicker, on: () => true },
     { c: title, on: () => true, at: 0.08 },
     { c: whoB, on: (s) => s === 0, at: 0.3 },
@@ -135,14 +151,16 @@ export default calmScene('open-weights', (ctx, K) => {
     { c: n1, on: (s) => s >= 1, at: 0.1 },
     { c: whyB, on: (s) => s >= 2, at: 0.1 },
     { c: barsB, on: (s) => s === 0, at: 0.3 },
-    { c: lagB, on: (s) => s >= 1, at: 0.1 },
-  ]);
+    { c: lagB, on: (s) => s >= 1 && !d1, at: 0.1 },
+  ];
+  if (d1) parts.push({ c: d1, on: (s) => s === 1, at: 0.35 }, { c: m1, on: (s) => s === 1, at: 0.8 });
+  const apply = K.stepper(parts);
 
   function go(step, animate, info = {}) {
     const anim = animate && !R;
     const tl = gsap.timeline();
     apply(step, anim, tl, info);
-    foot.show(step === 0 ? s0 : s1, anim, tl, 0.6);
+    foot.show(step === 0 ? s0 : step === 1 && d1 ? null : s1, anim, tl, 0.6);
     return tl;
   }
   return { go };

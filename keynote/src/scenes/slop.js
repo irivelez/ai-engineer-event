@@ -3,8 +3,12 @@
 //         slow push-in toward the October bar, her line as the caption.
 // Step 1: the still gives way to a calm line chart: reverts fall 0.98% → 0.47% (June → October) while the
 //         left column says it plainly: volume up 13×, reverts halved.
+// Evidence: step 0 plays her own words from the talk (src/data/evidence.json, cut to the quote by
+//         src/data/clip-cuts.json) in place of the still; the clip's captions carry the quote verbatim and its
+//         last frame holds her "11k PRs in oct" slide. Without the clip, the still and the typeset quote return.
 import { gsap } from 'gsap';
 import { calmScene, el, svgEl, esc, unquote, factSource, fact } from './_calm/kit.js';
+import { talkClip } from './_clip-cut.js';
 
 export default calmScene('slop', (ctx, K) => {
   const { T, C, G, g, place, R } = K;
@@ -34,7 +38,9 @@ export default calmScene('slop', (ctx, K) => {
   const pointB = K.maskLines(point, pointParts.map((p, i) => ({ html: esc(p), cls: i === pointParts.length - 1 ? 'ca-accent' : 'ca-fg' })), { stagger: 0.12 });
 
   // ----- the still (real broadcast frame, never cropped) with a slow push-in of the whole framed card -----
-  const stillSrc = ctx.assets.sf('lauren-tan-11k-prs');
+  const clip = talkClip(ctx, { width: RW, ground: g });
+  if (clip) K.add(clip, RX, 168);
+  const stillSrc = clip ? null : ctx.assets.sf('lauren-tan-11k-prs');
   const meta = ctx.assets.sfMeta('lauren-tan-11k-prs') || {};
   let still = null;
   const stillWrap = el('div', '');
@@ -124,9 +130,10 @@ export default calmScene('slop', (ctx, K) => {
     { c: views, on: (s) => s === 0, at: 0.4 },
     { c: pointB, on: (s) => s >= 1, at: 0.1 },
     { c: chartB, on: (s) => s >= 1, at: 0.2 },
-    { c: capB, on: (s) => s === 0, at: 0.9 },
+    { c: capB, on: (s) => s === 0 && !clip, at: 0.9 },
   ];
   if (still) parts.push({ c: still, on: (s) => s === 0, at: 0.2 });
+  if (clip) parts.push({ c: clip, on: (s) => s === 0, at: 0.2 });
   const apply = K.stepper(parts);
 
   function go(step, animate, info = {}) {
@@ -142,6 +149,7 @@ export default calmScene('slop', (ctx, K) => {
   }
   return {
     go,
+    exit() { if (clip) clip.pause(); return K.exit(); }, // freeze the frame, sound off, under the transition
     dispose() { if (pushTween) pushTween.kill(); },
   };
 });
