@@ -566,14 +566,14 @@
       "steps": [
         "Every step is a new model",
         "Since reasoning models, about twice as steep",
-        "Eight months of progress in 11 weeks, and the caveat"
+        "Seven months of progress in 11 weeks, and the caveat"
       ],
       "copy": {
-        "title": "Eight months of progress in 11 weeks",
+        "title": "Seven months of progress in 11 weeks",
         "headlines": [
           "Every step is a new model",
           "Since reasoning models, the climb is about twice as steep",
-          "Eight months of progress in 11 weeks"
+          "{months} months of progress in {weeks} weeks"
         ],
         "axis": "Epoch Capabilities Index",
         "explain": "One score that sums up dozens of AI tests. Higher means more capable.",
@@ -810,8 +810,8 @@
                 "62"
               ],
               [
-                "Gemini 4 Carbon",
-                "60"
+                "Gemini 4 Neon",
+                "61"
               ]
             ]
           },

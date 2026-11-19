@@ -572,9 +572,9 @@
           "url": "https://epoch.ai/benchmarks"
         }
       ],
-      "caveat": "Our conversion: about seven months of trend at Epoch's 16.6 points a year (estimate). An earlier version compared 162.48 (old method) with 174 (new method), which overstated the climb. Fable 5.2's 173.5 is preliminary.",
+      "caveat": "Our conversion (estimate): about seven months of trend at Epoch's current 16.6 points a year; about eight at its 1 Sep fit of about 14 (earlier method). An earlier version compared 162.48 (old method) with 174 (new method), which overstated the climb. That comparison was ours: Epoch's 11 Nov brief has no “close to a year” (read three times), only that Fable 5.2's 174 is “above what the pre-Astra trend for reasoning models would have predicted.” Fable 5.2's 173.5 is preliminary.",
       "verified": "live",
-      "checkedAt": "2026-11-18T21:20-05:00"
+      "checkedAt": "2026-11-18T21:30-05:00"
     },
     "eci-trend-14": {
       "claim": "Since labs added reasoning, the ECI frontier has climbed about 17 points a year (16.6), against about 8 (8.0) before, on Epoch's current method; Epoch's 1 Sep analysis, on the old method, gave about 14 and 6.",
@@ -936,7 +936,7 @@
       "checkedAt": "2026-11-18T15:25-05:00"
     },
     "aa-leaderboard": {
-      "claim": "Artificial Analysis Intelligence Index v5.0.1: Claude Fable 5.2 (Max) 65, GPT-6.2 Astra (Max) 62, Gemini 4 Carbon (High) 60.",
+      "claim": "Artificial Analysis Intelligence Index, 18 Nov 2026: Claude Fable 5.2 (Max) 65, GPT-6.2 Astra (Max) 62, Gemini 4 Neon (Xhigh) 61, Gemini 4 Carbon (High) 60. Cost per task: $26.54 for Fable 5.2, $4.00 for GPT-6.2 Astra.",
       "value": [
         [
           "Claude Fable 5.2",
@@ -952,17 +952,17 @@
         ]
       ],
       "unit": "index points",
-      "asOf": "2026-11-17",
+      "asOf": "2026-11-18",
       "label": "independent",
       "source": {
         "title": "Artificial Analysis Intelligence Index",
         "publisher": "Artificial Analysis",
         "url": "https://artificialanalysis.ai/leaderboards/models",
-        "date": "2026-11-17"
+        "date": "2026-11-18"
       },
-      "caveat": "Page shows no as-of date. Best setting per model; Fable 5.2 at Xhigh also scores 62. Can move within days.",
+      "caveat": "Gemini 4 Neon appeared on the leaderboard on 18 Nov; no Google announcement found yet. Rankings can move within days.",
       "verified": "live",
-      "checkedAt": "2026-11-18T15:25-05:00"
+      "checkedAt": "2026-11-18T21:30-05:00"
     },
     "eci-tie-174": {
       "claim": "Epoch Capabilities Index, current scale: GPT-6.2 Astra 174.2, Claude Fable 5.2 173.5 (preliminary), GPT-6 Astra 169.2.",
