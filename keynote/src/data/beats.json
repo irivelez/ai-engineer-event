@@ -580,6 +580,7 @@
         "reasoning": "Reasoning models arrive",
         "slopeLabel": "points a year, before and since reasoning models",
         "window": "Last 11 weeks",
+        "trendLabel": "Trend: {n} points a year",
         "eci": {
           "from": "162.5",
           "to": "174",
@@ -589,7 +590,7 @@
         },
         "caveat": "Two releases drove most of it. Epoch calls the record “just one data point.”"
       },
-      "visual": "Paper. The Epoch Capabilities Index frontier as a staircase over the whole period the data covers: each riser a model, years on the x axis, a few models named. Step 1 overlays Epoch's two slopes (before / since reasoning models) and marks when reasoning began. Step 2 lights the last 11 weeks in the accent, from → to with the models, then the caveat in small serif italic.",
+      "visual": "Paper. The Epoch Capabilities Index frontier as a staircase over the whole period the data covers: each riser a model, years on the x axis, a few models named. Step 1 overlays Epoch's two slopes (before / since reasoning models) and marks when reasoning began. Step 2 pushes the axes in on the last 11 weeks: the models that set 174 fill the chart in the accent, labelled with their scores, over the dashed trend for the same weeks; 162.5 → 174 beside it, then the caveat in small serif italic.",
       "facts": [
         "eci-tie-174",
         "eci-trend-14",
@@ -1595,7 +1596,7 @@
           {
             "text": "…wait for certainty.",
             "icon": "speed",
-            "why": "The frontier moved almost a year in 11 weeks."
+            "why": "The frontier moved about eight months in 11 weeks."
           }
         ]
       },
@@ -1657,7 +1658,7 @@
         "The line"
       ],
       "copy": {
-        "line1": "In 11 weeks, the frontier moved almost a year.",
+        "line1": "In 11 weeks, the frontier moved about eight months.",
         "line2": "Your 2027 plan has to move with it."
       },
       "visual": "Void. Light streaks accelerate like the opener, then decelerate to stillness; the line lands.",
@@ -1710,7 +1711,9 @@
         "role": "Founder, Deltanova",
         "link": "linkedin.com/in/irina-velez",
         "url": "https://www.linkedin.com/in/irina-velez/",
-        "cta": "Questions"
+        "cta": "Questions",
+        "sourcesLabel": "All sources",
+        "sourcesUrl": "https://inside-the-ai-frontier.vercel.app/sources.html"
       },
       "visual": "Void, mirrors the title frame. A crisp QR code (generated at build time, no external service) to the LinkedIn URL, with the link text beneath.",
       "facts": []
