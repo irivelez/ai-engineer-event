@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-19T03:56:05.059Z",
+ "generatedAt": "2026-11-19T04:01:29.518Z",
  "size": [
   1920,
   1080
@@ -383,27 +383,11 @@
   },
   {
    "n": 17,
-   "id": "science",
-   "step": 0,
-   "steps": 4,
-   "file": "static/frames/17-science-0.webp",
-   "ground": "void"
-  },
-  {
-   "n": 17,
    "id": "self-build",
    "step": 0,
    "steps": 3,
    "file": "static/frames/17-self-build-0.webp",
    "ground": "paper"
-  },
-  {
-   "n": 17,
-   "id": "science",
-   "step": 1,
-   "steps": 4,
-   "file": "static/frames/17-science-1.webp",
-   "ground": "void"
   },
   {
    "n": 17,
@@ -415,34 +399,10 @@
   },
   {
    "n": 17,
-   "id": "science",
-   "step": 2,
-   "steps": 4,
-   "file": "static/frames/17-science-2.webp",
-   "ground": "void"
-  },
-  {
-   "n": 17,
    "id": "self-build",
    "step": 2,
    "steps": 3,
    "file": "static/frames/17-self-build-2.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 17,
-   "id": "science",
-   "step": 3,
-   "steps": 4,
-   "file": "static/frames/17-science-3.webp",
-   "ground": "void"
-  },
-  {
-   "n": 18,
-   "id": "price",
-   "step": 0,
-   "steps": 2,
-   "file": "static/frames/18-price-0.webp",
    "ground": "paper"
   },
   {
@@ -452,14 +412,6 @@
    "steps": 4,
    "file": "static/frames/18-ruler-0.webp",
    "ground": "void"
-  },
-  {
-   "n": 18,
-   "id": "price",
-   "step": 1,
-   "steps": 2,
-   "file": "static/frames/18-price-1.webp",
-   "ground": "paper"
   },
   {
    "n": 18,
@@ -887,34 +839,10 @@
   },
   {
    "n": 34,
-   "id": "adoption",
-   "step": 0,
-   "steps": 3,
-   "file": "static/frames/34-adoption-0.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 34,
    "id": "rules",
    "step": 0,
    "steps": 1,
    "file": "static/frames/34-rules-0.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 34,
-   "id": "adoption",
-   "step": 1,
-   "steps": 3,
-   "file": "static/frames/34-adoption-1.webp",
-   "ground": "paper"
-  },
-  {
-   "n": 34,
-   "id": "adoption",
-   "step": 2,
-   "steps": 3,
-   "file": "static/frames/34-adoption-2.webp",
    "ground": "paper"
   },
   {

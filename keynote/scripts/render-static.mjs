@@ -65,8 +65,20 @@ if (!argv.includes('--viewer-only')) {
     frames = [...keep, ...fresh].sort((a, b) => a.n - b.n || a.step - b.step);
     await ctx.close();
   }, { timeoutMs: 30 * 60 * 1000 });
-  fs.writeFileSync(manifestPath, JSON.stringify({ generatedAt: new Date().toISOString(), size: [1920, 1080], frames }, null, 1));
 }
+// Only moments that still exist in beats.json, numbered as they are now, and only the steps they still have:
+// a cut or renumbered moment must never reach the fallback. Then delete frame files nothing points to.
+{
+  const now = new Map(beats.moments.map((m) => [m.id, m]));
+  frames = frames.filter((f) => now.has(f.id) && f.step < now.get(f.id).steps.length)
+    .map((f) => ({ ...f, n: now.get(f.id).n, steps: now.get(f.id).steps.length, ground: now.get(f.id).ground }))
+    .sort((a, b) => a.n - b.n || a.step - b.step);
+  const used = new Set(frames.map((f) => path.basename(f.file)));
+  for (const f of fs.readdirSync(framesDir)) if (f.endsWith('.webp') && !used.has(f)) fs.unlinkSync(path.join(framesDir, f));
+  const missing = frames.filter((f) => !fs.existsSync(path.join(ROOT, f.file)));
+  if (missing.length) console.warn(`render-static: ${missing.length} frames missing on disk, e.g. ${missing[0].file}`);
+}
+fs.writeFileSync(manifestPath, JSON.stringify({ generatedAt: new Date().toISOString(), size: [1920, 1080], frames }, null, 1));
 
 // ---------- static.html ----------
 const out = await esbuild.build({
