@@ -600,7 +600,7 @@
       "steps": [
         "1,000+ agents swarm",
         "8 days, nonstop (day counter races)",
-        "An empty folder becomes an OS that boots on a laptop"
+        "An empty folder becomes a prototype OS that boots on a laptop"
       ],
       "copy": {
         "kicker": "Lab-reported · Anthropic, 9 Nov 2026",
@@ -608,7 +608,7 @@
         "nLabel": "subagents",
         "d": "8 days",
         "dLabel": "nonstop",
-        "result": "From an empty folder to an operating system that boots on a laptop."
+        "result": "From an empty folder to a prototype operating system that boots on a laptop."
       },
       "visual": "Full-screen 3D peak: 1,000+ glowing agents (instanced points with trails) swirl, then self-organize into layered structure; a day counter races 1→8; the structure collapses into a minimal laptop silhouette whose screen lights with a boot line. Bloom, slow orbit, then stillness.",
       "facts": [
