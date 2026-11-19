@@ -241,10 +241,10 @@
   },
   "year-in-weeks": {
     "notes": [
-      "Epoch Capabilities Index (independent): the frontier score went from 162.5 on 1 Sep to 174 by mid-November.",
-      "The trend since reasoning models is about 14 points a year, so 11.5 points is roughly ten months of trend in 11 weeks.",
-      "Artificial Analysis (independent): top model 58 when its new index launched on 27 Oct, 65 three weeks later.",
-      "Honest caveat: two releases drove most of it (GPT-6 Astra, then Fable 5.2), and Epoch calls the record «just one data point». Don't annualize these weeks.",
+      "Epoch Capabilities Index (independent): one score that combines dozens of tests. 22 frontier records from GPT-4 (Mar 2023, 121.6) to GPT-6.2 Astra (17 Nov 2026, 174.2), on Epoch's current scale.",
+      "The climb got steeper with reasoning models: about 16.6 points a year since Sep 2024, against about 8 before (Epoch's current method).",
+      "The last 11 weeks: 164.7 to 174.2, +9.4 points. At 16.6 a year that is about seven months of progress, roughly 2.7 times the usual pace. That conversion is our arithmetic (estimate).",
+      "Honest caveat: two releases drove most of it (GPT-6 Astra, then Fable 5.2 and GPT-6.2 Astra), Fable 5.2's 173.5 is preliminary, and Epoch calls the record «just one data point». Plan for jumps; don't annualize them.",
       "Cue: Speed."
     ],
     "sources": [
@@ -824,7 +824,7 @@
   },
   "callback": {
     "notes": [
-      "«In 11 weeks, the frontier moved about eight months.» Epoch's index on its current scale: +9.4 points against a pace of about 14 a year; two releases drove it.",
+      "«In 11 weeks, the frontier moved about seven months.» Epoch's index on its current scale: +9.4 points against a pace of about 16.6 a year; two releases drove it.",
       "«Your 2027 plan has to move with it.»",
       "Then stillness. Cue: Speed."
     ],

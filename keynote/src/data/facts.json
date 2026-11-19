@@ -551,19 +551,16 @@
       "checkedAt": "2026-11-18T15:45-05:00"
     },
     "eci-jump": {
-      "claim": "The top score on Epoch AI's Capabilities Index rose from 162.48 (Epoch's 1 Sep table, Claude Fable 5) to 174 by mid-November (Claude Fable 5.2 on 9 Nov; GPT-6.2 Astra on 17 Nov): +11.5 points in about 11 weeks, against a trend of about 14 points a year, i.e. roughly ten months of trend.",
-      "value": {
-        "from": 162.48,
-        "to": 174
-      },
+      "claim": "On Epoch AI's current scale the ECI frontier rose from 164.74 (Claude Opus 5, top of the 1 Sep table) to 174.17 (GPT-6.2 Astra, 17 Nov 2026): +9.4 points in 11 weeks.",
+      "value": "164.74 → 174.17",
       "unit": "ECI points",
       "asOf": "2026-11-17",
       "label": "independent",
       "source": {
-        "title": "The Epoch Brief, 11 Nov 2026",
+        "title": "Epoch Capabilities Index scores (eci_scores.csv)",
         "publisher": "Epoch AI",
-        "url": "https://epochai.substack.com/p/the-epoch-brief-november-11-2026",
-        "date": "2026-11-11"
+        "url": "https://epoch.ai/eci",
+        "date": "2026-11-19"
       },
       "alsoSources": [
         {
@@ -575,25 +572,168 @@
           "url": "https://epoch.ai/benchmarks"
         }
       ],
-      "caveat": "Two discrete releases (GPT-6 Astra, then Fable 5.2) produced most of the rise, so annualizing these weeks overstates the steady trend. Fable 5.2's 174 comes from pre-launch testing and “may change”; ECI switched to a Bayesian method on 4 Nov (strong models moved about 1 point). “Almost a year” = 11.5 ÷ 14 ≈ 0.82 year.",
+      "caveat": "Our conversion: about seven months of trend at Epoch's 16.6 points a year (estimate). An earlier version compared 162.48 (old method) with 174 (new method), which overstated the climb. Fable 5.2's 173.5 is preliminary.",
       "verified": "live",
-      "checkedAt": "2026-11-18T15:25-05:00"
+      "checkedAt": "2026-11-18T21:20-05:00"
     },
     "eci-trend-14": {
-      "claim": "Since labs added reasoning, the ECI frontier has climbed about 14 points a year, against about 6 for non-reasoning models.",
-      "value": 14,
+      "claim": "Since labs added reasoning, the ECI frontier has climbed about 17 points a year (16.6), against about 8 (8.0) before, on Epoch's current method; Epoch's 1 Sep analysis, on the old method, gave about 14 and 6.",
+      "value": 16.6,
       "unit": "ECI points per year",
-      "asOf": "2026-09-01",
+      "asOf": "2026-11-04",
       "label": "independent",
       "source": {
-        "title": "ECI frontier trend",
+        "title": "Updating the Epoch Capabilities Index methodology to use a Bayesian model",
         "publisher": "Epoch AI",
-        "url": "https://epoch.ai/data-insights/eci-frontier-trend",
-        "date": "2026-09-01"
+        "url": "https://epoch.ai/publications/eci-bayesian-methodology",
+        "date": "2026-11-04"
       },
-      "caveat": "A fitted trend.",
+      "alsoSources": [
+        {
+          "title": "ECI frontier trend (1 Sep, old method: 14 and 6)",
+          "url": "https://epoch.ai/data-insights/eci-frontier-trend"
+        }
+      ],
+      "caveat": "A fitted trend; 90% intervals 14.6–18.7 (reasoning) and 5.4–9.7 (before). The reasoning fit starts at o1-mini (Sep 2024); its end isn't stated (Epoch's brief calls it the pre-Astra trend). Id kept so references don't break; the value is no longer 14.",
       "verified": "live",
-      "checkedAt": "2026-11-18T15:25-05:00"
+      "checkedAt": "2026-11-18T21:00-05:00"
+    },
+    "eci-history": {
+      "claim": "On Epoch AI's Capabilities Index (current method), 22 releases set a new frontier high, from GPT-4 (14 Mar 2023, 121.6) to GPT-6.2 Astra (17 Nov 2026, 174.2).",
+      "value": [
+        [
+          "2023-03-14",
+          "GPT-4",
+          121.58
+        ],
+        [
+          "2024-02-29",
+          "Claude 3 Opus",
+          125.58
+        ],
+        [
+          "2024-04-09",
+          "GPT-4 Turbo (Apr 2024)",
+          125.82
+        ],
+        [
+          "2024-05-13",
+          "GPT-4o",
+          128.13
+        ],
+        [
+          "2024-06-20",
+          "Claude 3.5 Sonnet",
+          130.0
+        ],
+        [
+          "2024-09-12",
+          "o1-mini",
+          135.28
+        ],
+        [
+          "2024-12-17",
+          "o1",
+          141.18
+        ],
+        [
+          "2025-03-31",
+          "Gemini 2.5 Pro",
+          144.05
+        ],
+        [
+          "2025-04-16",
+          "o3",
+          147.05
+        ],
+        [
+          "2025-06-10",
+          "o3-pro",
+          147.46
+        ],
+        [
+          "2025-08-07",
+          "GPT-5",
+          150.0
+        ],
+        [
+          "2025-10-07",
+          "GPT-5 Pro",
+          151.27
+        ],
+        [
+          "2025-11-18",
+          "Gemini 3 Pro",
+          153.04
+        ],
+        [
+          "2025-12-11",
+          "GPT-5.2 Pro",
+          157.31
+        ],
+        [
+          "2026-03-05",
+          "GPT-5.4 Pro",
+          160.32
+        ],
+        [
+          "2026-04-23",
+          "GPT-5.5 Pro",
+          162.77
+        ],
+        [
+          "2026-06-09",
+          "Claude Fable 5",
+          164.21
+        ],
+        [
+          "2026-07-24",
+          "Claude Opus 5",
+          164.74
+        ],
+        [
+          "2026-09-01",
+          "Claude Fable 5.1",
+          167.09
+        ],
+        [
+          "2026-09-03",
+          "GPT-6 Astra",
+          169.2
+        ],
+        [
+          "2026-11-09",
+          "Claude Fable 5.2",
+          173.5
+        ],
+        [
+          "2026-11-17",
+          "GPT-6.2 Astra",
+          174.17
+        ]
+      ],
+      "unit": "ECI points",
+      "asOf": "2026-11-19",
+      "label": "independent",
+      "source": {
+        "title": "Epoch Capabilities Index: ECI model scores (eci_scores.csv)",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/eci",
+        "date": "2026-11-19"
+      },
+      "alsoSources": [
+        {
+          "title": "ECI model scores (CSV)",
+          "url": "https://epoch.ai/data/eci_scores.csv"
+        },
+        {
+          "title": "Updating the ECI methodology to use a Bayesian model (4 Nov)",
+          "url": "https://epoch.ai/publications/eci-bayesian-methodology"
+        }
+      ],
+      "caveat": "Full series with 90% intervals in src/data/eci-history.json. Fable 5.2's 173.5 is preliminary (pre-launch testing; “may change”). GPT-4 Turbo (Nov 2023) is left out (Epoch dates it 25 Jan 2024). GPT-5.3 Codex, a frontier point in the 1 Sep table, is absent from the 19 Nov file. Small steps (Fable 5 to Opus 5: +0.5) sit inside the intervals.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T20:55-05:00"
     },
     "aa-jump": {
       "claim": "The top score on Artificial Analysis's Intelligence Index rose from 58 at the 27 Oct launch of v5 (Claude Opus 5.5) to 65 three weeks later (Claude Fable 5.2).",
@@ -825,33 +965,20 @@
       "checkedAt": "2026-11-18T15:25-05:00"
     },
     "eci-tie-174": {
-      "claim": "Epoch Capabilities Index: GPT-6.2 Astra 174 and Claude Fable 5.2 174 (tied), GPT-6 Astra 169.",
-      "value": [
-        [
-          "GPT-6.2 Astra",
-          174
-        ],
-        [
-          "Claude Fable 5.2",
-          174
-        ],
-        [
-          "GPT-6 Astra",
-          169
-        ]
-      ],
+      "claim": "Epoch Capabilities Index, current scale: GPT-6.2 Astra 174.2, Claude Fable 5.2 173.5 (preliminary), GPT-6 Astra 169.2.",
+      "value": "174.2 / 173.5 / 169.2",
       "unit": "ECI points",
       "asOf": "2026-11-17",
       "label": "independent",
       "source": {
-        "title": "Epoch AI Benchmarking Hub",
+        "title": "Epoch Capabilities Index scores (eci_scores.csv)",
         "publisher": "Epoch AI",
-        "url": "https://epoch.ai/benchmarks",
-        "date": "2026-11-17"
+        "url": "https://epoch.ai/eci",
+        "date": "2026-11-19"
       },
-      "caveat": "Epoch's hub (updated 18 Nov) names GPT-6.2 Astra top ECI at 174; Fable 5.2's 174 is from Epoch's 11 Nov brief, based on pre-launch testing that “may change” (one secondary source reports 173.5). Gemini 4 Carbon's ECI not shown.",
+      "caveat": "The top two sit within each other's 90% intervals; Fable 5.2's score comes from pre-launch testing and may change.",
       "verified": "live",
-      "checkedAt": "2026-11-18T15:25-05:00"
+      "checkedAt": "2026-11-18T21:20-05:00"
     },
     "arena-text-carbon": {
       "claim": "Arena's text leaderboard (11 Nov): Gemini 4 Carbon 1526 ±10 (preliminary), Gemini 4 Argon 1522 ±5, Meta Muse Wonder 1511; the top two are a statistical tie.",

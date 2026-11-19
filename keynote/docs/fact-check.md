@@ -155,3 +155,21 @@ Changes made by other teammates and checked here: the media teammate rewrote fac
 - **year-in-weeks:** dropped the Artificial Analysis "58 → 65" comparison: it spans an index update, so part of the jump may be method, not progress. The moment now shows only Epoch's ECI (162.5 → 174 against a trend of about 14 points a year), with Epoch's own caveat.
 - **twins:** the Google pair no longer says "vetted defenders only" (inferred). It now says what Google said: Gemini 4 Carbon for everyone since 10 Nov, released first to "a subset of cyber defenders".
 - **recipe:** retitled "The recipe that keeps recurring": the ingredients recur across incidents; not every case had all four.
+
+## ECI frontier history (18 Nov, 21:15, eci-data)
+
+Added `src/data/eci-history.json` and fact `eci-history`. Updated `eci-trend-14` (same id).
+
+- **Source.** Epoch's `eci_scores.csv`, updated 19 Nov 2026, on the current (Bayesian, 4 Nov) scale: https://epoch.ai/data/eci_scores.csv (linked from https://epoch.ai/eci). It has 257 models; the earliest is LLaMA-65B (24 Feb 2023). Every point was read twice, first in date slices and then row by row with its 90% interval, and both reads agreed.
+- **Series.** 22 frontier highs, from GPT-4 (14 Mar 2023, 121.58) to GPT-6.2 Astra (17 Nov 2026, 174.17). The series starts at GPT-4, as Epoch's own trend analysis does.
+- **Left out.**
+  - GPT-4 Turbo (Nov 2023), 124.75: its date is ambiguous (Epoch says 25 Jan 2024).
+  - GPT-5.3 Codex: a frontier point in the 1 Sep table, but absent from the 19 Nov file.
+- **Trend.** Epoch's 4 Nov methodology note (https://epoch.ai/publications/eci-bayesian-methodology) gives 16.6 points a year for reasoning models (90% interval 14.6–18.7) and 8.0 before them (5.4–9.7). On the old method it gave 15.7 and 6.2; the 1 Sep fit gave 14 and 6. Our least-squares check on the 17 new-scale reasoning points gives 16.2–16.9, which matches.
+- **Discrepancy 1, mixed scales (eci-jump, notes year-in-weeks).** "162.48 → 174" compares the old-method 1 Sep top with a new-method score. On one scale the 1 Sep table's top is Claude Opus 5 at 164.74 (Fable 5 is 164.21), so the rise is +9.43 to 174.17 in 77 days. At 16.6 a year that is about 7 months of trend, 2.7 times the pace; "almost a year" and "ten months" don't hold.
+- **Discrepancy 2, the 11 Nov brief.** Read twice: it contains no "weeks", no "year of trend", no "162" and no "may change". It does say Fable 5.2 scored 174, "above what the pre-Astra trend for reasoning models would have predicted"; "The previous high was GPT-6 Astra's 169"; and "Fable's score is just one data point." The "may change" quote is from the hub's 9 Nov item (https://epoch.ai/benchmarks): "This is based on pre-launch testing using only our own benchmarks, and may change as more results become available."
+- **Discrepancy 3 (eci-tie-174).** The CSV gives GPT-6.2 Astra 174.17 (170.29–178.58) and Fable 5.2 173.5 (170.09–177.36). Both round to 174 and their intervals overlap, so "tied" holds as a rounded, statistical tie.
+- **Not edited (outside this task):** `notes.json` year-in-weeks lines 244–245 (still 162.5, 14 a year, "ten months").
+- **eci-jump rewritten (21:25, at the director's request), replacing D6.** It now uses one scale: 164.74 (Claude Opus 5, top of the 1 Sep table, re-scored) to 174.17 (GPT-6.2 Astra, 17 Nov), +9.43, labelled estimate.
+  - The conversion gives about 8 months of trend at Epoch's 1 Sep slope (~14 a year, earlier method), or about 7 at its 4 Nov slope (16.6, the scale the scores use).
+  - The director's draft caveat credited "close to a year of trend" to Epoch's 11 Nov brief. A third read found no "close to a year" in it, so the caveat says the old 162.48 → 174 comparison was ours.

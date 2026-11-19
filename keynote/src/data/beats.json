@@ -514,7 +514,7 @@
       "name": "Releases now come in weeks",
       "act": "labs",
       "owner": "E4",
-      "plannedSec": 75,
+      "plannedSec": 60,
       "energy": 8,
       "ground": "void",
       "mode": "burst",
@@ -566,14 +566,14 @@
       "steps": [
         "Every step is a new model",
         "Since reasoning models, about twice as steep",
-        "Almost a year of progress in 11 weeks, and the caveat"
+        "Eight months of progress in 11 weeks, and the caveat"
       ],
       "copy": {
-        "title": "Almost a year of progress in 11 weeks",
+        "title": "Eight months of progress in 11 weeks",
         "headlines": [
           "Every step is a new model",
           "Since reasoning models, the climb is about twice as steep",
-          "Almost a year of progress in 11 weeks"
+          "Eight months of progress in 11 weeks"
         ],
         "axis": "Epoch Capabilities Index",
         "explain": "One score that sums up dozens of AI tests. Higher means more capable.",
@@ -588,15 +588,41 @@
           "dates": "1 Sep → mid-Nov 2026",
           "trend": "trend: about 14 points a year"
         },
-        "caveat": "Two releases drove most of it. Epoch calls the record “just one data point.”"
+        "caveat": "Epoch calls Claude Fable 5.2’s score “just one data point.”"
       },
-      "visual": "Paper. The Epoch Capabilities Index frontier as a staircase over the whole period the data covers: each riser a model, years on the x axis, a few models named. Step 1 overlays Epoch's two slopes (before / since reasoning models) and marks when reasoning began. Step 2 pushes the axes in on the last 11 weeks: the models that set 174 fill the chart in the accent, labelled with their scores, over the dashed trend for the same weeks; 162.5 → 174 beside it, then the caveat in small serif italic.",
+      "visual": "Paper. The Epoch Capabilities Index frontier as a staircase over the whole period the data covers: each riser a model, years on the x axis, a few models named. Step 1 overlays Epoch's two slopes (before / since reasoning models) and marks when reasoning began. Step 2 pushes the axes in on the last 11 weeks: the models that set the record fill the chart in the accent, labelled with their scores, over the dashed trend for the same weeks; from → to on one scale (164.7 → 174.2, eci-history.json) beside it, then the caveat in small serif italic.",
       "facts": [
         "eci-tie-174",
         "eci-trend-14",
         "eci-jump",
         "eci-one-data-point"
       ]
+    },
+    {
+      "id": "thermometers",
+      "name": "How we measure the frontier",
+      "act": "labs",
+      "owner": "eci-scene",
+      "plannedSec": 90,
+      "energy": 4,
+      "ground": "paper",
+      "mode": "data",
+      "icon": "uncertainty",
+      "brief": "How do we know AI is accelerating? No single number: a set of trusted thermometers, each answering a different question, read together.",
+      "steps": [
+        "How do we know? Four questions",
+        "Can it do it? Capability tests",
+        "Does it do real work? Real-work tests",
+        "What does it cost, and what does it take? Price, compute, power",
+        "Is it spreading, and is it speeding itself up? Adoption and AI-led R&D",
+        "Read them together"
+      ],
+      "copy": {
+        "title": "How do we know it is accelerating?",
+        "sub": "No single number. Trusted thermometers, read together."
+      },
+      "visual": "Paper. A 2×2 (or 4-row) grid of thermometer families revealed one per step; each tile: the question in plain words, 2–3 instruments with who runs them (independent / lab / government), the latest reading with its chip and date. Last step: all four lit, one line: read them together.",
+      "facts": []
     },
     {
       "id": "swarm",
@@ -660,7 +686,7 @@
         "s3": {
           "value": "~30,000",
           "label": "agents at work inside Anthropic at any time",
-        "note": "People still guide their work."
+          "note": "People still guide their work."
         },
         "caveat": "Lab-reported. Many agents is not autonomy: Claude is “not operating fully autonomously” on any measured part of the work."
       },
@@ -727,7 +753,7 @@
       "name": "The same capability keeps getting cheaper",
       "act": "labs",
       "owner": "E5",
-      "plannedSec": 60,
+      "plannedSec": 45,
       "energy": 5,
       "ground": "paper",
       "mode": "data",
@@ -756,7 +782,7 @@
       "name": "Who leads? Depends on the ruler",
       "act": "labs",
       "owner": "E5",
-      "plannedSec": 105,
+      "plannedSec": 90,
       "energy": 7,
       "ground": "void",
       "mode": "data",
@@ -794,15 +820,15 @@
             "rows": [
               [
                 "GPT-6.2 Astra",
-                "174"
+                "174.2"
               ],
               [
                 "Claude Fable 5.2",
-                "174"
+                "173.5"
               ],
               [
                 "GPT-6 Astra",
-                "169"
+                "169.2"
               ]
             ]
           },
@@ -857,7 +883,7 @@
       "name": "Open models: Chinese, months behind",
       "act": "labs",
       "owner": "E5",
-      "plannedSec": 75,
+      "plannedSec": 60,
       "energy": 5,
       "ground": "paper",
       "mode": "data",
@@ -888,7 +914,7 @@
       "name": "Too capable to ship as-is",
       "act": "labs",
       "owner": "E6",
-      "plannedSec": 75,
+      "plannedSec": 60,
       "energy": 7,
       "ground": "void",
       "mode": "calm",
@@ -1030,7 +1056,7 @@
       "name": "The measuring instruments are breaking",
       "act": "limits",
       "owner": "E7",
-      "plannedSec": 90,
+      "plannedSec": 75,
       "energy": 6,
       "ground": "paper",
       "mode": "data",
@@ -1596,7 +1622,7 @@
           {
             "text": "…wait for certainty.",
             "icon": "speed",
-            "why": "The frontier moved about eight months in 11 weeks."
+            "why": "The frontier moved about seven months in 11 weeks."
           }
         ]
       },
@@ -1658,7 +1684,7 @@
         "The line"
       ],
       "copy": {
-        "line1": "In 11 weeks, the frontier moved about eight months.",
+        "line1": "In 11 weeks, the frontier moved about seven months.",
         "line2": "Your 2027 plan has to move with it."
       },
       "visual": "Void. Light streaks accelerate like the opener, then decelerate to stillness; the line lands.",
