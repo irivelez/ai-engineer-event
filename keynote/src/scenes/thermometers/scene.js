@@ -94,7 +94,8 @@ export function makeThermo(D) {
     const promise = el('div', 't-lead pretty');
     place(promise, PX, RY - 4, PW);
     promise.style.color = G.muted;
-    promise.innerHTML = esc(copy.sub || '');
+    promise.innerHTML = esc(copy.sub || '')
+      + (copy.coverage ? `<div class="ca-sans40 pretty" style="color:${G.fg};margin-top:36px">${esc(copy.coverage)}</div>` : '');
     const promiseB = K.block(promise, { rise: 16 });
 
     const panels = F.map((f) => {
