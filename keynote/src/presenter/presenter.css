@@ -6,6 +6,10 @@
 .notes-body { margin: 0; padding: 0 0 0 28px; font-size: 30px; line-height: 1.38; }
 .notes-body li { margin: 0 0 14px; }
 .notes-transition { margin-top: 18px; font-size: 26px; color: #93AAFF; }
+.notes-ifasked { margin-top: 12px; padding: 12px 16px; border-left: 3px solid #3A4456; background: rgba(255,255,255,0.04); }
+.notes-ifasked-label { font: 500 15px/1 'Geist Mono', ui-monospace, monospace; letter-spacing: 0.06em; text-transform: uppercase; color: #8D98A8; }
+.notes-ifasked ul { margin: 8px 0 0; padding: 0 0 0 26px; font-size: 24px; line-height: 1.38; color: #C5CDD9; }
+.notes-ifasked li { margin: 0 0 8px; }
 
 /* ---------- Presenter window (#presenter) ---------- */
 html.pz-html, body.pz { height: 100%; overflow: hidden; background: #0B0F14 !important; }
@@ -43,6 +47,9 @@ body.pz { margin: 0; width: 100vw; color: #E9EEF5; font-family: 'Geist', 'Helvet
 .pz-notes { margin: 6px 0 0; padding: 0 0 0 26px; font-size: 25px; line-height: 1.42; color: #F2F5FA; }
 .pz-notes li { margin: 0 0 12px; }
 .pz-transition { font-size: 20px; color: #93AAFF; }
+.pz-ifasked { margin: 4px 0 14px; padding: 12px 16px; border-left: 3px solid #3A4456; background: rgba(255,255,255,0.03); }
+.pz-asked { margin: 8px 0 0; padding: 0 0 0 22px; font-size: 21px; line-height: 1.42; color: #C5CDD9; }
+.pz-asked li { margin: 0 0 8px; }
 .pz-sources { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: baseline; font-size: 16px; }
 .pz-srclabel { font: 500 13px/1 'Geist Mono', ui-monospace, monospace; letter-spacing: 0.06em; text-transform: uppercase; color: #8D98A8; }
 .pz-src { color: #A9BBFF; text-decoration: none; border-bottom: 1px solid rgba(169, 187, 255, 0.4); }

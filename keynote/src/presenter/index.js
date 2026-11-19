@@ -85,6 +85,18 @@ export function attachAudience(director, env = {}) {
     body.className = 'notes-body';
     lines.forEach((l) => { const li = document.createElement('li'); li.textContent = l; body.appendChild(li); });
     notesEl.append(head, clock, body);
+    const asked = n ? (Array.isArray(n.ifAsked) ? n.ifAsked : n.ifAsked ? [n.ifAsked] : []).filter(Boolean) : [];
+    if (asked.length) {
+      const box = document.createElement('div');
+      box.className = 'notes-ifasked';
+      const lab = document.createElement('div');
+      lab.className = 'notes-ifasked-label';
+      lab.textContent = 'If asked';
+      const ul = document.createElement('ul');
+      asked.forEach((l) => { const li = document.createElement('li'); li.textContent = String(l); ul.appendChild(li); });
+      box.append(lab, ul);
+      notesEl.appendChild(box);
+    }
     if (n && n.transition) {
       const tr = document.createElement('div');
       tr.className = 'notes-transition';

@@ -63,7 +63,9 @@ export function mountPresenterUI(env) {
   const notes = el('ul', 'pz-notes');
   const sources = el('div', 'pz-sources');
   const transition = el('div', 'pz-transition');
-  now.append(nowHead, title, cueRow, stepRow, notes, transition, sources);
+  // "If asked": the answers notes.json keeps for questions (ifAsked), under the notes, quieter than them.
+  const ifAsked = el('div', 'pz-ifasked');
+  now.append(nowHead, title, cueRow, stepRow, notes, ifAsked, transition, sources);
 
   const timer = el('div', 'pz-timer');
   const elapsed = el('div', 'pz-elapsed', '0:00');
@@ -143,6 +145,10 @@ export function mountPresenterUI(env) {
     const n = notesMap[m.id] || {};
     const lines = Array.isArray(n.notes) && n.notes.length ? n.notes : [m.brief || ''];
     notes.replaceChildren(...lines.map((l) => el('li', null, l)));
+    const asked = (Array.isArray(n.ifAsked) ? n.ifAsked : n.ifAsked ? [n.ifAsked] : []).filter(Boolean);
+    ifAsked.replaceChildren(...(asked.length ? [el('span', 'pz-srclabel', 'If asked'), el('ul', 'pz-asked', null)] : []));
+    if (asked.length) asked.forEach((l) => ifAsked.lastChild.appendChild(el('li', null, String(l))));
+    ifAsked.style.display = asked.length ? '' : 'none';
     transition.textContent = n.transition ? `→ ${n.transition}` : '';
     transition.style.display = n.transition ? '' : 'none';
     sources.replaceChildren();
