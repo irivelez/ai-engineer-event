@@ -8,7 +8,7 @@
 //   > 18 ms for 2 s.
 // - Renders only when the director asks (a GL moment is visible and the tab is not hidden).
 import * as THREE from 'three';
-import { EffectComposer, RenderPass, EffectPass, BloomEffect, VignetteEffect, ToneMappingEffect, ToneMappingMode, SMAAEffect, SMAAPreset, Effect, BlendFunction } from 'postprocessing';
+import { EffectComposer, RenderPass, EffectPass, BloomEffect, VignetteEffect, ToneMappingEffect, ToneMappingMode, SMAAEffect, SMAAPreset, Effect, BlendFunction, DepthOfFieldEffect, NoiseEffect } from 'postprocessing';
 import { makeWorldFactory } from './world.js';
 import * as helpers from './helpers.js';
 
@@ -61,9 +61,17 @@ export function createGLSystem({ stage, tokens, params, fonts, onFatal }) {
   const tone = new ToneMappingEffect({ mode: ToneMappingMode.AGX });
   const smaa = new SMAAEffect({ preset: SMAAPreset.HIGH });
   const mainPass = new EffectPass(placeholderCam, bloom, vignette, tone);
+  // Opt-in per world (off by default, so worlds that don't ask render exactly as before):
+  // depth of field on the linear HDR image before bloom, and film grain in display space after SMAA.
+  const dof = new DepthOfFieldEffect(placeholderCam, { focusDistance: 10, focusRange: 6, bokehScale: 2, resolutionScale: 0.5 });
+  const dofPass = new EffectPass(placeholderCam, dof);
+  dofPass.enabled = false;
+  const grain = new NoiseEffect({ blendFunction: BlendFunction.SOFT_LIGHT, premultiply: false });
+  grain.blendMode.opacity.value = 0;
   const dither = new DitherEffect();
-  const aaPass = new EffectPass(placeholderCam, smaa, dither);
+  const aaPass = new EffectPass(placeholderCam, smaa, grain, dither);
   composer.addPass(renderPass);
+  composer.addPass(dofPass);
   composer.addPass(mainPass);
   composer.addPass(aaPass);
 
@@ -120,6 +128,18 @@ export function createGLSystem({ stage, tokens, params, fonts, onFatal }) {
     bloom.mipmapBlurPass.radius = b.radius;
     vignette.offset = v.offset;
     vignette.darkness = p.vignette === false ? 0 : v.darkness;
+    // world.post.dof = { focus, range, bokeh, target }: focus and range in world units; target (a THREE.Vector3)
+    // autofocuses on a point and wins over focus. Animate these fields from the scene: they apply every frame.
+    const d = p.dof;
+    dofPass.enabled = !!d;
+    if (d) {
+      if (d.focus != null) dof.cocMaterial.focusDistance = d.focus;
+      if (d.range != null) dof.cocMaterial.focusRange = d.range;
+      dof.bokehScale = d.bokeh != null ? d.bokeh : 2;
+      dof.target = d.target || null;
+    }
+    // world.post.grain = 0…0.15 (soft-light film grain); 0 in render mode so static frames stay clean.
+    grain.blendMode.opacity.value = params && params.render ? 0 : Math.max(0, Math.min(0.15, Number(p.grain) || 0));
   }
   function setWorld(world) {
     if (!world || !world.scene || !world.camera) return;
@@ -175,7 +195,7 @@ export function createGLSystem({ stage, tokens, params, fonts, onFatal }) {
   });
 
   const makeWorld = makeWorldFactory({ THREE, tokens, renderer });
-  const api = { THREE, renderer, makeWorld, helpers: helpers.bind({ THREE, renderer, tokens, fonts }), composer, effects: { bloom, vignette, tone, smaa } };
+  const api = { THREE, renderer, makeWorld, helpers: helpers.bind({ THREE, renderer, tokens, fonts }), composer, effects: { bloom, vignette, tone, smaa, dof, grain } };
 
   return {
     api,
