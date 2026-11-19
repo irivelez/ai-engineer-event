@@ -141,6 +141,9 @@ export function createGLSystem({ stage, tokens, params, fonts, onFatal }) {
       if (d.range != null) dof.cocMaterial.focusRange = d.range;
       dof.bokehScale = d.bokeh != null ? d.bokeh : 2;
       dof.target = d.target || null;
+      // d.scale: blur buffer resolution (default 0.5). 0.3 costs well under half on a Retina buffer.
+      const sc = d.scale != null ? Math.max(0.2, Math.min(0.5, Number(d.scale) || 0.5)) : 0.5;
+      if (dof.resolution.scale !== sc) dof.resolution.scale = sc;
     }
     // world.post.grain = 0…0.15 (soft-light film grain); 0 in render mode so static frames stay clean.
     grain.blendMode.opacity.value = params && params.render ? 0 : Math.max(0, Math.min(0.15, Number(p.grain) || 0));
