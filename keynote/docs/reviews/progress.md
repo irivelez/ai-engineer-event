@@ -55,3 +55,4 @@
 17:19 · gl-1 · release-pace · done (polish: side-view timeline, top/bottom scrims, 22° lens) · p95 16.67 (s0 16.67, s1 16.67, s2 16.67; CPU work p95 ≤ 1.9 ms) · <scratch>/gl1/shots/labs-live
 17:22 · calm-b · all 13 · polish pass done · <scratch>/shots/calm-b/final · report docs/reviews/calm-b-report.md
 17:27 · gl-2 · breach, power, brazil, news-tunnel, motor · done (polish) · p95 16.67 on all 19 steps (1080p and Retina) · <scratch>/shots/gl2/final
+22:00 · two-speeds · done · keynote/.dev/two-speeds/final (+ final-live, zoom) · p95 n/a (DOM only)
