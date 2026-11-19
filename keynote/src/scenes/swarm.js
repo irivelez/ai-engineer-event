@@ -1,327 +1,229 @@
-// swarm (gl-1): the peak of the night. 2,048 agents as soft GPU light with short trails swirl out of one point,
-// then self-organize into eight layers (one per day, the counter races 1 → 8). Last step: Anthropic's own clip of
-// the operating system (evidence item for this moment, src/data/evidence.json) plays in a frame beside the result
-// line, with its chip, its own disclaimer and a QR to the video, while the layers dim behind it. Without that item
-// the layers fold into a minimal laptop whose screen lights with a boot line (the illustrative version). Everything is analytic in the vertex shader (no CPU
-// simulation): position = f(time, per-agent orbit, organize progress, laptop progress), so render mode and
-// goto(i, { animate:false }) are exact.
+// ART DIRECTION: "powers of ten, for agents".
+// References: Eames' Powers of Ten (one continuous pull-back), starling murmurations, GTC Berlin 2026's lit night
+//   architecture, DevDay 2026's restraint (one colour, lots of void).
+// Palette: the keynote's accent blue (#93AAFF) for bodies and light, white-hot cores only; near-black void and floor.
+// Light: the agents are the light; room IBL + a cool key and a blue rim on dark glass floors; glossy floor reflection.
+// Camera: s0 one eased pull-back from a macro on one agent (shallow focus) to the whole murmuration; s1 one slow
+//   push-in (12° of orbit) while eight floors lock in, a day each; s2 holds. The frame that sells it: the
+//   eighth floor locking in with a white sweep, the last agents streaming down, the tower doubled in the floor.
+//
+// swarm (gl-1): 1,024 agents ("over 1,000" in facts.json: just over, never more than the source implies); eight floors
+// for the eight days are a metaphor for the build progressing. Positions are analytic in the vertex shader (see _swarm-gl.js), the camera is a pure
+// function of (murmuration clock, pull, camera state), so render mode and goto(i, { animate:false }) are exact.
+// Last step: Anthropic's own clip of the operating system (evidence item for this moment) plays in a frame beside
+// the result line, with its chip, its own disclaimer and a QR to the video, while the tower dims behind it.
 import { gsap } from 'gsap';
-import { factSource, splitFigure, place, makeRig, SOFT_POINT_FRAG, roundedRectPoints, smooth } from './_worlds/gl1-kit.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { factSource, splitFigure, place, smooth } from './_worlds/gl1-kit.js';
+import {
+  K, SPEED, U_HERO, NF, PER, N, SLAB, FLOOR_Y, HL, RC, RACE0, DAY, SWEEP, LOCK, B_END,
+  heroPos, HEAD_VERT, HEAD_FRAG, TRAIL_VERT, TRAIL_FRAG, FLOOR_VERT, FLOOR_FRAG, buildSlots, slabGeometry, roughnessCanvas,
+} from './_swarm-gl.js';
 
-const LAYERS = 8;
-const PER = 384; // agents per layer: 176 on the outline + 208 on the inner grid (16 × 13)
-const N = LAYERS * PER; // 3,072 agents ("1,000+")
-const T = 14; // trail samples per agent (head + 13)
-const DAY = 0.8; // seconds per day while the counter races
-const LAYER_Y = (k) => -2.8 + k * 0.8;
-const PLATE = { w: 11.4, d: 7.4, r: 0.75 };
-
-// Laptop geometry (world units). Base top at y = YB, hinge near the back edge, lid leaning back.
-const YB = -1.6;
-const LAP = { w: 11.6, d: 7.6, r: 0.6, thick: 0.34, sw: 11.2, sh: 7.2, sr: 0.45, tilt: (13 * Math.PI) / 180, hingeZ: -3.55 };
-
-// Camera per step (spherical, degrees; shiftX = lens shift in stage px so the object sits right of the text).
+const T_RENDER = 7.0; // murmuration clock used by render mode (the live pull-back lands near it)
+const PULL_AT = 1.5; // s0: macro hold before the pull-back
+const PULL_DUR = 4.8;
+// Wide camera states (spherical, degrees, metres; shiftX = lens shift in stage px so the subject sits right of the type).
 const CAM = [
-  { az: -14, pol: 63, r: 30, tx: 0, ty: 0.6, tz: 0, shiftX: 420, orbitAmp: 16 },
-  { az: -33, pol: 64, r: 31, tx: 0, ty: 0.2, tz: 0, shiftX: 380, orbitAmp: 9 },
-  { az: -18, pol: 76, r: 30.5, tx: 0, ty: 1.9, tz: -0.4, shiftX: 470, orbitAmp: 0 },
+  { tx: 0, ty: 24, tz: 0, az: -22, pol: 84, dist: 118, fov: 30, shiftX: 400, ap: 5 },
+  { tx: 0, ty: 11.5, tz: 0, az: -10, pol: 77, dist: 74, fov: 30, shiftX: 440, ap: 7 },
+  { tx: 0, ty: 7, tz: 0, az: -12, pol: 78, dist: 112, fov: 30, shiftX: 410, ap: 6 },
 ];
-// Last step with the real clip: the layers step back and dim behind the frame.
-const CAM_CLIP = { az: -26, pol: 66, r: 38, tx: 0, ty: 0.2, tz: 0, shiftX: 300, orbitAmp: 5 };
-
-const VERT = /* glsl */ `
-  uniform float uTime, uScale, uSize, uSpawn, uOrganize, uOrgRate, uLaptop, uLapRate, uTrailDt, uIntensity, uTwinkle;
-  uniform vec3 uColA, uColB;
-  attribute vec3 aLap;     // laptop target
-  attribute vec4 aOrbit;   // r0, phase, omega, wobble
-  attribute vec3 aU;       // orbit plane basis
-  attribute vec3 aV;
-  attribute vec4 aMisc;    // seed, organize start, trail index, laptop delay
-  attribute vec2 aBr;      // brightness in the laptop (x) and in the layers (y)
-  varying vec3 vColor;
-  varying float vAlpha;
-  SIMPLEX
-
-  vec3 swirlAt(float t) {
-    float a = aOrbit.y + aOrbit.z * t;
-    float r = aOrbit.x * (1.0 + 0.07 * sin(t * 0.5 + aMisc.x * 6.2831));
-    vec3 n = cross(aU, aV);
-    vec3 p = aU * (cos(a) * r) + aV * (sin(a) * r) + n * (aOrbit.w * sin(2.0 * a + aMisc.x * 12.0));
-    vec3 q = p * 0.13 + vec3(0.0, 0.0, t * 0.07);
-    p += 0.75 * vec3(snoise(q), 0.6 * snoise(q + vec3(17.1, 3.2, 0.0)), snoise(q + vec3(0.0, 31.7, 9.4)));
-    return p;
-  }
-
-  void main() {
-    float k = aMisc.z;
-    float tk = uTime - k * uTrailDt;
-    float seed = aMisc.x;
-
-    // 1) the swarm, spawned from one point
-    vec3 sw = swirlAt(tk);
-    float sp = clamp(uSpawn * 1.45 - seed * 0.45, 0.0, 1.0);
-    sp = 1.0 - pow(1.0 - sp, 3.0);
-    sw *= sp;
-
-    // 2) self-organize into layer aMisc.y (organize runs 0 → 8, one unit per day)
-    float orgK = uOrganize - k * uTrailDt * uOrgRate;
-    float o = smoothstep(aMisc.y, aMisc.y + 0.55, orgK);
-    vec3 st = position;
-    vec3 bend = vec3(0.0, 2.2 + seed * 1.5, 0.0);
-    vec3 p = mix(sw, st, o) + bend * (4.0 * o * (1.0 - o));
-
-    // 3) fold into the laptop
-    float lapK = uLaptop - k * uTrailDt * uLapRate;
-    float l = smoothstep(aMisc.w, aMisc.w + 0.45, lapK);
-    vec3 bendL = vec3(0.0, 1.4, 1.2 + seed);
-    p = mix(p, aLap, l) + bendL * (4.0 * l * (1.0 - l));
-
-    // trail visibility: hidden once the agent holds still
-    float oh = smoothstep(aMisc.y, aMisc.y + 0.55, uOrganize);
-    float lh = smoothstep(aMisc.w, aMisc.w + 0.45, uLaptop);
-    float done = lh > 0.0 ? lh : oh;
-    float trailVis = (k < 0.5) ? 1.0 : (1.0 - smoothstep(0.82, 1.0, done));
-    float fall = 1.0 - k / ${T}.0;
-
-    vec4 mv = modelViewMatrix * vec4(p, 1.0);
-    gl_Position = projectionMatrix * mv;
-    float depth = max(0.5, -mv.z);
-    float size = uSize * (0.75 + 0.5 * fract(seed * 7.13)) * (k < 0.5 ? 1.0 : 0.42 + 0.5 * fall);
-    size *= mix(1.0, 1.25, oh * (1.0 - lh));
-    size *= mix(1.0, 0.82, l);
-    gl_PointSize = clamp(size * uScale / depth, 2.0, 48.0);
-
-    // colour: agents in accent and light; the laptop resolves toward light
-    vec3 c = mix(uColA, uColB, step(0.66, fract(seed * 3.71)));
-    c = mix(c, uColB, l * 0.55);
-    // twinkle while they work inside the layers (soft, per agent, never in sync)
-    float tw = 0.5 + 0.5 * sin(uTime * (1.3 + 2.1 * fract(seed * 5.3)) + seed * 40.0);
-    float work = mix(1.0, 0.62 + 0.55 * tw * tw, uTwinkle * oh * (1.0 - lh));
-    // each agent flashes as it snaps into its layer, then settles to its place in the grid
-    float arr = uOrganize - (aMisc.y + 0.55);
-    float flash = 1.0 + 1.7 * step(0.0, arr) * exp(-arr * 2.6) * (1.0 - lh);
-    float bright = mix(mix(1.0, aBr.y, oh * (1.0 - lh)), aBr.x, l) * work * flash;
-    float a = (k < 0.5 ? 1.0 : 0.72 * pow(fall, 1.2)) * trailVis * sp;
-    a *= smoothstep(0.6, 3.0, depth);
-    vColor = c * uIntensity * bright;
-    vAlpha = a;
-  }`;
-
-const SCREEN_FRAG = /* glsl */ `
-  uniform float uScreen, uBoot;
-  uniform vec3 uColA, uColB;
-  uniform vec2 uSize;
-  varying vec2 vUv;
-  float sdBox(vec2 p, vec2 b, float r) { vec2 q = abs(p) - b + r; return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - r; }
-  void main() {
-    vec2 p = (vUv - 0.5) * uSize;
-    // the screen's own light: brighter centre, eased to the bezel
-    float g = 1.0 - smoothstep(0.0, 0.62, length((vUv - vec2(0.5, 0.55)) * vec2(1.0, 1.35)));
-    vec3 col = uColA * (0.045 + 0.11 * g * g) * uScreen;
-    // boot line: a rounded track with a bright fill
-    vec2 b = p - vec2(0.0, -0.55);
-    float hw = 2.3; float hh = 0.085;
-    float track = 1.0 - smoothstep(-0.012, 0.012, sdBox(b, vec2(hw, hh), hh));
-    float fillEdge = -hw + 2.0 * hw * uBoot;
-    float fill = track * (1.0 - smoothstep(fillEdge - 0.02, fillEdge + 0.02, b.x)) * step(0.001, uBoot);
-    col += uColB * track * 0.22 * uScreen;
-    col += uColB * fill * 2.4;
-    gl_FragColor = vec4(col, 1.0);
-  }`;
+// The macro: 4.6 m from the hero, 16° round and 5° above the wide shot's own axis, so the pull-back is one
+// straight dolly out (the sheet of agents faces the lens there); long lens, wide aperture.
+const MAC = { daz: 16, dpol: -5, dist: 4.6, fov: 26, shiftX: 400, ap: 64 };
 
 export default {
   id: 'swarm',
   gl: true,
   create(ctx) {
     const { root, copy, beat, gl, components: C, renderMode, tokens } = ctx;
-    const { THREE, makeWorld, helpers: H } = gl;
+    const { THREE, makeWorld, helpers: H, renderer } = gl;
     const rand = H.seeded('swarm-agents');
+    // lookdev/QA only: ?render=1&m=swarm&s=<step>&swarmT=<s> renders that step's animation at <s> seconds
+    const dbgT = renderMode ? parseFloat(new URLSearchParams(location.search).get('swarmT')) : NaN;
 
     // ---------- world ----------
     const world = makeWorld({
-      fov: 32,
-      post: { bloom: { intensity: 1.05, threshold: 0.55, smoothing: 0.3, radius: 0.8 }, vignette: { offset: 0.3, darkness: 0.66 } },
+      fov: 30, far: 900,
+      post: { bloom: { intensity: 0.9, threshold: 0.9, smoothing: 0.25, radius: 0.62 }, vignette: { offset: 0.3, darkness: 0.62 } },
     });
-    world.scene.background = H.gradientTexture([['#080B15', 0], ['#05070A', 1]], { radial: true });
+    const voidCol = H.color('void');
+    const accent = H.color('accent');
+    world.scene.background = voidCol.clone();
+    world.scene.fog = new THREE.FogExp2(voidCol.clone(), 0.004);
+    // image-based light: a neutral room, prefiltered once
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const room = new RoomEnvironment();
+    const envRT = world.track(pmrem.fromScene(room, 0.04, 0.1, 100, { size: 128 }));
+    world.scene.environment = envRT.texture;
+    room.dispose();
+    pmrem.dispose();
+    // the floors' own environment: a dark studio with one soft overhead panel and a blue strip behind
+    const studio = new THREE.Scene();
+    const panel = (w, h, col, pos, look) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: col, side: THREE.DoubleSide }));
+      m.position.set(...pos); m.lookAt(...look); studio.add(m); return m;
+    };
+    // nothing near the horizon: grazing reflections on the glass stay black; only bevels catch the strips
+    panel(9, 9, new THREE.Color(0.32, 0.34, 0.4), [0, 10, 0], [0, 0, 0]);
+    panel(24, 1.0, accent.clone().multiplyScalar(0.9), [0, 7, -8], [0, 0, 0]);
+    panel(1.0, 6, new THREE.Color(0.22, 0.25, 0.32), [-8, 6, 3], [0, 0, 0]);
+    const pmrem2 = new THREE.PMREMGenerator(renderer);
+    const studioRT = world.track(pmrem2.fromScene(studio, 0.03, 0.1, 100, { size: 128 }));
+    studio.traverse((o) => { if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); });
+    pmrem2.dispose();
+    const key = new THREE.DirectionalLight(new THREE.Color('#DCE4FF'), 0.3);
+    key.position.set(-30, 50, 40);
+    const rim = new THREE.DirectionalLight(accent.clone(), 0.45);
+    rim.position.set(22, 14, -50);
+    world.add(key, rim);
 
-    // ---------- targets ----------
-    const struct = new Float32Array(N * 3);
-    const layerOf = new Uint8Array(N);
-    const structBright = new Float32Array(N);
-    const OUT = 176;
-    const outline = roundedRectPoints(THREE, PLATE.w - 0.3, PLATE.d - 0.3, PLATE.r, OUT);
-    for (let L = 0; L < LAYERS; L++) {
-      for (let j = 0; j < PER; j++) {
-        const i = L * PER + j;
-        let x;
-        let z;
-        if (j < OUT) { x = outline[j].x; z = outline[j].y; structBright[i] = 1.0; } else {
-          const g = j - OUT; // 16 × 13 grid: the agents themselves draw each layer
-          x = -4.5 + (g % 16) * 0.6;
-          z = -2.7 + Math.floor(g / 16) * 0.45;
-          structBright[i] = 0.6;
-        }
-        struct[i * 3] = x; struct[i * 3 + 1] = LAYER_Y(L); struct[i * 3 + 2] = z;
-        layerOf[i] = L;
-      }
-    }
-
-    // laptop targets: lid outline, base top, base bottom edge, trackpad, keyboard rows
-    const lap = [];
-    const lapBright = [];
-    const lapDelay = [];
-    const cosT = Math.cos(LAP.tilt);
-    const sinT = Math.sin(LAP.tilt);
-    const lid = (u, v) => [u, YB + v * cosT, LAP.hingeZ - v * sinT];
-    roundedRectPoints(THREE, LAP.sw, LAP.sh, LAP.sr, 960).forEach((pt) => {
-      const v = pt.y + LAP.sh / 2 + 0.15;
-      lap.push(lid(pt.x, v)); lapBright.push(1.0); lapDelay.push(0.3 + 0.24 * (v / (LAP.sh + 0.3)));
-    });
-    roundedRectPoints(THREE, LAP.w, LAP.d, LAP.r, 840).forEach((pt) => { lap.push([pt.x, YB, pt.y]); lapBright.push(0.9); lapDelay.push(0.02); });
-    roundedRectPoints(THREE, LAP.w, LAP.d, LAP.r, 450).forEach((pt) => { lap.push([pt.x, YB - LAP.thick, pt.y]); lapBright.push(0.42); lapDelay.push(0.0); });
-    roundedRectPoints(THREE, 3.8, 2.3, 0.25, 210).forEach((pt) => { lap.push([pt.x, YB + 0.001, pt.y + 2.15]); lapBright.push(0.55); lapDelay.push(0.12); });
-    {
-      const need = N - lap.length; // keyboard: five dashed rows (key gaps)
-      const rows = 6;
-      const per = Math.ceil(need / rows);
-      let made = 0;
-      for (let r = 0; r < rows && made < need; r++) {
-        const z = -3.0 + r * 0.48;
-        for (let c = 0; c < per * 2 && made < need; c++) {
-          const x = -4.7 + c * 0.072;
-          if (x > 4.7) break;
-          if (((x + 4.7) % 0.72) < 0.16) continue; // gap between keys
-          lap.push([x, YB + 0.001, z]); lapBright.push(0.38); lapDelay.push(0.08 + 0.02 * r); made++;
-        }
-      }
-      while (lap.length < N) { lap.push([0, YB, 0]); lapBright.push(0); lapDelay.push(0.1); }
-    }
-    // match struct → laptop by x so the fold flows sideways without crossings
-    const byX = (arr) => [...arr.keys()].sort((a, b) => arr[a][0] - arr[b][0] || arr[a][2] - arr[b][2]);
-    const structList = Array.from({ length: N }, (_, i) => [struct[i * 3], struct[i * 3 + 1], struct[i * 3 + 2]]);
-    const sOrder = byX(structList);
-    const lOrder = byX(lap);
-    const lapOf = new Int32Array(N);
-    for (let r = 0; r < N; r++) lapOf[sOrder[r]] = lOrder[r];
-
-    // ---------- agent attributes (per trail vertex) ----------
-    const V = N * T;
-    const aPos = new Float32Array(V * 3);
-    const aLap = new Float32Array(V * 3);
-    const aOrbit = new Float32Array(V * 4);
-    const aU = new Float32Array(V * 3);
-    const aV = new Float32Array(V * 3);
-    const aMisc = new Float32Array(V * 4);
-    const aBr = new Float32Array(V * 2);
-    const n = new THREE.Vector3();
-    const u = new THREE.Vector3();
-    const v = new THREE.Vector3();
-    const e = new THREE.Euler();
+    // ---------- agents ----------
+    const L = buildSlots(THREE, H.seeded('swarm-desks'));
+    const aBand = new Float32Array(N * 4);
+    const aSlot = L.slots;
+    const aOrg = new Float32Array(N * 4);
+    const aLook = new Float32Array(N * 4);
+    const HERO = (NF - 1) * PER + 3; // the hero ends on the top floor's front edge
     for (let i = 0; i < N; i++) {
-      // a vortex with three loose arms: mostly rigid rotation (the arms persist), a little shear
-      const r0 = 1.4 + 8.2 * Math.pow(rand(), 0.72);
-      e.set((rand() - 0.5) * 0.42, 0, (rand() - 0.5) * 0.42);
-      n.set(0, 1, 0).applyEuler(e).normalize();
-      u.set(0, 0, 1).cross(n).normalize();
-      v.copy(n).cross(u).normalize();
-      const arm = i % 3;
-      const phase = arm * 2.0944 + 1.85 * Math.log(r0) + (rand() - 0.5) * (0.5 + 0.06 * r0);
-      const omega = 0.34 * (1.18 - 0.028 * r0) * (0.92 + 0.16 * rand());
-      const wobble = (0.15 + 0.55 * rand()) * (0.5 + 0.08 * r0);
-      const seed = rand();
-      const orgStart = layerOf[i] + 0.42 * rand();
-      const li = lapOf[i];
-      const delay = lapDelay[li] + 0.06 * rand();
-      for (let k = 0; k < T; k++) {
-        const vi = i * T + k;
-        aPos.set([struct[i * 3], struct[i * 3 + 1], struct[i * 3 + 2]], vi * 3);
-        aLap.set(lap[li], vi * 3);
-        aOrbit.set([r0, phase, omega, wobble], vi * 4);
-        aU.set([u.x, u.y, u.z], vi * 3);
-        aV.set([v.x, v.y, v.z], vi * 3);
-        aMisc.set([seed, orgStart, k, delay], vi * 4);
-        aBr[vi * 2] = lapBright[li];
-        aBr[vi * 2 + 1] = structBright[i];
-      }
+      const hero = i === HERO;
+      const v = (rand() * 2 - 1);
+      const w = (rand() + rand() + rand()) / 1.5 - 1; // denser mid-sheet
+      aBand.set([hero ? U_HERO : rand(), hero ? 0 : Math.sign(v) * Math.pow(Math.abs(v), 0.8), hero ? 0 : w, rand()], i * 4);
+      const f = L.floorOf[i];
+      const arr = LOCK(f) + L.sweepPos[i] * SWEEP - 0.05;
+      const dep = Math.max(0, arr - (1.25 + 0.6 * rand()));
+      aOrg.set([dep, arr, L.sweepPos[i], LOCK(f)], i * 4);
+      aLook.set([0.82 + 0.36 * rand(), L.onFloor[i], L.coreOn[i], hero ? 1 : 0], i * 4);
     }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(aPos, 3));
-    geo.setAttribute('aLap', new THREE.BufferAttribute(aLap, 3));
-    geo.setAttribute('aOrbit', new THREE.BufferAttribute(aOrbit, 4));
-    geo.setAttribute('aU', new THREE.BufferAttribute(aU, 3));
-    geo.setAttribute('aV', new THREE.BufferAttribute(aV, 3));
-    geo.setAttribute('aMisc', new THREE.BufferAttribute(aMisc, 4));
-    geo.setAttribute('aBr', new THREE.BufferAttribute(aBr, 2));
-    const U = {
-      uTime: { value: 0 }, uScale: { value: 1000 }, uSize: { value: 0.14 }, uSpawn: { value: 1 }, uOrganize: { value: 0 }, uOrgRate: { value: 0 },
-      uLaptop: { value: 0 }, uLapRate: { value: 0 }, uTrailDt: { value: 0.05 }, uIntensity: { value: 3.0 }, uTwinkle: { value: renderMode ? 0 : 1 },
-      uColA: { value: H.color('accent') }, uColB: { value: H.color('light') },
+    const inst = {
+      aBand: new THREE.InstancedBufferAttribute(aBand, 4),
+      aSlot: new THREE.InstancedBufferAttribute(aSlot, 4),
+      aOrg: new THREE.InstancedBufferAttribute(aOrg, 4),
+      aLook: new THREE.InstancedBufferAttribute(aLook, 4),
     };
-    const mat = new THREE.ShaderMaterial({
-      uniforms: U, vertexShader: VERT.replace('SIMPLEX', H.noise.glsl), fragmentShader: SOFT_POINT_FRAG,
-      transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending,
+    function agentGeo(base) {
+      const g = new THREE.InstancedBufferGeometry();
+      Object.entries(base).forEach(([k, a]) => (k === 'index' ? g.setIndex(a) : g.setAttribute(k, a)));
+      Object.entries(inst).forEach(([k, a]) => g.setAttribute(k, a));
+      g.instanceCount = N;
+      return g;
+    }
+    const headGeo = agentGeo({
+      position: new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 1, -1, 0, -1, 1, 0, 1, 1, 0]), 3),
+      aCorner: new THREE.BufferAttribute(new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), 2),
+      index: [0, 1, 2, 2, 1, 3],
     });
-    const agents = new THREE.Points(geo, mat);
-    agents.frustumCulled = false;
-    const bufSize = new THREE.Vector2();
-    agents.onBeforeRender = (renderer, scene, camera) => {
-      renderer.getDrawingBufferSize(bufSize);
-      U.uScale.value = bufSize.y / (2 * Math.tan((camera.fov * Math.PI) / 360));
+    const trailGeo = (() => {
+      const tr = [];
+      const pos = [];
+      const idx = [];
+      for (let k = 0; k <= K; k++) for (const s of [-1, 1]) { tr.push(k, s); pos.push(0, 0, 0); }
+      for (let k = 0; k < K; k++) { const a = k * 2; idx.push(a, a + 1, a + 2, a + 2, a + 1, a + 3); }
+      return agentGeo({ position: new THREE.BufferAttribute(new Float32Array(pos), 3), aTr: new THREE.BufferAttribute(new Float32Array(tr), 2), index: idx });
+    })();
+    world.track(headGeo); world.track(trailGeo);
+    const U = {
+      uTime: { value: T_RENDER }, uBuild: { value: 0 }, uBuildRate: { value: 0 }, uMirror: { value: 0 }, uRes: { value: new THREE.Vector2(1920, 1080) },
+      uScale: { value: 2000 }, uFocus: { value: 120 }, uAperture: { value: 5 }, uCocMax: { value: 70 }, uFog: { value: 0.004 },
+      uIntensity: { value: 1.45 }, uCoreI: { value: 2.5 }, uDim: { value: 0 }, uHeroHead: { value: 1 }, uTrailDt: { value: 0.07 },
+      uRefl: { value: 0.4 }, uMinR: { value: 1.6 }, uCurl: { value: 1.0 }, uSpace: { value: 0 }, uGather: { value: 0 }, uNearK: { value: 0 }, uAccent: { value: accent.clone() },
     };
-    world.add(agents);
+    const UM = { ...U, uMirror: { value: 1 } };
+    const SIMPLEX = H.noise.glsl;
+    const agentMat = (vert, frag, uniforms, mirror) => new THREE.ShaderMaterial({
+      uniforms, vertexShader: vert, fragmentShader: frag,
+      transparent: !mirror, depthWrite: false, depthTest: !mirror, blending: THREE.AdditiveBlending,
+    });
+    // reflections are drawn in the opaque pass, right after the floor and before the floors' glass
+    const reflTrails = new THREE.Mesh(trailGeo, agentMat(TRAIL_VERT, TRAIL_FRAG, UM, true));
+    const reflHeads = new THREE.Mesh(headGeo, agentMat(HEAD_VERT, HEAD_FRAG, UM, true));
+    const trails = new THREE.Mesh(trailGeo, agentMat(TRAIL_VERT, TRAIL_FRAG, U, false));
+    const heads = new THREE.Mesh(headGeo, agentMat(HEAD_VERT, HEAD_FRAG, U, false));
+    reflTrails.renderOrder = -9; reflHeads.renderOrder = -8; trails.renderOrder = 10; heads.renderOrder = 11;
+    [reflTrails, reflHeads, trails, heads].forEach((m) => { m.frustumCulled = false; world.add(m); });
+    const bufSize = new THREE.Vector2();
+    heads.onBeforeRender = (r, scene, camera) => {
+      r.getDrawingBufferSize(bufSize);
+      U.uRes.value.copy(bufSize);
+      U.uScale.value = bufSize.y / (2 * Math.tan((camera.fov * Math.PI) / 360));
+      U.uMinR.value = 1.6 * (bufSize.y / 1080);
+      U.uAperture.value = S.apNow * (bufSize.y / 1080);
+      U.uCocMax.value = 70 * (bufSize.y / 1080);
+    };
+    reflTrails.onBeforeRender = heads.onBeforeRender;
 
-    // depth: a faint far field
-    const dust = world.add(H.particles({ count: 1400, spread: [80, 44, 50], center: [0, 0, -18], size: 0.07, colors: ['light', 'accent'], intensity: 0.5, drift: 0.5, seed: 'swarm-dust' }));
-    const dustBase = dust.uniforms.uOpacity.value;
+    // ---------- the floor plane ----------
+    const floorU = {
+      uVoid: { value: voidCol.clone() }, uAccent: { value: accent.clone() }, uCam: { value: new THREE.Vector3() }, uFog: { value: 0.004 },
+      uPoolA: { value: 0.06 }, uPoolB: { value: 0 }, uGridA: { value: 0.12 }, uShadow: { value: 0 },
+      uSlab: { value: new THREE.Vector3(SLAB.w / 2, SLAB.d / 2, SLAB.r) },
+    };
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(1400, 1400), new THREE.ShaderMaterial({
+      uniforms: floorU, vertexShader: FLOOR_VERT, fragmentShader: FLOOR_FRAG.replace('SIMPLEX', SIMPLEX), depthWrite: true,
+    }));
+    floor.rotation.x = -Math.PI / 2;
+    floor.renderOrder = -10;
+    world.add(floor);
 
-    // the vortex's core: a soft light that the agents leave as they spawn, quiet once they organize
-    const glowCanvas = document.createElement('canvas');
-    glowCanvas.width = 256; glowCanvas.height = 256;
-    {
-      const g2 = glowCanvas.getContext('2d');
-      const grd = g2.createRadialGradient(128, 128, 0, 128, 128, 128);
-      [[0, 1], [0.18, 0.62], [0.4, 0.22], [0.65, 0.06], [1, 0]].forEach(([p, a2]) => grd.addColorStop(p, `rgba(255,255,255,${a2})`));
-      g2.fillStyle = grd; g2.fillRect(0, 0, 256, 256);
+    // ---------- the eight floors: dark glass slabs that a light sweep locks in ----------
+    const roughTex = world.track(new THREE.CanvasTexture(roughnessCanvas(H.seeded('swarm-rough'), 256)));
+    roughTex.wrapS = roughTex.wrapT = THREE.RepeatWrapping;
+    roughTex.repeat.set(0.09, 0.09);
+    const slabGeo = world.track(slabGeometry(THREE));
+    const slabs = [];
+    for (let f = 0; f < NF; f++) {
+      const su = { uFront: { value: -99 }, uBand: { value: 0 }, uLit: { value: 0 }, uDimS: { value: 1 }, uAccentS: { value: accent.clone() } };
+      const m = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color('#05070B'), metalness: 0.0, roughness: 0.45, roughnessMap: roughTex,
+        clearcoat: 0.35, clearcoatRoughness: 0.3, envMap: studioRT.texture, envMapIntensity: 0.6,
+      });
+      m.onBeforeCompile = (sh) => {
+        Object.assign(sh.uniforms, su);
+        sh.vertexShader = sh.vertexShader
+          .replace('#include <common>', '#include <common>\nvarying vec3 vWp;')
+          .replace('#include <project_vertex>', '#include <project_vertex>\nvWp = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+        sh.fragmentShader = sh.fragmentShader
+          .replace('#include <common>', '#include <common>\nvarying vec3 vWp;\nuniform float uFront, uBand, uLit, uDimS;\nuniform vec3 uAccentS;')
+          .replace('#include <clipping_planes_fragment>', '#include <clipping_planes_fragment>\nif (vWp.x > uFront) discard;')
+          .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n'
+            + 'float fbd = (uFront - vWp.x) / 0.5;\n'
+            + 'totalEmissiveRadiance += vec3(1.0) * (exp(-fbd * fbd) * 1.6 * uBand) + uAccentS * (0.035 * uLit);')
+          .replace('#include <opaque_fragment>', 'outgoingLight *= uDimS;\n#include <opaque_fragment>');
+      };
+      const mesh = new THREE.Mesh(slabGeo, m);
+      mesh.position.y = FLOOR_Y(f);
+      mesh.visible = false;
+      world.add(mesh);
+      slabs.push({ mesh, su, lock: LOCK(f) });
     }
-    const glowTex = world.track(new THREE.CanvasTexture(glowCanvas));
-    const core = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: H.color('accent', 2.2), transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending }));
-    const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, color: H.color('accent', 0.32), transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending }));
-    core.scale.setScalar(3.2);
-    halo.scale.setScalar(19);
-    world.add(halo, core);
 
-    // the lid's screen light + boot line
-    const screenU = { uScreen: { value: 0 }, uBoot: { value: 0 }, uColA: { value: H.color('accent') }, uColB: { value: H.color('light') }, uSize: { value: new THREE.Vector2(LAP.sw - 0.5, LAP.sh - 0.5) } };
-    const screen = new THREE.Mesh(
-      new THREE.PlaneGeometry(LAP.sw - 0.5, LAP.sh - 0.5),
-      new THREE.ShaderMaterial({
-        uniforms: screenU, transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending,
-        vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-        fragmentShader: SCREEN_FRAG,
-      }),
-    );
-    {
-      const vMid = LAP.sh / 2 + 0.15;
-      const c = lid(0, vMid);
-      screen.position.set(c[0], c[1], c[2]);
-      screen.rotation.x = -LAP.tilt;
-    }
-    world.add(screen);
+    // ---------- the hero agent up close: a glass pill with a white-hot filament ----------
+    const hero = new THREE.Group();
+    const shell = new THREE.Mesh(new THREE.CapsuleGeometry(RC * 1.04, HL * 2, 8, 28), new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color('#0B1430'), roughness: 0.07, metalness: 0, clearcoat: 1, clearcoatRoughness: 0.05,
+      transparent: true, opacity: 0.62, envMapIntensity: 2.2, emissive: accent.clone(), emissiveIntensity: 0.55, depthWrite: false,
+    }));
+    const filament = new THREE.Mesh(new THREE.CapsuleGeometry(RC * 0.36, HL * 1.7, 6, 16), new THREE.MeshBasicMaterial({ color: new THREE.Color(5, 5.4, 6.4), transparent: true, depthWrite: false }));
+    hero.add(shell, filament);
+    shell.renderOrder = 12; filament.renderOrder = 13;
+    world.add(hero);
 
     // ---------- DOM ----------
     const g = 'void';
     const src = factSource(ctx, (beat.facts || [])[0], copy.kicker);
     const scrim = C.Scrim.create({ ground: g, side: 'left', extent: 0.66, strength: 0.95 });
-    const floor = C.Scrim.create({ ground: g, side: 'bottom', extent: 0.24, strength: 0.9 }); // keeps the footer band calm
+    const floorScrim = C.Scrim.create({ ground: g, side: 'bottom', extent: 0.24, strength: 0.9 }); // keeps the footer band calm
     const n1 = C.BigNumber.create({ display: copy.n, label: copy.nLabel, size: 'display', ground: g });
     const dParts = splitFigure(copy.d);
     const n2 = C.BigNumber.create({ display: dParts.figure, unit: dParts.unit || undefined, label: copy.dLabel, size: 'display', ground: g });
-    // the evidence clip (real Anthropic video) replaces the illustrative laptop on the last step
+    // the evidence clip (real Anthropic video) plays on the last step
     const ev = ((ctx.assets.evidenceFor && ctx.assets.evidenceFor(beat.id)) || []).find((e) => e.kind === 'video') || null;
     const clip = ev && C.EvidenceVideo ? C.EvidenceVideo.create({ item: ev, kind: ev.chip || src.kind, width: tokens.spanW(6), qr: true, qrSize: 246, ground: g }) : null;
     const result = C.Headline.create({ text: copy.result, role: 'h2', ground: g, width: clip ? tokens.spanW(6) : 870 });
     const source = C.SourceLine.create({ kind: src.kind, text: src.text, ground: g });
-    root.append(scrim.el, floor.el, n1.el, n2.el, result.el, source.el);
+    root.append(scrim.el, floorScrim.el, n1.el, n2.el, result.el, source.el);
     if (clip) root.append(clip.el);
     place(n1.el, 128, 168);
     place(n2.el, 128, 560);
@@ -334,114 +236,216 @@ export default {
     const muted = tokens.colors.lightSoft;
     const fg = tokens.colors.light;
 
-    // ---------- camera ----------
-    const rig = makeRig(THREE, world.camera, { ...CAM[0], orbitAmp: renderMode ? 0 : CAM[0].orbitAmp, breathe: renderMode ? 0 : 0.5 });
-
     // ---------- state ----------
-    const vis = { n1: false, n2: false, result: false, src: false, scrim: false, floor: false, clip: false };
-    function show(c, key, want, tl, at, animate) {
-      if (want === vis[key]) return;
-      vis[key] = want;
-      if (animate) { if (want) c.in(tl, at); else c.out(tl, at); } else tl.add(c.set({ visible: want }, { animate: false }), 0);
+    // S: pull (macro → wide), build (s1 clock, seconds), dim (s2), plus the wide camera state.
+    const S = { pull: 1, build: 0, dim: 0, ...CAM[0], apNow: CAM[0].ap };
+    let clock = T_RENDER;
+    let curStep = 0;
+
+    // ---------- camera: a pure function of (clock, S) ----------
+    const cam = world.camera;
+    const D2R = Math.PI / 180;
+    const v = { L: new THREE.Vector3(), A: new THREE.Vector3(), B: new THREE.Vector3(), T: new THREE.Vector3(), N: new THREE.Vector3(), Bn: new THREE.Vector3(),
+      dirW: new THREE.Vector3(), tgtW: new THREE.Vector3(), dirM: new THREE.Vector3(), tgtM: new THREE.Vector3(), off: new THREE.Vector3(),
+      dir: new THREE.Vector3(), tgt: new THREE.Vector3(), foc: new THREE.Vector3(), Y: new THREE.Vector3(0, 1, 0) };
+    let lastShift = NaN;
+    let lastFov = NaN;
+    function heroFrame(t) {
+      heroPos(t, v.L);
+      heroPos(t + 0.02, v.A);
+      heroPos(t - 0.02, v.B);
+      v.T.subVectors(v.A, v.B).normalize();
+      v.N.crossVectors(v.T, v.Y);
+      if (v.N.lengthSq() < 1e-8) v.N.set(1, 0, 0);
+      v.N.normalize();
+      v.Bn.crossVectors(v.N, v.T);
     }
-    function raceEase(p) { // seven quick rolls, one per day, in sync with the layers
-      const t = p * (7 * DAY + 0.3);
-      let v = 0;
-      for (let k = 1; k <= 7; k++) { const x = Math.min(1, Math.max(0, (t - (k * DAY - 0.1)) / 0.3)); v += 1 - (1 - x) * (1 - x); }
-      return v / 7;
+    function applyCamera(t) {
+      const br = renderMode ? 0 : 0.18; // a breath, not an orbit
+      const az = (S.az + Math.sin(t * 0.21) * br) * D2R;
+      const pol = (S.pol + Math.sin(t * 0.17 + 1.3) * br * 0.5) * D2R;
+      v.dirW.set(Math.sin(pol) * Math.sin(az), Math.cos(pol), Math.sin(pol) * Math.cos(az));
+      v.tgtW.set(S.tx, S.ty, S.tz);
+      const p = S.pull;
+      let fov = S.fov;
+      let shift = S.shiftX;
+      let dist = S.dist;
+      let ap = S.ap;
+      if (p < 0.9999) {
+        heroFrame(t);
+        const azm = (S.az + MAC.daz) * D2R;
+        const polm = (S.pol + MAC.dpol) * D2R;
+        v.dirM.set(Math.sin(polm) * Math.sin(azm), Math.cos(polm), Math.sin(polm) * Math.cos(azm));
+        const dm = MAC.dist;
+        v.tgtM.copy(v.L);
+        dist = Math.exp(Math.log(dm) + (Math.log(S.dist) - Math.log(dm)) * p);
+        v.dir.copy(v.dirM).lerp(v.dirW, smooth(0, 0.85, p)).normalize();
+        v.tgt.copy(v.tgtM).lerp(v.tgtW, smooth(0.2, 1.0, p));
+        fov = MAC.fov + (S.fov - MAC.fov) * p;
+        shift = MAC.shiftX + (S.shiftX - MAC.shiftX) * p;
+        ap = MAC.ap + (S.ap - MAC.ap) * smooth(0, 0.25, p);
+        v.foc.copy(v.L).lerp(v.tgtW, smooth(0.25, 0.95, p));
+      } else {
+        v.dir.copy(v.dirW);
+        v.tgt.copy(v.tgtW);
+        v.foc.copy(v.tgtW);
+      }
+      cam.position.copy(v.tgt).addScaledVector(v.dir, dist);
+      cam.up.set(0, 1, 0);
+      cam.lookAt(v.tgt);
+      if (fov !== lastFov || shift !== lastShift) {
+        cam.fov = fov;
+        cam.setViewOffset(1920, 1080, -shift, 0, 1920, 1080);
+        cam.updateProjectionMatrix();
+        lastFov = fov; lastShift = shift;
+      }
+      U.uFocus.value = cam.position.distanceTo(v.foc);
+      S.apNow = ap;
+      // the hero pill: only up close
+      const heroVis = 1 - smooth(0.1, 0.38, p);
+      hero.visible = heroVis > 0.002;
+      if (hero.visible) {
+        hero.position.copy(v.L);
+        hero.quaternion.setFromUnitVectors(v.Y, v.T);
+        shell.material.opacity = 0.62 * heroVis;
+        filament.material.opacity = heroVis;
+      }
+      U.uHeroHead.value = 1 - heroVis;
+      U.uSpace.value = 1 - smooth(0.25, 0.75, p);
+      U.uNearK.value = 1 - smooth(0.82, 1.0, p);
     }
 
-    function stateTo(step, animate, entering = false) {
-      const A = animate && !renderMode;
+    // ---------- per-frame GL state from S ----------
+    function applyGL() {
+      const b = S.build;
+      U.uBuild.value = b;
+      U.uGather.value = smooth(0, 5.5, b);
+      U.uDim.value = S.dim;
+      let lit = 0;
+      for (const sl of slabs) {
+        const s = (b - sl.lock) / SWEEP; // 0 → 1 while the sweep crosses the floor
+        sl.mesh.visible = s > 0;
+        sl.su.uFront.value = -SLAB.w / 2 - 0.6 + (SLAB.w + 1.2) * Math.min(1, Math.max(0, s)) + (s >= 1 ? 50 : 0);
+        sl.su.uBand.value = s > 0 ? Math.max(0, 1 - Math.max(0, s - 1) * 2.2) : 0;
+        sl.su.uLit.value = Math.min(1, Math.max(0, s));
+        sl.su.uDimS.value = 1 - 0.75 * S.dim;
+        lit += Math.min(1, Math.max(0, s));
+      }
+      const litF = lit / NF;
+      floorU.uPoolA.value = 0.06 * (1 - 0.6 * litF) * (1 - 0.7 * S.dim);
+      floorU.uPoolB.value = 0.16 * litF * (1 - 0.7 * S.dim);
+      floorU.uShadow.value = 0.85 * Math.min(1, lit);
+      floorU.uGridA.value = 0.12 * (1 - 0.8 * S.dim);
+      floorU.uCam.value.copy(cam.position);
+      key.intensity = 0.3 * (1 - 0.7 * S.dim);
+      rim.intensity = 0.45 * (1 - 0.7 * S.dim);
+    }
+
+    function show(c, key2, want, tl, at, animate) {
+      if (want === vis[key2]) return false;
+      vis[key2] = want;
+      if (animate) { if (want) c.in(tl, at); else c.out(tl, at); } else tl.add(c.set({ visible: want }, { animate: false }), 0);
+      return animate && want;
+    }
+    // A figure that lands whole: drop the odometer's entry roll, so no intermediate value (no "999+") is ever on
+    // screen. The figure keeps the component's own calm rise and fade.
+    function landWhole(bn) {
+      const cols = [...bn.el.querySelectorAll('.bn-col')];
+      gsap.getTweensOf(cols.map((c) => c.firstElementChild)).forEach((t) => t.kill());
+      cols.forEach((c) => gsap.set(c.firstElementChild, { yPercent: cellY(+c.dataset.d + 10) }));
+    }
+    const vis = { n1: false, n2: false, result: false, src: false, scrim: false, floor: false, clip: false };
+    function raceEase(p) { // seven quick rolls, one per day, in sync with the floors
+      const t = p * (7 * DAY + 0.3);
+      let r = 0;
+      for (let k = 1; k <= 7; k++) { const x = Math.min(1, Math.max(0, (t - (k * DAY - 0.1)) / 0.3)); r += 1 - (1 - x) * (1 - x); }
+      return r / 7;
+    }
+
+    function stateTo(step, animate, entering = false, force = false) {
+      const A = (animate && !renderMode) || force;
+      curStep = step;
       const tl = gsap.timeline();
       const withClip = !!clip && step === 2;
-      const camDef = withClip ? CAM_CLIP : CAM[step];
-      const cam = { ...camDef, orbitAmp: renderMode ? 0 : camDef.orbitAmp };
-      tl.add(rig.to(cam, { duration: A ? (step === 2 ? 5 : 4.4) : 0, ease: 'power3.inOut' }), 0);
-      // with the real footage on screen the swarm steps back to ~15% (agents and far field), and returns on ← back
-      const inten = withClip ? 0.45 : 3.0;
-      const dustOp = withClip ? dustBase * 0.15 : dustBase;
-      if (A) {
-        tl.to(U.uIntensity, { value: inten, duration: 0.8, ease: 'sine.inOut' }, 0);
-        tl.to(dust.uniforms.uOpacity, { value: dustOp, duration: 0.8, ease: 'sine.inOut' }, 0);
-      } else {
-        tl.set(U.uIntensity, { value: inten }, 0);
-        tl.set(dust.uniforms.uOpacity, { value: dustOp }, 0);
-      }
-      const org = step >= 1 ? LAYERS : 0;
-      const lapT = step >= 2 && !clip ? 1 : 0;
-      if (A && step === 1 && U.uOrganize.value < org) tl.to(U.uOrganize, { value: org, duration: LAYERS * DAY, ease: 'none' }, 0.4);
-      else tl.set(U.uOrganize, { value: org }, 0);
-      if (A && lapT === 1 && U.uLaptop.value < 1) tl.to(U.uLaptop, { value: 1, duration: 3.8, ease: 'none' }, 0.15);
-      else tl.set(U.uLaptop, { value: lapT }, 0);
-      const scr = lapT;
-      if (A && lapT === 1) {
-        tl.to(screenU.uScreen, { value: 1, duration: 1.4, ease: 'power2.out' }, 3.3);
-        tl.fromTo(screenU.uBoot, { value: 0 }, { value: 1, duration: 2.0, ease: 'power2.inOut' }, 3.9);
-      } else {
-        tl.set(screenU.uScreen, { value: scr }, 0);
-        tl.set(screenU.uBoot, { value: scr }, 0);
-      }
+      const c = CAM[step];
+      // s0 on entry: hold on one agent, then one continuous pull-back (log-distance, power3) to the whole swarm
       if (entering) {
-        if (A) tl.fromTo(U.uSpawn, { value: 0 }, { value: 1, duration: 3.2, ease: 'power2.out' }, 0);
-        else tl.set(U.uSpawn, { value: 1 }, 0);
+        if (A) tl.fromTo(S, { pull: 0 }, { pull: 1, duration: PULL_DUR, ease: 'expo.inOut' }, PULL_AT);
+        else tl.set(S, { pull: 1 }, 0);
       }
+      const camDur = step === 1 ? 8.6 : step === 2 ? 2.2 : 3.2;
+      const camEase = step === 1 ? 'power2.inOut' : 'power3.inOut';
+      if (A) tl.to(S, { tx: c.tx, ty: c.ty, tz: c.tz, az: c.az, pol: c.pol, dist: c.dist, fov: c.fov, shiftX: c.shiftX, ap: c.ap, duration: camDur, ease: camEase }, 0);
+      else tl.set(S, { tx: c.tx, ty: c.ty, tz: c.tz, az: c.az, pol: c.pol, dist: c.dist, fov: c.fov, shiftX: c.shiftX, ap: c.ap }, 0);
+      const bT = step >= 1 ? B_END : 0;
+      if (A && step === 1 && S.build < B_END) tl.to(S, { build: B_END, duration: B_END - S.build, ease: 'none' }, 0);
+      else if (A && step === 0 && S.build > 0) tl.to(S, { build: 0, duration: 2.6, ease: 'power2.inOut' }, 0);
+      else tl.set(S, { build: bT }, 0);
+      const dimT = withClip ? 1 : 0;
+      if (A) tl.to(S, { dim: dimT, duration: 0.9, ease: 'sine.inOut' }, 0);
+      else tl.set(S, { dim: dimT }, 0);
 
       // DOM
-      show(n1, 'n1', step <= 1, tl, A ? (entering ? 1.1 : 0) : 0, A);
+      if (show(n1, 'n1', step <= 1, tl, A ? (entering ? PULL_AT + 2.6 : 0) : 0, A)) landWhole(n1);
       if (step === 1) {
         if (A) tl.to(n1.el, { '--g-fg': muted, duration: 0.6, ease: 'sine.inOut' }, 0);
         else tl.set(n1.el, { '--g-fg': muted }, 0);
-      } else tl.set(n1.el, { '--g-fg': fg }, 0);
+      } else if (step === 0) tl.set(n1.el, { '--g-fg': fg }, 0); // on s2 it leaves muted (no flash of white on exit)
       const wantN2 = step === 1;
       if (wantN2 && !vis.n2 && A) {
         vis.n2 = true;
-        n2.in(tl, 0.4);
-        if (strip) tl.fromTo(strip, { yPercent: cellY(11) }, { yPercent: cellY(finalDay + 10), duration: 7 * DAY + 0.3, ease: raceEase }, 0.4);
+        n2.in(tl, RACE0);
+        landWhole(n2); // the day digit is driven by the race below only: 1, 2 … 8, each a true day count
+        if (strip) tl.fromTo(strip, { yPercent: cellY(11) }, { yPercent: cellY(finalDay + 10), duration: 7 * DAY + 0.3, ease: raceEase }, RACE0);
       } else show(n2, 'n2', wantN2, tl, 0, A);
-      show(result, 'result', step === 2, tl, A ? (clip ? 0.5 : 2.4) : 0, A);
+      show(result, 'result', step === 2, tl, A ? (clip ? 0.5 : 1.2) : 0, A);
       if (clip) show(clip, 'clip', withClip, tl, A ? 0.8 : 0, A); // in() starts the clip; → never waits for it
       // with the clip, its own meta line carries the chip and the source: one chip per frame
-      show(source, 'src', !withClip, tl, A ? (entering ? 1.7 : 0) : 0, A);
+      show(source, 'src', !withClip, tl, A ? (entering ? PULL_AT + 3.2 : 0) : 0, A);
       show(scrim, 'scrim', true, tl, 0, A);
-      show(floor, 'floor', true, tl, 0, A);
+      show(floorScrim, 'floor', true, tl, 0, A);
       return tl;
     }
 
-    let lastOrg = 0;
-    let lastLap = 0;
+    let lastBuild = 0;
+    let dbgDone = false;
     return {
       steps: beat.steps.length,
       world,
-      enter() { return stateTo(0, true, true); },
+      enter() {
+        clock = renderMode ? T_RENDER : 0;
+        Object.assign(S, CAM[0], { build: 0, dim: 0, pull: renderMode ? 1 : 0 });
+        return stateTo(0, true, true);
+      },
       goto(step, { animate }) { return stateTo(step, animate); },
       exit() {
         const tl = gsap.timeline();
-        tl.to(rig.state, { r: rig.state.r - 2.5, duration: 0.8, ease: 'power2.in', onUpdate: rig.apply }, 0);
+        tl.to(S, { dist: S.dist * 1.04, duration: 0.8, ease: 'power2.in' }, 0);
         if (clip) tl.call(() => clip.pause(), null, 0.8); // keeps moving through the transition, then freezes (no empty card)
         return tl;
       },
       update(time, dt) {
-        U.uTime.value = renderMode ? 0 : time;
-        // rates let each trail sample read the organize/fold progress a few frames back
-        if (dt > 0) {
-          U.uOrgRate.value += ((U.uOrganize.value - lastOrg) / dt - U.uOrgRate.value) * 0.3;
-          U.uLapRate.value += ((U.uLaptop.value - lastLap) / dt - U.uLapRate.value) * 0.3;
-        } else { U.uOrgRate.value = 0; U.uLapRate.value = 0; }
-        lastOrg = U.uOrganize.value;
-        lastLap = U.uLaptop.value;
-        const o = U.uOrganize.value;
-        dust.update(renderMode ? 0 : time);
-        const sp = U.uSpawn.value;
-        const live = (1 - smooth(0, 3, o)) * (1 - U.uLaptop.value);
-        core.material.opacity = live * (0.85 + 1.2 * (1 - sp) * smooth(0, 0.08, sp));
-        halo.material.opacity = live * (0.7 + 0.3 * sp);
-        core.scale.setScalar(3.2 * (0.6 + 0.4 * sp));
-        rig.update(renderMode ? 0 : time);
+        if (renderMode && !Number.isNaN(dbgT) && !dbgDone) { // lookdev: the animated state of this step at swarmT s
+          dbgDone = true;
+          const step = curStep;
+          if (step > 0) stateTo(step - 1, false).progress(1);
+          const tl = stateTo(step, true, step === 0, true);
+          tl.pause();
+          tl.seek(dbgT);
+          clock = step === 0 ? dbgT : T_RENDER + dbgT;
+          U.uBuildRate.value = step === 1 && dbgT < B_END ? 1 : 0;
+        }
+        if (!renderMode) clock += Math.min(Math.max(dt, 0), 0.1);
+        U.uTime.value = clock;
+        if (!renderMode && dt > 0) U.uBuildRate.value += ((S.build - lastBuild) / dt - U.uBuildRate.value) * 0.35;
+        else if (!renderMode) U.uBuildRate.value = 0;
+        lastBuild = S.build;
+        applyCamera(clock);
+        applyGL();
       },
       dispose() {
-        gsap.killTweensOf([rig.state, U.uOrganize, U.uLaptop, U.uSpawn, U.uIntensity, dust.uniforms.uOpacity, screenU.uScreen, screenU.uBoot, n1.el, strip].filter(Boolean));
-        [scrim, floor, n1, n2, result, source, clip].filter(Boolean).forEach((c) => c.destroy());
+        gsap.killTweensOf([S, n1.el, strip].filter(Boolean));
+        [scrim, floorScrim, n1, n2, result, source, clip].filter(Boolean).forEach((c) => c.destroy());
         world.dispose();
         root.replaceChildren();
       },
