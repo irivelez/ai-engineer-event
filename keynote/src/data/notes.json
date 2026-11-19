@@ -322,10 +322,10 @@
   },
   "ruler": {
     "notes": [
+      "The chips: INDEPENDENT means measured by an organization that does not sell the model (Epoch AI, Artificial Analysis, Arena). LAB-REPORTED means the lab speaking about its own model. Say it once here; the audience will read every chip after that.",
       "Four independent rulers, four answers (read 11–18 Nov).",
       "Artificial Analysis index: Fable 5.2 65, GPT-6.2 Astra 62, Gemini 4 Carbon 60. Epoch's index: GPT-6.2 Astra and Fable 5.2 tied at 174.",
       "Arena, human votes on text: Gemini 4 Carbon 1526 and Argon 1522, a statistical tie (Carbon still preliminary).",
-      "ARC-AGI-3, standard protocol: Fable 5.2 81.2%, Astra 70.3%, Carbon 65.1%. With a provider's adapter Astra reaches 100%: the setup changes the winner.",
       "Cue: Uncertainty. Choose with your own tests on your own work, not a leaderboard."
     ],
     "sources": [
@@ -643,22 +643,31 @@
     "sources": [],
     "transition": "Inside companies, what is actually happening?"
   },
-  "adoption": {
+  "two-speeds": {
     "notes": [
-      "Ramp AI Index, Ramp's own card and invoice data on 85,000+ US businesses: 56.8% paid for AI in October, up 13.3 points in a year.",
-      "Token volume up 29% in the four weeks to 1 Nov while prices fell 14.8%; spend up 10.5%.",
-      "Caveat: paid tools and Ramp customers only, not all US firms (government surveys put AI use nearer a quarter of firms).",
-      "The backlash against “tokenmaxxing” (chasing usage numbers): Amazon's 27 Oct guidance reportedly calls usage metrics “deeply flawed” without results (press).",
-      "Spending hasn't fallen; the yardstick is changing. Cue: Value: usage is not results."
+      "Left, the labs, measured in weeks: 14 new models from three labs in 11 weeks; Anthropic says Claude writes over 90% of the code it merges.",
+      "Right, the real economy, measured in years: the US Census survey (nationally representative, self-reported) has 24.6% of US businesses using AI, up from 17.3% in Nov 2025. Brazil: 17% of companies with 10+ staff, from 13% in 2024 (15% of small firms, 50% of large ones).",
+      "Don't read the columns as one race: the labs set what is possible; each company's capability sets how fast it adopts.",
+      "Latin America, this month: Bloomberg Línea (10 Nov), firms adopt AI but can't yet measure its economic impact; El Economista (17 Nov), Mexican warehouses prove benefits in only 32% of their AI uses.",
+      "If asked about Ramp's 56.8%: that counts firms paying for an AI tool in Ramp's own sample, not firms using AI in the business. Census changed its wording on 5 Nov (24.2% that round), so we show October's; next release 19 Nov, re-check that morning.",
+      "Cue: Speed. Land the line, then pause."
     ],
     "sources": [
       {
-        "label": "Ramp AI Index",
-        "url": "https://ramp.com/data/ai-index"
+        "label": "US Census Bureau · Business Trends and Outlook Survey, national estimates (collected 5–18 Oct 2026)",
+        "url": "https://www.census.gov/hfp/btos/downloads/National.xlsx"
       },
       {
-        "label": "eWeek · Amazon tokenmaxxing guidance (press)",
-        "url": "https://www.eweek.com/news/amazon-tokenmaxxing-ai-engineering-guidance/"
+        "label": "Cetic.br · TIC Empresas 2025, indicator H9 (AI use)",
+        "url": "https://cetic.br/pt/tics/pesquisa/2025/empresas/H9/"
+      },
+      {
+        "label": "Bloomberg Línea · 10 Nov 2026 (press)",
+        "url": "https://www.bloomberglinea.com/latinoamerica/las-empresas-de-america-latina-adoptan-la-ia-pero-aun-no-logran-medir-su-impacto-economico/"
+      },
+      {
+        "label": "El Economista (Mexico) · 17 Nov 2026 (press)",
+        "url": "https://www.eleconomista.com.mx/tecnologia/almacenes-mexicanos-comprueban-beneficios-32-usos-ia-20261117-844368.html"
       }
     ],
     "transition": "And the rules are landing on how AI is used."

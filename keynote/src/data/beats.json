@@ -724,10 +724,9 @@
       "icon": "uncertainty",
       "brief": "Who leads depends on the ruler. Never pick a vendor from a leaderboard.",
       "steps": [
-        "Artificial Analysis",
-        "Epoch Capabilities Index",
-        "Arena (human preference)",
-        "ARC-AGI-3",
+        "Artificial Analysis: nine tests, same settings",
+        "Epoch Capabilities Index: many benchmarks, one scale",
+        "Arena: people vote blind",
         "Takeaway"
       ],
       "copy": {
@@ -748,7 +747,8 @@
                 "Gemini 4 Neon",
                 "61"
               ]
-            ]
+            ],
+            "what": "Nine tests, run the same way on every model"
           },
           {
             "name": "Epoch Capabilities Index",
@@ -765,7 +765,8 @@
                 "GPT-6 Astra",
                 "169.2"
               ]
-            ]
+            ],
+            "what": "Many benchmarks on one scale, comparable over years"
           },
           {
             "name": "Arena · human preference, text",
@@ -782,35 +783,18 @@
                 "Meta Muse Wonder",
                 "1511"
               ]
-            ]
-          },
-          {
-            "name": "ARC-AGI-3 · standard protocol",
-            "rows": [
-              [
-                "Claude Fable 5.2",
-                "81.2%"
-              ],
-              [
-                "GPT-6.2 Astra",
-                "70.3%"
-              ],
-              [
-                "Gemini 4 Carbon",
-                "65.1%"
-              ]
-            ]
+            ],
+            "what": "Blind votes: people pick the answer they prefer"
           }
         ],
         "takeaway": "Choose with your own tests, not a leaderboard.",
-        "tag": "All independent measures, as of 11–17 Nov 2026"
+        "tag": "All independent measures, as of 11–18 Nov 2026"
       },
       "visual": "Void. Three tall bars or towers (lab-tinted) that re-sort and re-scale with each ruler (FLIP-style), ruler name swapping in like a split-flap. Ties shown as ties.",
       "facts": [
         "aa-leaderboard",
         "eci-tie-174",
-        "arena-text-carbon",
-        "arc-agi-3-standard"
+        "arena-text-carbon"
       ]
     },
     {
@@ -1297,14 +1281,39 @@
       "copy": {
         "title": "Two speeds",
         "labsLabel": "The labs",
+        "labsPace": "Measured in weeks",
         "economyLabel": "The real economy",
+        "economyPace": "Measured in years",
+        "labs": [
+          {
+            "fact": "releases-sep-nov",
+            "label": "new models from Anthropic, Google and OpenAI in 11 weeks"
+          },
+          {
+            "fact": "claude-90-merged",
+            "label": "of the code merged at Anthropic is written by Claude"
+          }
+        ],
+        "economy": [
+          {
+            "fact": "census-btos-ai-246",
+            "label": "of US businesses used AI in the last two weeks",
+            "delta": "17.3% in Nov 2025"
+          },
+          {
+            "fact": "cetic-br-ai-17",
+            "label": "of Brazilian companies with 10+ staff use AI",
+            "delta": "13% in 2024"
+          }
+        ],
         "line": "The frontier moves at lab speed. Your company moves at adoption speed."
       },
-      "visual": "Paper. Two columns or two clocks: left the labs (releases every few weeks, most of their own code written by AI), right the real economy (share of businesses paying for AI, companies that cannot yet measure impact, Latin American press). Real captures and sourced numbers only; every number with its chip.",
+      "visual": "Paper. Step 0: left column, the labs, measured in weeks (14 models in 11 weeks; >90% of Anthropic's merged code written by Claude; values read from facts.json). Step 1: right column, the real economy, measured in years (US Census BTOS 24.6%; Cetic.br Brazil 17%; each with last year's reading). Every number with its chip and source. Step 2: the columns step out; the line on the left, two Latin American press captures on the right (Bloomberg Línea: firms adopt but can't measure impact; El Economista: benefits proven in 32% of uses).",
       "facts": [
-        "ramp-568",
-        "ramp-volume-29",
-        "tokenmaxxing"
+        "releases-sep-nov",
+        "claude-90-merged",
+        "census-btos-ai-246",
+        "cetic-br-ai-17"
       ]
     },
     {
