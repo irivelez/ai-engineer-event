@@ -296,5 +296,8 @@ export function bind({ tokens, fonts }) {
     noise: { glsl: SIMPLEX_GLSL, simplex3 },
     fonts: fontList,
     whenReady: () => Promise.all([...pending]),
+    // track(promise): render mode (static frames, QA shots) also waits for this before its one render,
+    // e.g. an image that decodes off the main thread into a texture.
+    track: (p) => { const q = Promise.resolve(p).catch(() => {}); pending.add(q); q.then(() => pending.delete(q)); return p; },
   };
 }

@@ -66,7 +66,7 @@ export default {
       img.src = ctx.assets.capture(id);
       // decode off the main thread: the cards are built while the previous moment is on screen, and must not stall it
       const decoded = img.decode().then(() => true, () => false);
-      Promise.all([decoded, fontReady]).then(([ok]) => {
+      H.track(Promise.all([decoded, fontReady]).then(([ok]) => {
         if (!ok) return;
         const [x0, y0, x1, y1] = crop || [0, 0, img.naturalWidth, Math.round(img.naturalWidth * cropAspect)];
         g2.imageSmoothingQuality = 'high';
@@ -77,7 +77,7 @@ export default {
         g2.textBaseline = 'middle';
         g2.fillText(labelText, 30, STRIP / 2 + 1);
         tex.needsUpdate = true;
-      });
+      }));
       const mat = new THREE.ShaderMaterial({
         uniforms: { uMap: { value: tex }, uAspect: { value: aspect }, uEdge: { value: H.color('light', 0.9) }, uBright: { value: 1.5 }, uBlur: { value: 0 }, uFade: { value: 1 } },
         transparent: true,
