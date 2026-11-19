@@ -101,7 +101,11 @@ export function createGLSystem({ stage, tokens, params, fonts, onFatal }) {
   const frames = [];
   let windowStart = performance.now();
   let lastFrame = 0;
+  // Grace: shader compiles and preloads at boot, and the first moments of each new world, are not the show.
+  // Frames inside a grace window aren't measured, so a stutter there can't drop the ratio for the whole talk.
+  let graceUntil = performance.now() + 4000;
   function adapt(now) {
+    if (now < graceUntil) { frames.length = 0; windowStart = now; lastFrame = now; return; }
     if (lastFrame) frames.push(now - lastFrame);
     lastFrame = now;
     if (now - windowStart < 2000) return;
@@ -154,6 +158,7 @@ export function createGLSystem({ stage, tokens, params, fonts, onFatal }) {
     composer.setMainScene(world.scene);
     composer.setMainCamera(world.camera);
     applyPost(world);
+    graceUntil = Math.max(graceUntil, performance.now() + 1200);
   }
   let rendering = false;
   let lastRenderAt = 0;
