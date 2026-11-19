@@ -52,6 +52,10 @@ export function createGLSystem({ stage, tokens, params, fonts, onFatal }) {
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.NoToneMapping;
   renderer.setClearColor(new THREE.Color(voidColor), 1);
+  // Shadows on for the renderer: only worlds with castShadow lights pay for them (three skips the shadow pass
+  // and compiles the same programs when a scene has no shadow-casting light), so worlds own their lights.
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFShadowMap;
 
   const composer = new EffectComposer(renderer, { frameBufferType: THREE.HalfFloatType });
   const placeholderCam = new THREE.PerspectiveCamera(40, 16 / 9, 0.1, 100);
