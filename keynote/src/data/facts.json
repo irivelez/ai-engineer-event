@@ -1764,7 +1764,11 @@
     },
     "metr-anthropic-2x": {
       "claim": "METR estimates that, as of October 2026, Anthropic improves its models on well-specified tasks at around twice the rate of March 2024–October 2025, and would not be surprised by anything from 1.3x to 3x.",
-      "value": { "estimate": 2, "low": 1.3, "high": 3 },
+      "value": {
+        "estimate": 2,
+        "low": 1.3,
+        "high": 3
+      },
       "unit": "x the Mar 2024–Oct 2025 rate of capability progress",
       "asOf": "2026-10",
       "label": "independent",
@@ -1796,7 +1800,10 @@
     },
     "epoch-compute-slowing": {
       "claim": "Quarterly additions of AI computing capacity have grown about 2.5× a year since 2024, down from about 6× in 2023; capacity still doubles about every 9 months.",
-      "value": { "2023": 6, "since2024": 2.5 },
+      "value": {
+        "2023": 6,
+        "since2024": 2.5
+      },
       "unit": "× per year growth of quarterly additions",
       "asOf": "2026-11-11",
       "label": "independent",
@@ -1812,7 +1819,14 @@
     },
     "ai2027-scenario": {
       "claim": "The AI 2027 scenario has the AI R&D progress multiplier at 1.5x in early 2026, 3x in Jan 2027, 10x in Jun 2027 and about 50x in Sep 2027, with superintelligence in Dec 2027 in its 'race' ending.",
-      "value": { "early2026": 1.5, "2027-01": 3, "2027-03": 4, "2027-06": 10, "2027-08": 25, "2027-09": 50 },
+      "value": {
+        "early2026": 1.5,
+        "2027-01": 3,
+        "2027-03": 4,
+        "2027-06": 10,
+        "2027-08": 25,
+        "2027-09": 50
+      },
       "unit": "x (scenario, not measured)",
       "asOf": "2025-04-03",
       "label": "estimate",
@@ -1839,8 +1853,14 @@
         "date": "2025-03-19"
       },
       "alsoSources": [
-        { "title": "Odd Lots: Understanding the Most Viral Chart in Artificial Intelligence (Bloomberg, 25 Apr 2026)", "url": "https://www.bloomberg.com/news/articles/2026-04-25/understanding-the-most-viral-chart-in-artificial-intelligence" },
-        { "title": "This is the most misunderstood graph in AI (MIT Technology Review, 5 Feb 2026)", "url": "https://www.technologyreview.com/2026/02/05/1132254/this-is-the-most-misunderstood-graph-in-ai/" }
+        {
+          "title": "Odd Lots: Understanding the Most Viral Chart in Artificial Intelligence (Bloomberg, 25 Apr 2026)",
+          "url": "https://www.bloomberg.com/news/articles/2026-04-25/understanding-the-most-viral-chart-in-artificial-intelligence"
+        },
+        {
+          "title": "This is the most misunderstood graph in AI (MIT Technology Review, 5 Feb 2026)",
+          "url": "https://www.technologyreview.com/2026/02/05/1132254/this-is-the-most-misunderstood-graph-in-ai/"
+        }
       ],
       "caveat": "METR flags the 7-month figure as reflecting the data at publication; the Odd Lots title is from search results, not a listened episode. Mostly coding tasks; a horizon is not how long a model works unattended. See metr-stopped.",
       "verified": "live",
@@ -1848,7 +1868,11 @@
     },
     "rli-fable-41": {
       "claim": "Remote Labor Index (share of real remote-work projects where the AI's deliverable is judged at least as good as the human standard): Claude Fable 5.2 41.25%, Claude Opus 5.5 21.25%, GPT-6 Astra 20.83%, Claude Fable 5.1 17.92%, Gemini 4 Argon 17.08%.",
-      "value": { "Fable 5.2": 41.25, "Opus 5.5": 21.25, "GPT-6 Astra": 20.83 },
+      "value": {
+        "Fable 5.2": 41.25,
+        "Opus 5.5": 21.25,
+        "GPT-6 Astra": 20.83
+      },
       "unit": "% automation rate",
       "asOf": "2026-11-18",
       "label": "independent",
@@ -1864,7 +1888,11 @@
     },
     "tbench-41": {
       "claim": "Terminal-Bench 4.1: GitHub Copilot Fusion (max) 71.2% ±2.9; Claude Code with Opus 5.5 (max) 65.8% ±3.1 and with Fable 5.2 (max) 65.8% ±2.8; Antigravity CLI with Gemini 4 Carbon (high) 64.5% ±3.2.",
-      "value": { "Copilot Fusion": 71.2, "Fable 5.2 (Claude Code)": 65.8, "Gemini 4 Carbon (Antigravity CLI)": 64.5 },
+      "value": {
+        "Copilot Fusion": 71.2,
+        "Fable 5.2 (Claude Code)": 65.8,
+        "Gemini 4 Carbon (Antigravity CLI)": 64.5
+      },
       "unit": "% tasks solved (±95% CI)",
       "asOf": "2026-11-18",
       "label": "independent",
@@ -1879,7 +1907,7 @@
       "checkedAt": "2026-11-18T21:37-05:00"
     },
     "census-btos-ai-246": {
-      "claim": "24.6% of US businesses said they used AI in any of their business functions in the previous two weeks (US Census Bureau BTOS, collected 5–18 Oct 2026, published 22 Oct 2026). 28.6% expect to use it in the next six months.",
+      "claim": "24.6% of US businesses said they used AI in any of their business functions in the previous two weeks (US Census Bureau BTOS, collected 5–18 Oct 2026, published 22 Oct 2026), up from 17.3% in the first round of this question (collected from 17 Nov 2025). 28.6% expect to use it in the next six months.",
       "value": "24.6%",
       "unit": "of US businesses used AI in the last two weeks",
       "asOf": "2026-10-18",
@@ -1891,8 +1919,14 @@
         "date": "2026-10-22"
       },
       "alsoSources": [
-        { "title": "Large Firms With at Least 20 Employees Biggest AI Users (Census story, 26 May 2026: 17%–20% from Dec 2025 to May 2026)", "url": "https://www.census.gov/library/stories/2026/05/ai-use-businesses.html" },
-        { "title": "BTOS AI question wording updates (new series from 17 Nov 2025)", "url": "https://www.census.gov/hfp/btos/downloads/AI%20Question%20Wording%20Updates.pdf" }
+        {
+          "title": "Large Firms With at Least 20 Employees Biggest AI Users (Census story, 26 May 2026: 17%–20% from Dec 2025 to May 2026)",
+          "url": "https://www.census.gov/library/stories/2026/05/ai-use-businesses.html"
+        },
+        {
+          "title": "BTOS AI question wording updates (new series from 17 Nov 2025)",
+          "url": "https://www.census.gov/hfp/btos/downloads/AI%20Question%20Wording%20Updates.pdf"
+        }
       ],
       "caveat": "Self-reported; biweekly, nationally representative survey of US employer businesses. The question changed on 17 Nov 2025 (new series: 17.3% in its first round, 19.8% on 3 May 2026). The newest round (collected 19 Oct–1 Nov, published 5 Nov) reads 24.2%, but it asks about “Super Intelligence or SI (formerly referred to as Artificial Intelligence or AI)” and “do not know” rose from 9.6% to 13.9%; we cite the last round with the plain AI wording. Next release due 19 Nov 2026: re-check that morning. Ramp's 56.8% counts businesses paying for AI tools in its own sample, so the two figures measure different things.",
       "verified": "live",
@@ -1911,62 +1945,46 @@
         "date": "2026-08-31"
       },
       "alsoSources": [
-        { "title": "Pesquisa TIC Empresas 2025, Resumo Executivo, p. 3: “17% afirmaram utilizá-las, proporção que foi de 13% em 2024”", "url": "https://cetic.br/media/docs/publicacoes/2/pt-br/20260831091252/TIC_EMPRESAS_2025_PT_RE.pdf" }
+        {
+          "title": "Pesquisa TIC Empresas 2025, Resumo Executivo, p. 3: “17% afirmaram utilizá-las, proporção que foi de 13% em 2024”",
+          "url": "https://cetic.br/media/docs/publicacoes/2/pt-br/20260831091252/TIC_EMPRESAS_2025_PT_RE.pdf"
+        }
       ],
       "caveat": "Self-reported survey of companies with 10+ employees, all sectors; fieldwork Feb 2025–Jan 2026. The AI question goes to firms with IT staff or an IT department; results are shown over all companies. Cetic.br is the research centre of NIC.br (Brazil's internet steering committee), not the statistics office (IBGE).",
       "verified": "live",
       "checkedAt": "2026-11-18T21:40-05:00"
     },
-    "glean-golden-evals": {
-      "claim": "Glean (Chinmay Goyal, AI Engineer Code Summit, 12 Nov 2026): every AI change goes through a multi-phase rollout with a golden eval set, a couple of weeks of internal soak with its ~1,500 staff, then A/B tests with customers.",
-      "value": "qualitative",
-      "unit": "",
-      "asOf": "2026-11-12",
-      "label": "lab-reported",
+    "epoch-kimi-k3-lag": {
+      "claim": "Epoch AI put Moonshot AI's open-weight Kimi K3 about 4.4 months behind the frontier on its Capabilities Index.",
+      "value": "4.4",
+      "unit": "months",
+      "asOf": "2026-09-23",
+      "label": "independent",
       "source": {
-        "title": "Beyond Generation: Fast, Structured AI Decisions with Jev at Glean — Chinmay Goyal, Glean (Day 1 livestream, 5:36:56)",
-        "publisher": "AI Engineer (YouTube)",
-        "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=20216",
-        "date": "2026-11-12"
+        "title": "Furniture assembly and the open-weight gap",
+        "publisher": "Epoch AI",
+        "url": "https://epoch.ai/publications/furniture-assembly",
+        "date": "2026-09-23"
       },
-      "quote": "We have a multi phase approach, a rollout approach to any change that we are making. This includes having a golden eval set for almost every possible thing.",
-      "caveat": "A company describing its own process on stage. Quote from YouTube's auto-captions (they spell Glean “Clein” elsewhere), checked against the audio timing only.",
-      "verified": "live",
-      "checkedAt": "2026-11-18T21:45-05:00"
+      "caveat": "About 7 months behind on Epoch's furniture-assembly test; the gap depends on the measure.",
+      "verified": "doc-only",
+      "checkedAt": "2026-11-17"
     },
-    "uipath-decision-points": {
-      "claim": "UiPath (Chibi Vikram and Kevin Bernstein, AI Engineer Code Summit, 12 Nov 2026): after single agents with tools gave “good results, bad results”, UiPath landed on agentic process orchestration: deterministic calls plus clear decision points where an LLM steers the flow.",
-      "value": "qualitative",
-      "unit": "",
-      "asOf": "2026-11-12",
-      "label": "lab-reported",
+    "caisi-glm53": {
+      "claim": "The US government evaluator CAISI (NIST) called Z.ai's GLM-5.3 the most cyber-capable open-weight model released to date, about four months behind the US frontier.",
+      "value": "~4",
+      "unit": "months",
+      "asOf": "2026-09-17",
+      "label": "official",
       "source": {
-        "title": "Your Automation Is Overthinking It — Chibi Vikram and Kevin Bernstein, UiPath (Day 1 livestream, 5:54:00)",
-        "publisher": "AI Engineer (YouTube)",
-        "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=21239",
-        "date": "2026-11-12"
+        "title": "CAISI's assessment of Z.ai's GLM-5.3 cyber capabilities",
+        "publisher": "NIST CAISI",
+        "url": "https://www.nist.gov/news-events/news/2026/09/caisis-assessment-zais-glm-53-cyber-capabilities",
+        "date": "2026-09-17"
       },
-      "quote": "So you have deterministic calls and clear cognitive decision points where you would use an LLM to control the control flow rather than leaving it all in the hands of an agent.",
-      "caveat": "A company describing its own product on stage. Quote from YouTube's auto-captions; the speaker introduces himself as “Sibi” in the captions.",
-      "verified": "live",
-      "checkedAt": "2026-11-18T21:45-05:00"
-    },
-    "workday-not-in-production": {
-      "claim": "Workday (Scott Roberts, AI Engineer Code Summit, 12 Nov 2026) prefaced its demos: not real data, not in production now and may or may not be in the future, “something our legal asked me to say”.",
-      "value": "qualitative",
-      "unit": "",
-      "asOf": "2026-11-12",
-      "label": "lab-reported",
-      "source": {
-        "title": "Autocomplete for Actions — Scott Roberts, Workday (Day 1 livestream, 6:29:09)",
-        "publisher": "AI Engineer (YouTube)",
-        "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=23349",
-        "date": "2026-11-12"
-      },
-      "quote": "It's not real data, so we're not using any of your, you know, resumes or payroll data. Uh, these are also not in production now and may or may not be in the future. So that's something our legal asked me to say.",
-      "caveat": "A company's own disclaimer about its own demos. Quote from YouTube's auto-captions; on screen the fillers (“you know”, “uh”) are cut, marked with an ellipsis.",
-      "verified": "live",
-      "checkedAt": "2026-11-18T21:45-05:00"
+      "caveat": "Cyber tasks only.",
+      "verified": "doc-only",
+      "checkedAt": "2026-11-17"
     }
   }
 }

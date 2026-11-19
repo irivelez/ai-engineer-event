@@ -510,6 +510,50 @@
       ]
     },
     {
+      "id": "thermometers",
+      "name": "Who keeps score",
+      "act": "labs",
+      "owner": "eci-scene",
+      "plannedSec": 90,
+      "energy": 4,
+      "ground": "paper",
+      "mode": "data",
+      "icon": "uncertainty",
+      "brief": "Before any ranking: the trusted referees that measure the labs, American and Chinese models alike. Four questions, three instruments each, today's readings.",
+      "steps": [
+        "Who keeps score? The referees and the four questions",
+        "Can it do it? Capability tests",
+        "Does it do real work? Real-work tests",
+        "What does it cost, and what does it take? Price, compute, power",
+        "Is it spreading, and is it speeding itself up? Adoption and AI-led R&D",
+        "Read them together"
+      ],
+      "copy": {
+        "title": "Who keeps score?",
+        "sub": "The trusted referees. Four questions, read together.",
+        "together": "Read them together.",
+        "coverage": "They score American and Chinese models alike: Moonshot's Kimi, Z.ai's GLM, DeepSeek."
+      },
+      "visual": "Paper. The four questions as a rail on the left (columns 0–3); the family being read fills the panel on the right (columns 4–11): one instrument per row, provenance chip and name, the latest reading in plain words (34 px), who runs it and when. Step 0: the rail and the promise (no single number). Steps 1–4: one family per step, the rail's accent bar moves to it. Step 5: all four questions lit, the panel says: read them together, with the research desk's takeaway.",
+      "facts": [
+        "aa-leaderboard",
+        "arena-text-carbon",
+        "caisi-glm53",
+        "eci-tie-174",
+        "epoch-compute-slowing",
+        "epoch-kimi-k3-lag",
+        "epoch-real-work",
+        "kimi-46",
+        "metr-anthropic-2x",
+        "open-lag-aisi",
+        "pjm-shortfall",
+        "price-47-quarter",
+        "ramp-568",
+        "rli-fable-41",
+        "tbench-41"
+      ]
+    },
+    {
       "id": "release-pace",
       "name": "Releases now come in weeks",
       "act": "labs",
@@ -597,46 +641,6 @@
         "eci-trend-14",
         "eci-jump",
         "eci-one-data-point"
-      ]
-    },
-    {
-      "id": "thermometers",
-      "name": "How we measure the frontier",
-      "act": "labs",
-      "owner": "eci-scene",
-      "plannedSec": 90,
-      "energy": 4,
-      "ground": "paper",
-      "mode": "data",
-      "icon": "uncertainty",
-      "brief": "How do we know AI is accelerating? No single number: a set of trusted thermometers, each answering a different question, read together.",
-      "steps": [
-        "How do we know? Four questions",
-        "Can it do it? Capability tests",
-        "Does it do real work? Real-work tests",
-        "What does it cost, and what does it take? Price, compute, power",
-        "Is it spreading, and is it speeding itself up? Adoption and AI-led R&D",
-        "Read them together"
-      ],
-      "copy": {
-        "title": "How do we know it is accelerating?",
-        "sub": "No single number. Four questions, each with its own trusted thermometers.",
-        "together": "Read them together."
-      },
-      "visual": "Paper. The four questions as a rail on the left (columns 0–3); the family being read fills the panel on the right (columns 4–11): one instrument per row, provenance chip and name, the latest reading in plain words (34 px), who runs it and when. Step 0: the rail and the promise (no single number). Steps 1–4: one family per step, the rail's accent bar moves to it. Step 5: all four questions lit, the panel says: read them together, with the research desk's takeaway.",
-      "facts": [
-        "eci-tie-174",
-        "aa-leaderboard",
-        "arena-text-carbon",
-        "rli-fable-41",
-        "epoch-real-work",
-        "tbench-41",
-        "price-47-quarter",
-        "epoch-compute-slowing",
-        "pjm-shortfall",
-        "ramp-568",
-        "metr-anthropic-2x",
-        "open-lag-aisi"
       ]
     },
     {
@@ -1287,23 +1291,23 @@
         "labs": [
           {
             "fact": "releases-sep-nov",
-            "label": "new models from Anthropic, Google and OpenAI in 11 weeks"
+            "label": "new frontier models in 11 weeks"
           },
           {
             "fact": "claude-90-merged",
-            "label": "of the code merged at Anthropic is written by Claude"
+            "label": "of Anthropic's code written by Claude"
           }
         ],
         "economy": [
           {
             "fact": "census-btos-ai-246",
-            "label": "of US businesses used AI in the last two weeks",
-            "delta": "17.3% in Nov 2025"
+            "label": "of US businesses use AI",
+            "delta": "from 17.3% in Nov 2025"
           },
           {
             "fact": "cetic-br-ai-17",
-            "label": "of Brazilian companies with 10+ staff use AI",
-            "delta": "13% in 2024"
+            "label": "of Brazilian firms (10+ staff) use AI",
+            "delta": "from 13% in 2024"
           }
         ],
         "line": "The frontier moves at lab speed. Your company moves at adoption speed."

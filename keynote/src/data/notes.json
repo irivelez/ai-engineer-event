@@ -834,5 +834,10 @@
     ],
     "sources": [],
     "transition": ""
+  },
+  "thermometers": {
+    "notes": [
+      "They measure Chinese models too: Artificial Analysis ranks Moonshot's Kimi K3.1 Pro first among open-weight models (46 vs 65 for the top); Epoch put Kimi K3 about 4.4 months behind; the US evaluator CAISI assessed Z.ai's GLM-5.3 (about four months behind on cyber)."
+    ]
   }
 }
