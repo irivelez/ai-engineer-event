@@ -36,6 +36,7 @@ Presentation clickers that send PageUp/PageDown work too. The presenter window a
 
 - `keynote/sources.html` lists every claim on screen, moment by moment, with its provenance label, publisher, date and link. `node scripts/build.mjs` regenerates it. The end moment's «All sources» QR opens the deployed copy (https://inside-the-ai-frontier.vercel.app/sources.html), so redeploy after a build that changes facts or evidence.
 - Evidence clips (`keynote/media/evidence/*.mp4`, listed in `keynote/src/data/evidence.json`) are not in git. Without the file, a clip shows its poster and link when opened from `file://`, and the YouTube embed on the website. Clips start muted; **M** turns sound on.
+- The San Francisco footage (`keynote/media/plates/*.mp4`, moment 4) is licensed stock and not in git either. Keep both files next to `index.html` on show day and in the website deploy; without them the moment shows its graded still frames. Sources, licence and edits: [`keynote/docs/footage-manifest.md`](keynote/docs/footage-manifest.md).
 
 ### On Zoom
 
@@ -82,3 +83,5 @@ QA tools (frame time, Zoom legibility, screenshots, presenter sync): [`keynote/d
 - [Engine spec](keynote/docs/engine-spec.md), [production brief](keynote/docs/production-brief.md), [goal and review gauntlet](keynote/docs/GOAL.md), [review notes](keynote/docs/reviews/).
 
 Built with three.js, GSAP, postprocessing, troika-three-text and d3. Fonts: Geist and Geist Mono (Vercel) and Newsreader, all under the SIL Open Font License. Captures and stills belong to their publishers and speakers and are shown for commentary, each with its link. The opening film is Irina's and is not stored in this repository.
+
+San Francisco aerial footage (moment 4): «Golden Gate Bridge at Dusk Aerial View» by Asad Mehmood and «Aerial view of the city skyline at sunset» by Advancer Drones, both on Pexels under the [Pexels License](https://www.pexels.com/license/); cut and graded for this keynote ([`keynote/docs/footage-manifest.md`](keynote/docs/footage-manifest.md)). Maps (Brazil, power): [Natural Earth](https://www.naturalearthdata.com), public domain. PJM's footprint: HIFLD Open «Independent System Operators», US Department of Homeland Security, data from Oak Ridge National Laboratory, public use ([layer](https://services1.arcgis.com/Hp6G80Pky0om7QvQ/ArcGIS/rest/services/Independent_System_Operator/FeatureServer), [metadata](https://www.datacommons.psu.edu/metadata/Independent%20Systems%20Operators-metadata.html)).
