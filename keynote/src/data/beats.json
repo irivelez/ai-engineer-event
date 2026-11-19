@@ -731,7 +731,7 @@
         "Artificial Analysis: nine tests, same settings",
         "Epoch Capabilities Index: many benchmarks, one scale",
         "Arena: people vote blind",
-        "Takeaway"
+        "Takeaway: no single winner; several models, each on its job"
       ],
       "copy": {
         "title": "Who leads? It depends on the ruler.",
@@ -791,14 +791,15 @@
             "what": "Blind votes: people pick the answer they prefer"
           }
         ],
-        "takeaway": "Choose with your own tests, not a leaderboard.",
-        "tag": "All independent measures, as of 11–18 Nov 2026"
+        "takeaway": "No single winner: 3 points apart in score, more than 6× apart in cost per task.",
+        "tag": "All independent measures, as of 11–18 Nov 2026",
+        "takeawaySub": "Claude Fable 5.2: 65 at $26.54 per task · GPT-6.2 Astra: 62 at $4.00 (Artificial Analysis, 18 Nov). So companies use several models, each on the job it does best."
       },
       "visual": "Void. Three tall bars or towers (lab-tinted) that re-sort and re-scale with each ruler (FLIP-style), ruler name swapping in like a split-flap. Ties shown as ties.",
       "facts": [
         "aa-leaderboard",
-        "eci-tie-174",
-        "arena-text-carbon"
+        "arena-text-carbon",
+        "eci-tie-174"
       ]
     },
     {
@@ -1505,7 +1506,7 @@
           },
           {
             "name": "Verifier",
-            "job": "Builds the checks: your own tests, not a leaderboard."
+            "job": "Builds the checks every output must pass."
           },
           {
             "name": "Operator",
@@ -1545,9 +1546,9 @@
             "why": "The same capability gets about 13× cheaper a year."
           },
           {
-            "text": "…choose a model from a leaderboard.",
+            "text": "…bet everything on one model.",
             "icon": "uncertainty",
-            "why": "The leader depends on the ruler."
+            "why": "No single winner: the leader changes with the ruler and the task. Use several models."
           },
           {
             "text": "…give an agent the internet without a sandbox.",

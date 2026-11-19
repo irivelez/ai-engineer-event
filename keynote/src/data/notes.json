@@ -326,7 +326,7 @@
       "Four independent rulers, four answers (read 11–18 Nov).",
       "Artificial Analysis index: Fable 5.2 65, GPT-6.2 Astra 62, Gemini 4 Carbon 60. Epoch's index: GPT-6.2 Astra and Fable 5.2 tied at 174.",
       "Arena, human votes on text: Gemini 4 Carbon 1526 and Argon 1522, a statistical tie (Carbon still preliminary).",
-      "Cue: Uncertainty. Choose with your own tests on your own work, not a leaderboard."
+      "Takeaway: no single winner. On Artificial Analysis (18 Nov) Fable 5.2 scores 65 at $26.54 per task and 41.6 min; GPT-6.2 Astra scores 62 at $4.00 and 13.7 min: 3 points apart, more than 6× apart in cost. Companies route each job to the model that does it best."
     ],
     "sources": [
       {
@@ -763,7 +763,7 @@
     "notes": [
       "Three roles for 2027; a proposal, not a study.",
       "Workflow owner: accountable for the outcome, approves what ships.",
-      "Verifier: builds the checks, your own tests, not a leaderboard.",
+      "Verifier: builds the checks every output must pass.",
       "Operator: runs the agents, handles the exceptions.",
       "Callback: «Judgement is the last job.» (Ishaan Dey, Google DeepMind). Cue: Value."
     ],
@@ -829,7 +829,7 @@
     "notes": [
       "Thank them. The QR goes to linkedin.com/in/irina-velez.",
       "Questions. Every number tonight has a public link in the fact sheet.",
-      "Likely: which model to pick? Your own tests on your own work. Is the pace sustainable? Two releases drove most of it (Epoch's caveat).",
+      "Likely: which model to pick? Several, each on the job it does best: the leader changes with the ruler and the task. Is the pace sustainable? Two releases drove most of it (Epoch's caveat).",
       "Brazil's rule: a licence, not a ban; US-headquartered buyers exempt; in force once published in the Federal Register."
     ],
     "sources": [],
