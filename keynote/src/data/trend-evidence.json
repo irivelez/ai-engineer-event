@@ -1,0 +1,201 @@
+{
+  "asOf": "2026-11-18",
+  "question": "Is AI at an inflection point, about to skyrocket like Moore's law but more abruptly? Who backs that?",
+  "charts": [
+    {
+      "id": "metr-time-horizon",
+      "rank": 1,
+      "title": "Task-completion time horizons of frontier AI models (first published as \"Measuring AI Ability to Complete Long Software Tasks\")",
+      "author": "METR",
+      "date": "2025-03-19",
+      "url": "https://metr.org/time-horizons/",
+      "kind": "measurement",
+      "claim": "The length of software task (timed by human experts) that AI agents finish with 50% success has grown exponentially since 2019, doubling about every 7 months; on a linear axis the line shoots up, which is why it gets called a \"Moore's law for AI agents\".",
+      "basis": "About a hundred-plus software tasks timed by human experts; a logistic fit per model reads off the 50% and 80% horizons.",
+      "uncertainty": "METR: \"this plot does not account for future changes in the trend or external validity concerns\"; the page is \"no longer actively updated\" (last update 8 Sep 2026) and \"Measurements above 16 hrs are unreliable with our current task suite\"; no model released since September is on it. A METR researcher on the trend: \"You should absolutely not tie your life to this graph\" (MIT Technology Review). It measures mostly coding tasks, and a horizon is not how long a model works unattended.",
+      "whyItMatches": "Bloomberg's Odd Lots called it \"the most viral chart in artificial intelligence\" (25 Apr 2026) and MIT Technology Review \"the most misunderstood graph in AI\" (5 Feb 2026). It is the exponential, Moore's-law-style curve people share.",
+      "links": [
+        { "title": "Measuring AI Ability to Complete Long Software Tasks (METR, 19 Mar 2025)", "url": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" },
+        { "title": "This is the most misunderstood graph in AI (MIT Technology Review, 5 Feb 2026)", "url": "https://www.technologyreview.com/2026/02/05/1132254/this-is-the-most-misunderstood-graph-in-ai/" },
+        { "title": "Odd Lots: Understanding the Most Viral Chart in Artificial Intelligence (Bloomberg, 25 Apr 2026)", "url": "https://www.bloomberg.com/news/articles/2026-04-25/understanding-the-most-viral-chart-in-artificial-intelligence" }
+      ]
+    },
+    {
+      "id": "ai-2027",
+      "rank": 2,
+      "title": "AI 2027",
+      "author": "Daniel Kokotajlo, Scott Alexander, Thomas Larsen, Eli Lifland, Romeo Dean (AI Futures Project)",
+      "date": "2025-04-03",
+      "url": "https://ai-2027.com/",
+      "kind": "scenario",
+      "claim": "Once AI automates AI research, progress compounds: an AI R&D progress multiplier of 1.5x in early 2026, 3x in Jan 2027, 10x in Jun 2027 and about 50x in Sep 2027, reaching superintelligence in Dec 2027 in its 'race' ending. This is the curve that 'changes and skyrockets'.",
+      "basis": "A written story backed by the authors' compute, timelines and takeoff forecasts; its timelines graph uses METR time-horizon data. The multipliers are the story's assumptions, not measurements.",
+      "uncertainty": "Authors: \"This represents roughly our median guess, but we think it's plausible that this happens up to ~5x slower or faster.\" Later notes on the same page: \"2027 was our modal (most likely) year at the time of publication, our medians were somewhat longer\"; a July 2025 update pushed the median back 1.5 years; a Dec 2025 note gives Eli Lifland's median as 2030."
+    },
+    {
+      "id": "situational-awareness",
+      "rank": 3,
+      "title": "Situational Awareness, I. From GPT-4 to AGI: Counting the OOMs",
+      "author": "Leopold Aschenbrenner",
+      "date": "2024-06",
+      "url": "https://situational-awareness.ai/from-gpt-4-to-agi/",
+      "kind": "scenario",
+      "claim": "Counting orders of magnitude (OOMs) of 'effective compute' (about 0.5 OOM a year from compute plus 0.5 from algorithms), \"AGI by 2027 is strikingly plausible\"; compute scale-ups run \"close to 5x the speed of Moore's law\".",
+      "basis": "One author's extrapolation of training-compute and algorithmic-efficiency trends (Epoch AI data among them).",
+      "uncertainty": "Author: \"To be clear—the error bars are large\" and \"There's a very real chance things stall out.\" The page's text shows no byline or date; author and June 2024 come from the site's URLs."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "epoch-trend-break",
+      "claim": "Since the first reasoning models (Sep 2024) the frontier of Epoch's Capabilities Index has climbed about 14 points a year, against 6 for non-reasoning models. Epoch fits both eras with straight lines: a steeper slope, not a curve bending upward.",
+      "quote": "the Epoch Capabilities Index (ECI) frontier has advanced linearly by 14 points per year … compared with 6 points per year for non-reasoning models.",
+      "publisher": "Epoch AI",
+      "date": "2026-09-01",
+      "url": "https://epoch.ai/data-insights/eci-frontier-trend",
+      "label": "independent",
+      "verified": "live"
+    },
+    {
+      "id": "epoch-one-data-point",
+      "claim": "Claude Fable 5.2's record ECI (174, 9 Nov) sits above the reasoning-era trend, and Epoch warns against reading too much into it.",
+      "quote": "These contributions could accelerate progress, but Fable’s score is just one data point.",
+      "publisher": "Epoch AI (The Epoch Brief)",
+      "date": "2026-11-11",
+      "url": "https://epochai.substack.com/p/the-epoch-brief-november-11-2026",
+      "label": "independent",
+      "verified": "live"
+    },
+    {
+      "id": "metr-anthropic-2x",
+      "claim": "METR's independent assessment: as of October 2026 Anthropic improves its models on well-specified tasks at about twice its March 2024–October 2025 rate, plausibly 1.3x to 3x; METR guesses about 80% of that is due to AI. The strongest evidence of real acceleration, with heavy caveats.",
+      "quote": "As of October 2026, Anthropic is likely improving the capabilities of their models on well-specified tasks at around twice the rate they did between March 2024 and October 2025.",
+      "publisher": "METR",
+      "date": "2026-11-05",
+      "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment",
+      "label": "independent",
+      "verified": "live",
+      "caveat": "\"we would not be surprised if the true acceleration was closer to 1.3x or 3x the historical rate\"; \"Anthropic redacted a majority of the evidence we found most informative\"; \"An acceleration in benchmark scores may fail to track acceleration in real-world impact\"; \"AECI shows less acceleration when we include non-Anthropic models\". One lab only."
+    },
+    {
+      "id": "metr-one-time-jump",
+      "claim": "Anthropic's earlier system cards treated the speed-up as a one-time jump; METR now reads it as a lasting change of trend, and above the 1.7x in Anthropic's Haiku 5.5 card.",
+      "quote": "Recent models make this hypothesis look less likely than a permanent trend change.",
+      "publisher": "METR",
+      "date": "2026-11-05",
+      "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment",
+      "label": "independent",
+      "verified": "live",
+      "caveat": "Same report: \"Our estimated acceleration is greater than that reported in the Haiku 5.5 system card (1.7x)\". The Fable 5 card's sentence that internal measures showed no sustained, AI-attributable 2x acceleration is known only second-hand and was not re-read."
+    },
+    {
+      "id": "metr-insufficient",
+      "claim": "Six weeks earlier METR could not tell steady from accelerating progress.",
+      "quote": "the data we have is insufficient for distinguishing consistent, accelerating, or decelerating rates of improvement.",
+      "publisher": "METR",
+      "date": "2026-09-22",
+      "url": "https://metr.org/blog/2026-09-22-claude-opus-5-5/",
+      "label": "independent",
+      "verified": "live",
+      "caveat": "The same post relays \"~1.5X overall acceleration in capabilities due to AI (i.e. 1.5 years in 1 year)\" \"with perhaps 30% chance of 2X\", from a separate METR team's preliminary report, not from Anthropic; the authors did not see its evidence. Superseded by the 5 Nov report."
+    },
+    {
+      "id": "openai-on-trend",
+      "claim": "OpenAI's own index puts GPT-6.2 Astra slightly above trend but within normal pace.",
+      "quote": "This places GPT-6.2 Astra slightly above the trend since GPT-5, but within the range we would expect if capabilities continued to improve at roughly the same pace.",
+      "publisher": "OpenAI (GPT-6.2 System Card)",
+      "date": "2026-11-17",
+      "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol",
+      "label": "lab-reported",
+      "verified": "live"
+    },
+    {
+      "id": "openai-self-improvement-high",
+      "claim": "GPT-6.2 Astra is the first OpenAI model released at 'High' for AI self-improvement; 'Critical', the level where sustained acceleration could outrun oversight, is described as a future threshold.",
+      "quote": "GPT-6.2 Astra is our first externally released model to meet the High threshold for AI Self-Improvement.",
+      "publisher": "OpenAI (GPT-6.2 System Card)",
+      "date": "2026-11-17",
+      "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol",
+      "label": "lab-reported",
+      "verified": "live",
+      "caveat": "Card: \"the future Critical threshold for AI Self-Improvement, where sustained acceleration could make existing oversight practices insufficient.\" On NanoGPT, Astra \"saved an average of 42.87 percent of baseline training time\", below the 80% indicative cutoff."
+    },
+    {
+      "id": "epoch-automation-flat",
+      "claim": "On Epoch's realistic research-automation tasks, GPT-6.2 Astra showed no meaningful gain over GPT-6 Astra.",
+      "quote": "They did not observe any meaningful improvements between GPT-6.2 Astra and GPT-6 Astra.",
+      "publisher": "Epoch AI, as published in OpenAI's GPT-6.2 System Card",
+      "date": "2026-11-17",
+      "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol",
+      "label": "lab-reported",
+      "verified": "live",
+      "caveat": "A third party's result chosen and published by the developer. Same passage: \"GPT-6.2 Astra still struggles with designing good research experiments\"."
+    },
+    {
+      "id": "epoch-compute-slowing",
+      "claim": "The fuel is growing more slowly: quarterly additions of AI computing capacity grow about 2.5x a year since 2024, down from about 6x in 2023.",
+      "quote": "Quarterly additions of computing capacity have grown about 2.5× per year since 2024 … That’s down from the roughly 6× annual surge in 2023.",
+      "publisher": "Epoch AI (The Epoch Brief)",
+      "date": "2026-11-11",
+      "url": "https://epochai.substack.com/p/the-epoch-brief-november-11-2026",
+      "label": "independent",
+      "verified": "live",
+      "caveat": "Further slowing \"is not statistically significant and may reflect a lull between chip generations\". Capacity still doubles about every 9 months."
+    },
+    {
+      "id": "pjm-power",
+      "claim": "Power is a measured limit: the largest US grid's latest capacity auction fell 6,831 MW short of its reliability requirement.",
+      "quote": "The capacity of the resources procured in the auction, plus FRR resources, is short of PJM’s reliability requirement by 6,831 MW",
+      "publisher": "PJM Interconnection",
+      "date": "2026-07-14",
+      "url": "https://www.pjm.com/-/media/DotCom/about-pjm/newsroom/2026-releases/20260714-pjm-capacity-auction-procures-138318-mw-of-generation-resources.pdf",
+      "label": "official",
+      "verified": "live"
+    },
+    {
+      "id": "metr-chart-stopped",
+      "claim": "The viral chart has stopped: METR no longer updates it, and it cannot measure today's frontier.",
+      "quote": "This page is no longer actively updated. … Measurements above 16 hrs are unreliable with our current task suite.",
+      "publisher": "METR",
+      "date": "2026-09-08",
+      "url": "https://metr.org/time-horizons/",
+      "label": "independent",
+      "verified": "live"
+    },
+    {
+      "id": "mit-misread",
+      "claim": "The common misreading: a time horizon is not how long a model can work alone, and the tasks are almost all coding.",
+      "quote": "They represent how long it takes humans to complete tasks that a model can successfully perform.",
+      "publisher": "MIT Technology Review (Grace Huckins)",
+      "date": "2026-02-05",
+      "url": "https://www.technologyreview.com/2026/02/05/1132254/this-is-the-most-misunderstood-graph-in-ai/",
+      "label": "press",
+      "verified": "live",
+      "caveat": "Same article: \"the plot is based almost entirely on coding tasks.\""
+    }
+  ],
+  "verdict": "Measured: AI is improving faster since 2024. Epoch's index climbs about 14 points a year, up from 6, and METR estimates Anthropic now improves at about twice its 2024–25 pace, with wide error bars. Not measured: a vertical takeoff; that curve is a scenario. Plan for big steps every few months, not for a date when everything changes.",
+  "scenarioCurve": {
+    "source": "AI 2027 (Kokotajlo, Alexander, Larsen, Lifland, Dean), 'race' ending, published 3 Apr 2025",
+    "url": "https://ai-2027.com/",
+    "unit": "AI R&D progress multiplier (x the pace of algorithmic progress without AI); NOT on the ECI scale",
+    "points": [
+      { "date": "2026-01", "dateText": "Early 2026", "approx": true, "value": 1.5, "unit": "x", "quote": "an 'AI R&D progress multiplier' of 1.5" },
+      { "date": "2027-01", "value": 3, "unit": "x", "quote": "Agent-1 could double the pace of OpenBrain's algorithmic progress, Agent-2 can now triple it" },
+      { "date": "2027-03", "value": 4, "unit": "x", "quote": "speeds up OpenBrain's overall rate of algorithmic progress by 'only' 4x" },
+      { "date": "2027-06", "value": 10, "unit": "x", "quote": "The AI R&D progress multiplier is now 10x" },
+      { "date": "2027-08", "value": 25, "unit": "x", "quote": "their AIs give a 10x research progress multiplier compared to America's 25x" },
+      { "date": "2027-09", "value": 50, "unit": "x", "quote": "speed up the overall rate of algorithmic progress by about 50x" }
+    ],
+    "measuredComparison": {
+      "date": "2026-10",
+      "value": 2,
+      "low": 1.3,
+      "high": 3,
+      "unit": "x the Mar 2024–Oct 2025 rate of capability progress (Anthropic only)",
+      "source": "METR, 5 Nov 2026",
+      "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment",
+      "note": "A comparable but not identical quantity: METR measures capability progress on a benchmark index, the scenario measures algorithmic progress. The measured point sits in the range of the scenario's early stage; nobody has measured anything like its 10x–50x stage."
+    }
+  }
+}

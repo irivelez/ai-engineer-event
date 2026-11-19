@@ -1719,6 +1719,90 @@
       "caveat": "The team's own metric; a revert is one signal of quality, not the whole picture. She says the rate is “steady at about half a percent.”",
       "verified": "live",
       "checkedAt": "2026-11-18T14:43-05:00"
+    },
+    "metr-anthropic-2x": {
+      "claim": "METR estimates that, as of October 2026, Anthropic improves its models on well-specified tasks at around twice the rate of March 2024–October 2025, and would not be surprised by anything from 1.3x to 3x.",
+      "value": { "estimate": 2, "low": 1.3, "high": 3 },
+      "unit": "x the Mar 2024–Oct 2025 rate of capability progress",
+      "asOf": "2026-10",
+      "label": "independent",
+      "source": {
+        "title": "Independent Assessment of AI R&D Acceleration at Anthropic in October 2026",
+        "publisher": "METR",
+        "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment",
+        "date": "2026-11-05"
+      },
+      "caveat": "One lab; Anthropic redacted a majority of the evidence METR found most informative; benchmark acceleration “may fail to track acceleration in real-world impact”; less acceleration when non-Anthropic models are included. METR guesses about 80% of the current acceleration is due to AI.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:25-05:00"
+    },
+    "openai-on-trend": {
+      "claim": "OpenAI's own index places GPT-6.2 Astra “slightly above the trend since GPT-5, but within the range we would expect if capabilities continued to improve at roughly the same pace.”",
+      "value": "quote",
+      "unit": "",
+      "asOf": "2026-11-17",
+      "label": "lab-reported",
+      "source": {
+        "title": "GPT-6.2 Astra and Sol System Card",
+        "publisher": "OpenAI",
+        "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol",
+        "date": "2026-11-17"
+      },
+      "caveat": "Same card: Astra is OpenAI's first externally released model at “High” for AI self-improvement; “Critical” is described as a future threshold.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:25-05:00"
+    },
+    "epoch-compute-slowing": {
+      "claim": "Quarterly additions of AI computing capacity have grown about 2.5× a year since 2024, down from about 6× in 2023; capacity still doubles about every 9 months.",
+      "value": { "2023": 6, "since2024": 2.5 },
+      "unit": "× per year growth of quarterly additions",
+      "asOf": "2026-11-11",
+      "label": "independent",
+      "source": {
+        "title": "The Epoch Brief, 11 Nov 2026",
+        "publisher": "Epoch AI",
+        "url": "https://epochai.substack.com/p/the-epoch-brief-november-11-2026",
+        "date": "2026-11-11"
+      },
+      "caveat": "Epoch: further deceleration “is not statistically significant and may reflect a lull between chip generations.”",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:20-05:00"
+    },
+    "ai2027-scenario": {
+      "claim": "The AI 2027 scenario has the AI R&D progress multiplier at 1.5x in early 2026, 3x in Jan 2027, 10x in Jun 2027 and about 50x in Sep 2027, with superintelligence in Dec 2027 in its 'race' ending.",
+      "value": { "early2026": 1.5, "2027-01": 3, "2027-03": 4, "2027-06": 10, "2027-08": 25, "2027-09": 50 },
+      "unit": "x (scenario, not measured)",
+      "asOf": "2025-04-03",
+      "label": "estimate",
+      "source": {
+        "title": "AI 2027",
+        "publisher": "Kokotajlo, Alexander, Larsen, Lifland, Dean (AI Futures Project)",
+        "url": "https://ai-2027.com/",
+        "date": "2025-04-03"
+      },
+      "caveat": "A scenario. Authors: “roughly our median guess, but we think it's plausible that this happens up to ~5x slower or faster”; later notes say their medians were longer than 2027 (one author's median 2030).",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:15-05:00"
+    },
+    "metr-viral-chart": {
+      "claim": "METR's time-horizon chart (length of software task agents finish 50% of the time, doubling about every 7 months in its 2025 paper) is the chart Bloomberg's Odd Lots called “the most viral chart in artificial intelligence” (25 Apr 2026).",
+      "value": 7,
+      "unit": "months per doubling (as published Mar 2025)",
+      "asOf": "2025-03-19",
+      "label": "independent",
+      "source": {
+        "title": "Measuring AI Ability to Complete Long Software Tasks",
+        "publisher": "METR",
+        "url": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/",
+        "date": "2025-03-19"
+      },
+      "alsoSources": [
+        { "title": "Odd Lots: Understanding the Most Viral Chart in Artificial Intelligence (Bloomberg, 25 Apr 2026)", "url": "https://www.bloomberg.com/news/articles/2026-04-25/understanding-the-most-viral-chart-in-artificial-intelligence" },
+        { "title": "This is the most misunderstood graph in AI (MIT Technology Review, 5 Feb 2026)", "url": "https://www.technologyreview.com/2026/02/05/1132254/this-is-the-most-misunderstood-graph-in-ai/" }
+      ],
+      "caveat": "METR flags the 7-month figure as reflecting the data at publication; the Odd Lots title is from search results, not a listened episode. Mostly coding tasks; a horizon is not how long a model works unattended. See metr-stopped.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:20-05:00"
     }
   }
 }

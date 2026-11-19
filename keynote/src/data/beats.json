@@ -554,7 +554,7 @@
     },
     {
       "id": "year-in-weeks",
-      "name": "Almost a year in 11 weeks",
+      "name": "About seven months of progress in 11 weeks",
       "act": "labs",
       "owner": "E5",
       "plannedSec": 75,
@@ -562,23 +562,24 @@
       "ground": "paper",
       "mode": "data",
       "icon": "speed",
-      "brief": "Epoch’s independent index moved almost a year of trend in 11 weeks, with an honest caveat.",
+      "brief": "The whole story on Epoch's index: every step a new model, a steeper climb since reasoning models, and the last 11 weeks at about 2.7 times the usual pace, with Epoch's own caveat.",
       "steps": [
         "Every step is a new model",
         "Since reasoning models, about twice as steep",
-        "Seven months of progress in 11 weeks, and the caveat"
+        "About seven months of progress in 11 weeks, and the caveat"
       ],
       "copy": {
-        "title": "Seven months of progress in 11 weeks",
+        "title": "About seven months of progress in 11 weeks",
         "headlines": [
           "Every step is a new model",
           "Since reasoning models, the climb is about twice as steep",
-          "{months} months of progress in {weeks} weeks"
+          "About seven months of progress in 11 weeks"
         ],
         "axis": "Epoch Capabilities Index",
         "explain": "One score that sums up dozens of AI tests. Higher means more capable.",
         "reasoning": "Reasoning models arrive",
-        "slopeLabel": "points a year, before and since reasoning models",
+        "slopeLabel": "points a year, before and since reasoning models (Epoch's published trend)",
+        "estimate": "+{gain} points on Epoch's current scale, against its pace of about {slope} a year",
         "window": "Last 11 weeks",
         "trendLabel": "Trend: {n} points a year",
         "eci": {
@@ -619,9 +620,10 @@
       ],
       "copy": {
         "title": "How do we know it is accelerating?",
-        "sub": "No single number. Trusted thermometers, read together."
+        "sub": "No single number. Four questions, each with its own trusted thermometers.",
+        "together": "Read them together: no single thermometer tells you the temperature."
       },
-      "visual": "Paper. A 2×2 (or 4-row) grid of thermometer families revealed one per step; each tile: the question in plain words, 2–3 instruments with who runs them (independent / lab / government), the latest reading with its chip and date. Last step: all four lit, one line: read them together.",
+      "visual": "Paper. A 2×2 grid of thermometer families on the 12-column grid, revealed one per step; each tile: the question in plain words, then 2–3 instruments as compact rows: provenance chip and name, who runs it and when, the latest reading (≥ 30 px) on the right. The family being read has its question in the accent; families already read step back to muted. Last step: all four lit, and the line under the title becomes: read them together.",
       "facts": []
     },
     {
