@@ -3,7 +3,7 @@
   "presenter": "Irina Vélez",
   "event": "Inside the AI Frontier · free online session",
   "date": "2026-11-19T19:00:00-05:00",
-  "plannedTotalSec": 3495,
+  "plannedTotalSec": 3450,
   "icons": {
     "speed": "Speed",
     "tradeoffs": "Trade-offs",
@@ -621,10 +621,23 @@
       "copy": {
         "title": "How do we know it is accelerating?",
         "sub": "No single number. Four questions, each with its own trusted thermometers.",
-        "together": "Read them together: no single thermometer tells you the temperature."
+        "together": "Read them together."
       },
-      "visual": "Paper. A 2×2 grid of thermometer families on the 12-column grid, revealed one per step; each tile: the question in plain words, then 2–3 instruments as compact rows: provenance chip and name, who runs it and when, the latest reading (≥ 30 px) on the right. The family being read has its question in the accent; families already read step back to muted. Last step: all four lit, and the line under the title becomes: read them together.",
-      "facts": []
+      "visual": "Paper. The four questions as a rail on the left (columns 0–3); the family being read fills the panel on the right (columns 4–11): one instrument per row, provenance chip and name, the latest reading in plain words (34 px), who runs it and when. Step 0: the rail and the promise (no single number). Steps 1–4: one family per step, the rail's accent bar moves to it. Step 5: all four questions lit, the panel says: read them together, with the research desk's takeaway.",
+      "facts": [
+        "eci-tie-174",
+        "aa-leaderboard",
+        "arena-text-carbon",
+        "rli-fable-41",
+        "epoch-real-work",
+        "tbench-41",
+        "price-47-quarter",
+        "epoch-compute-slowing",
+        "pjm-shortfall",
+        "ramp-568",
+        "metr-anthropic-2x",
+        "open-lag-aisi"
+      ]
     },
     {
       "id": "swarm",
@@ -665,11 +678,11 @@
       "ground": "paper",
       "mode": "data",
       "icon": "speed",
-      "brief": "AI is now building AI: inside one lab, Claude writes most of the code and leads a quarter of R&D.",
+      "brief": "AI is now building AI: inside one lab, Claude writes most of the code and leads a quarter of R&D, and an outside check finds the lab's progress now runs about twice as fast, mostly because of AI.",
       "steps": [
-        ">90% of merged changes",
-        "R&D led by Claude: <1% in February → ~26% in August",
-        "~30,000 agents at work; the caveat"
+        ">90% of merged changes (Anthropic, 9 Nov)",
+        "R&D led by Claude: <1% in February → ~26% in August (its latest figure)",
+        "~2× faster progress, mostly from AI (METR, as of October); the caveat"
       ],
       "copy": {
         "title": "AI is now building AI",
@@ -683,49 +696,20 @@
           "fromDate": "Feb 2026",
           "to": "~26%",
           "toDate": "Aug 2026",
-          "label": "of Anthropic's AI R&D work is led by Claude"
+          "label": "of Anthropic's AI R&D work is led by Claude, as of August 2026 (its latest figure)"
         },
         "s3": {
-          "value": "~30,000",
-          "label": "agents at work inside Anthropic at any time",
-          "note": "People still guide their work."
+          "value": "~2×",
+          "label": "As of October 2026, Anthropic's models improve about twice as fast as in 2024–25, mostly because of AI",
+          "note": "People still guide the work: the speed-up comes mainly from AI assistance."
         },
-        "caveat": "Lab-reported. Many agents is not autonomy: Claude is “not operating fully autonomously” on any measured part of the work."
+        "caveat": "First two: Anthropic's own figures. METR's range is 1.3× to 3×, and Anthropic redacted most of its key evidence."
       },
       "visual": "Paper. Big numbers; the <1% → ~26% climb as a single rising bar or line with the two dates.",
       "facts": [
         "claude-90-merged",
         "claude-rd-26",
-        "anthropic-30000-agents"
-      ]
-    },
-    {
-      "id": "price",
-      "name": "The same capability keeps getting cheaper",
-      "act": "labs",
-      "owner": "E5",
-      "plannedSec": 45,
-      "energy": 5,
-      "ground": "paper",
-      "mode": "data",
-      "icon": "tradeoffs",
-      "brief": "The same capability gets much cheaper every quarter: buy now or wait is a real trade-off.",
-      "steps": [
-        "−47% every quarter",
-        "≈13× cheaper per year; Ramp: −14.8% in four weeks"
-      ],
-      "copy": {
-        "title": "The same capability keeps getting cheaper",
-        "value": "−47%",
-        "label": "price to reach a fixed score, every quarter since 2023",
-        "equiv": "≈ 13× cheaper per year",
-        "ramp": "Ramp: blended token prices −14.8% in the four weeks to 1 Nov",
-        "tag": "Estimate · Epoch AI, via State of AI 2026"
-      },
-      "visual": "Paper. A cube or bar that halves quarter by quarter (8 quarters), price tag ticking down.",
-      "facts": [
-        "price-47-quarter",
-        "ramp-price-148"
+        "metr-anthropic-2x"
       ]
     },
     {
