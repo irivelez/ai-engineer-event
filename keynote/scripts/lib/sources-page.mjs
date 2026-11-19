@@ -24,7 +24,11 @@ export async function writeSourcesPage({ ROOT, SRC, beats, outFile }) {
   const P = tokens.provenance;
   const factsJson = readJSON(path.join(SRC, 'data/facts.json')) || {};
   const facts = factsJson.facts && !Array.isArray(factsJson.facts) ? factsJson.facts : Object.fromEntries(listOf(factsJson.facts).map((f) => [f.id, f]));
-  const evidence = listOf(readJSON(path.join(SRC, 'data/evidence.json')));
+  // evidence.json plus every evidence-*.json (an id seen first wins), as the build does
+  const evFiles = ['evidence.json', ...fs.readdirSync(path.join(SRC, 'data')).filter((f) => /^evidence-.+\.json$/.test(f)).sort()];
+  const evSeen = new Map();
+  for (const f of evFiles) for (const e of listOf(readJSON(path.join(SRC, 'data', f)))) if (e && e.id && !evSeen.has(e.id)) evSeen.set(e.id, e);
+  const evidence = [...evSeen.values()];
   const captures = listOf(readJSON(path.join(SRC, 'data/captures.json')));
   const stills = listOf(readJSON(path.join(SRC, 'data/sf-stills.json')));
 
