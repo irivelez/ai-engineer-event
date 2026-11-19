@@ -566,20 +566,20 @@
       "steps": [
         "Every step is a new model",
         "Since reasoning models, about twice as steep",
-        "About seven months of progress in 11 weeks, and the caveat"
+        "About 7 months of progress in 11 weeks, and the caveat"
       ],
       "copy": {
-        "title": "About seven months of progress in 11 weeks",
+        "title": "About 7 months of progress in 11 weeks",
         "headlines": [
           "Every step is a new model",
           "Since reasoning models, the climb is about twice as steep",
-          "About seven months of progress in 11 weeks"
+          "About {months} months of progress in {weeks} weeks"
         ],
         "axis": "Epoch Capabilities Index",
         "explain": "One score that sums up dozens of AI tests. Higher means more capable.",
         "reasoning": "Reasoning models arrive",
         "slopeLabel": "points a year, before and since reasoning models (Epoch's published trend)",
-        "estimate": "+{gain} points on Epoch's current scale, against its pace of about {slope} a year",
+        "estimate": "Our arithmetic: +{gain} points at Epoch's pace of {slope} a year.",
         "window": "Last 11 weeks",
         "trendLabel": "Trend: {n} points a year",
         "eci": {

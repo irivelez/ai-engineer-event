@@ -427,12 +427,6 @@ export function makeScene(D) {
     explain.innerHTML = esc(copy.explain || '');
     const explainB = K.block(explain, { rise: 16 });
 
-    if (!document.getElementById('yiw-css')) {
-      const st2 = document.createElement('style');
-      st2.id = 'yiw-css';
-      st2.textContent = '.yiw-est{line-height:44px}.yiw-est .itaf-chip{vertical-align:middle;margin:0 12px 0 0;position:relative;top:-3px}';
-      document.head.appendChild(st2);
-    }
     // a "from → to" number row: from in muted, to rolls in the accent
     function pairRow(top, fromTxt, toTxt, sub, size = 'h1') {
       const box = el('div', '');
@@ -468,16 +462,10 @@ export function makeScene(D) {
     const jumpB = W && Number.isFinite(W.from) && Number.isFinite(W.to)
       ? pairRow(slotY(3), fmtV(W.from), fmtV(W.to), [
         { cls: 't-label tnum', html: esc([fmtDate(W.fromDate), fmtDate(W.toDate)].filter(Boolean).join(' → ')), color: G.muted, gap: 12 },
-        // our arithmetic on Epoch's numbers wears the ESTIMATE chip, not Epoch's
-        P.rTrend && copy.estimate && {
-          cls: 'ca-sans32 yiw-est',
-          html: `${C.chipHTML('estimate')} ${esc(fill(copy.estimate, { gain: fmtV(W.to - W.from), slope: fmtV(P.rTrend.slope) }))}`,
-          color: G.muted, gap: 20,
-        },
       ], 'h2')
       : null;
     const caveat = el('div', 'pretty');
-    place(caveat, M, slotY(3) + 330, LW); // under the estimate (up to 3 lines of 44)
+    place(caveat, M, slotY(3) + 200, LW);
     Object.assign(caveat.style, { fontFamily: 'var(--f-serif)', fontStyle: 'italic', fontSize: '40px', lineHeight: '52px', color: G.fg });
     caveat.innerHTML = esc(copy.caveat || '');
     const caveatB = K.block(caveat, { rise: 16 });
@@ -491,12 +479,29 @@ export function makeScene(D) {
     }
 
     const foot = K.footer();
+    // step 2's "N months" is our arithmetic on Epoch's numbers: an ESTIMATE chip beside Epoch's INDEPENDENT one
+    let estB = null;
+    if (W && P.rTrend && copy.estimate && Number.isFinite(W.from) && Number.isFinite(W.to)) {
+      const e = el('div', '');
+      Object.assign(e.style, { display: 'flex', alignItems: 'center', gap: '20px', height: '44px', whiteSpace: 'nowrap' });
+      e.classList.add('ground-' + g);
+      e.innerHTML = `${C.chipHTML('estimate')}<span style="font-family:var(--f-sans);font-size:26px;line-height:32px;font-weight:460;color:${G.muted}">${esc(fill(copy.estimate, { gain: fmtV(W.to - W.from), slope: fmtV(P.rTrend.slope) }))}</span>`;
+      estB = e;
+    }
     const src = D && D.source;
     const dataSrc = src && (src.publisher || src.date)
       ? { kind: kindOf(src.label || D.label || 'independent'), text: [src.publisher, fmtDate(src.date || src.fetchedAt)].filter(Boolean).join(' · ') }
       : factSource(ctx, 'eci-tie-174');
     const sTrend = factSource(ctx, 'eci-trend-14') || dataSrc;
     const sJump = factSource(ctx, 'eci-jump') || dataSrc;
+    let estFootB = null;
+    if (estB && sJump) {
+      // after the footer's own chip + 'Outlet · date' (26 px mono), with the footer's 40 px rhythm
+      const CHIPN = { independent: 11, labReported: 12, secondary: 9, official: 8, estimate: 8, press: 5 };
+      const chipW = 56 + (CHIPN[sJump.kind] || 11) * 26 * 0.68;
+      place(estB, Math.round(M + chipW + 20 + String(sJump.text).length * 26 * 0.61 + 40), T.space.footer.y);
+      estFootB = K.block(estB, { rise: 0, dur: 0.5 });
+    }
 
     const apply = K.stepper([
       { c: kicker, on: () => true },
@@ -515,6 +520,7 @@ export function makeScene(D) {
       slopeB && { c: slopeB, on: (s) => s === 1, at: 0.4 },
       jumpB && { c: jumpB, on: (s) => s === 2, at: 0.4 },
       { c: caveatB, on: (s) => s === 2, at: 2.6 },
+      estFootB && { c: estFootB, on: (s) => s === 2, at: 1.4 },
     ].filter(Boolean));
 
     function go(step, animate, info = {}) {
