@@ -282,7 +282,7 @@
       "alsoSources": [
         {
           "title": "Quote “The agent made it up and the judge approved it.” at 6:12:57",
-          "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=22298"
+          "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=22377"
         }
       ],
       "caveat": "ZoomInfo's own offline evaluation of its own system.",
@@ -825,9 +825,9 @@
         "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
         "date": "2026-09-17"
       },
-      "caveat": "Lab-reported. The <1% February baseline is from the chart description on the same page. Anthropic adds that Claude is not operating fully autonomously for any measured subset of the work; its grading model agreed with human raters 59% of the time, human raters with each other 35%.",
+      "caveat": "Lab-reported. The <1% February baseline is from the chart description on the same page. Anthropic adds that Claude is not operating fully autonomously for any measured subset of the work; its grading model agreed with human raters 59% of the time, human raters with each other 35%. Still Anthropic's latest published figure: the page, re-read 18 Nov 2026, shows nothing after August, and no newer share was found in its 26 Oct S-1 coverage or 9 Nov launch.",
       "verified": "live",
-      "checkedAt": "2026-11-18T15:25-05:00"
+      "checkedAt": "2026-11-18T21:30-05:00"
     },
     "anthropic-30000-agents": {
       "claim": "Anthropic says about 30,000 agents do research and engineering inside the company at any one time.",
@@ -841,9 +841,51 @@
         "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
         "date": "2026-09-17"
       },
-      "caveat": "Lab-reported; Anthropic counts agents on its most-used internal platform, as of August 2026.",
+      "caveat": "Lab-reported; Anthropic counts agents on its most-used internal platform, as of August 2026. No newer count found by 18 Nov 2026. Off the self-build slide since 18 Nov (replaced by metr-anthropic-2x); kept for questions.",
       "verified": "live",
       "checkedAt": "2026-11-18T15:25-05:00"
+    },
+    "openai-astra-high-self-improvement": {
+      "claim": "OpenAI says “GPT-6.2 Astra is our first externally released model to meet the High threshold for AI Self-Improvement”; GPT-6.2 Sol does not.",
+      "value": "High",
+      "unit": "AI Self-Improvement rating, OpenAI Preparedness Framework (below Critical)",
+      "asOf": "2026-11-17",
+      "label": "lab-reported",
+      "source": {
+        "title": "GPT-6.2 System Card (Astra and Sol)",
+        "publisher": "OpenAI Deployment Safety Hub",
+        "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol",
+        "date": "2026-11-17"
+      },
+      "caveat": "OpenAI calls High “an early milestone for proactively preparing safeguards”, below its future Critical level (fully automated, recursive self-improvement). In the same card, Vals finds Astra “unlikely to fully automate AI research” and Epoch says it “still struggles with designing good research experiments”. The card gives no figure for how much of OpenAI's own research its models do.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:30-05:00"
+    },
+    "openai-research-intern": {
+      "claim": "OpenAI says it reached its goal of an automated AI research intern, which it describes as “a system that can carry out well-defined research tasks under human direction”, and that it is “making strong progress toward creating an automated AI researcher by March of 2028.”",
+      "value": "intern goal reached",
+      "unit": "OpenAI's internal research-automation goal",
+      "asOf": "2026-09-06",
+      "label": "secondary",
+      "source": {
+        "title": "OpenAI says it reached its goal of creating an automated research intern",
+        "publisher": "Engadget",
+        "url": "https://www.engadget.com/2251859/openai-says-it-reached-its-goal-of-creating-an-automated-research-intern/",
+        "date": "2026-09-06"
+      },
+      "alsoSources": [
+        {
+          "title": "OpenAI's own post (blocks automated reading)",
+          "url": "https://openai.com/index/research-acceleration-view-inside-openai/"
+        },
+        {
+          "title": "METR Senate testimony, 30 Sep 2026: OpenAI at about 3.1 agent-workdays per human workday by mid-August",
+          "url": "https://metr.org/blog/2026-09-30-chris-painter-senate-testimony/"
+        }
+      ],
+      "caveat": "openai.com returned HTTP 403 on 18 Nov, so OpenAI's words are as Engadget quotes them. The goal was set in OpenAI's 28 Oct 2025 livestream (outside our window). The 3.1 agent-workdays figure is as of mid-August and known only via METR's testimony.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:30-05:00"
     },
     "fermat-lean": {
       "claim": "Anthropic reports that a team of about 1,000 Claude Fable 5.2 agents fully formalized Fermat's Last Theorem in Lean in 30 hours “with minimal human intervention”; its footnote lists what they were given: 60 statements, a one-sentence sketch of the classical route, the definitions, and 47 proved lemmas from an earlier formalization, plus lead and helper roles.",
@@ -1732,7 +1774,7 @@
         "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment",
         "date": "2026-11-05"
       },
-      "caveat": "One lab; Anthropic redacted a majority of the evidence METR found most informative; benchmark acceleration “may fail to track acceleration in real-world impact”; less acceleration when non-Anthropic models are included. METR guesses about 80% of the current acceleration is due to AI.",
+      "caveat": "One lab; Anthropic redacted a majority of the evidence METR found most informative; benchmark acceleration “may fail to track acceleration in real-world impact”; less acceleration when non-Anthropic models are included. METR guesses about 80% of the current acceleration is due to AI. On autonomy, METR: “We were told that R&D is accelerated primarily via AI assistance rather than fully autonomous contributions, but there are some signs that fully autonomous contributions will play a larger role soon” (the self-build slide's “people still guide the work” holds for now). Secondary coverage: AP via U.S. News, 5 Nov 2026, https://www.usnews.com/news/best-states/california/articles/2026-11-05/anthropic-is-rapidly-accelerating-ai-development-amid-slowdown-calls-outside-research-group-says",
       "verified": "live",
       "checkedAt": "2026-11-18T21:25-05:00"
     },
@@ -1835,6 +1877,96 @@
       "caveat": "Ranks agent systems, not bare models; the board shows no as-of date; Copilot Fusion's underlying models are not disclosed.",
       "verified": "live",
       "checkedAt": "2026-11-18T21:37-05:00"
+    },
+    "census-btos-ai-246": {
+      "claim": "24.6% of US businesses said they used AI in any of their business functions in the previous two weeks (US Census Bureau BTOS, collected 5–18 Oct 2026, published 22 Oct 2026). 28.6% expect to use it in the next six months.",
+      "value": "24.6%",
+      "unit": "of US businesses used AI in the last two weeks",
+      "asOf": "2026-10-18",
+      "label": "official",
+      "source": {
+        "title": "Business Trends and Outlook Survey (BTOS), national estimates",
+        "publisher": "US Census Bureau",
+        "url": "https://www.census.gov/hfp/btos/downloads/National.xlsx",
+        "date": "2026-10-22"
+      },
+      "alsoSources": [
+        { "title": "Large Firms With at Least 20 Employees Biggest AI Users (Census story, 26 May 2026: 17%–20% from Dec 2025 to May 2026)", "url": "https://www.census.gov/library/stories/2026/05/ai-use-businesses.html" },
+        { "title": "BTOS AI question wording updates (new series from 17 Nov 2025)", "url": "https://www.census.gov/hfp/btos/downloads/AI%20Question%20Wording%20Updates.pdf" }
+      ],
+      "caveat": "Self-reported; biweekly, nationally representative survey of US employer businesses. The question changed on 17 Nov 2025 (new series: 17.3% in its first round, 19.8% on 3 May 2026). The newest round (collected 19 Oct–1 Nov, published 5 Nov) reads 24.2%, but it asks about “Super Intelligence or SI (formerly referred to as Artificial Intelligence or AI)” and “do not know” rose from 9.6% to 13.9%; we cite the last round with the plain AI wording. Next release due 19 Nov 2026: re-check that morning. Ramp's 56.8% counts businesses paying for AI tools in its own sample, so the two figures measure different things.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:40-05:00"
+    },
+    "cetic-br-ai-17": {
+      "claim": "17% of Brazilian companies with 10 or more employees used AI applications in 2025, up from 13% in 2024: 15% of companies with 10–49 employees, 32% with 50–249 and 50% with 250 or more.",
+      "value": "17%",
+      "unit": "of Brazilian companies (10+ employees) used AI",
+      "asOf": "2025",
+      "label": "independent",
+      "source": {
+        "title": "TIC Empresas 2025, indicator H9: companies that used artificial intelligence technologies",
+        "publisher": "Cetic.br / NIC.br",
+        "url": "https://cetic.br/pt/tics/pesquisa/2025/empresas/H9/",
+        "date": "2026-08-31"
+      },
+      "alsoSources": [
+        { "title": "Pesquisa TIC Empresas 2025, Resumo Executivo, p. 3: “17% afirmaram utilizá-las, proporção que foi de 13% em 2024”", "url": "https://cetic.br/media/docs/publicacoes/2/pt-br/20260831091252/TIC_EMPRESAS_2025_PT_RE.pdf" }
+      ],
+      "caveat": "Self-reported survey of companies with 10+ employees, all sectors; fieldwork Feb 2025–Jan 2026. The AI question goes to firms with IT staff or an IT department; results are shown over all companies. Cetic.br is the research centre of NIC.br (Brazil's internet steering committee), not the statistics office (IBGE).",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:40-05:00"
+    },
+    "glean-golden-evals": {
+      "claim": "Glean (Chinmay Goyal, AI Engineer Code Summit, 12 Nov 2026): every AI change goes through a multi-phase rollout with a golden eval set, a couple of weeks of internal soak with its ~1,500 staff, then A/B tests with customers.",
+      "value": "qualitative",
+      "unit": "",
+      "asOf": "2026-11-12",
+      "label": "lab-reported",
+      "source": {
+        "title": "Beyond Generation: Fast, Structured AI Decisions with Jev at Glean — Chinmay Goyal, Glean (Day 1 livestream, 5:36:56)",
+        "publisher": "AI Engineer (YouTube)",
+        "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=20216",
+        "date": "2026-11-12"
+      },
+      "quote": "We have a multi phase approach, a rollout approach to any change that we are making. This includes having a golden eval set for almost every possible thing.",
+      "caveat": "A company describing its own process on stage. Quote from YouTube's auto-captions (they spell Glean “Clein” elsewhere), checked against the audio timing only.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:45-05:00"
+    },
+    "uipath-decision-points": {
+      "claim": "UiPath (Chibi Vikram and Kevin Bernstein, AI Engineer Code Summit, 12 Nov 2026): after single agents with tools gave “good results, bad results”, UiPath landed on agentic process orchestration: deterministic calls plus clear decision points where an LLM steers the flow.",
+      "value": "qualitative",
+      "unit": "",
+      "asOf": "2026-11-12",
+      "label": "lab-reported",
+      "source": {
+        "title": "Your Automation Is Overthinking It — Chibi Vikram and Kevin Bernstein, UiPath (Day 1 livestream, 5:54:00)",
+        "publisher": "AI Engineer (YouTube)",
+        "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=21239",
+        "date": "2026-11-12"
+      },
+      "quote": "So you have deterministic calls and clear cognitive decision points where you would use an LLM to control the control flow rather than leaving it all in the hands of an agent.",
+      "caveat": "A company describing its own product on stage. Quote from YouTube's auto-captions; the speaker introduces himself as “Sibi” in the captions.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:45-05:00"
+    },
+    "workday-not-in-production": {
+      "claim": "Workday (Scott Roberts, AI Engineer Code Summit, 12 Nov 2026) prefaced its demos: not real data, not in production now and may or may not be in the future, “something our legal asked me to say”.",
+      "value": "qualitative",
+      "unit": "",
+      "asOf": "2026-11-12",
+      "label": "lab-reported",
+      "source": {
+        "title": "Autocomplete for Actions — Scott Roberts, Workday (Day 1 livestream, 6:29:09)",
+        "publisher": "AI Engineer (YouTube)",
+        "url": "https://www.youtube.com/watch?v=ZZ19zhYnDKY&t=23349",
+        "date": "2026-11-12"
+      },
+      "quote": "It's not real data, so we're not using any of your, you know, resumes or payroll data. Uh, these are also not in production now and may or may not be in the future. So that's something our legal asked me to say.",
+      "caveat": "A company's own disclaimer about its own demos. Quote from YouTube's auto-captions; on screen the fillers (“you know”, “uh”) are cut, marked with an ellipsis.",
+      "verified": "live",
+      "checkedAt": "2026-11-18T21:45-05:00"
     }
   }
 }

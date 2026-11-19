@@ -2,7 +2,7 @@
 // size (DevDay's one-number frame), its sentence at lead size under it; each step's number replaces the last.
 // Step 0: >90 % of merged changes, with people guiding the work.
 // Step 1: ~26 % of AI R&D led by Claude; a full-width 0–100 % track shows the climb from <1 % (Feb) to ~26 % (Aug).
-// Step 2: ~30,000 agents at any time, and the caveat in the lab's own words.
+// Step 2: ~2× faster progress, mostly from AI (METR's outside estimate, Oct 2026), and the caveat.
 import { gsap } from 'gsap';
 import { calmScene, el, esc, factSource } from './_calm/kit.js';
 
@@ -66,7 +66,7 @@ export default calmScene('self-build', (ctx, K) => {
   const caveatB = K.block(caveat, { rise: 16 });
 
   const foot = K.footer();
-  const src = [factSource(ctx, 'claude-90-merged'), factSource(ctx, 'claude-rd-26'), factSource(ctx, 'anthropic-30000-agents')];
+  const src = [factSource(ctx, 'claude-90-merged'), factSource(ctx, 'claude-rd-26'), factSource(ctx, 'metr-anthropic-2x')];
 
   const apply = K.stepper([
     { c: kicker, on: () => true },

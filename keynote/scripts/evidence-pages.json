@@ -1,0 +1,360 @@
+[
+ {
+  "name": "three-labs-anthropic-fable52-launch",
+  "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+  "top": 760
+ },
+ {
+  "name": "three-labs-openai-gpt62-system-card",
+  "url": "https://deploymentsafety.openai.com/gpt-6-2-astra-sol",
+  "anchor": "Published November 17, 2026",
+  "from": "GPT-6.2 System Card",
+  "up": "main",
+  "maxH": 900,
+  "top": 0
+ },
+ {
+  "name": "three-labs-google-carbon-launch",
+  "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+  "top": 760
+ },
+ {
+  "name": "release-pace-openai-hub",
+  "url": "https://deploymentsafety.openai.com/",
+  "anchor": "GPT-Live-1.1 system card",
+  "from": "Updates",
+  "pad": 20
+ },
+ {
+  "name": "release-pace-gemini-model-table",
+  "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions",
+  "anchor": "gemini-4-hydrogen",
+  "up": "table",
+  "from": "The following table lists models available for shorter terms",
+  "pad": 20
+ },
+ {
+  "name": "self-build-anthropic-90-merged",
+  "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+  "anchor": "Over 90% of the changes merged into Anthropic",
+  "up": "p"
+ },
+ {
+  "name": "self-build-anthropic-rd-26",
+  "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+  "anchor": "leads” 26% of Anthropic’s AI R&D work",
+  "from": "As of August 2026,",
+  "to": "The share of work at or above"
+ },
+ {
+  "name": "self-build-anthropic-30000-agents",
+  "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+  "anchor": "approximately 30,000 agents doing research and engineering",
+  "up": "p"
+ },
+ {
+  "name": "science-fermat-chart",
+  "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+  "anchor": "At the dashed line (18 hours), both teams resumed",
+  "from": "Fermat’s Last Theorem proof formalization"
+ },
+ {
+  "name": "science-fermat-text",
+  "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+  "anchor": "fully formalized the theorem in just 30 hours",
+  "up": "p"
+ },
+ {
+  "name": "science-fermat-footnote",
+  "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+  "anchor": "gave the agents a list of 60 statements",
+  "up": "li"
+ },
+ {
+  "name": "science-alphaproof-signal",
+  "url": "https://deepmind.google/blog/introducing-alphaproof-code/",
+  "anchor": "our verification process took just four weeks",
+  "up": "p",
+  "from": "First, our researchers collaborated with a mix of models"
+ },
+ {
+  "name": "science-alphaproof-launch",
+  "url": "https://deepmind.google/blog/introducing-alphaproof-code/",
+  "top": 760
+ },
+ {
+  "name": "science-enzyme-950-agents",
+  "url": "https://www.anthropic.com/research/claude-discovers-novel-enzyme-system",
+  "anchor": "After 21 hours spent searching this data by roughly 950 agents",
+  "up": "p"
+ },
+ {
+  "name": "science-enzyme-unknown-function",
+  "url": "https://www.anthropic.com/research/claude-discovers-novel-enzyme-system",
+  "anchor": "Although we don’t yet know its function",
+  "up": "p"
+ },
+ {
+  "name": "twins-openai-gpt6-critical",
+  "url": "https://deploymentsafety.openai.com/gpt-6-astra",
+  "anchor": "with the right tools and access, GPT-6 Astra can find previously unknown security flaws",
+  "up": "li",
+  "from": "Today, we are releasing GPT-6 Astra",
+  "pad": 14
+ },
+ {
+  "name": "twins-anthropic-mythos",
+  "url": "https://www.anthropic.com/news/claude-fable-and-mythos-5-2",
+  "anchor": "Claude Mythos 5.2 is our most capable model for cybersecurity engineering",
+  "up": "p"
+ },
+ {
+  "name": "ruler-aa-intelligence-index",
+  "url": "https://artificialanalysis.ai/leaderboards/models",
+  "anchor": "Gemini 4 Carbon High",
+  "up": "tr, [role=row]",
+  "from": "Further Analysis",
+  "col": "table, [role=table]",
+  "pad": 16,
+  "keepSticky": true
+ },
+ {
+  "name": "ruler-epoch-eci",
+  "url": "https://epoch.ai/benchmarks",
+  "anchor": "Epoch Capabilities Index over time",
+  "up": "section",
+  "maxH": 1100
+ },
+ {
+  "name": "ruler-arc-agi-3",
+  "url": "https://arcprize.org/leaderboard",
+  "anchor": "81.2%",
+  "up": "tr, [role=row]",
+  "from": "Leaderboard Breakdown",
+  "pad": 16,
+  "maxH": 1600,
+  "keepSticky": true
+ },
+ {
+  "name": "release-pace-gemini-ga-table",
+  "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions",
+  "anchor": "gemini-3.8-flash",
+  "up": "table",
+  "pad": 20
+ },
+ {
+  "name": "release-pace-claude-release-notes",
+  "url": "https://support.claude.com/en/articles/12138966-release-notes",
+  "anchor": "We just launched Claude Opus 5.5",
+  "up": "p",
+  "from": "Claude Haiku 5.5 launch",
+  "maxH": 2400
+ },
+ {
+  "name": "employee-bar-epoch-key-findings",
+  "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work",
+  "anchor": "Models prefer their own outputs over higher-quality human outputs",
+  "from": "Key findings:",
+  "up": "li"
+ },
+ {
+  "name": "employee-bar-epoch-masthead",
+  "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work",
+  "top": 800
+ },
+ {
+  "name": "economics-epoch-contractor",
+  "url": "https://epoch.ai/publications/how-good-are-fable-5-2-and-gpt-6-2-astra-at-real-work",
+  "anchor": "A contractor typically spends about 16 hours per data center",
+  "from": "Fable 5.2 scored 97.5%, and Opus 5.5 scored 87.5%",
+  "up": "p"
+ },
+ {
+  "name": "rulers-break-metr-stopped",
+  "url": "https://metr.org/time-horizons/",
+  "anchor": "September 8, 2026",
+  "from": "These are our measurements of the task-completion time horizons",
+  "pad": 20
+ },
+ {
+  "name": "rulers-break-metr-chart",
+  "url": "https://metr.org/time-horizons/",
+  "anchor": "Measurements above 16 hrs are unreliable",
+  "up": "figure, section, svg",
+  "maxH": 1300
+ },
+ {
+  "name": "rulers-break-aisi-cheat",
+  "url": "https://www.aisi.gov.uk/blog/cheating-behaviour-in-frontier-model-evaluations",
+  "anchor": "Every model tested in this analysis attempted to cheat some of the time",
+  "from": "Figure 1: Percentage of cyber evaluation trajectories",
+  "up": "figure",
+  "maxH": 1800
+ },
+ {
+  "name": "breach-hf-masthead",
+  "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+  "top": 800
+ },
+ {
+  "name": "breach-hf-13-hours",
+  "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+  "anchor": "cluster-admin across multiple internal clusters in under thirteen hours",
+  "up": "p"
+ },
+ {
+  "name": "breach-hf-motive",
+  "url": "https://huggingface.co/blog/agent-intrusion-technical-timeline",
+  "anchor": "an attempt to cheat the evaluation",
+  "up": "p"
+ },
+ {
+  "name": "breach-metr-700-agents",
+  "url": "https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/",
+  "anchor": "~700 attacked Hugging Face",
+  "up": "aside, nav, ul, ol",
+  "pad": 20
+ },
+ {
+  "name": "recipe-epoch-never-give-up",
+  "url": "https://epoch.ai/publications/incident-report-ai-agents-attempted-exploits-on-our-website",
+  "anchor": "harness included languag",
+  "up": "p"
+ },
+ {
+  "name": "recipe-epoch-487-messages",
+  "url": "https://epoch.ai/publications/incident-report-ai-agents-attempted-exploits-on-our-website",
+  "anchor": "agents sent 487 messages and made 36,411 calls",
+  "up": "p"
+ },
+ {
+  "name": "recipe-epoch-masthead",
+  "url": "https://epoch.ai/publications/incident-report-ai-agents-attempted-exploits-on-our-website",
+  "top": 800
+ },
+ {
+  "name": "power-portafolio-xm-capacity",
+  "url": "https://www.portafolio.co/energia/embalses-llegan-a-minimos-historicos-y-xm-advierte-que-el-sistema-exigira-al-maximo-al-parque-termico-499064",
+  "anchor": "la capacidad efectiva del parque de generación asciende a 21.680,95 MW",
+  "up": "p"
+ },
+ {
+  "name": "brazil-epoch-chips-72",
+  "url": "https://epoch.ai/latest/introducing-the-ai-chip-imports-explorer",
+  "anchor": "we estimate that 19.8 million, or 72%, went to the United States",
+  "up": "p"
+ },
+ {
+  "name": "money-anthropic-s1",
+  "url": "https://www.anthropic.com/news/s1-sec",
+  "anchor": "under the symbol",
+  "from": "Anthropic files S-1 with the SEC for proposed initial public offering",
+  "up": "p, h1"
+ },
+ {
+  "name": "money-stateofai-105",
+  "url": "https://www.stateof.ai/",
+  "anchor": "combined reported annualized revenue run rates reached an astonishing $105B",
+  "up": "p"
+ },
+ {
+  "name": "price-stateofai-47",
+  "url": "https://www.stateof.ai/",
+  "anchor": "achieving a fixed score has become 47% cheaper each quarter",
+  "up": "p"
+ },
+ {
+  "name": "price-ramp-tokenomics",
+  "url": "https://ramp.com/data/ai-index",
+  "anchor": "Share of token spend: Anthropic",
+  "from": "The latest complete week compared with the same week last month",
+  "up": "table, p",
+  "maxH": 1600
+ },
+ {
+  "name": "adoption-ramp-568-chart",
+  "url": "https://ramp.com/data/ai-index",
+  "anchor": "Ramp Overall 56.8%",
+  "from": "Share of businesses with spending on AI models, subscriptions, tokens, and APIs",
+  "maxH": 1600
+ },
+ {
+  "name": "adoption-ramp-summary",
+  "url": "https://ramp.com/data/ai-index",
+  "anchor": "Among firms paying for AI, the top 1%",
+  "from": "Monthly measurement of AI adoption and spend",
+  "up": "p",
+  "pad": 28
+ },
+ {
+  "name": "rules-eu-ai-act",
+  "url": "https://digital-strategy.ec.europa.eu/en/news/commission-starts-enforcing-ai-act-rules-and-new-transparency-requirements-2-august",
+  "anchor": "chatbots and other interactive AI systems will have to tell users",
+  "from": "From 2 August 2026, the European Commission",
+  "up": "p"
+ },
+ {
+  "name": "rules-eo-14434",
+  "url": "https://www.govinfo.gov/content/pkg/FR-2026-10-02/html/2026-20321.htm",
+  "top": 900
+ },
+ {
+  "name": "rules-xinhua-companion",
+  "url": "https://www.news.cn/fortune/20260715/99e7098330ec47a18057250f31129f98/c.html",
+  "anchor": "7月15日，国家网信办",
+  "from": "人工智能拟人化互动服务管理新规施行",
+  "up": "p, h1"
+ },
+ {
+  "name": "open-weights-aisi-4-7-months",
+  "url": "https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber",
+  "anchor": "recent open weight models lag frontier closed models",
+  "up": "p"
+ },
+ {
+  "name": "open-weights-aa-kimi",
+  "url": "https://artificialanalysis.ai/models/kimi-k3-1-pro",
+  "top": 900
+ },
+ {
+  "name": "thermometers-metr-anthropic-2x",
+  "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment",
+  "anchor": "is likely improving the capabilities of their models on well-specified tasks at around twice the rate",
+  "up": "p"
+ },
+ {
+  "name": "thermometers-epoch-compute-9-months",
+  "url": "https://epochai.substack.com/p/the-epoch-brief-november-11-2026",
+  "anchor": "Quarterly additions of computing capacity have grown about 2.5× per year since 2024",
+  "up": "p",
+  "from": "Measuring growth in the global compute supply",
+  "hide": [
+   "[role=dialog]",
+   ".modal",
+   "[class*=modal]",
+   "[class*=Modal]",
+   "[class*=overlay]",
+   "[class*=Overlay]"
+  ],
+  "wait": 3000
+ },
+ {
+  "name": "thermometers-rli-leaderboard",
+  "url": "https://labs.scale.com/leaderboard/rli",
+  "anchor": "17.08",
+  "from": "PERFORMANCE COMPARISON",
+  "pad": 24,
+  "keepSticky": true,
+  "maxH": 1400
+ },
+ {
+  "name": "thermometers-tbench-leaderboard",
+  "url": "https://www.tbench.ai/leaderboard",
+  "anchor": "64.5% ± 3.2%",
+  "from": "Copilot Fusion",
+  "up": "tr, [role=row]",
+  "pad": 64,
+  "keepSticky": true,
+  "maxH": 1400
+ }
+]

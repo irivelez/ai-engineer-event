@@ -73,7 +73,7 @@ async function locate(page, job) {
     if (job.col) { const c = a.closest(job.col) || document.querySelector(job.col); if (c) { const cr = c.getBoundingClientRect(); left = cr.left; right = cr.right; } }
     const top = Math.min(...rs.map((r) => r.top)) + window.scrollY;
     const bottom = Math.max(...rs.map((r) => r.bottom)) + window.scrollY;
-    const text = els.map((e) => e.innerText.trim()).filter((v, i, s) => s.indexOf(v) === i).join('\n\n');
+    const text = els.map((e) => (e.innerText ?? e.textContent ?? "").trim()).filter((v, i, s) => s.indexOf(v) === i).join('\n\n');
     return { left: left + window.scrollX, right: right + window.scrollX, top, bottom, text, pageH: document.documentElement.scrollHeight };
   }, job);
 }

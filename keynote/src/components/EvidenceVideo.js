@@ -35,6 +35,26 @@ const SPEAKER = '<svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="tr
   '<path d="M15.5 8.6c1.1 1 1.7 2.1 1.7 3.4s-.6 2.4-1.7 3.4M18.2 6c1.9 1.6 2.9 3.6 2.9 6s-1 4.4-2.9 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
 
 /**
+ * Captions in clip seconds: an array [{ start, end, text }] passes through; a transcript string is split into
+ * short lines at word boundaries (sentence ends first) and spread over the clip by length, like auto-captions.
+ */
+function timedCaptions(c, len) {
+  if (Array.isArray(c)) return c;
+  const text = typeof c === 'string' ? c.trim() : '';
+  if (!text || !(len > 0)) return [];
+  const chunks = [];
+  let cur = '';
+  for (const w of text.split(/\s+/)) {
+    if (cur && cur.length + 1 + w.length > 84) { chunks.push(cur); cur = w; } else cur = cur ? `${cur} ${w}` : w;
+    if (/[.!?]["')]?$/.test(w) && cur.length >= 32) { chunks.push(cur); cur = ''; }
+  }
+  if (cur) chunks.push(cur);
+  const total = chunks.reduce((a, x) => a + x.length, 0);
+  let t = 0;
+  return chunks.map((x) => { const d = (len * x.length) / total; const out = { start: t, end: t + d, text: x }; t += d; return out; });
+}
+
+/**
  * @param {object} o
  * @param {object} o.item               evidence item (ctx.assets.evidence(id)): file, posterSrc, url, youtubeId, start, end,
  *                                      publisher, title, date, disclaimer, speech, captions
@@ -53,12 +73,18 @@ export function create(o = {}) {
   const bleed = variant === 'bleed';
   const W = bleed ? 1920 : o.width || 960;
   const H = bleed ? 1080 : Math.round((W * 9) / 16);
-  const start = Math.max(0, Number(item.start) || 0);
-  const end = Number.isFinite(Number(item.end)) && Number(item.end) > start ? Number(item.end) : null;
+  // item.start / item.end are seconds in the SOURCE video (the YouTube embed uses them). The local .mp4 is the
+  // trimmed segment [start, end]: its own clock runs from 0 for item.duration (else end - start) seconds.
+  // item.localStart / item.localEnd override that when a local file is not trimmed this way.
+  const ytStart = Math.max(0, Number(item.start) || 0);
+  const ytEnd = Number.isFinite(Number(item.end)) && Number(item.end) > ytStart ? Number(item.end) : null;
+  const segLen = Number(item.duration) > 0 ? Number(item.duration) : ytEnd != null ? ytEnd - ytStart : null;
+  const start = Number(item.localStart) > 0 ? Number(item.localStart) : 0;
+  const end = Number(item.localEnd) > start ? Number(item.localEnd) : segLen != null ? start + segLen : null;
   const loop = !!o.loop;
   const posterSrc = o.poster || item.posterSrc || '';
   const file = o.src || item.file || '';
-  const captions = item.speech && Array.isArray(item.captions) ? item.captions : [];
+  const captions = item.speech ? timedCaptions(item.captions, end != null ? end - start : null) : [];
   const ground = o.ground || (variant === 'paper' ? 'paper' : 'void');
 
   const el = root(`itaf-ev itaf-evvideo v-${variant}`, { ...o, ground, tag: 'figure', width: W });
@@ -149,7 +175,7 @@ export function create(o = {}) {
     if (end != null && t >= end - 0.02) {
       if (loop) { try { video.currentTime = start; } catch (e) { /* ignore */ } } else { hold(); return; }
     }
-    setCaption(t);
+    setCaption(t - start);
   }
   function startTick() { if (!ticking) { gsap.ticker.add(tick); ticking = true; } }
   function stopTick() { if (ticking) { gsap.ticker.remove(tick); ticking = false; } }
@@ -181,8 +207,8 @@ export function create(o = {}) {
   }
 
   function startYouTube() {
-    const q = new URLSearchParams({ autoplay: '1', mute: '1', controls: '0', rel: '0', playsinline: '1', modestbranding: '1', iv_load_policy: '3', disablekb: '1', fs: '0', enablejsapi: '1', start: String(Math.floor(start)) });
-    if (end != null) q.set('end', String(Math.ceil(end)));
+    const q = new URLSearchParams({ autoplay: '1', mute: '1', controls: '0', rel: '0', playsinline: '1', modestbranding: '1', iv_load_policy: '3', disablekb: '1', fs: '0', enablejsapi: '1', start: String(Math.floor(ytStart)) });
+    if (ytEnd != null) q.set('end', String(Math.ceil(ytEnd)));
     if (loop) { q.set('loop', '1'); q.set('playlist', item.youtubeId); }
     iframe = document.createElement('iframe');
     iframe.className = 'ev-yt';
@@ -198,7 +224,7 @@ export function create(o = {}) {
       gsap.to(f, { autoAlpha: 1, duration: 0.4, delay: 0.5 });
       applySound();
       // YouTube shows its end screen after `end`: fade back to the poster (the same frame) when the clip is over.
-      if (!loop && end != null) ytDone = gsap.delayedCall(end - start + 1.5, () => { ytDone = null; if (iframe === f) gsap.to(f, { autoAlpha: 0, duration: 0.5 }); showPoster(true, 0.5); hold(); });
+      if (!loop && ytEnd != null) ytDone = gsap.delayedCall(ytEnd - ytStart + 1.5, () => { ytDone = null; if (iframe === f) gsap.to(f, { autoAlpha: 0, duration: 0.5 }); showPoster(true, 0.5); hold(); });
     }, { once: true });
     frame.insertBefore(iframe, capEl);
   }

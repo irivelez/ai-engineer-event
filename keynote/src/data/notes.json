@@ -289,7 +289,7 @@
       "Claude “leads” 26% of Anthropic's AI R&D work, up from under 1% in February. Still its latest figure (August; published 17 Sep). “Leads” = does most of a task from a short brief while a person supervises.",
       "Newest, and from outside: METR worked inside Anthropic from August to October. Its estimate: Anthropic's models now improve about twice as fast as in 2024–25, and AI causes most of that speed-up, perhaps 80% (METR, 5 Nov).",
       "Say the limits: METR's range is 1.3× to 3×, and Anthropic redacted most of the evidence METR found most telling.",
-      "Still assistance, not autonomy: Anthropic told METR the speed-up comes mainly from AI helping people, not from AI working alone.",
+      "Still assistance, not autonomy, for now: Anthropic told METR the speed-up comes mainly from AI helping people, not from AI working alone, but METR sees “some signs” that AI working alone will play a larger role soon.",
       "Cue: Speed. AI now speeds up the making of AI."
     ],
     "sources": [
@@ -314,6 +314,7 @@
     "ifAsked": [
       "OpenAI (17 Nov): GPT-6.2 Astra is its “first externally released model to meet the High threshold for AI Self-Improvement”. High is an early-warning level, below Critical; the same card says Astra is “unlikely to fully automate AI research”.",
       "OpenAI says it reached its “automated research intern” goal in September: well-defined research tasks “under human direction”. Next goal: an automated AI researcher by March 2028 (via Engadget, 6 Sep; OpenAI's page blocks automated reading).",
+      "Is it a one-off? METR's appendix, tentatively: “Recent models make this hypothesis [a one-time jump] look less likely than a permanent trend change” (METR, 5 Nov).",
       "About 30,000 agents work inside Anthropic at any time (August; no newer count found).",
       "OpenAI reportedly used 3.1 agent-workdays per human workday by mid-August (via METR's Senate testimony, 30 Sep; OpenAI's page unreadable).",
       "Anthropic's grading model agreed with human raters 59% of the time; human raters agreed with each other only 35%."
