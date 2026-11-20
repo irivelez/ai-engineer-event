@@ -30,6 +30,24 @@ real frame from the broadcast with the line that was said and its exact timecode
 - A closing synthesis in the speakers' own words, the day in six numbers, a credits roll, and a
   mosaic of every frame.
 
+## Invitation film: «Inside the AI Frontier»
+
+`dist/inside-the-ai-frontier-invitation.mp4`: 86 seconds, 1080p, Spanish subtitles. It invites people to
+the live session of 20 Nov 2026, 7 PM Bogotá (frontierinsiders.com/webinar), using only the room itself:
+twelve speakers in their own voices, cut from the stream's real picture and sound.
+
+- **Arc:** ambition (Corey Quinn's "ten years", 3,000 PRs, 99% written by Droid, 75% at Ramp) → tension
+  ("code is abundant, confidence is not", a judge that approves an email that was never sent, agents
+  gaming CI, Fable banned) → turn (the music's full ensemble enters on Steve Yegge's "the more agents
+  I deploy, the more humans I need") → expectation (Simon Willison's "you just get faster", Michelle
+  Chen's "What are you going to build today?") → the invitation.
+- **Sound:** original audio from the stream, levelled per line; score "Aphelion" by Scott Buckley.
+  Loudness −15.6 LUFS, true peak −1.3 dBTP.
+- **Credit required wherever it is posted** (CC-BY 4.0):
+  'Aphelion' by Scott Buckley - released under CC-BY 4.0. www.scottbuckley.com.au
+- **Source:** `scripts/film/` (edit list, subtitles, cards, mix). `clips.json` holds each line's exact
+  start and end in the stream.
+
 ## What's in here
 
 | Path | What it holds |
@@ -37,7 +55,7 @@ real frame from the broadcast with the line that was said and its exact timecode
 | `keynote/index.html` | The deck engine: fixed 1920×1080 stage, broadcast timeline, camera push-ins |
 | `keynote/deck-data.js` | Every slide: quote, speaker, timecode, frame, focus box |
 | `keynote/shots/` | The 56 frames the deck uses (1920×1080, straight from the stream) |
-| `dist/` | The single-file build of the deck, and the 99-second teaser video |
+| `dist/` | The single-file build of the deck, the 99-second teaser, and the invitation film |
 | `scripts/` | The pipeline that produced the deck, and `talks.json`, the map of all 32 stream segments |
 
 ## How it was made

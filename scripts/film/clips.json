@@ -1,0 +1,98 @@
+[
+ {
+  "id": "corey",
+  "start": 620.88,
+  "end": 624.31,
+  "ratio": 1.0,
+  "heard": "it feels like this year has been about 10 years in technology",
+  "next_word": "we"
+ },
+ {
+  "id": "lauren",
+  "start": 3727.11,
+  "end": 3732.08,
+  "ratio": 1.0,
+  "heard": "i did something crazy last month and i shipped 3000 pull requests to production",
+  "next_word": "now"
+ },
+ {
+  "id": "luke",
+  "start": 14176.93,
+  "end": 14180.7,
+  "ratio": 1.0,
+  "heard": "and droid wrote 99 of them and reviewed all of them",
+  "next_word": "now"
+ },
+ {
+  "id": "zach",
+  "start": 28257.59,
+  "end": 28264.85,
+  "ratio": 1.0,
+  "heard": "we now see around 75 of all of ramp's code being being written and shipped by inspect",
+  "next_word": "when"
+ },
+ {
+  "id": "andrew1",
+  "start": 11634.6,
+  "end": 11640.47,
+  "ratio": 1.0,
+  "heard": "our ceo uh tarek said recently code is abundant confidence is not",
+  "next_word": "so"
+ },
+ {
+  "id": "brian",
+  "start": 22385.32,
+  "end": 22389.25,
+  "ratio": 1.0,
+  "heard": "the agent fabricated a send and the judge rubber stamped it",
+  "next_word": "approved"
+ },
+ {
+  "id": "kush",
+  "start": 17565.27,
+  "end": 17567.8,
+  "ratio": 1.0,
+  "heard": "agents sometimes take the shortest paths to green ci",
+  "next_word": "we"
+ },
+ {
+  "id": "simon1",
+  "start": 31077.01,
+  "end": 31082.45,
+  "ratio": 0.99,
+  "heard": "we later found out that the um the prompt that got fable banned was was fixed the bugs",
+  "next_word": "somebody"
+ },
+ {
+  "id": "andrew2",
+  "start": 12188.51,
+  "end": 12191.94,
+  "ratio": 1.0,
+  "heard": "i like to say the factory runs dim not dark",
+  "next_word": "it's"
+ },
+ {
+  "id": "yegge",
+  "start": 30413.61,
+  "end": 30417.38,
+  "ratio": 1.0,
+  "heard": "the more agents i deploy the more humans i need",
+  "next_word": "isn't"
+ },
+ {
+  "id": "simon2",
+  "start": 31744.92,
+  "end": 31747.95,
+  "ratio": 1.0,
+  "heard": "it doesn't get easier you just get faster",
+  "next_word": "and"
+ },
+ {
+  "id": "michelle",
+  "start": 3582.11,
+  "end": 3584.48,
+  "ratio": 1.0,
+  "heard": "what are you going to build today",
+  "next_word": "applause"
+ }
+]
